@@ -1,0 +1,15 @@
+C:\Projects\Github\POS\POS.BE\POS.Domain\bin\Release\net8.0\POS.Domain.deps.json
+C:\Projects\Github\POS\POS.BE\POS.Domain\bin\Release\net8.0\POS.Domain.runtimeconfig.json
+C:\Projects\Github\POS\POS.BE\POS.Domain\bin\Release\net8.0\POS.Domain.dll
+C:\Projects\Github\POS\POS.BE\POS.Domain\bin\Release\net8.0\POS.Domain.pdb
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.csproj.AssemblyReference.cache
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.AssemblyInfoInputs.cache
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.AssemblyInfo.cs
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.csproj.CoreCompileInputs.cache
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.sourcelink.json
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.dll
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\refint\POS.Domain.dll
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.pdb
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\POS.Domain.genruntimeconfig.cache
+C:\Projects\Github\POS\POS.BE\POS.Domain\obj\Release\net8.0\ref\POS.Domain.dll

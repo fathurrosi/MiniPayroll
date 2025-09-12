@@ -1,0 +1,810 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "POSContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "MinimumProductVersion": "2.6.0",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "POS.Domain",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Catalog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CatalogPrice]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CatalogStock]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CatalogStockHistory]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Config]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CurrentStock]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Customer]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DailyGrossProfit]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HPP]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Log]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Menu]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Menu_backup]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Previllage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Profile]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Purchase]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PurchaseDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Reconcile]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ReconcileDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Role]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sale]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SaleDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Supplier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[UserRole]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[v_Catalog_Convertion_Kg_to_Other_Unit]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[v_UserPrevillage]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Gen_ConvertToDto]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Gen_Mapper]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetGrossProfitYearly]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetHargaBeliRata]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[GetTotalSalesPerCustomerMonthly]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteCatalogByID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteCustomer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteDailyGrossProfit]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteHPPByRange]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteMenu]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeletePurchase]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeletePurchaseDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteRole]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteSaleByTransactionID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteSaleDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteSaledetailByTransactionID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteSupplier]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteTransactionByReconcileID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_DeleteUserRole]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetActiveByCatalogID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetActiveCatalogStockByCatalogID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetAllCatalogStockByCatalogID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetAllColiPurchase]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetAllColiSales]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetAllCurrentStock]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetAllPurchases]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetAutoIDPurchase]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetBuyPrices]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetByCatalogIDTransDate]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalog]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogByCustomer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogByID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogByName]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogByNameUnit]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogItem]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogPaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogPrice]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogPriceByCatalogID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogPricePaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogReconcilePrice]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogStockByCatalogID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogStockByDate]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogStockByRange]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogStockPaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCatalogStockSummary]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCstmPurchasePaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCurrentStockByCatalogIDAndDate]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCurrentStockPaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCustomer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCustomerByFullname]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCustomerByID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetCustomerPaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetDailySalesPerCatalog]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetGPPermonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetGrossProfit]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetGrossProfitPermonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetGrossProfitYearly]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetHPPByRange]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetHPPByRangeAndCatalogID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetHPPPerCatalogByDate]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetHPPPerCatalogByRange]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetHPPPerMonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetHPPTablePerMonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetLastHPP]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetLatestProfile]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetLogPaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetMenu]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetMenuByID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetMenuByUsername]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetMenuPaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetMonthlyGrossProfit]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPerCustomerPerMonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPerCustomerPerYear]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPerformancePerMonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPiutang]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPrevBuyPrices]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPrevillage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPrevillageByRole]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPrevillageByRoleMenu]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPrevillageByUsername]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPurchase]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPurchaseByCounter]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPurchaseByPurchaseNo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPurchaseDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPurchaseDetailByPurchaseN]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetPurchaseDetailByPurchaseNo]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetReconcileByID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetReconcileDetailByReconcileID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetReconcilePaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetRole]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetRoleByID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetRoleByUsername]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetRolePaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetSaleByCounter]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetSaleByTransactionID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetSaleNewIndex]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetSalePaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetStockReport]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetSumGrossProfitYearly]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetSupplier]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetSupplierByCode]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetSupplierPaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalDailyPurchaseDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalDailySales]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalDailySalesDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalPurchasesMonthly]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalPurchasesPerSupplierDaily]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalPurchasesPerSupplierMonthly]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalSalePerCatalog]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalSalePerCustomer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalSalePerDay]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalSalePermonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalSales]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalSalesPerCustomer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalSalesPeritemPerMonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetTotalSalesPerMonth]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetUserPaging]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_GetUserPrevillageByUsername]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InserCatalog]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InserCatalogstock]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertAndGetCustomer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertAndGetSupplier]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertCatalogStock]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertCustomer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertHPP]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertLog]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertMenu]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertPrevillage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertPurchase]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertPurchaseDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertReconcile]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertReconcileDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertRole]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertSale]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertSaleDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertSaleDetailWithColi]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertSupplier]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_InsertUserRole]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_IsExistDailyGrossProfit]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_IsExistHPP]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_SaleDetailByTransactionID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateActiveCatalogstock]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateCatalog]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateCatalogprice]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateCatalogstock]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateCatalogStockByDate]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateCustomer]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateDailyGrossProfit]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateExpiredDate]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateHPPByTransDateAndCatalogID]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateMenu]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdatePrevillage]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdatePurchase]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateReconcile]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateRole]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateSale]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateSaleBySale]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateSaleDetail]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateSupplier]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateTodayCatalogStock]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateUser]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[Usp_UpdateUserPassword]",
+         "ObjectType": 1
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": true,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": true,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": true,
+   "UseT4Split": false
+}
