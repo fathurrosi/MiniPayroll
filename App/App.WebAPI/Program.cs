@@ -2,10 +2,8 @@ using App.Application.Interfaces.Repositories;
 using App.Infrastructure;
 using App.Infrastructure.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-//using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-//using POS.Shared.Settings;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +27,6 @@ builder.Logging.AddProvider(new AppLoggerProvider(logRepository, httpContextAcce
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
@@ -60,10 +57,6 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-
-
-//builder.Services.AddSingleton(options => options.GetService<IOptions<JwtSettings>>().Value);
-//builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
 
 builder.Services.AddAuthentication(options =>
 {
