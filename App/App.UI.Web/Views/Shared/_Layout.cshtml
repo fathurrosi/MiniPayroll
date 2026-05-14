@@ -1,0 +1,378 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Enterprise System</title>
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="~/plugins/fontawesome-free/css/all.min.css" />
+
+    <!-- AdminLTE -->
+    <link rel="stylesheet"
+          href="~/dist/css/adminlte.min.css" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css" />
+
+    <!-- Select2 -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link"
+                           data-widget="pushmenu"
+                           href="#"
+                           role="button">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ms-auto">
+
+                <!-- Dark Mode Toggle -->
+                <li class="nav-item">
+                    <a class="nav-link"
+                           href="#"
+                           id="darkModeToggle">
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </a>
+                </li>
+
+                <!-- User Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link"
+                           data-bs-toggle="dropdown"
+                           href="#">
+                        <i class="far fa-user-circle"></i>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                        <span class="dropdown-header">
+                            @User.Identity?.Name
+                        </span>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a href="/Account/Profile" class="dropdown-item">
+                            <i class="fas fa-user me-2"></i> Profile
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+
+                        <form method="post"
+                              asp-controller="Account"
+                              asp-action="Logout">
+                            <button type="submit"
+                                    class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+            <!-- Brand Logo -->
+            <a href="/" class="brand-link text-center">
+                <span class="brand-text fw-light">
+                    Enterprise System
+                </span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+
+                <!-- Sidebar user panel -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="https://ui-avatars.com/api/?name=User"
+                             class="img-circle elevation-2"
+                             alt="User Image">
+                    </div>
+
+                    <div class="info">
+                        <a href="#" class="d-block">
+                            @User.Identity?.Name
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column"
+                        data-widget="treeview"
+                        role="menu"
+                        data-accordion="false">
+
+                        <!-- Dashboard -->
+                        <li class="nav-item">
+                            <a asp-controller="Home"
+                                   asp-action="Index"
+                                   class="nav-link">
+
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+
+                        <!-- Payroll -->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-money-check-alt"></i>
+                                <p>
+                                    Payroll
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+
+                            <ul class="nav nav-treeview">
+
+                                <li class="nav-item">
+                                    <a asp-controller="Employee"
+                                           asp-action="Index"
+                                           class="nav-link">
+
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Employees</p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a asp-controller="Payroll"
+                                           asp-action="Index"
+                                           class="nav-link">
+
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Payroll Process</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <!-- Workflow -->
+                        <li class="nav-item">
+                            <a asp-controller="Workflow"
+                                   asp-action="Index"
+                                   class="nav-link">
+
+                                <i class="nav-icon fas fa-project-diagram"></i>
+                                <p>Workflow</p>
+                            </a>
+                        </li>
+
+                        <!-- Documents -->
+                        <li class="nav-item">
+                            <a asp-controller="Document"
+                                   asp-action="Index"
+                                   class="nav-link">
+
+                                <i class="nav-icon fas fa-folder-open"></i>
+                                <p>Documents</p>
+                            </a>
+                        </li>
+
+                        <!-- Settings -->
+                        <li class="nav-item">
+                            <a asp-controller="Setting"
+                                   asp-action="Index"
+                                   class="nav-link">
+
+                                <i class="nav-icon fas fa-cogs"></i>
+                                <p>Settings</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+
+            </div>
+        </aside>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+
+            <!-- Content Header -->
+            <section class="content-header">
+                <div class="container-fluid">
+
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>@ViewData["Title"]</h1>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-end">
+                                <li class="breadcrumb-item">
+                                    <a href="/">Home</a>
+                                </li>
+
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+
+                    @RenderBody()
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <strong>
+                Copyright &copy; @DateTime.Now.Year
+                Enterprise System.
+            </strong>
+
+            All rights reserved.
+
+            <div class="float-end d-none d-sm-inline-block">
+                <b>Version</b> 1.0.0
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Bundle -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- AdminLTE -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+
+    <!-- Select2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Site -->
+    <script src="~/js/site.js"></script>
+
+    <script>
+        // Dark mode toggle
+        $('#darkModeToggle').on('click', function (e) {
+        e.preventDefault();
+        $('body').toggleClass('dark-mode');
+        });
+
+        // Select2 global
+        $('.select2').select2({
+        width: '100%'
+        });
+
+        // Auto close alerts
+        setTimeout(function () {
+        $('.alert-dismissible').alert('close');
+        }, 5000);
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - App.UI.Web</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/App.UI.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">App.UI.Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2026 - App.UI.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+ *@

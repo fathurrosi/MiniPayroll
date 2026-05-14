@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Attendance\" />
+    <Folder Include="Views\Employee\" />
+    <Folder Include="Views\Leave\" />
+    <Folder Include="Views\BPJS\" />
+    <Folder Include="Views\Approval\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\Reporting\" />
+    <Folder Include="Views\Tax\" />
+    <Folder Include="Views\Payroll\" />
+    <Folder Include="Views\Overtime\" />
+  </ItemGroup>
+
+</Project>

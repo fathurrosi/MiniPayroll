@@ -1,0 +1,110 @@
+﻿{
+   "CodeGenerationMode": 6,
+   "ContextClassName": "AppDBContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1465",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entities",
+   "PluralRules": null,
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "App.Application",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 2,
+   "SingularRules": null,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Approvals]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Attendances]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[AuditLogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[BPJSConfigurations]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Departments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EmployeeLeaves]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Employees]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[EmployeeTHR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[LeaveTypes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Overtimes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PayrollDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PayrollPeriods]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Payrolls]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Positions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TaxBrackets]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false,
+   "UseTypedTvpParameters": true
+}
