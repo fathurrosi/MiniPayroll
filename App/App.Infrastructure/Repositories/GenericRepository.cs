@@ -3,11 +3,8 @@ using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Data;
 using App.Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
+using Microsoft.EntityFrameworkCore; 
+using System.Linq.Expressions; 
 
 namespace App.Infrastructure.Repositories
 {

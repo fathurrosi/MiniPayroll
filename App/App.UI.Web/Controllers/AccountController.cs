@@ -1,83 +1,140 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using App.Application.Interfaces.Services;
+using App.UI.Web.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization; 
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace App.UI.Web.Controllers
 {
-    public class AccountController : Controller
+
+    public sealed class AccountController : BaseController
     {
-        // GET: EmployeeController
-        public ActionResult Index()
+        private readonly ILogger<AccountController> _logger; 
+        private readonly IUserService _userService;
+        public AccountController(ILogger<AccountController> logger           
+            , IUserService userService)
         {
+            _logger = logger; 
+            _userService = userService;
+        }
+         
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login(string returnUrl = "/")
+        {
+            if (!Url.IsLocalUrl(returnUrl))
+                returnUrl = "/";
+
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
-        // GET: EmployeeController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: EmployeeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Create
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Login(UserModel model, string? returnUrl = "/")
         {
-            try
+            _logger.LogWarning($"LoginForm {model?.Username}");
+             
+            if (!ModelState.IsValid || string.IsNullOrWhiteSpace(model?.Username))
             {
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("", "Username is required");
+                ViewData["ReturnUrl"] = returnUrl;
+                return View(model);
             }
-            catch
+             
+            var userValid = await _userService.ValidateUserAsync(model.Username, model.Password);
+            if (!userValid)
             {
-                return View();
+                ModelState.AddModelError("", "Invalid username or password");
+                return View(model);
             }
+             
+            TempData["Username"] = model.Username;
+            TempData["ReturnUrl"] = returnUrl;
+             
+            return RedirectToAction(nameof(Mfa));
+        } 
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Mfa()
+        {
+            if (TempData["Username"] == null)
+                return RedirectToAction(nameof(Login));
+             
+            TempData.Keep();
+
+            return View(new OtpModel());
         }
 
-        // GET: EmployeeController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Edit/5
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> SendOtp(OtpModel model)
         {
-            try
+            var username = TempData["Username"]?.ToString();
+            var returnUrl = TempData["ReturnUrl"]?.ToString() ?? "/";
+
+            if (username == null)
+                return RedirectToAction(nameof(Login));
+
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                TempData.Keep();
+                return View("Mfa", model);
             }
-            catch
+
+            var otp = model.GetOtp();
+
+            //var userSecret = GetUserSecret(username);
+
+            if (!VerifyOtp(otp, "userSecret"))
             {
-                return View();
-            }
+                ModelState.AddModelError("", "Invalid or expired code");
+                TempData.Keep();
+                return View("Mfa", model);
+            } 
+
+            await SignInUser(username);
+
+            return Redirect(returnUrl);
         }
 
-        // GET: EmployeeController/Delete/5
-        public ActionResult Delete(int id)
+        private bool VerifyOtp(string otp, object userSecret)
         {
-            return View();
+            return true;
         }
 
-        // POST: EmployeeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [Authorize]
+        public async Task<IActionResult> Logout()
         {
-            try
+            //await _currentUser.ClearAsync();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
+        }
+
+        // ================= HELPERS =================
+
+        private async Task SignInUser(string username)
+        {
+            var user = await _userService.GetByKey(username);
+            var claims = new List<Claim>
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                new Claim(ClaimTypes.Name, username),
+            };
+
+            var identity = new ClaimsIdentity(
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal);
         }
     }
 }

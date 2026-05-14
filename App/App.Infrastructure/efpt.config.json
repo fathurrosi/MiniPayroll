@@ -77,6 +77,54 @@
       {
          "Name": "[dbo].[TaxBrackets]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Attendances]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_AuditLogs]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Employees]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_LeaveRequests]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_PayrollDetails]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_PayrollPeriods]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Payrolls]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Permissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_RolePermissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_UserRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Users]",
+         "ObjectType": 0
       }
    ],
    "UiHint": null,

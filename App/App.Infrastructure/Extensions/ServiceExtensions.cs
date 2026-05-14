@@ -1,10 +1,16 @@
 ﻿
+using App.Application.Interfaces.Procedures;
+using App.Application.Interfaces.Repositories;
 using App.Domain.Models;
+using App.Infrastructure.Data;
+using App.Infrastructure.Procedures;
+using App.Infrastructure.Repositories;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
 
 namespace App.Infrastructure.Extensions
 {
@@ -15,10 +21,12 @@ namespace App.Infrastructure.Extensions
             //services.Configure<ApplicationSetting>(config.GetSection("Application"));
             services.AddHttpContextAccessor();
             services.Scan(scan => scan
-                .FromAssemblies(typeof(global::MANDe.Transmittal.Infrastructure.AssemblyReference).Assembly)
+                .FromAssemblies(typeof(global::App.Infrastructure.AssemblyReference).Assembly)
                 .AddClasses(classes => classes.InNamespaces(
-                    "App.Services",
-                    "App.Services.Administration" )
+                    "App.Infrastructure.Services"
+                    //"App.Infrastructure.Procedures",
+                    //"App.Infrastructure.Repositories"
+                    )
                 .Where(type => type.Name.EndsWith("Service")))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
@@ -41,18 +49,14 @@ namespace App.Infrastructure.Extensions
                 options.SlidingExpiration = true;
             });
 
-            //services.AddHttpClient("MANDeApi", (sp, client) =>
-            //{
-            //    var appSetting = sp.GetRequiredService<IOptions<ApplicationSetting>>().Value;
-            //    client.BaseAddress = new Uri(appSetting.ApiSetting.BaseUrl);
-            //    client.DefaultRequestHeaders.Add(appSetting.ApiSetting.ApiKey, appSetting.ApiSetting.ApiKeyValue);
-            //});
-
-
-            //Utils.Initialize(
-            //    env,
-            //    config.GetSection("Application").Get<ApplicationSetting>()
-            //);
+            services.AddDbContext<AppDBContext>(options => options.UseSqlServer(
+                config.GetConnectionString("DefaultConnection"),
+                sqlOptions =>
+                {
+                    sqlOptions.CommandTimeout(3600);
+                }));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IProcedureExecutor, ProcedureExecutor>();
 
             return services;
         }
