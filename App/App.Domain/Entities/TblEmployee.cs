@@ -13,39 +13,74 @@ namespace App.Domain.Entities;
 public partial class TblEmployee
 {
     [Key]
-    public long Id { get; set; }
-
-    [StringLength(50)]
-    public string EmployeeNumber { get; set; } = null!;
-
-    [StringLength(255)]
-    public string FullName { get; set; } = null!;
+    public int EmployeeId { get; set; }
 
     [StringLength(20)]
+    [Unicode(false)]
+    public string EmployeeCode { get; set; } = null!;
+
+    [StringLength(255)]
+    [Unicode(false)]
+    public string FullName { get; set; } = null!;
+
+    [StringLength(50)]
+    [Unicode(false)]
     public string? Gender { get; set; }
 
     public DateOnly? BirthDate { get; set; }
 
     public DateOnly? HireDate { get; set; }
 
+    public DateOnly? ResignDate { get; set; }
+
     [StringLength(100)]
+    [Unicode(false)]
     public string? Department { get; set; }
 
     [StringLength(100)]
+    [Unicode(false)]
     public string? Position { get; set; }
 
     [Column(TypeName = "decimal(18, 2)")]
     public decimal BasicSalary { get; set; }
 
     [StringLength(255)]
+    [Unicode(false)]
     public string? Email { get; set; }
 
     [StringLength(50)]
+    [Unicode(false)]
     public string? PhoneNumber { get; set; }
 
+    [Unicode(false)]
     public string? Address { get; set; }
+
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? BankName { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? BankAccountNumber { get; set; }
+
+    [Column("NPWP")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? Npwp { get; set; }
 
     public bool IsActive { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedDate { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 }

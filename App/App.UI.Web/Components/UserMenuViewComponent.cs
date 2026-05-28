@@ -15,7 +15,7 @@ namespace MANDe.Web.Components
         {
             //UserDto item = await _userService.GetAsync();
             //return View("~/Views/Shared/Layout/_SidebarUserMenu.cshtml", item);
-            return View("~/Views/Shared/Layout/_SidebarUserMenu.cshtml");
+            return View("~/Views/Shared/Layout/_Sidebar.cshtml");
         }
     }
 }

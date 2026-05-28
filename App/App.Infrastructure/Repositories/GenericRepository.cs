@@ -23,7 +23,7 @@ namespace App.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return entry.Entity;
         }
-        public async Task<TEntity?> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _context.Set<TEntity>().FirstOrDefaultAsync(predicate);
         }
@@ -48,25 +48,12 @@ namespace App.Infrastructure.Repositories
 
             return new PagedResponse<TEntity>(entities, totalRecords, filteredRecords, request);
         }
-        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<List<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _context.Set<TEntity>()
                 .Where(predicate)
                 .ToListAsync();
-        }
-        //public async Task<PagedResponse<TEntity>> GetAllAsync(DataTableRequest request)
-        //{
-        //    var entities = await _context.Set<TEntity>()
-        //                  .ApplyDataTableFilters(request)
-        //                  .ApplyDataTableSorting(request)
-        //                  .AsNoTracking()
-        //                  .ToListAsync();
-
-        //    var filteredRecords = await _context.Set<TEntity>().ApplyDataTableFilters(request).CountAsync();
-        //    var totalRecords = await _context.Set<TEntity>().CountAsync();
-
-        //    return new PagedResponse<TEntity>(entities, totalRecords, filteredRecords, request);
-        //}
+        } 
         public async Task<PagedResponse<TEntity>> GetPagedAsync(Expression<Func<TEntity, bool>> predicate, DataTableRequest request)
         {
             var entities = await _context.Set<TEntity>()

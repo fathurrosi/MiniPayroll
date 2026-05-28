@@ -1,5 +1,612 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using App.Domain.Models
+@using App.Domain.Models.Dto
+@model PageModel<EmployeeDto>
+
 @{
+    ViewData["Title"] = $"Data Master - {Model.Title}";
+}
+
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="card shadow-sm full-height-card">
+           
+            <div class="card-header py-2 px-3 d-flex justify-content-between align-items-center bg-light">
+
+                <!-- Left -->
+                <h6 class="mb-0 fw-semibold">
+                    Existing @Model.Title
+                </h6>
+
+                <!-- Right -->
+                <div class="d-flex gap-2">
+
+                    <button id="pdf-export"
+                            class="btn btn-sm btn-outline-dark">
+                        <i class="fa-solid fa-file-pdf me-1"></i>
+                        Export PDF
+                    </button>
+
+                    <button id="csv-export"
+                            class="btn btn-sm btn-outline-dark">
+                        <i class="fa-solid fa-file-excel me-1"></i>
+                        Export CSV
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Body -->
+            <div class="card-body p-2">
+                <div class="table-responsive">
+                    <table id="main-table"
+                           class="table table-sm table-striped table-hover align-middle w-100 mb-0">
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="sticky-wrapper">
+            <div class="card shadow-sm full-height-card">
+
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <strong>
+                        <i class="fa-solid fa-user-plus me-1"></i>
+                        Add New @Model.Title
+                    </strong>
+                </div>
+
+                <div class="card-body">
+
+                    <form id="addEmployeeForm"
+                          asp-action="AddEmployee"
+                          method="post"
+                          autocomplete="off">
+
+                        @Html.AntiForgeryToken()
+
+                        @Html.HiddenFor(model => model.Mode)
+                        @Html.HiddenFor(model => model.Title)
+                        @Html.HiddenFor(model => model.Item.EmployeeId)
+
+                        <div class="row g-3">
+
+                            <!-- Employee Code -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.EmployeeCode" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.EmployeeCode"
+                                       class="form-control"
+                                       placeholder="EMP001" />
+
+                                <span asp-validation-for="Item.EmployeeCode"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.FullName" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.FullName"
+                                       class="form-control"
+                                       placeholder="Employee Full Name" />
+
+                                <span asp-validation-for="Item.FullName"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.Gender" class="form-label fw-semibold"></label>
+
+                                <select asp-for="Item.Gender"
+                                        class="form-select">
+
+                                    <option value="">-- Select Gender --</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+
+                                </select>
+
+                                <span asp-validation-for="Item.Gender"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Birth Date -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.BirthDate" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.BirthDate"
+                                       type="date"
+                                       class="form-control" />
+
+                                <span asp-validation-for="Item.BirthDate"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Hire Date -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.HireDate" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.HireDate"
+                                       type="date"
+                                       class="form-control" />
+
+                                <span asp-validation-for="Item.HireDate"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Resign Date -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.ResignDate" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.ResignDate"
+                                       type="date"
+                                       class="form-control" />
+
+                                <span asp-validation-for="Item.ResignDate"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Department -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.Department" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.Department"
+                                       class="form-control"
+                                       placeholder="Department" />
+
+                                <span asp-validation-for="Item.Department"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Position -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.Position" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.Position"
+                                       class="form-control"
+                                       placeholder="Position" />
+
+                                <span asp-validation-for="Item.Position"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Salary -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.BasicSalary" class="form-label fw-semibold"></label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">IDR</span>
+
+                                    <input asp-for="Item.BasicSalary"
+                                           type="number"
+                                           step="0.01"
+                                           class="form-control text-end"
+                                           placeholder="0.00" />
+                                </div>
+
+                                <span asp-validation-for="Item.BasicSalary"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.Email" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.Email"
+                                       type="email"
+                                       class="form-control"
+                                       placeholder="email@example.com" />
+
+                                <span asp-validation-for="Item.Email"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Phone -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.PhoneNumber" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.PhoneNumber"
+                                       class="form-control"
+                                       placeholder="+62xxxxxxxxxx" />
+
+                                <span asp-validation-for="Item.PhoneNumber"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Bank Name -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.BankName" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.BankName"
+                                       class="form-control"
+                                       placeholder="Bank Name" />
+
+                                <span asp-validation-for="Item.BankName"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Bank Account -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.BankAccountNumber" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.BankAccountNumber"
+                                       class="form-control"
+                                       placeholder="Bank Account Number" />
+
+                                <span asp-validation-for="Item.BankAccountNumber"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- NPWP -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.Npwp" class="form-label fw-semibold"></label>
+
+                                <input asp-for="Item.Npwp"
+                                       class="form-control"
+                                       placeholder="NPWP Number" />
+
+                                <span asp-validation-for="Item.Npwp"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Active -->
+                            <div class="col-md-6">
+                                <label asp-for="Item.IsActive" class="form-label fw-semibold"></label>
+
+                                <select asp-for="Item.IsActive"
+                                        class="form-select">
+
+                                    <option value="true">Active</option>
+                                    <option value="false">Inactive</option>
+
+                                </select>
+
+                                <span asp-validation-for="Item.IsActive"
+                                      class="text-danger small"></span>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="col-12">
+                                <label asp-for="Item.Address" class="form-label fw-semibold"></label>
+
+                                <textarea asp-for="Item.Address"
+                                          rows="3"
+                                          class="form-control"
+                                          placeholder="Employee Address"></textarea>
+
+                                <span asp-validation-for="Item.Address"
+                                      class="text-danger small"></span>
+                            </div>
+
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-grid gap-2 mt-4">
+                            <button id="submit-button"
+                                    type="submit"
+                                    class="btn btn-primary text-white">
+
+                                <i class="fa-solid fa-floppy-disk me-1"></i>
+                                Save @Model.Title
+
+                            </button>
+
+                            <button type="reset"
+                                    class="btn btn-outline-secondary">
+
+                                <i class="fa-solid fa-rotate-left me-1"></i>
+                                Reset Form
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+ 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+
+            const form = $('#addEmployeeForm');
+            const tableElement = $('#main-table');
+
+            // ================================
+            // DataTable Initialization
+            // ================================
+            const table = tableElement.DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                autoWidth: false,
+                filter: true,
+                orderMulti: false,
+                ajax: {
+                    url: '@Url.Action("GetEmployees", "Employee")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    },
+                    dataSrc: function (json) {
+                        return json.data || [];
+                    },
+                    error: function (xhr) {
+
+                        if (xhr.status === 401 || xhr.status === 403)
+                            return;
+
+                        notify.error('Failed to load employee data');
+                    }
+                },
+
+                columns: [
+
+                    {
+                        data: 'employeeCode',
+                        title: 'Employee Code'
+                    },
+
+                    {
+                        data: 'fullName',
+                        title: 'Full Name'
+                    },
+
+                    {
+                        data: 'department',
+                        title: 'Department',
+                        defaultContent: '-'
+                    },
+
+                    {
+                        data: 'position',
+                        title: 'Position',
+                        defaultContent: '-'
+                    },
+
+                    {
+                        data: 'basicSalary',
+                        title: 'Basic Salary',
+                        className: 'text-end',
+                        render: function (data) {
+
+                            if (data == null)
+                                return '-';
+
+                            return new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR',
+                                minimumFractionDigits: 2
+                            }).format(data);
+                        }
+                    },
+
+                    {
+                        data: 'isActive',
+                        title: 'Status',
+                        className: 'text-center',
+                        render: function (data) {
+
+                            return data
+                                ? '<span class="badge bg-success">Active</span>'
+                                : '<span class="badge bg-danger">Inactive</span>';
+                        }
+                    },
+                    {
+                        data: null,
+                        title: 'Action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center action-col',
+                        width: '120px',
+                        render: function (data, type, row) {
+
+                            return `
+                                <a href="javascript:void(0)"
+                                   onclick="editRow('${row.employeeId}')"
+                                   title="Edit"
+                                   class="me-2">
+                                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                </a>
+                                <a href="javascript:void(0)"
+                                   onclick="confirmDelete(() => deleteRow('${row.employeeId}'))"
+                                   title="Delete"
+                                   class="me-2">
+                                    <i class="fa-solid fa-trash text-danger"></i>
+                                </a> 
+                                <a href="javascript:void(0)"
+                                   onclick="showPayslip('${row.employeeId}')"
+                                   title="View Payslip">
+                                     <i class="fa-solid fa-file-invoice-dollar text-success"></i>                                       
+                                </a>
+                            `;
+                        }
+                    }
+                ],
+
+                dom:
+                    "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
+                    "rt" +
+                    "<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
+
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        title: '@Model.Title',
+                        className: 'd-none'
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        title: '@Model.Title',
+                        className: 'd-none'
+                    }
+                ]
+            });
+
+            // ================================
+            // Form Submit
+            // ================================
+            form.on('submit', function (event) {
+
+                event.preventDefault();
+
+                if (!form.valid())
+                    return;
+
+                const submitButton = $('#submit-button');
+
+                submitButton.prop('disabled', true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddEmployee", "Payroll")',
+                    data: form.serialize(),
+
+                    success: function (response) {
+
+                        if (response.success) {
+
+                            table.ajax.reload(null, false);
+
+                            resetForm();
+
+                            notify.success(response.message);
+
+                        } else {
+
+                            notify.warning(response.message);
+                        }
+                    },
+
+                    error: function (xhr) {
+
+                        if (xhr.status === 401 || xhr.status === 403)
+                            return;
+
+                        notify.error('@Model.Title save failed');
+                    },
+
+                    complete: function () {
+
+                        submitButton.prop('disabled', false);
+                    }
+                });
+            });
+
+            // ================================
+            // Export Buttons
+            // ================================
+            $('#csv-export').on('click', function () {
+
+                table.button('.buttons-csv').trigger();
+            });
+
+            $('#pdf-export').on('click', function () {
+
+                table.button('.buttons-pdf').trigger();
+            });
+
+        });
+         
+        function editRow(id) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetEmployee", "Payroll")',
+                data: { id: id },
+                success: function (data) {
+                    if (!data) {
+                        notify.warning('Employee data not found');
+                        return;
+                    }
+                    $('#Item_EmployeeId').val(data.employeeId);
+                    $('#Item_EmployeeCode').val(data.employeeCode);
+                    $('#Item_FullName').val(data.fullName);
+                    $('#Item_Gender').val(data.gender);
+                    $('#Item_BirthDate').val(data.birthDate);
+                    $('#Item_HireDate').val(data.hireDate);
+                    $('#Item_ResignDate').val(data.resignDate);
+                    $('#Item_Department').val(data.department);
+                    $('#Item_Position').val(data.position);
+                    $('#Item_BasicSalary').val(data.basicSalary);
+                    $('#Item_Email').val(data.email);
+                    $('#Item_PhoneNumber').val(data.phoneNumber);
+                    $('#Item_Address').val(data.address);
+                    $('#Item_BankName').val(data.bankName);
+                    $('#Item_BankAccountNumber').val(data.bankAccountNumber);
+                    $('#Item_Npwp').val(data.npwp);
+                    $('#Item_IsActive').val(data.isActive.toString());
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+
+                    notify.info('Employee loaded');
+                },
+
+                error: function (xhr) {
+
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+
+                    notify.error('Failed to retrieve employee data');
+                }
+            });
+        }
+
+        function deleteRow(id) {
+
+            $.ajax({
+                type: 'DELETE',
+                url: '@Url.Action("DeleteEmployee", "Payroll")',
+
+                data: {
+                    id: id
+                },
+
+                headers: {
+                    'RequestVerificationToken':
+                        $('input[name="__RequestVerificationToken"]').val()
+                },
+
+                success: function (response) {
+                    if (response.success) {
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        resetForm();
+                        notify.success(response.message);
+                    } else {
+                        notify.warning(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('Failed to delete employee');
+                }
+            });
+        }
+
+        function resetForm() {
+            $('#addEmployeeForm')[0].reset();
+            $('#Item_EmployeeId').val('');
+            setReadonly(false);
+        }
+        function setReadonly(isReadonly) {
+            $('#Item_EmployeeCode').prop('readonly', isReadonly);
+        }
+    </script>
 }

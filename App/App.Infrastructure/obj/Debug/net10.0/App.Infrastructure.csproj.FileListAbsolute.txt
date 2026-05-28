@@ -1,9 +1,3 @@
-C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.csproj.AssemblyReference.cache
-C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
-C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.AssemblyInfoInputs.cache
-C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.AssemblyInfo.cs
-C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.csproj.CoreCompileInputs.cache
-C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.sourcelink.json
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\bin\Debug\net10.0\App.Infrastructure.deps.json
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\bin\Debug\net10.0\App.Infrastructure.runtimeconfig.json
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\bin\Debug\net10.0\App.Infrastructure.dll
@@ -12,6 +6,12 @@ C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\bin\Debug\net10.0\App.
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\bin\Debug\net10.0\App.Domain.dll
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\bin\Debug\net10.0\App.Application.pdb
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\bin\Debug\net10.0\App.Domain.pdb
+C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.csproj.AssemblyReference.cache
+C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.AssemblyInfoInputs.cache
+C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.AssemblyInfo.cs
+C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.sourcelink.json
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infr.D9A1D18F.Up2Date
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\App.Infrastructure.dll
 C:\Local\Backup\New folder\Payslip\App\App.Infrastructure\obj\Debug\net10.0\refint\App.Infrastructure.dll

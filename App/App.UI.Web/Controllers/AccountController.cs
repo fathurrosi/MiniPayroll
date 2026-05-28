@@ -2,7 +2,7 @@
 using App.UI.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization; 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -11,15 +11,15 @@ namespace App.UI.Web.Controllers
 
     public sealed class AccountController : BaseController
     {
-        private readonly ILogger<AccountController> _logger; 
+        private readonly ILogger<AccountController> _logger;
         private readonly IUserService _userService;
-        public AccountController(ILogger<AccountController> logger           
+        public AccountController(ILogger<AccountController> logger
             , IUserService userService)
         {
-            _logger = logger; 
+            _logger = logger;
             _userService = userService;
         }
-         
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Login(string returnUrl = "/")
@@ -37,26 +37,26 @@ namespace App.UI.Web.Controllers
         public async Task<IActionResult> Login(UserModel model, string? returnUrl = "/")
         {
             _logger.LogWarning($"LoginForm {model?.Username}");
-             
+
             if (!ModelState.IsValid || string.IsNullOrWhiteSpace(model?.Username))
             {
                 ModelState.AddModelError("", "Username is required");
                 ViewData["ReturnUrl"] = returnUrl;
                 return View(model);
             }
-             
+
             var userValid = await _userService.ValidateUserAsync(model.Username, model.Password);
             if (!userValid)
             {
                 ModelState.AddModelError("", "Invalid username or password");
                 return View(model);
             }
-             
+
             TempData["Username"] = model.Username;
             TempData["ReturnUrl"] = returnUrl;
-             
+
             return RedirectToAction(nameof(Mfa));
-        } 
+        }
 
         [AllowAnonymous]
         [HttpGet]
@@ -64,7 +64,7 @@ namespace App.UI.Web.Controllers
         {
             if (TempData["Username"] == null)
                 return RedirectToAction(nameof(Login));
-             
+
             TempData.Keep();
 
             return View(new OtpModel());
@@ -96,7 +96,7 @@ namespace App.UI.Web.Controllers
                 ModelState.AddModelError("", "Invalid or expired code");
                 TempData.Keep();
                 return View("Mfa", model);
-            } 
+            }
 
             await SignInUser(username);
 
@@ -116,25 +116,16 @@ namespace App.UI.Web.Controllers
             return RedirectToAction("Login");
         }
 
-        // ================= HELPERS =================
-
         private async Task SignInUser(string username)
         {
             var user = await _userService.GetByKey(username);
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, username),
-            };
+            var claims = new List<Claim> { new Claim(ClaimTypes.Name, username), };
 
-            var identity = new ClaimsIdentity(
-                claims,
-                CookieAuthenticationDefaults.AuthenticationScheme);
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var principal = new ClaimsPrincipal(identity);
 
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                principal);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
     }
 }

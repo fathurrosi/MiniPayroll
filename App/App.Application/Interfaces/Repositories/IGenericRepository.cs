@@ -7,12 +7,11 @@ namespace App.Application.Interfaces.Repositories
 
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate);
-        //Task<PagedResponse<TEntity>> GetAllAsync(DataTableRequest request);
+        Task<List<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate); 
         Task<PagedResponse<TEntity>> GetPagedAsync(DataTableRequest request);
         Task<PagedResponse<TEntity>> GetPagedAsync(DataTableRequest request, bool enableColumnSearch);
         Task<PagedResponse<TEntity>> GetPagedAsync(Expression<Func<TEntity, bool>> predicate, DataTableRequest request);
-        Task<TEntity?> Find(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity?> FindAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> AddAsync(TEntity entity);
         Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate);
         Task<List<TEntity>> GetListAsync();

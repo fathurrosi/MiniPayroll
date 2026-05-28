@@ -1,83 +1,113 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using App.Application.Interfaces.Services.Masters;
+using App.Domain.Enums;
+using App.Domain.Models;
+using App.Domain.Models.Dto;
+using App.Domain.Models.Request;
+using App.Domain.Models.Response;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.UI.Web.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeeController : BaseController
     {
-        // GET: EmployeeController
-        public ActionResult Index()
+        private readonly IEmployeeService _EmployeeService;
+        public EmployeeController(IEmployeeService employeeService)
         {
-            return View();
+            _EmployeeService = employeeService;
         }
 
-        // GET: EmployeeController/Details/5
-        public ActionResult Details(int id)
+        #region Employee
+        public IActionResult Index()
         {
-            return View();
+            var item = new PageModel<EmployeeDto>() { Title = "Employee" };
+            return View(item);
         }
 
-        // GET: EmployeeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> GetEmployees([FromBody] DataTableRequest model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = await _EmployeeService.GetPagedAsync(model);
+
+                return Json(new
+                {
+                    draw = model.Draw,
+                    recordsTotal = result.TotalCount,
+                    recordsFiltered = result.TotalFilteredCount,
+                    data = result.Items
+                });
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                return StatusCode(500, new
+                {
+                    draw = model.Draw,
+                    recordsTotal = 0,
+                    recordsFiltered = 0,
+                    data = Array.Empty<object>()
+                });
             }
         }
 
-        // GET: EmployeeController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: EmployeeController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpGet] 
+        public async Task<IActionResult> GetEmployee(string code)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var Employee = await _EmployeeService.GetByCode(code);
+                return Json(Employee);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return Json(ActionResponse.Fail(ex.Message));
+            }
+
+        }
+
+
+        [HttpDelete] 
+        public async Task<IActionResult> DeleteEmployee(string code)
+        {
+            if (string.IsNullOrWhiteSpace(code))
+                return BadRequest("Employee code is required");
+
+            try
+            {
+                var result = await _EmployeeService.Delete(code);
+                if (result > 0)
+                    return Ok(ActionResponse.Ok($"Employee {code} deleted successfully"));
+
+                return Ok(ActionResponse.Fail("Failed to delete Employee"));
+            }
+            catch (Exception ex)
+            {
+                return Json(ActionResponse.Fail(ex.Message));
             }
         }
+
+        [HttpPost] 
+        public async Task<IActionResult> AddEmployee(PageModel<EmployeeDto> model)
+        {
+            try
+            {
+                if (model.Mode == FormMode.Create)
+                {
+                    var existingItem = await _EmployeeService.GetByCode(model.Item.EmployeeCode);
+                    if (existingItem != null) return Json(ActionResponse.Fail($"Employee {model.Item.EmployeeCode} already exist!"));
+                }
+                var result = await _EmployeeService.Save(model.Item);
+                return (result != null) ? Json(ActionResponse.Ok("Employee saved successfully")) : Json(ActionResponse.Fail("Employee saved failed"));
+            }
+            catch (Exception ex)
+            {
+                return Json(ActionResponse.Fail(ex.Message));
+            }
+        }
+
+
+        #endregion
+
     }
 }
