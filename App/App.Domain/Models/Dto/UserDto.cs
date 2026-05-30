@@ -15,5 +15,7 @@ namespace App.Domain.Models.Dto
         public string? FullName { get; set; }
         public bool IsActive { get; set; }
         public DateTime? LastLoginDate { get; set; }
+
+        public List<MenuDto> MenuList { get; set; }
     }
 }

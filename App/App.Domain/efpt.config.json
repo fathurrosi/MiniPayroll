@@ -99,6 +99,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_Menus]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_PayrollDetails]",
          "ObjectType": 0
       },

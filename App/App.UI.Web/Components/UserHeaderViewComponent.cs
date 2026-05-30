@@ -1,4 +1,4 @@
-﻿ 
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -12,7 +12,7 @@ namespace MANDe.Web.Components
         //    _userService = userService;
         //}
         public async Task<IViewComponentResult> InvokeAsync()
-        { 
+        {
             //UserDto item = await _userService.GetAsync();
             return View("~/Views/Shared/Layout/_Header.cshtml");
         }

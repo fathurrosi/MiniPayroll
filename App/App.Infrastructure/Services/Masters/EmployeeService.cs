@@ -78,7 +78,7 @@ namespace App.Infrastructure.Services.Masters
             }
         }
 
-        public async Task<List<EmployeeDto>> GetCountriesAsync()
+        public async Task<List<EmployeeDto>> GetListAsync()
         {
             try
             {

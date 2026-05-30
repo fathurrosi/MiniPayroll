@@ -93,7 +93,7 @@
 
     <!-- Site -->
     <script src="~/js/site.js"></script>
-@* 
+    @* 
    <style>
         /* Force the AdminLTE 4 Main Header Navbar into custom Dark Mode */
         .app-header.navbar {
@@ -313,9 +313,7 @@
         </nav>
         <!--end::Header-->
         <!--begin::Sidebar-->
-       
-        <partial name="Layout/_Sidebar" />
-
+        @await Component.InvokeAsync("Sidebar")
         <!--end::Sidebar-->
         <!--begin::App Main-->
         <main class="app-main">
@@ -326,7 +324,7 @@
                 <div class="container-fluid">
                     @RenderBody()
                   
-                 @*    <!--begin::Row-->
+                    @*    <!--begin::Row-->
                     <div class="row">
                         <div class="col-12">
                             <!-- Default box -->

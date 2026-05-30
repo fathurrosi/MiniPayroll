@@ -1,28 +1,36 @@
 ﻿using App.Application.Interfaces.Repositories;
 using App.Application.Interfaces.Services;
+using App.Application.Interfaces.Services.Settings;
 using App.Domain.Entities;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Extensions;
 using MapsterMapper;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace App.Infrastructure.Services.Settings
 {
     public class UserService : IUserService
     {
+        const string CacheKeyPrefix = "CurrentUser";
         readonly IHasherService _hasherService;
         readonly IContextService _context;
         readonly IGenericRepository<TblUser> _userRepo;
+        readonly IGenericRepository<TblMenu> _menuRepo;
         readonly IMapper _mapper;
         readonly ILogger<UserService> _logger;
-
+        readonly IDistributedCache _cache;
         public UserService(IMapper mapper
             , ILogger<UserService> logger
             , IContextService context
             , IGenericRepository<TblUser> userRepo
             , IHasherService hasherService
+            , IDistributedCache cache
+            , IGenericRepository<TblMenu> menuRepo
             )
         {
             _mapper = mapper;
@@ -30,6 +38,8 @@ namespace App.Infrastructure.Services.Settings
             _logger = logger;
             _context = context;
             _hasherService = hasherService;
+            _cache = cache;
+            _menuRepo = menuRepo;
         }
 
         public async Task<bool> ValidateUserAsync(string username, string password)
@@ -297,6 +307,80 @@ namespace App.Infrastructure.Services.Settings
             }
         }
 
+        public async Task<UserDto?> GetUserAsync()
+        {
+            UserDto? userInfo = null;
+            string userDataJson = "";
+            var username = _context.Username;
+            if (string.IsNullOrEmpty(username)) return null;
+
+            var cacheKey = $"{CacheKeyPrefix}:{username}";
+            var cachedBytes = await _cache.GetAsync(cacheKey);
+            if (cachedBytes != null)
+            {
+                var json = Encoding.UTF8.GetString(cachedBytes);
+                return JsonConvert.DeserializeObject<UserDto>(json);
+            }
+
+            userInfo = await GetUserAsync(username);
+            if (userInfo != null)
+            {
+                userDataJson = JsonConvert.SerializeObject(userInfo);
+                var cacheEntryOptions = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromDays(1));
+                _cache.SetString(cacheKey, userDataJson, cacheEntryOptions);
+            }
+            return userInfo;
+        }
+
+        private async Task<UserDto?> GetUserAsync(string username)
+        {
+            UserDto? user = null;
+            if (string.IsNullOrEmpty(username)) return null;
+            var entity = await _userRepo.GetFirstOrDefaultAsync(u => u.Username == username);
+            if (entity != null)
+            {
+                user = _mapper.Map<UserDto>(entity);
+                var menuEntities = await _menuRepo.GetListAsync();
+
+                List<MenuDto> result = new List<MenuDto>();
+                var parentList = menuEntities.Where(t => string.IsNullOrEmpty(t.ParentId)).ToList();
+                foreach (var parent in parentList)
+                {
+                    var parentManu = _mapper.Map<MenuDto>(parent);
+                    parentManu.ChildList = menuEntities.Where(t => t.ParentId == parent.Id).Select(t => _mapper.Map<MenuDto>(t)).OrderBy(t => t.Sort).ToList();
+
+                    result.Add(parentManu);
+                }
+
+                user.MenuList = result;
+            }
+            return user;
+        }
+
+        public async Task ClearAsync()
+        {
+            var username = _context.Username;
+            if (!string.IsNullOrEmpty(username))
+            {
+                string cacheKey = $"{CacheKeyPrefix}:{username}";
+                await _cache.RemoveAsync(cacheKey);
+            }
+        }
+
+        public async Task ClearAsync(string username)
+        {
+            if (!string.IsNullOrEmpty(username))
+            {
+                string cacheKey = $"{CacheKeyPrefix}:{username}";
+                await _cache.RemoveAsync(cacheKey);
+            }
+        }
+
+        public Task<List<UserDto>> GetUsersAsyncJoin()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<UserDto>> GetUnMappedusers()
         {
             throw new NotImplementedException();
@@ -307,46 +391,9 @@ namespace App.Infrastructure.Services.Settings
             throw new NotImplementedException();
         }
 
-        public Task<List<UserDto>> SearchUsers(string searchText)
+        Task<UserDto?> IUserService.GetUserAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<UserDto>> GetActiveUsersAsync(string searchText = "")
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<UserDto>> GetUsersAsyncJoin()
-        {
-            try
-            {
-                return new List<UserDto>();
-                //var users = await _userRepo.GetListAsync();
-                //var originators = await _originatorRepo.GetListAsync();
-                //var groups = await _groupRepo.GetListAsync();
-
-                //var result = users.Select(u =>
-                //{
-                //    var dto = _mapper.Map<UserDto>(u);
-
-                //    dto.OriginatorName = originators
-                //        .FirstOrDefault(o => o.OriginatorId == u.OriginatorCode)
-                //        ?.OriginatorName;
-                //    dto.GroupDisplayName = groups
-                //        .FirstOrDefault(o => o.GroupName == u.GroupName)
-                //        ?.DisplayName;
-
-                //    return dto;
-                //}).ToList();
-
-                //return result;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting User");
-                throw;
-            }
+            return GetUserAsync();
         }
     }
 

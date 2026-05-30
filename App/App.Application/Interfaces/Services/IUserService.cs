@@ -20,10 +20,13 @@ namespace App.Application.Interfaces.Services
         Task DeleteBulkAsync(List<int> userIds);
         Task<List<UserDto>> GetUsers(List<string> usernames);
 
-        Task<List<UserDto>> SearchUsers(string searchText);
-        Task<List<UserDto>> GetUserByDisplayName(List<string> displayNames);
-        //Task<List<UserViewDto>> GetUsersViewByGroup(string groupName);
-        Task<List<UserDto>> GetActiveUsersAsync(string searchText = "");
+        //Task<List<UserDto>> SearchUsers(string searchText);
+        //Task<List<UserDto>> GetUserByDisplayName(List<string> displayNames);
+        ////Task<List<UserViewDto>> GetUsersViewByGroup(string groupName);
+        //Task<List<UserDto>> GetActiveUsersAsync(string searchText = "");
         //Task<List<UserDto>> GetUsersByOriginator(string originator);
+
+        Task<UserDto?> GetUserAsync();
+        //Task<UserDto?> GetUserAsync(string username);
     }
 }

@@ -41,7 +41,6 @@
 
   <ItemGroup>
     <Folder Include="Interfaces\Services\Transactions\" />
-    <Folder Include="Interfaces\Services\Settings\" />
   </ItemGroup>
 
 </Project>

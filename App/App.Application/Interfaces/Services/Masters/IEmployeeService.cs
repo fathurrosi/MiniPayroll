@@ -6,7 +6,7 @@ namespace App.Application.Interfaces.Services.Masters
     public interface IEmployeeService
     {
         Task<PagedResponse<EmployeeDto>> GetPagedAsync(DataTableRequest model);
-        Task<List<EmployeeDto>> GetCountriesAsync();
+        Task<List<EmployeeDto>> GetListAsync();
         Task<EmployeeDto> Save(EmployeeDto model);
         Task<int> Delete(string code);
         Task<EmployeeDto> GetByCode(string code);
