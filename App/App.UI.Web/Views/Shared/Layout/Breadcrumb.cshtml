@@ -1,10 +1,15 @@
-﻿<style type="text/css">
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+}
+<style type="text/css">
+    
     /* Container */
     .breadcrumb-modern {
         background: #fff;
         padding: 10px 0;
         font-family: "Segoe UI", Arial, sans-serif;
-        margin-left: 15px;
+        margin-left: 20px;
     }
 
         /* List */
@@ -87,10 +92,36 @@
                 letter-spacing: 1px;
             }
 </style>
-<nav class="breadcrumb-modern" aria-label="breadcrumb">
+<nav class="breadcrumb-modern">
     <ol>
         <li>
-            @*      <a asp-controller="Home" asp-action="Index">Home</a> *@
+            @*  <a href="@Url.Action("Index", "Home")" class="text-dark p-2 rounded-circle d-inline-flex justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.08); width: 28px; height: 28px;">
+                <i class="fas fa-home" style="font-size: 0.75rem; color: #000000;"></i>
+            </a> *@
+            <a asp-controller="Home"
+                   asp-action="Index">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a asp-controller="@controller"
+                   asp-action="Index">
+                @controller
+            </a>
+        </li>
+
+        @if (action != "Index")
+        {
+            <li class="active">@action</li>
+        }
+    </ol>
+</nav>
+
+@*
+<nav class="breadcrumb-modern" aria-label="breadcrumb">
+    <ol>
+        <li>      
             <a href="@Url.Action("Index", "Home")" class="text-dark p-2 rounded-circle d-inline-flex justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.08); width: 28px; height: 28px;">
                 <i class="fas fa-home" style="font-size: 0.75rem; color: #000000;"></i>
             </a>
@@ -111,100 +142,5 @@
         <li class="active">
             Product Details
         </li>
-    </ol>
-</nav>
-
-@* 
-<style type="text/css">
-    /* Custom Tabs Styling */
-    .custom-tabs .nav-link {
-        color: #555;
-        border: none;
-        border-radius: 0;
-        padding: 14px 24px;
-        font-weight: 500;
-        font-size: 0.95rem;
-        transition: all 0.2s ease;
-    }
-
-        .custom-tabs .nav-link.active {
-            background-color: transparent !important;
-            border-bottom: 3px solid #0d6efd !important;
-            color: #0d6efd !important;
-            font-weight: 600;
-        }
-
-    /* Status Pill Styling */
-    .status-pill {
-        display: inline-flex;
-        align-items: center;
-        padding: 6px 16px;
-        border-radius: 50px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .status-approved {
-        background-color: #e6f4ea;
-        color: #1e7e34;
-        border: 1px solid #c3e6cb;
-    }
-
-    .status-review {
-        background-color: #e8f0fe;
-        color: #1a73e8;
-        border: 1px solid #d2e3fc;
-    }
-
-    .status-rejected {
-        background-color: #fce8e6;
-        color: #d93025;
-        border: 1px solid #fad2cf;
-    }
-
-    .status-pending {
-        background-color: #fff4e5;
-        color: #664d03;
-        border: 1px solid #ffecb5;
-    }
-
-    /* Smooth transition for side-panel layout changes */
-    #containerTable, #containerMetadata {
-        transition: all 0.3s ease-in-out;
-    }
-
-    .card {
-        border-radius: 12px;
-    }
-
-    .table > :not(caption) > * > * {
-        padding: 1.2rem 1rem;
-    }
-
-    .metadata-label {
-        font-size: 0.75rem;
-        letter-spacing: 0.3px;
-    }
-</style>
-
-<nav aria-label="breadcrumb" class="mb-4">
-    <ol class="breadcrumb bg-transparent p-0 m-0">
-        <li class="breadcrumb-item">
-            <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">
-                <i class="bi bi-house-door me-1"></i>Home
-            </a>
-        </li>
-        
-        <li class="breadcrumb-item text-primary fw-medium">
-            <a href="@Url.Action("Index", "Home")" class="text-dark text-decoration-none ms-2" style="color: #000000 !important;">Home</a>
-        </li>
-
-        <li class="breadcrumb-item text-primary fw-medium">
-            <a href="@Url.Action("Profile", "User")" class="text-dark text-decoration-none" style="color: #000000 !important;">Profile</a>
-        </li>
-
-        <li class="breadcrumb-item active text-primary fw-medium" aria-current="page">Current Page</li>
     </ol>
 </nav> *@
