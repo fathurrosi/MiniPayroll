@@ -357,23 +357,26 @@ namespace App.Infrastructure.Services.Settings
             return user;
         }
 
-        public async Task ClearAsync()
-        {
-            var username = _context.Username;
-            if (!string.IsNullOrEmpty(username))
-            {
-                string cacheKey = $"{CacheKeyPrefix}:{username}";
-                await _cache.RemoveAsync(cacheKey);
-            }
+        public async Task<bool> ClearAsync()
+        { 
+            return await ClearAsync(_context.Username);  
         }
 
-        public async Task ClearAsync(string username)
+        public async Task<bool> ClearAsync(string username)
         {
-            if (!string.IsNullOrEmpty(username))
+            try
             {
-                string cacheKey = $"{CacheKeyPrefix}:{username}";
-                await _cache.RemoveAsync(cacheKey);
+                if (!string.IsNullOrEmpty(username))
+                {
+                    string cacheKey = $"{CacheKeyPrefix}:{username}";
+                    await _cache.RemoveAsync(cacheKey);
+                }
             }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         public Task<List<UserDto>> GetUsersAsyncJoin()

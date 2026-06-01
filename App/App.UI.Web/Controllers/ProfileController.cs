@@ -11,16 +11,17 @@ namespace App.UI.Web.Controllers
 {
     public class ProfileController : BaseController
     {
-        private readonly IEmployeeService _EmployeeService;
-        public ProfileController(IEmployeeService employeeService)
+        private readonly IProfileService _profileService;
+        public ProfileController(IProfileService profileService)
         {
-            _EmployeeService = employeeService;
+            _profileService = profileService;
         }
 
-        #region Employee
+        #region Profile
         public IActionResult Index()
         {
-            var item = new PageModel<EmployeeDto>() { Title = "Employee" };
+            var item = new PageModel<ProfileDto>() { Title = "Profile" };
+            item.Item = new ProfileDto();
             return View(item);
         }
 
@@ -29,7 +30,7 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-                var result = await _EmployeeService.GetPagedAsync(model);
+                var result = await _profileService.GetPagedAsync(model);
 
                 return Json(new
                 {
@@ -52,12 +53,12 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpGet] 
-        public async Task<IActionResult> GetEmployee(string code)
+        public async Task<IActionResult> GetProfile(int id)
         {
             try
             {
-                var Employee = await _EmployeeService.GetByCode(code);
-                return Json(Employee);
+                var Profile = await _profileService.GetByIdAsync(id);
+                return Json(Profile);
             }
             catch (Exception ex)
             {
@@ -68,18 +69,18 @@ namespace App.UI.Web.Controllers
 
 
         [HttpDelete] 
-        public async Task<IActionResult> DeleteEmployee(string code)
+        public async Task<IActionResult> DeleteProfile(int id)
         {
-            if (string.IsNullOrWhiteSpace(code))
-                return BadRequest("Employee code is required");
+            if (id <= 0)
+                return BadRequest("Profile ID is required");
 
             try
             {
-                var result = await _EmployeeService.Delete(code);
+                var result = await _profileService.DeleteAsync(id);
                 if (result > 0)
-                    return Ok(ActionResponse.Ok($"Employee {code} deleted successfully"));
+                    return Ok(ActionResponse.Ok($"Profile {id} deleted successfully"));
 
-                return Ok(ActionResponse.Fail("Failed to delete Employee"));
+                return Ok(ActionResponse.Fail("Failed to delete Profile"));
             }
             catch (Exception ex)
             {
@@ -88,17 +89,17 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpPost] 
-        public async Task<IActionResult> AddEmployee(PageModel<EmployeeDto> model)
+        public async Task<IActionResult> AddProfile(PageModel<ProfileDto> model)
         {
             try
             {
                 if (model.Mode == FormMode.Create)
                 {
-                    var existingItem = await _EmployeeService.GetByCode(model.Item.EmployeeCode);
-                    if (existingItem != null) return Json(ActionResponse.Fail($"Employee {model.Item.EmployeeCode} already exist!"));
+                    var existingItem = await _profileService.GetByIdAsync(model.Item.CompanyProfileId);
+                    if (existingItem != null) return Json(ActionResponse.Fail($"Profile {model.Item.CompanyProfileId} already exist!"));
                 }
-                var result = await _EmployeeService.Save(model.Item);
-                return (result != null) ? Json(ActionResponse.Ok("Employee saved successfully")) : Json(ActionResponse.Fail("Employee saved failed"));
+                var result = await _profileService.Save(model.Item);
+                return (result != null) ? Json(ActionResponse.Ok("Profile saved successfully")) : Json(ActionResponse.Fail("Profile saved failed"));
             }
             catch (Exception ex)
             {

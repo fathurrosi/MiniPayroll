@@ -1,0 +1,210 @@
+﻿<style type="text/css">
+    /* Container */
+    .breadcrumb-modern {
+        background: #fff;
+        padding: 10px 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        margin-left: 15px;
+    }
+
+        /* List */
+        .breadcrumb-modern ol {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Items */
+        .breadcrumb-modern li {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+            /* Chevron separator */
+            .breadcrumb-modern li + li::before {
+                content: "›";
+                color: #b8bec7;
+                font-size: 18px;
+                font-weight: 300;
+                margin: 0 10px;
+                position: relative;
+                top: -1px;
+            }
+
+            /* Circle marker */
+            .breadcrumb-modern li::after {
+                display: none;
+            }
+
+            .breadcrumb-modern li a,
+            .breadcrumb-modern li.active {
+                display: flex;
+                align-items: center;
+            }
+
+                /* Small outlined circle */
+                .breadcrumb-modern li a::before,
+                .breadcrumb-modern li.active::before {
+                    content: "";
+                    width: 11px;
+                    height: 11px;
+                    border: 2px solid #6fa8dc;
+                    border-radius: 50%;
+                    margin-right: 7px;
+                    box-sizing: border-box;
+                }
+
+            /* Link style */
+            .breadcrumb-modern li a {
+                color: #3f7fc0;
+                text-decoration: none;
+                transition: color .15s ease;
+            }
+
+                .breadcrumb-modern li a:hover {
+                    color: #2f6ca8;
+                }
+
+            /* Current page */
+            .breadcrumb-modern li.active {
+                color: #444;
+                font-weight: 400;
+            }
+
+                /* Current page circle */
+                .breadcrumb-modern li.active::before {
+                    border-color: #4a4a4a;
+                }
+
+            /* Ellipsis item */
+            .breadcrumb-modern li a[href="#"] {
+                letter-spacing: 1px;
+            }
+</style>
+<nav class="breadcrumb-modern" aria-label="breadcrumb">
+    <ol>
+        <li>
+            @*      <a asp-controller="Home" asp-action="Index">Home</a> *@
+            <a href="@Url.Action("Index", "Home")" class="text-dark p-2 rounded-circle d-inline-flex justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.08); width: 28px; height: 28px;">
+                <i class="fas fa-home" style="font-size: 0.75rem; color: #000000;"></i>
+            </a>
+        </li>
+
+        <li>
+            <a asp-controller="Category" asp-action="Index">Categories</a>
+        </li>
+
+        <li>
+            <a asp-controller="Product" asp-action="Index">Products</a>
+        </li>
+
+        <li>
+            <a href="#">...</a>
+        </li>
+
+        <li class="active">
+            Product Details
+        </li>
+    </ol>
+</nav>
+
+@* 
+<style type="text/css">
+    /* Custom Tabs Styling */
+    .custom-tabs .nav-link {
+        color: #555;
+        border: none;
+        border-radius: 0;
+        padding: 14px 24px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+        .custom-tabs .nav-link.active {
+            background-color: transparent !important;
+            border-bottom: 3px solid #0d6efd !important;
+            color: #0d6efd !important;
+            font-weight: 600;
+        }
+
+    /* Status Pill Styling */
+    .status-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-approved {
+        background-color: #e6f4ea;
+        color: #1e7e34;
+        border: 1px solid #c3e6cb;
+    }
+
+    .status-review {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+        border: 1px solid #d2e3fc;
+    }
+
+    .status-rejected {
+        background-color: #fce8e6;
+        color: #d93025;
+        border: 1px solid #fad2cf;
+    }
+
+    .status-pending {
+        background-color: #fff4e5;
+        color: #664d03;
+        border: 1px solid #ffecb5;
+    }
+
+    /* Smooth transition for side-panel layout changes */
+    #containerTable, #containerMetadata {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card {
+        border-radius: 12px;
+    }
+
+    .table > :not(caption) > * > * {
+        padding: 1.2rem 1rem;
+    }
+
+    .metadata-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.3px;
+    }
+</style>
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb bg-transparent p-0 m-0">
+        <li class="breadcrumb-item">
+            <a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">
+                <i class="bi bi-house-door me-1"></i>Home
+            </a>
+        </li>
+        
+        <li class="breadcrumb-item text-primary fw-medium">
+            <a href="@Url.Action("Index", "Home")" class="text-dark text-decoration-none ms-2" style="color: #000000 !important;">Home</a>
+        </li>
+
+        <li class="breadcrumb-item text-primary fw-medium">
+            <a href="@Url.Action("Profile", "User")" class="text-dark text-decoration-none" style="color: #000000 !important;">Profile</a>
+        </li>
+
+        <li class="breadcrumb-item active text-primary fw-medium" aria-current="page">Current Page</li>
+    </ol>
+</nav> *@

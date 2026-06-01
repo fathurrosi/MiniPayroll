@@ -14,12 +14,10 @@ namespace App.Application.Interfaces.Services.Masters
 
         Task<bool> UpdateAsync(ProfileDto dto);
 
-        Task<bool> DeleteAsync(int companyProfileId);
+        Task<int> DeleteAsync(int companyProfileId);
 
         Task<PagedResponse<ProfileDto>> GetPagedAsync(DataTableRequest model);
-        Task<List<ProfileDto>> GetCountriesAsync();
-        Task<ProfileDto> Save(ProfileDto model);
-        Task<int> Delete(string code);
-        Task<ProfileDto> GetByCode(string code);
+        //Task<List<ProfileDto>> GetCountriesAsync();
+        Task<ProfileDto> Save(ProfileDto model);  
     }
 }

@@ -27,6 +27,7 @@ namespace App.Application.Interfaces.Services
         //Task<List<UserDto>> GetUsersByOriginator(string originator);
 
         Task<UserDto?> GetUserAsync();
+        Task<bool> ClearAsync();
         //Task<UserDto?> GetUserAsync(string username);
     }
 }

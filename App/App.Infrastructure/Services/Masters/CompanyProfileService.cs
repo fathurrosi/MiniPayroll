@@ -3,7 +3,8 @@ using App.Application.Interfaces.Services.Masters;
 using App.Domain.Entities;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
-using App.Domain.Models.Response; 
+using App.Domain.Models.Response;
+using App.Infrastructure.Extensions;
 using MapsterMapper;
 using Microsoft.Extensions.Logging; 
 
@@ -12,28 +13,28 @@ namespace App.Infrastructure.Services.Masters
     public class CompanyProfileService : IProfileService
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<TblCompanyProfile> _companyProfileRepo;
+        private readonly IGenericRepository<TblCompanyProfile> _profileRepo;
         private readonly ILogger<CompanyProfileService> _logger;
         public CompanyProfileService(
             ILogger<CompanyProfileService> logger,
-           IGenericRepository<TblCompanyProfile> companyProfileRepo,
+           IGenericRepository<TblCompanyProfile> profileRepo,
             IMapper mapper)
         {
             _logger = logger;
-            _companyProfileRepo = companyProfileRepo;
+            _profileRepo = profileRepo;
             _mapper = mapper;
         }
 
         public async Task<List<ProfileDto>> GetAllAsync()
         {
-            var entities = await _companyProfileRepo.GetListAsync();
+            var entities = await _profileRepo.GetListAsync();
 
             return _mapper.Map<List<ProfileDto>>(entities);
         }
 
         public async Task<ProfileDto?> GetByIdAsync(int companyProfileId)
         {
-            var entity = await _companyProfileRepo.GetFirstOrDefaultAsync(x =>
+            var entity = await _profileRepo.GetFirstOrDefaultAsync(x =>
                     x.CompanyProfileId == companyProfileId);
 
             return entity == null
@@ -79,43 +80,56 @@ namespace App.Infrastructure.Services.Masters
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int companyProfileId)
+        public async Task<int> DeleteAsync(int companyProfileId)
         {
-            var entity = await _companyProfileRepo.FindAsync(x =>
-                    x.CompanyProfileId == companyProfileId);
+            var entity = await _profileRepo.FindAsync(x =>
+                x.CompanyProfileId == companyProfileId);
 
             if (entity == null)
-                return false;
+                return 0;
 
-            await _companyProfileRepo.Remove(entity);
-
-
-            return true;
+            return await _profileRepo.Remove(entity);
         }
 
-        public Task<PagedResponse<ProfileDto>> GetPagedAsync(DataTableRequest model)
+        public async Task<PagedResponse<ProfileDto>> GetPagedAsync(DataTableRequest model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entityResult = await _profileRepo.GetPagedAsync(model);
+                return entityResult.MapPaged<TblCompanyProfile, ProfileDto>(_mapper, model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting paged Employees");
+                throw;
+            }
         }
 
-        public Task<List<ProfileDto>> GetCountriesAsync()
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<ProfileDto> Save(ProfileDto model)
+         
+        public async Task<ProfileDto> Save(ProfileDto model)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> Delete(string code)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ProfileDto> GetByCode(string code)
-        {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                var entityItem = await _profileRepo.FindAsync(t => t.CompanyProfileId.Equals(model.CompanyProfileId));
+                if (entityItem == null)
+                {
+                    TblCompanyProfile item = _mapper.Map<TblCompanyProfile>(model);
+                    var addedEntity = await _profileRepo.AddAsync(item);
+                    return _mapper.Map<ProfileDto>(addedEntity);
+                }
+                else
+                {
+                    _mapper.Map(model, entityItem);
+                    var updatedEntity = await _profileRepo.UpdateAsync(entityItem);
+                    return _mapper.Map<ProfileDto>(updatedEntity);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving profile");
+                throw;
+            }
+        } 
     }
 }

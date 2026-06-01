@@ -53,27 +53,27 @@
                                     @foreach (var child in menu.ChildList)
                                     {
                                         string isActive = "";
-                                        if (controller == menu.Link)
+                                        if (controller == child.Link)
                                         {
                                             isActive = "active";
                                         }
                                         <li class="nav-item @isActive">
-                                            <a href="@Url.Content(menu.Link)"
+                                            <a href="@Url.Content(child.Link)"
                                                    class="nav-link">
-                                                <i class="@menu.Icon"></i>
-                                                <p>@menu.Caption</p>
+                                                <i class="@child.Icon"></i>
+                                                <p>@child.Caption</p>
                                             </a>
                                         </li>
                                     }
 
-                                    <li class="nav-item">
+                                  @*   <li class="nav-item">
                                         <a asp-controller="Employee"
                                                asp-action="Index"
                                                class="nav-link">
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>Employees</p>
                                         </a>
-                                    </li>                                   
+                                    </li>     *@                               
                                 </ul>
                             </li>
                         }

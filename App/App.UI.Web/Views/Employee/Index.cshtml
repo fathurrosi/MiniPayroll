@@ -11,27 +11,35 @@
     <div class="col-md-8">
         <div class="card shadow-sm full-height-card">
            
-            <div class="card-header py-2 px-3 d-flex justify-content-between align-items-center bg-light">
+            <div class="card-header py-2 px-3 bg-light">
 
-                <!-- Left -->
-                <h6 class="mb-0 fw-semibold">
-                    Existing @Model.Title
-                </h6>
+                <div class="d-flex align-items-center">
 
-                <!-- Right -->
-                <div class="d-flex gap-2">
+                    <h6 class="mb-0 fw-semibold">
+                        Existing @Model.Title
+                    </h6>
 
-                    <button id="pdf-export"
-                            class="btn btn-sm btn-outline-dark">
-                        <i class="fa-solid fa-file-pdf me-1"></i>
-                        Export PDF
-                    </button>
+                    <div class="ms-auto d-flex gap-2">
 
-                    <button id="csv-export"
-                            class="btn btn-sm btn-outline-dark">
-                        <i class="fa-solid fa-file-excel me-1"></i>
-                        Export CSV
-                    </button>
+                        <button id="add-new"
+                                class="btn btn-sm btn-primary">
+                            <i class="fa-solid fa-plus me-1"></i>
+                            Add New
+                        </button>
+
+                        <button id="csv-export"
+                                class="btn btn-sm btn-outline-success">
+                            <i class="fa-solid fa-file-excel me-1"></i>
+                            Export CSV
+                        </button>
+
+                        <button id="pdf-export"
+                                class="btn btn-sm btn-outline-danger">
+                            <i class="fa-solid fa-file-pdf me-1"></i>
+                            Export PDF
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -461,47 +469,33 @@
             // Form Submit
             // ================================
             form.on('submit', function (event) {
-
                 event.preventDefault();
-
                 if (!form.valid())
                     return;
 
                 const submitButton = $('#submit-button');
-
                 submitButton.prop('disabled', true);
-
                 $.ajax({
                     type: 'POST',
                     url: '@Url.Action("AddEmployee", "Payroll")',
                     data: form.serialize(),
-
                     success: function (response) {
-
                         if (response.success) {
-
                             table.ajax.reload(null, false);
-
                             resetForm();
-
                             notify.success(response.message);
-
                         } else {
-
                             notify.warning(response.message);
                         }
                     },
 
                     error: function (xhr) {
-
                         if (xhr.status === 401 || xhr.status === 403)
                             return;
-
                         notify.error('@Model.Title save failed');
                     },
 
                     complete: function () {
-
                         submitButton.prop('disabled', false);
                     }
                 });
@@ -520,6 +514,11 @@
                 table.button('.buttons-pdf').trigger();
             });
 
+            $('#add-new').on('click', function () {
+                table.button('.buttons-pdf').trigger();
+            });
+                       
+
         });
 
         // ====================================
@@ -531,11 +530,8 @@
                 type: 'GET',
                 url: '@Url.Action("GetEmployee", "Payroll")',
                 data: { id: id },
-
                 success: function (data) {
-
                     if (!data) {
-
                         notify.warning('Employee data not found');
                         return;
                     }

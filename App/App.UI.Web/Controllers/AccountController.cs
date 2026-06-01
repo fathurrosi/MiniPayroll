@@ -34,8 +34,9 @@ namespace App.UI.Web.Controllers
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserModel model, string? returnUrl = "/")
+        public async Task<IActionResult> Login(UserModel model, string returnUrl = "/")
         {
+            returnUrl = returnUrl ?? "/";
             _logger.LogWarning($"LoginForm {model?.Username}");
 
             if (!ModelState.IsValid || string.IsNullOrWhiteSpace(model?.Username))
@@ -51,11 +52,16 @@ namespace App.UI.Web.Controllers
                 ModelState.AddModelError("", "Invalid username or password");
                 return View(model);
             }
+            //TempData["Username"] = model.Username;
+            //TempData["ReturnUrl"] = returnUrl;
+            await SignInUser(model.Username);
 
-            TempData["Username"] = model.Username;
-            TempData["ReturnUrl"] = returnUrl;
+            return Redirect(returnUrl);
 
-            return RedirectToAction(nameof(Mfa));
+
+
+
+            //return RedirectToAction(nameof(Mfa));
         }
 
         [AllowAnonymous]
@@ -89,8 +95,6 @@ namespace App.UI.Web.Controllers
 
             var otp = model.GetOtp();
 
-            //var userSecret = GetUserSecret(username);
-
             if (!VerifyOtp(otp, "userSecret"))
             {
                 ModelState.AddModelError("", "Invalid or expired code");
@@ -111,9 +115,11 @@ namespace App.UI.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            //await _currentUser.ClearAsync();
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            if (await _userService.ClearAsync())
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            }
+            return RedirectToAction(nameof(Login));
         }
 
         private async Task SignInUser(string username)

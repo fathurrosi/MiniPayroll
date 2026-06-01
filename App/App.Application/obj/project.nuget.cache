@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k6GD9O+nSW4=",
+  "dgSpecHash": "hOYhQ+Ygwsc=",
   "success": true,
-  "projectFilePath": "C:\\Local\\Backup\\New folder\\Payslip\\App\\App.Application\\App.Application.csproj",
+  "projectFilePath": "C:\\Local\\Backup\\New folder\\Payslip\\App\\App\\App.Application\\App.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mk.fathur.rosi\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\mk.fathur.rosi\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
