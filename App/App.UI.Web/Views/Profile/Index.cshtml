@@ -60,26 +60,20 @@
      aria-hidden="true">
 
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
-
         <div class="modal-content">
-
             <div class="modal-header">
-
                 <h5 class="modal-title">
                     <i class="fa-solid fa-building me-2"></i>
                     <span id="modalTitle">
                         Add @Model.Title
                     </span>
                 </h5>
-
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"></button>
-
             </div>
 
             <div class="modal-body">
-
                 <form id="companyProfileForm"
                       asp-action="Save"
                       method="post"
@@ -87,8 +81,10 @@
                       autocomplete="off">
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.Mode)
-                    @Html.HiddenFor(model => model.Title)
-                    @Html.HiddenFor(model => model.Item.CompanyProfileId)                
+                    @Html.HiddenFor(model => model.Title) 
+                    <input type="hidden"
+                           asp-for="Item.CompanyProfileId"
+                           asp-key="true" />
                     <div class="row g-3">
                        
                         <!-- Company Name -->
@@ -98,7 +94,7 @@
                             <input asp-for="Item.CompanyName"
                                    class="form-control"
                                    placeholder="Company Name" />
-                            <span asp-validation-for="Item.CompanyName"
+                            <span asp-validation-for="Item.CompanyName" 
                                   class="text-danger small"></span>
                         </div>
                         <!-- Phone Number -->
@@ -220,14 +216,17 @@
         function closeModal() {
             const modalElement = document.getElementById('companyProfileModal');
             const modal = bootstrap.Modal.getInstance(modalElement);
-
+            setReadonly(false);
             if (modal) {
                 modal.hide();
             }
         }
-        function showAddModal() {
-            // resetForm();
-            $('#modalTitle').text('Add Company Profile');
+        function showModal(id) {
+            $('#modalTitle').text(
+                id > 0 ? 'Edit Company Profile' : 'Add Company Profile'
+            );
+
+            setReadonly(id > 0 ? true : false);
             const modal = new bootstrap.Modal(
                 document.getElementById('companyProfileModal')
             );
@@ -244,11 +243,7 @@
                  preview.src = URL.createObjectURL(file);
                  preview.style.display = 'block';
             });
-            const form = $('#addProfileForm'); 
 
-            // ================================
-            // DataTable Initialization
-            // ================================
             const table =  $('#main-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -256,7 +251,7 @@
                 autoWidth: false,
                 filter: true,
                 orderMulti: false,
-
+                order: [[0, 'desc']],
                 ajax: {
                     url: '@Url.Action("GetList", "Profile")',
                     type: 'POST',
@@ -273,54 +268,56 @@
                         notify.error('Failed to load Profile data');
                     }
                 },
-             columns: [
-                 { data: 'companyName', title: 'Company Name' },
-                 { data: 'phoneNumber', title: 'Phone Number', defaultContent: '-' },
-                 { data: 'email', title: 'Email', defaultContent: '-' },
-                 { data: 'website', title: 'Website', defaultContent: '-',
-                     render: function (data) {
-                         if (!data)
-                             return '-';
-                         return `<a href="${data}" target="_blank">${data}</a>`;
+                columnDefs: [
+                    {
+                        targets: -1,
+                        className: 'not-export'
+                    }
+                ],
+                 columns: [
+                     { data: 'companyName', title: 'Company Name' },
+                     { data: 'phoneNumber', title: 'Phone Number', defaultContent: '-' },
+                     { data: 'email', title: 'Email', defaultContent: '-' },
+                     { data: 'website', title: 'Website', defaultContent: '-',
+                         render: function (data) {
+                             if (!data)
+                                 return '-';
+                             return `<a href="${data}" target="_blank">${data}</a>`;
+                         }
+                     },
+                     { data: 'taxNumber', title: 'Tax Number', defaultContent: '-' },
+                     { data: 'isActive', title: 'Status', className: 'text-center',
+                         render: function (data) {
+                             return data
+                                 ? '<span class="badge bg-success">Active</span>'
+                                 : '<span class="badge bg-danger">Inactive</span>';
+                         }
+                     },
+                     {
+                         data: null,
+                         title: 'Action',
+                         orderable: false,
+                         searchable: false,
+                         className: 'text-center action-col',
+                         width: '100px',
+                         render: function (data, type, row) {
+                             return `
+                                 <div class="d-flex justify-content-center align-items-center gap-2">
+                                     <a href="javascript:void(0)"
+                                        onclick="editRow('${row.companyProfileId}')"
+                                        title="Edit">
+                                         <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                     </a>
+                                     <a href="javascript:void(0)"
+                                        onclick="confirmDelete(() => deleteRow('${row.companyProfileId}'))"
+                                        title="Delete">
+                                         <i class="fa-solid fa-trash text-danger"></i>
+                                     </a>
+                                 </div>
+                             `;
+                         }
                      }
-                 },
-                 { data: 'taxNumber', title: 'Tax Number', defaultContent: '-' },
-                 { data: 'isActive', title: 'Status', className: 'text-center',
-                     render: function (data) {
-                         return data
-                             ? '<span class="badge bg-success">Active</span>'
-                             : '<span class="badge bg-danger">Inactive</span>';
-                     }
-                 },
-                 {
-                     data: null,
-                     title: 'Action',
-                     orderable: false,
-                     searchable: false,
-                     className: 'text-center action-col',
-                     width: '100px',
-                     render: function (data, type, row) {
-                         return `
-                             <div class="d-flex justify-content-center align-items-center gap-2">
-             
-                                 <a href="javascript:void(0)"
-                                    onclick="editRow('${row.companyProfileId}')"
-                                    title="Edit">
-                                     <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                 </a>
-             
-                                 <a href="javascript:void(0)"
-                                    onclick="confirmDelete(() => deleteRow('${row.companyProfileId}'))"
-                                    title="Delete">
-                                     <i class="fa-solid fa-trash text-danger"></i>
-                                 </a>
-             
-                             </div>
-                         `;
-                     }
-                 }
-             ] ,
-
+                 ] ,
                 dom:
                     "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
                     "rt" +
@@ -328,31 +325,33 @@
                 buttons: [
                     {
                         extend: 'csvHtml5',
+                        className: 'btn-export-csv d-none',
                         title: '@Model.Title',
-                        className: 'd-none'
+                        exportOptions: {
+                            columns: ':not(.not-export)'
+                        }
                     },
                     {
                         extend: 'pdfHtml5',
+                        className: 'btn-export-pdf d-none',
                         title: '@Model.Title',
-                        className: 'd-none'
+                        exportOptions: {
+                            columns: ':not(.not-export)'
+                        }
                     }
                 ]
             });
-            // ================================
-            // Export Buttons
-            // ================================
+            
             $('#csv-export').on('click', function () {
-                alert('csv-export');
-                const table = $('#main-table').DataTable();
-                table.button('.buttons-csv').trigger();
+                $('.btn-export-csv').trigger('click');
             });
-            $('#pdf-export').on('click', function () {
-                alert('pdf-export');
-                const table = $('#main-table').DataTable();
-                table.button('.buttons-pdf').trigger();
+
+            $('#pdf-export').on('click', function () { 
+                $('.btn-export-pdf').trigger('click');
             });
+
             $('#add-new').on('click', function () {
-                showAddModal();
+                showModal();
             });
              $('#save-button').on('click', function () {
                 saveCompanyProfile();
@@ -364,7 +363,7 @@
             const formData = new FormData(form);
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("AddProfile", "Profile")',
+                url: '@Url.Action("Add", "Profile")',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -373,15 +372,12 @@
                 },
                 success: function (response) {
                     if (response.success) {
-                        notify.success(response.message || 'Company Profile saved successfully');
-                        if (response.companyProfileId) {
-                            $('#Item_CompanyProfileId').val(response.companyProfileId);
-                        }
-                        $('#companyProfileTable').DataTable().ajax.reload(null, false);
+                        notify.success(response.message);
+                        $('#main-table').DataTable().ajax.reload(null, false);
                         closeModal();
                     }
                     else {
-                        notify.warning(response.message || 'Failed to save Company Profile');
+                        notify.warning(response.message);
                     }
                 },
                 error: function (xhr) {
@@ -397,7 +393,7 @@
         function editRow(id) {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetCompanyProfile", "CompanyProfile")',
+                url: '@Url.Action("GetData", "Profile")',
                 data: { id: id },
                 success: function (data) {
                     if (!data) {
@@ -414,11 +410,7 @@
                     $('#Item_IsActive').val(data.isActive.toString());
                     $('#Item_LogoFileName').val(data.logoFileName);
                     $('#Item_LogoFilePath').val(data.logoFilePath);
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                    notify.info('Company Profile loaded');
+                    showModal(data.companyProfileId);
                 },
 
                 error: function (xhr) {
@@ -432,7 +424,7 @@
         function deleteRow(id) {
             $.ajax({
                 type: 'DELETE',
-                url: '@Url.Action("DeleteProfile", "Profile")',
+                url: '@Url.Action("Delete", "Profile")',
                 data: {
                     id: id
                 },

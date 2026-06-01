@@ -53,7 +53,7 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpGet] 
-        public async Task<IActionResult> GetProfile(int id)
+        public async Task<IActionResult> GetData(int id)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace App.UI.Web.Controllers
 
 
         [HttpDelete] 
-        public async Task<IActionResult> DeleteProfile(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id <= 0)
                 return BadRequest("Profile ID is required");
@@ -89,7 +89,7 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpPost] 
-        public async Task<IActionResult> AddProfile(PageModel<ProfileDto> model)
+        public async Task<IActionResult> Add(PageModel<ProfileDto> model)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace App.UI.Web.Controllers
                     var existingItem = await _profileService.GetByIdAsync(model.Item.CompanyProfileId);
                     if (existingItem != null) return Json(ActionResponse.Fail($"Profile {model.Item.CompanyProfileId} already exist!"));
                 }
-                var result = await _profileService.Save(model.Item);
+                var result = await _profileService.SaveAsync(model.Item);
                 return (result != null) ? Json(ActionResponse.Ok("Profile saved successfully")) : Json(ActionResponse.Fail("Profile saved failed"));
             }
             catch (Exception ex)

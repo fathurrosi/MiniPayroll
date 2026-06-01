@@ -11,10 +11,6 @@
       "destination": "wwwroot/lib/select2/"
     },
     {
-      "library": "datatables.net@2.3.4",
-      "destination": "wwwroot/lib/datatables.net/"
-    },
-    {
       "library": "bootstrap@5.3.8",
       "destination": "wwwroot/lib/bootstrap/"
     },
@@ -33,6 +29,26 @@
     {
       "library": "overlayscrollbars@2.12.0",
       "destination": "wwwroot/lib/overlayscrollbars/"
+    },
+    {
+      "library": "datatables-buttons@3.2.5",
+      "destination": "wwwroot/lib/datatables-buttons/"
+    },
+    {
+      "library": "datatables.net@2.3.4",
+      "destination": "wwwroot/lib/datatables.net/"
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/lib/datatables/"
+    },
+    {
+      "library": "jszip@3.10.1",
+      "destination": "wwwroot/lib/jszip/"
+    },
+    {
+      "library": "pdfmake@0.2.12",
+      "destination": "wwwroot/lib/pdfmake/"
     }
   ]
 }

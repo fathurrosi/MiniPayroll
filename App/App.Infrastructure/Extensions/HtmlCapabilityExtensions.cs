@@ -52,7 +52,7 @@
 //        /*
 //        @if (Html.Can("Create", "Edit"))
 //        {
-//            <button>Save</button>
+//            <button>SaveAsync</button>
 //        }
 //         */
 //        public static bool Can(this IHtmlHelper html, params string[] actions)

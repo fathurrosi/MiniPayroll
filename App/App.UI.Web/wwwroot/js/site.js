@@ -46,7 +46,18 @@ window.getEditMode = function () {
         $keyFields.hasClass('asp-key-readonly');
 };
 window.notify = {
-    success: function (message) {
+    //success: function (message) {
+    //    Swal.fire({
+    //        toast: true,
+    //        position: 'top-end',
+    //        icon: 'success',
+    //        title: message,
+    //        showConfirmButton: false,
+    //        timer: 3000,
+    //        timerProgressBar: true
+    //    });
+    //},
+    success: function (message, callback = null) {
         Swal.fire({
             toast: true,
             position: 'top-end',
@@ -55,6 +66,10 @@ window.notify = {
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true
+        }).then(() => {
+            if (typeof callback === 'function') {
+                callback();
+            }
         });
     },
     error: function (message) {
@@ -110,6 +125,39 @@ function confirmDelete(callback) {
     });
 }
 
+function showConfirm(confirmText = 'Are you sure?') {
+    return Swal.fire({
+        title: 'Confirmation',
+        text: confirmText,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-secondary'
+        }
+    }).then((result) => result.isConfirmed);
+}
+
+function showConfirm(callback, confirmText = 'Are you sure?') {
+    Swal.fire({
+        title: 'Confirmation',
+        text: confirmText,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-secondary'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            callback();
+        }
+    });
+}
 function confirmCallback(callback) {
     Swal.fire({
         title: 'Confirmation',

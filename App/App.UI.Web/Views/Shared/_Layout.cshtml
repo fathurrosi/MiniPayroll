@@ -68,8 +68,8 @@
          JAVASCRIPT
     ========================== -->
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+   @*  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap Bundle -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -81,6 +81,12 @@
 
     <!-- DataTables Bootstrap 5 -->
     <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/pdfmake/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+
 
     <!-- Select2 -->
     <script src="~/lib/select2/js/select2.min.js"></script>
@@ -92,27 +98,8 @@
     <script src="~/js/adminlte.js"></script>
 
     <!-- Site -->
-    <script src="~/js/site.js"></script> 
-    @* 
-   <style>
-        /* Force the AdminLTE 4 Main Header Navbar into custom Dark Mode */
-        .app-header.navbar {
-        background-color: #2F353E !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-        }
+    <script src="~/js/site.js"></script>
 
-        /* Ensure all links and text icons turn white */
-        .app-header.navbar .nav-link,
-        .app-header.navbar .nav-link i,
-        .app-header.navbar .user-menu span {
-        color: #ffffff !important;
-        }
-
-        /* Add a subtle hover effect for dark navbar items */
-        .app-header.navbar .nav-link:hover {
-        background-color: rgba(255, 255, 255, 0.05);
-        }
-   </style> *@
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -130,7 +117,7 @@
                             <i class="bi bi-list"></i>
                         </a>
                     </li>
-                </ul>                
+                </ul>
                 @await Component.InvokeAsync("Header")
             </div>
             <!--end::Container-->
@@ -141,7 +128,7 @@
         <!--end::Sidebar-->
         <!--begin::App Main-->
         <main class="app-main">
-       @*      <partial name="Layout/_Header" /> *@
+            @*      <partial name="Layout/_Header" /> *@
             @await Component.InvokeAsync("Breadcrumb")
             <!--begin::App Content-->
             <div class="app-content">
@@ -192,7 +179,7 @@
         </main>
         <!--end::App Main-->
         <!--begin::Footer-->
-       @*  <partial name="Layout/_Footer" /> *@
+        @*  <partial name="Layout/_Footer" /> *@
         @await Component.InvokeAsync("Footer")
         <!--end::Footer-->
     </div>

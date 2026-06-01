@@ -6,18 +6,10 @@ namespace App.Application.Interfaces.Services.Masters
 {
     public interface IProfileService
     {
-        Task<List<ProfileDto>> GetAllAsync();
-
-        Task<ProfileDto?> GetByIdAsync(int companyProfileId);
-
-        Task<int> CreateAsync(ProfileDto dto);
-
-        Task<bool> UpdateAsync(ProfileDto dto);
-
-        Task<int> DeleteAsync(int companyProfileId);
-
-        Task<PagedResponse<ProfileDto>> GetPagedAsync(DataTableRequest model);
-        //Task<List<ProfileDto>> GetCountriesAsync();
-        Task<ProfileDto> Save(ProfileDto model);  
+        Task<List<ProfileDto>> GetListAsync();
+        Task<ProfileDto?> GetByIdAsync(int id);  
+        Task<int> DeleteAsync(int id);
+        Task<PagedResponse<ProfileDto>> GetPagedAsync(DataTableRequest model); 
+        Task<ProfileDto> SaveAsync(ProfileDto model);  
     }
 }

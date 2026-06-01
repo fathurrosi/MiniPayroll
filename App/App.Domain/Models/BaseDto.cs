@@ -1,15 +1,17 @@
-﻿ 
+﻿
+using App.Domain.Models.Attributes;
+
 namespace App.Domain.Models
 {
     public abstract class BaseDto<TEntity>
     {
-        //[IgnoreMapping]
+        [IgnoreMapping]
         public DateTime? CreatedDate { get; set; }
-        //[IgnoreMapping]
+        [IgnoreMapping]
         public DateTime? UpdatedDate { get; set; }
-        //[IgnoreMapping]
+        [IgnoreMapping]
         public string? CreatedBy { get; set; }
-        //[IgnoreMapping]
+        [IgnoreMapping]
         public string? UpdatedBy { get; set; }
 
     }

@@ -1,4 +1,5 @@
 ﻿using App.Application.Interfaces.Repositories;
+using App.Application.Interfaces.Services;
 using App.Application.Interfaces.Services.Masters;
 using App.Domain.Entities;
 using App.Domain.Models.Dto;
@@ -6,7 +7,8 @@ using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Extensions;
 using MapsterMapper;
-using Microsoft.Extensions.Logging; 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Services.Masters
 {
@@ -15,76 +17,39 @@ namespace App.Infrastructure.Services.Masters
         private readonly IMapper _mapper;
         private readonly IGenericRepository<TblCompanyProfile> _profileRepo;
         private readonly ILogger<CompanyProfileService> _logger;
+        private readonly IContextService _context;
         public CompanyProfileService(
             ILogger<CompanyProfileService> logger,
            IGenericRepository<TblCompanyProfile> profileRepo,
+           IContextService context,
             IMapper mapper)
         {
             _logger = logger;
             _profileRepo = profileRepo;
             _mapper = mapper;
+            _context = context;
         }
 
-        public async Task<List<ProfileDto>> GetAllAsync()
+        public async Task<List<ProfileDto>> GetListAsync()
         {
             var entities = await _profileRepo.GetListAsync();
-
             return _mapper.Map<List<ProfileDto>>(entities);
         }
 
-        public async Task<ProfileDto?> GetByIdAsync(int companyProfileId)
+        public async Task<ProfileDto?> GetByIdAsync(int id)
         {
             var entity = await _profileRepo.GetFirstOrDefaultAsync(x =>
-                    x.CompanyProfileId == companyProfileId);
+                    x.CompanyProfileId == id);
 
             return entity == null
                 ? null
                 : _mapper.Map<ProfileDto>(entity);
         }
 
-        public async Task<int> CreateAsync(ProfileDto dto)
-        {
-            //var entity = _mapper.Map<CompanyProfile>(dto);
-
-            //entity.CreatedDate = DateTime.Now;
-
-            //_context.CompanyProfiles.Add(entity);
-
-            //await _context.SaveChangesAsync();
-
-            return 1;
-        }
-
-        public async Task<bool> UpdateAsync(ProfileDto dto)
-        {
-            //var entity = await _context.CompanyProfiles
-            //    .FirstOrDefaultAsync(x =>
-            //        x.CompanyProfileId == dto.CompanyProfileId);
-
-            //if (entity == null)
-            //    return false;
-
-            //entity.CompanyName = dto.CompanyName;
-            //entity.CompanyAddress = dto.CompanyAddress;
-            //entity.PhoneNumber = dto.PhoneNumber;
-            //entity.Email = dto.Email;
-            //entity.Website = dto.Website;
-            //entity.TaxNumber = dto.TaxNumber;
-            //entity.LogoFileName = dto.LogoFileName;
-            //entity.LogoFilePath = dto.LogoFilePath;
-            //entity.IsActive = dto.IsActive;
-            //entity.UpdatedDate = DateTime.Now;
-
-            //await _context.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<int> DeleteAsync(int companyProfileId)
+        public async Task<int> DeleteAsync(int id)
         {
             var entity = await _profileRepo.FindAsync(x =>
-                x.CompanyProfileId == companyProfileId);
-
+                x.CompanyProfileId == id);
             if (entity == null)
                 return 0;
 
@@ -106,23 +71,27 @@ namespace App.Infrastructure.Services.Masters
         }
 
 
-         
-        public async Task<ProfileDto> Save(ProfileDto model)
+
+        public async Task<ProfileDto> SaveAsync(ProfileDto model)
         {
             try
             {
-                var entityItem = await _profileRepo.FindAsync(t => t.CompanyProfileId.Equals(model.CompanyProfileId));
-                if (entityItem == null)
+                var existingItem = await _profileRepo.FindAsync(t => t.CompanyProfileId.Equals(model.CompanyProfileId));
+                if (existingItem == null)
                 {
-                    TblCompanyProfile item = _mapper.Map<TblCompanyProfile>(model);
-                    var addedEntity = await _profileRepo.AddAsync(item);
-                    return _mapper.Map<ProfileDto>(addedEntity);
+                    var item = _mapper.Map<TblCompanyProfile>(model);
+                    item.CreatedBy = _context.Username;
+                    item.CreatedDate = DateTime.Now;
+                    var addedItem = await _profileRepo.AddAsync(item);
+                    return _mapper.Map<ProfileDto>(addedItem);
                 }
                 else
                 {
-                    _mapper.Map(model, entityItem);
-                    var updatedEntity = await _profileRepo.UpdateAsync(entityItem);
-                    return _mapper.Map<ProfileDto>(updatedEntity);
+                    _mapper.Map(model, existingItem);
+                    existingItem.UpdatedBy = _context.Username;
+                    existingItem.UpdatedDate = DateTime.Now;
+                    var updatedItem = await _profileRepo.UpdateAsync(existingItem);
+                    return _mapper.Map<ProfileDto>(updatedItem);
                 }
             }
             catch (Exception ex)
@@ -130,6 +99,6 @@ namespace App.Infrastructure.Services.Masters
                 _logger.LogError(ex, "Error saving profile");
                 throw;
             }
-        } 
+        }
     }
 }
