@@ -24,7 +24,19 @@ public partial class TblRole
     [StringLength(500)]
     public string? Description { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool? IsDeleted { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedDate { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 }

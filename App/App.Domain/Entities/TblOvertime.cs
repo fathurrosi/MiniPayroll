@@ -9,39 +9,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_Attendance")]
-public partial class TblAttendance
+[Table("tbl_Overtime")]
+public partial class TblOvertime
 {
     [Key]
     public int Id { get; set; }
 
     public int EmployeeId { get; set; }
 
-    public DateOnly WorkDate { get; set; }
+    public DateOnly OvertimeDate { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime? CheckIn { get; set; }
+    public DateTime StartTime { get; set; }
 
     [Column(TypeName = "datetime")]
-    public DateTime? CheckOut { get; set; }
+    public DateTime EndTime { get; set; }
 
-    public int? ShiftId { get; set; }
-
-    public int LateMinutes { get; set; }
-
-    public int EarlyOutMinutes { get; set; }
-
-    public int OvertimeMinutes { get; set; }
-
-    public bool IsAbsent { get; set; }
-
-    public bool IsHoliday { get; set; }
-
-    public bool IsWeekend { get; set; }
+    [Column(TypeName = "decimal(10, 2)")]
+    public decimal TotalHours { get; set; }
 
     [StringLength(500)]
     [Unicode(false)]
-    public string? Remarks { get; set; }
+    public string? Reason { get; set; }
+
+    [StringLength(20)]
+    [Unicode(false)]
+    public string Status { get; set; } = null!;
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? ApprovedBy { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? ApprovedDate { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime CreatedDate { get; set; }

@@ -27,17 +27,20 @@ public partial class TblEmployee
     [Unicode(false)]
     public string? Gender { get; set; }
 
-    public DateOnly? BirthDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? BirthDate { get; set; }
 
-    public DateOnly? HireDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? HireDate { get; set; }
 
-    public DateOnly? ResignDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? ResignDate { get; set; }
 
-    [StringLength(100)]
+    [StringLength(50)]
     [Unicode(false)]
     public string? Department { get; set; }
 
-    [StringLength(100)]
+    [StringLength(50)]
     [Unicode(false)]
     public string? Position { get; set; }
 
@@ -83,4 +86,11 @@ public partial class TblEmployee
     [StringLength(50)]
     [Unicode(false)]
     public string? UpdatedBy { get; set; }
+
+    public int? DefaultShift { get; set; }
+
+    [Column("PTKPCode")]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? Ptkpcode { get; set; }
 }

@@ -9,17 +9,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-public partial class LeaveType
+[Table("tbl_Deduction")]
+public partial class TblDeduction
 {
     [Key]
-    public int LeaveTypeId { get; set; }
+    public int Id { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? DeductionCode { get; set; }
 
     [StringLength(100)]
     [Unicode(false)]
-    public string? LeaveName { get; set; }
+    public string? DeductionName { get; set; }
 
-    public int? MaxDays { get; set; }
+    public bool IsTaxable { get; set; }
 
-    [InverseProperty("LeaveType")]
-    public virtual ICollection<EmployeeLeaf> EmployeeLeaves { get; set; } = new List<EmployeeLeaf>();
+    public bool IsActive { get; set; }
 }

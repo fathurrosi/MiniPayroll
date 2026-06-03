@@ -9,12 +9,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-public partial class Department
+[Table("tbl_Holiday")]
+public partial class TblHoliday
 {
     [Key]
-    public int DepartmentId { get; set; }
+    public int Id { get; set; }
 
-    [StringLength(100)]
+    public DateOnly HolidayDate { get; set; }
+
+    [StringLength(200)]
     [Unicode(false)]
-    public string DepartmentName { get; set; } = null!;
+    public string HolidayName { get; set; } = null!;
+
+    public bool IsNationalHoliday { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedDate { get; set; }
 }

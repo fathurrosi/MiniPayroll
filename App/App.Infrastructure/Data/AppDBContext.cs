@@ -14,47 +14,61 @@ public partial class AppDBContext : DbContext
     {
     }
 
-    public virtual DbSet<Approval> Approvals { get; set; }
-
-    public virtual DbSet<Attendance> Attendances { get; set; }
-
     public virtual DbSet<AuditLog> AuditLogs { get; set; }
-
-    public virtual DbSet<Bpjsconfiguration> Bpjsconfigurations { get; set; }
-
-    public virtual DbSet<Department> Departments { get; set; }
-
-    public virtual DbSet<Employee> Employees { get; set; }
-
-    public virtual DbSet<EmployeeLeaf> EmployeeLeaves { get; set; }
-
-    public virtual DbSet<EmployeeThr> EmployeeThrs { get; set; }
-
-    public virtual DbSet<LeaveType> LeaveTypes { get; set; }
-
-    public virtual DbSet<Overtime> Overtimes { get; set; }
-
-    public virtual DbSet<Payroll> Payrolls { get; set; }
-
-    public virtual DbSet<PayrollDetail> PayrollDetails { get; set; }
 
     public virtual DbSet<PayrollPeriod> PayrollPeriods { get; set; }
 
-    public virtual DbSet<Position> Positions { get; set; }
-
     public virtual DbSet<TaxBracket> TaxBrackets { get; set; }
+
+    public virtual DbSet<TblAllowance> TblAllowances { get; set; }
 
     public virtual DbSet<TblAttendance> TblAttendances { get; set; }
 
+    public virtual DbSet<TblAttendance1> TblAttendances1 { get; set; }
+
     public virtual DbSet<TblAuditLog> TblAuditLogs { get; set; }
+
+    public virtual DbSet<TblBiayaJabatanConfig> TblBiayaJabatanConfigs { get; set; }
+
+    public virtual DbSet<TblBpjskesehatanConfig> TblBpjskesehatanConfigs { get; set; }
+
+    public virtual DbSet<TblBpjsketenagakerjaanConfig> TblBpjsketenagakerjaanConfigs { get; set; }
 
     public virtual DbSet<TblCompanyProfile> TblCompanyProfiles { get; set; }
 
+    public virtual DbSet<TblDeduction> TblDeductions { get; set; }
+
+    public virtual DbSet<TblDepartment> TblDepartments { get; set; }
+
     public virtual DbSet<TblEmployee> TblEmployees { get; set; }
+
+    public virtual DbSet<TblEmployeeAllowance> TblEmployeeAllowances { get; set; }
+
+    public virtual DbSet<TblEmployeeDeduction> TblEmployeeDeductions { get; set; }
+
+    public virtual DbSet<TblEmployeePayroll> TblEmployeePayrolls { get; set; }
+
+    public virtual DbSet<TblEmployeePayrollInfo> TblEmployeePayrollInfos { get; set; }
+
+    public virtual DbSet<TblEmployeeShift> TblEmployeeShifts { get; set; }
+
+    public virtual DbSet<TblEmployeeShiftSchedule> TblEmployeeShiftSchedules { get; set; }
+
+    public virtual DbSet<TblHoliday> TblHolidays { get; set; }
 
     public virtual DbSet<TblLeaveRequest> TblLeaveRequests { get; set; }
 
+    public virtual DbSet<TblLeaveRequest1> TblLeaveRequests1 { get; set; }
+
+    public virtual DbSet<TblLeaveType> TblLeaveTypes { get; set; }
+
     public virtual DbSet<TblMenu> TblMenus { get; set; }
+
+    public virtual DbSet<TblOvertime> TblOvertimes { get; set; }
+
+    public virtual DbSet<TblOvertimeCalculation> TblOvertimeCalculations { get; set; }
+
+    public virtual DbSet<TblOvertimeRate> TblOvertimeRates { get; set; }
 
     public virtual DbSet<TblPayroll> TblPayrolls { get; set; }
 
@@ -62,11 +76,33 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblPayrollPeriod> TblPayrollPeriods { get; set; }
 
+    public virtual DbSet<TblPayrollPolicy> TblPayrollPolicies { get; set; }
+
+    public virtual DbSet<TblPayrollResult> TblPayrollResults { get; set; }
+
+    public virtual DbSet<TblPayrollResultDetail> TblPayrollResultDetails { get; set; }
+
+    public virtual DbSet<TblPayrollRun> TblPayrollRuns { get; set; }
+
+    public virtual DbSet<TblPayslip> TblPayslips { get; set; }
+
     public virtual DbSet<TblPermission> TblPermissions { get; set; }
+
+    public virtual DbSet<TblPosition> TblPositions { get; set; }
+
+    public virtual DbSet<TblPph21Bracket> TblPph21Brackets { get; set; }
+
+    public virtual DbSet<TblPtkp> TblPtkps { get; set; }
 
     public virtual DbSet<TblRole> TblRoles { get; set; }
 
     public virtual DbSet<TblRolePermission> TblRolePermissions { get; set; }
+
+    public virtual DbSet<TblShift> TblShifts { get; set; }
+
+    public virtual DbSet<TblShiftPattern> TblShiftPatterns { get; set; }
+
+    public virtual DbSet<TblShiftPatternDetail> TblShiftPatternDetails { get; set; }
 
     public virtual DbSet<TblUser> TblUsers { get; set; }
 
@@ -74,37 +110,6 @@ public partial class AppDBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Approval>(entity =>
-        {
-            entity.HasKey(e => e.ApprovalId).HasName("PK__Approval__328477F476A675FE");
-
-            entity.Property(e => e.ApprovalStatus)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.ReferenceType)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Remarks)
-                .HasMaxLength(500)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<Attendance>(entity =>
-        {
-            entity.HasKey(e => e.AttendanceId).HasName("PK__Attendan__8B69261C89767F79");
-
-            entity.Property(e => e.LateMinutes).HasDefaultValue(0);
-            entity.Property(e => e.Status)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.WorkHours).HasColumnType("decimal(5, 2)");
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.Attendances)
-                .HasForeignKey(d => d.EmployeeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Attendanc__Emplo__5441852A");
-        });
-
         modelBuilder.Entity<AuditLog>(entity =>
         {
             entity.HasKey(e => e.AuditLogId).HasName("PK__AuditLog__EB5F6CBDAE9771B9");
@@ -118,194 +123,12 @@ public partial class AppDBContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Bpjsconfiguration>(entity =>
-        {
-            entity.HasKey(e => e.BpjsconfigId).HasName("PK__BPJSConf__D4D800C9D76F8435");
-
-            entity.ToTable("BPJSConfigurations");
-
-            entity.Property(e => e.BpjsconfigId).HasColumnName("BPJSConfigId");
-            entity.Property(e => e.CompanyPercentage).HasColumnType("decimal(5, 2)");
-            entity.Property(e => e.ConfigName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.EmployeePercentage).HasColumnType("decimal(5, 2)");
-        });
-
-        modelBuilder.Entity<Department>(entity =>
-        {
-            entity.HasKey(e => e.DepartmentId).HasName("PK__Departme__B2079BED1D3A0B65");
-
-            entity.Property(e => e.DepartmentName)
-                .IsRequired()
-                .HasMaxLength(100)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<Employee>(entity =>
-        {
-            entity.HasKey(e => e.EmployeeId).HasName("PK__Employee__7AD04F1144288E43");
-
-            entity.HasIndex(e => e.EmployeeCode, "UQ__Employee__1F642548EC8F4513").IsUnique();
-
-            entity.Property(e => e.BankAccountNumber)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.BankName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Email)
-                .HasMaxLength(150)
-                .IsUnicode(false);
-            entity.Property(e => e.EmployeeCode)
-                .IsRequired()
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.FullName)
-                .IsRequired()
-                .HasMaxLength(150)
-                .IsUnicode(false);
-            entity.Property(e => e.Gender)
-                .HasMaxLength(1)
-                .IsUnicode(false)
-                .IsFixedLength();
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.Npwp)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("NPWP");
-            entity.Property(e => e.PhoneNumber)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<EmployeeLeaf>(entity =>
-        {
-            entity.HasKey(e => e.LeaveId).HasName("PK__Employee__796DB959B7D42184");
-
-            entity.Property(e => e.Status)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeLeaves)
-                .HasForeignKey(d => d.EmployeeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__EmployeeL__Emplo__59063A47");
-
-            entity.HasOne(d => d.LeaveType).WithMany(p => p.EmployeeLeaves)
-                .HasForeignKey(d => d.LeaveTypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__EmployeeL__Leave__59FA5E80");
-        });
-
-        modelBuilder.Entity<EmployeeThr>(entity =>
-        {
-            entity.HasKey(e => e.Thrid).HasName("PK__Employee__5C59F774AC6BC253");
-
-            entity.ToTable("EmployeeTHR");
-
-            entity.Property(e => e.Thrid).HasColumnName("THRId");
-            entity.Property(e => e.Thramount)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("THRAmount");
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.EmployeeThrs)
-                .HasForeignKey(d => d.EmployeeId)
-                .HasConstraintName("FK__EmployeeT__Emplo__6EF57B66");
-        });
-
-        modelBuilder.Entity<LeaveType>(entity =>
-        {
-            entity.HasKey(e => e.LeaveTypeId).HasName("PK__LeaveTyp__43BE8F14F728B318");
-
-            entity.Property(e => e.LeaveName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<Overtime>(entity =>
-        {
-            entity.HasKey(e => e.OvertimeId).HasName("PK__Overtime__F61430B839FEDE42");
-
-            entity.Property(e => e.Status)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.TotalHours).HasColumnType("decimal(5, 2)");
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.Overtimes)
-                .HasForeignKey(d => d.EmployeeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Overtimes__Emplo__5CD6CB2B");
-        });
-
-        modelBuilder.Entity<Payroll>(entity =>
-        {
-            entity.HasKey(e => e.PayrollId).HasName("PK__Payrolls__99DFC6723B242460");
-
-            entity.Property(e => e.AllowanceAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.Bpjsamount)
-                .HasColumnType("decimal(18, 2)")
-                .HasColumnName("BPJSAmount");
-            entity.Property(e => e.DeductionAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.GeneratedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.GrossSalary).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.NetSalary).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.OvertimeAmount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.PayrollStatus)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.TaxAmount).HasColumnType("decimal(18, 2)");
-
-            entity.HasOne(d => d.Employee).WithMany(p => p.Payrolls)
-                .HasForeignKey(d => d.EmployeeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Payrolls__Employ__656C112C");
-
-            entity.HasOne(d => d.PayrollPeriod).WithMany(p => p.Payrolls)
-                .HasForeignKey(d => d.PayrollPeriodId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Payrolls__Payrol__6477ECF3");
-        });
-
-        modelBuilder.Entity<PayrollDetail>(entity =>
-        {
-            entity.HasKey(e => e.PayrollDetailId).HasName("PK__PayrollD__010127C9C518D4D0");
-
-            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.ComponentName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.ComponentType)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-
-            entity.HasOne(d => d.Payroll).WithMany(p => p.PayrollDetails)
-                .HasForeignKey(d => d.PayrollId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__PayrollDe__Payro__68487DD7");
-        });
-
         modelBuilder.Entity<PayrollPeriod>(entity =>
         {
             entity.HasKey(e => e.PayrollPeriodId).HasName("PK__PayrollP__06190D36A30FFDD5");
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsClosed).HasDefaultValue(false);
-        });
-
-        modelBuilder.Entity<Position>(entity =>
-        {
-            entity.HasKey(e => e.PositionId).HasName("PK__Position__60BB9A799D578AAB");
-
-            entity.Property(e => e.GradeLevel)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.PositionName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
         });
 
         modelBuilder.Entity<TaxBracket>(entity =>
@@ -317,7 +140,51 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.TaxRate).HasColumnType("decimal(5, 2)");
         });
 
+        modelBuilder.Entity<TblAllowance>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Allo__3214EC071A21B3F6");
+
+            entity.ToTable("tbl_Allowance");
+
+            entity.Property(e => e.AllowanceCode)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.AllowanceName)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsTaxable).HasDefaultValue(true);
+        });
+
         modelBuilder.Entity<TblAttendance>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Atte__3214EC07A59516EA");
+
+            entity.ToTable("tbl_Attendance");
+
+            entity.Property(e => e.CheckIn).HasColumnType("datetime");
+            entity.Property(e => e.CheckOut).HasColumnType("datetime");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Remarks)
+                .HasMaxLength(500)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblAttendance1>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__tbl_Atte__3214EC07A280FC32");
 
@@ -342,6 +209,58 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IpAddress).HasMaxLength(100);
             entity.Property(e => e.ModuleName).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<TblBiayaJabatanConfig>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Biay__3214EC07A217BE00");
+
+            entity.ToTable("tbl_BiayaJabatanConfig");
+
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.MaxMonthly).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.MaxYearly).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Rate).HasColumnType("decimal(5, 4)");
+        });
+
+        modelBuilder.Entity<TblBpjskesehatanConfig>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_BPJS__3214EC077D3A585E");
+
+            entity.ToTable("tbl_BPJSKesehatanConfig");
+
+            entity.Property(e => e.CompanyRate).HasColumnType("decimal(5, 4)");
+            entity.Property(e => e.EmployeeRate).HasColumnType("decimal(5, 4)");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.SalaryCap).HasColumnType("decimal(18, 2)");
+        });
+
+        modelBuilder.Entity<TblBpjsketenagakerjaanConfig>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_BPJS__3214EC073D6C9D05");
+
+            entity.ToTable("tbl_BPJSKetenagakerjaanConfig");
+
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.JhtCompanyRate)
+                .HasColumnType("decimal(5, 4)")
+                .HasColumnName("JHT_CompanyRate");
+            entity.Property(e => e.JhtEmployeeRate)
+                .HasColumnType("decimal(5, 4)")
+                .HasColumnName("JHT_EmployeeRate");
+            entity.Property(e => e.JkkCompanyRate)
+                .HasColumnType("decimal(5, 4)")
+                .HasColumnName("JKK_CompanyRate");
+            entity.Property(e => e.JkmCompanyRate)
+                .HasColumnType("decimal(5, 4)")
+                .HasColumnName("JKM_CompanyRate");
+            entity.Property(e => e.JpCompanyRate)
+                .HasColumnType("decimal(5, 4)")
+                .HasColumnName("JP_CompanyRate");
+            entity.Property(e => e.JpEmployeeRate)
+                .HasColumnType("decimal(5, 4)")
+                .HasColumnName("JP_EmployeeRate");
+            entity.Property(e => e.SalaryCap).HasColumnType("decimal(18, 2)");
         });
 
         modelBuilder.Entity<TblCompanyProfile>(entity =>
@@ -371,6 +290,44 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.Website).HasMaxLength(150);
         });
 
+        modelBuilder.Entity<TblDeduction>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Dedu__3214EC0719F7064B");
+
+            entity.ToTable("tbl_Deduction");
+
+            entity.Property(e => e.DeductionCode)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.DeductionName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+        });
+
+        modelBuilder.Entity<TblDepartment>(entity =>
+        {
+            entity.HasKey(e => e.DepartmentCode).HasName("PK__Departme__B2079BED1D3A0B65");
+
+            entity.ToTable("tbl_Departments");
+
+            entity.Property(e => e.DepartmentCode)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.DepartmentName)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<TblEmployee>(entity =>
         {
             entity.HasKey(e => e.EmployeeId).HasName("PK__tbl_Empl__7AD04F11AD6E2F2B");
@@ -385,12 +342,13 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.BirthDate).HasColumnType("datetime");
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Department)
-                .HasMaxLength(100)
+                .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
@@ -406,6 +364,7 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.Gender)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.HireDate).HasColumnType("datetime");
             entity.Property(e => e.Npwp)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -414,15 +373,161 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Position)
-                .HasMaxLength(100)
+                .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Ptkpcode)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("PTKPCode");
+            entity.Property(e => e.ResignDate).HasColumnType("datetime");
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<TblEmployeeAllowance>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC07233A1C65");
+
+            entity.ToTable("tbl_EmployeeAllowance");
+
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+        });
+
+        modelBuilder.Entity<TblEmployeeDeduction>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC07694504BA");
+
+            entity.ToTable("tbl_EmployeeDeduction");
+
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+        });
+
+        modelBuilder.Entity<TblEmployeePayroll>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0739A25DF7");
+
+            entity.ToTable("tbl_EmployeePayroll");
+
+            entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsBpjskesehatan)
+                .HasDefaultValue(true)
+                .HasColumnName("IsBPJSKesehatan");
+            entity.Property(e => e.IsBpjsketenagakerjaan)
+                .HasDefaultValue(true)
+                .HasColumnName("IsBPJSKetenagakerjaan");
+            entity.Property(e => e.Npwp)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("NPWP");
+            entity.Property(e => e.Ptkpcode)
+                .IsRequired()
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasDefaultValue("TK0")
+                .HasColumnName("PTKPCode");
+        });
+
+        modelBuilder.Entity<TblEmployeePayrollInfo>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0796BD63D8");
+
+            entity.ToTable("tbl_EmployeePayrollInfo");
+
+            entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.IsBpjskesehatan).HasColumnName("IsBPJSKesehatan");
+            entity.Property(e => e.IsBpjsketenagakerjaan).HasColumnName("IsBPJSKetenagakerjaan");
+            entity.Property(e => e.Npwp)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("NPWP");
+            entity.Property(e => e.Ptkpcode)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("PTKPCode");
+        });
+
+        modelBuilder.Entity<TblEmployeeShift>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC077F3E5CD0");
+
+            entity.ToTable("tbl_EmployeeShift");
+
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblEmployeeShiftSchedule>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0743913644");
+
+            entity.ToTable("tbl_EmployeeShiftSchedule");
+
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+            entity.Property(e => e.WorkDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblHoliday>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Holi__3214EC078D0D7029");
+
+            entity.ToTable("tbl_Holiday");
+
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.HolidayName)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.IsNationalHoliday).HasDefaultValue(true);
+        });
+
         modelBuilder.Entity<TblLeaveRequest>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC073948417D");
+
+            entity.ToTable("tbl_LeaveRequest");
+
+            entity.Property(e => e.ApprovedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ApprovedDate).HasColumnType("datetime");
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Reason)
+                .HasMaxLength(500)
+                .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValue("DRAFT");
+        });
+
+        modelBuilder.Entity<TblLeaveRequest1>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC0753668F16");
 
@@ -436,6 +541,22 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.LeaveType)
                 .IsRequired()
                 .HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<TblLeaveType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC077F5B36D9");
+
+            entity.ToTable("tbl_LeaveType");
+
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsPaid).HasDefaultValue(true);
+            entity.Property(e => e.LeaveCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.LeaveName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<TblMenu>(entity =>
@@ -466,6 +587,63 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblOvertime>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC07327E2243");
+
+            entity.ToTable("tbl_Overtime");
+
+            entity.Property(e => e.ApprovedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ApprovedDate).HasColumnType("datetime");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.EndTime).HasColumnType("datetime");
+            entity.Property(e => e.Reason)
+                .HasMaxLength(500)
+                .IsUnicode(false);
+            entity.Property(e => e.StartTime).HasColumnType("datetime");
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValue("DRAFT");
+            entity.Property(e => e.TotalHours).HasColumnType("decimal(10, 2)");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblOvertimeCalculation>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC07C895A1F2");
+
+            entity.ToTable("tbl_OvertimeCalculation");
+
+            entity.Property(e => e.CalculatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Hour1Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Hour2Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 2)");
+        });
+
+        modelBuilder.Entity<TblOvertimeRate>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC07228AC5FC");
+
+            entity.ToTable("tbl_OvertimeRate");
+
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Multiplier).HasColumnType("decimal(10, 2)");
         });
 
         modelBuilder.Entity<TblPayroll>(entity =>
@@ -517,6 +695,99 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(20);
         });
 
+        modelBuilder.Entity<TblPayrollPolicy>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC0783AFC037");
+
+            entity.ToTable("tbl_PayrollPolicy");
+
+            entity.Property(e => e.EarlyOutPenaltyPerMinute).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.LatePenaltyPerMinute).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.PolicyName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TblPayrollResult>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC07ECCB6119");
+
+            entity.ToTable("tbl_PayrollResult");
+
+            entity.Property(e => e.Allowance).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.BiayaJabatan).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Bpjskesehatan)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("BPJSKesehatan");
+            entity.Property(e => e.Bpjsketenagakerjaan)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("BPJSKetenagakerjaan");
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.GrossSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.NetSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Overtime).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Pph21)
+                .HasColumnType("decimal(18, 2)")
+                .HasColumnName("PPh21");
+            entity.Property(e => e.TotalDeduction).HasColumnType("decimal(18, 2)");
+        });
+
+        modelBuilder.Entity<TblPayrollResultDetail>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC0736ADDCE2");
+
+            entity.ToTable("tbl_PayrollResultDetail");
+
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ItemCode)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ItemDescription)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ItemType)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TblPayrollRun>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC07BAD228BC");
+
+            entity.ToTable("tbl_PayrollRun");
+
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TblPayslip>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Pays__3214EC07C0CD4D78");
+
+            entity.ToTable("tbl_Payslip");
+
+            entity.Property(e => e.FileName)
+                .HasMaxLength(500)
+                .IsUnicode(false);
+            entity.Property(e => e.GeneratedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.GeneratedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<TblPermission>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__tbl_Perm__3214EC07EF48C5E8");
@@ -534,21 +805,83 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(255);
         });
 
+        modelBuilder.Entity<TblPosition>(entity =>
+        {
+            entity.HasKey(e => e.PositionCode).HasName("PK__Position__60BB9A799D578AAB");
+
+            entity.ToTable("tbl_Positions");
+
+            entity.Property(e => e.PositionCode)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.GradeLevel)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.PositionName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblPph21Bracket>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_PPh2__3214EC07A501B6AF");
+
+            entity.ToTable("tbl_PPh21Bracket");
+
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.MaxAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.MinAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TaxRate).HasColumnType("decimal(5, 4)");
+        });
+
+        modelBuilder.Entity<TblPtkp>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_PTKP__3214EC0731D8BA17");
+
+            entity.ToTable("tbl_PTKP");
+
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.Ptkpcode)
+                .IsRequired()
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("PTKPCode");
+            entity.Property(e => e.Ptkpname)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("PTKPName");
+        });
+
         modelBuilder.Entity<TblRole>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__tbl_Role__3214EC075E5D7AB3");
 
             entity.ToTable("tbl_Roles");
 
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(500);
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.RoleCode)
                 .IsRequired()
                 .HasMaxLength(100);
             entity.Property(e => e.RoleName)
                 .IsRequired()
                 .HasMaxLength(255);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblRolePermission>(entity =>
@@ -558,6 +891,69 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_RolePermissions");
 
             entity.Property(e => e.AssignedDate).HasDefaultValueSql("(getdate())");
+        });
+
+        modelBuilder.Entity<TblShift>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC07B7E95F55");
+
+            entity.ToTable("tbl_Shift");
+
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsOvernight).HasDefaultValue(false);
+            entity.Property(e => e.ShiftCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.ShiftName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+            entity.Property(e => e.WorkingHours).HasColumnType("decimal(5, 2)");
+        });
+
+        modelBuilder.Entity<TblShiftPattern>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC0754CDCD0A");
+
+            entity.ToTable("tbl_ShiftPattern");
+
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.PatternCode)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.PatternName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblShiftPatternDetail>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC07695CC16B");
+
+            entity.ToTable("tbl_ShiftPatternDetail");
+
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblUser>(entity =>
@@ -587,6 +983,14 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_UserRoles");
 
             entity.Property(e => e.AssignedDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         OnModelCreatingPartial(modelBuilder);

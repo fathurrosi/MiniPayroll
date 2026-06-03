@@ -9,15 +9,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_LeaveRequest")]
-public partial class TblLeaveRequest
+[Table("tbl_LeaveRequests")]
+public partial class TblLeaveRequest1
 {
     [Key]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
-    public int EmployeeId { get; set; }
+    public long EmployeeId { get; set; }
 
-    public int LeaveTypeId { get; set; }
+    [StringLength(100)]
+    public string LeaveType { get; set; } = null!;
 
     public DateOnly StartDate { get; set; }
 
@@ -25,21 +26,14 @@ public partial class TblLeaveRequest
 
     public int TotalDays { get; set; }
 
-    [StringLength(500)]
-    [Unicode(false)]
     public string? Reason { get; set; }
 
-    [StringLength(20)]
-    [Unicode(false)]
-    public string Status { get; set; } = null!;
-
     [StringLength(50)]
-    [Unicode(false)]
-    public string? ApprovedBy { get; set; }
+    public string ApprovalStatus { get; set; } = null!;
 
-    [Column(TypeName = "datetime")]
+    public long? ApprovedBy { get; set; }
+
     public DateTime? ApprovedDate { get; set; }
 
-    [Column(TypeName = "datetime")]
-    public DateTime? CreatedDate { get; set; }
+    public DateTime CreatedDate { get; set; }
 }

@@ -9,10 +9,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-public partial class Position
+[Table("tbl_Positions")]
+public partial class TblPosition
 {
     [Key]
-    public int PositionId { get; set; }
+    [StringLength(50)]
+    [Unicode(false)]
+    public string PositionCode { get; set; } = null!;
 
     [StringLength(100)]
     [Unicode(false)]
@@ -21,4 +24,18 @@ public partial class Position
     [StringLength(20)]
     [Unicode(false)]
     public string? GradeLevel { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedDate { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 }

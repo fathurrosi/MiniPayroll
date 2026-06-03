@@ -4,33 +4,70 @@ using App.Domain.Models;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
-using Microsoft.AspNetCore.Http;
+using App.UI.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.UI.Web.Controllers
 {
-    public class ProfileController : BaseController
+    public class ShiftController : BaseController
     {
-        private readonly IProfileService _profileService;
-        public ProfileController(IProfileService profileService)
+
+        private readonly IDepartmentService _departmentService;
+        private readonly IShiftPatternService _ShiftPatternService;
+        private readonly IShiftService _ShiftService;
+        public ShiftController(IShiftService ShiftService
+            , IDepartmentService departmentService
+            , IShiftPatternService ShiftPatternService)
         {
-            _profileService = profileService;
+            _ShiftService = ShiftService;
+            _ShiftPatternService = ShiftPatternService;
+            _departmentService = departmentService;
         }
 
-        #region Profile
-        public IActionResult Index()
+        #region Shift
+
+        [HttpPost]
+        public async Task<IActionResult> GenerateSchedule(GenerateScheduleRequest request)
         {
-            var model = new PageModel<ProfileDto>() { Title = "Profile" };
-            model.Item = new ProfileDto();
+            try
+            {
+
+                await _ShiftService.GenerateAsync(request);
+                return Json(ActionResponse.Ok("Schedule generated successfully"));
+            }
+            catch (Exception ex)
+            {
+                return Json(ActionResponse.Fail(ex.Message));
+            }
+
+        }
+
+        public async Task<IActionResult> Index(int? year, int? month)
+        {
+            var model = new ShiftScheduleModel
+            {
+                Year = year ?? DateTime.Now.Year,
+                Month = month ?? DateTime.Now.Month,
+                ShiftPatterns = await _ShiftPatternService.GetListAsync(),
+                Departments = await _departmentService.GetListAsync()
+            };
+
             return View(model);
         }
 
+        //public IActionResult Index()
+        //{
+        //    var model = new PageModel<ShiftDto>() { Title = "Shift" };
+        //    model.Item = new ShiftDto();
+        //    return View(model);
+        //}
+
         public async Task<IActionResult> Info(int id)
         {
-            var model = new PageModel<ProfileDto>() { Title = "Profile" };
-            var item = await _profileService.GetByIdAsync(id);
+            var model = new PageModel<ShiftDto>() { Title = "Shift" };
+            var item = await _ShiftService.GetByIdAsync(id);
             if (item == null)
-                item = new ProfileDto();
+                item = new ShiftDto();
             model.Item = item;
             return View(model);
         }
@@ -40,7 +77,7 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-                var result = await _profileService.GetPagedAsync(model);
+                var result = await _ShiftService.GetPagedAsync(model);
 
                 return Json(new
                 {
@@ -67,7 +104,7 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-                var model = await _profileService.GetByIdAsync(id);
+                var model = await _ShiftService.GetByIdAsync(id);
                 return Json(model);
             }
             catch (Exception ex)
@@ -86,7 +123,7 @@ namespace App.UI.Web.Controllers
 
             try
             {
-                var result = await _profileService.DeleteAsync(id);
+                var result = await _ShiftService.DeleteAsync(id);
                 if (result > 0)
                     return Ok(ActionResponse.Ok($"model {id} deleted successfully"));
 
@@ -99,16 +136,16 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PageModel<ProfileDto> model)
+        public async Task<IActionResult> Add(PageModel<ShiftDto> model)
         {
             try
             {
                 if (model.Mode == FormMode.Create)
                 {
-                    var existingItem = await _profileService.GetByIdAsync(model.Item.CompanyProfileId);
-                    if (existingItem != null) return Json(ActionResponse.Fail($"model {model.Item.CompanyProfileId} already exist!"));
+                    var existingItem = await _ShiftService.GetByIdAsync(model.Item.Id);
+                    if (existingItem != null) return Json(ActionResponse.Fail($"model {model.Item.Id} already exist!"));
                 }
-                var result = await _profileService.SaveAsync(model.Item);
+                var result = await _ShiftService.SaveAsync(model.Item);
                 return (result != null) ? Json(ActionResponse.Ok("model saved successfully")) : Json(ActionResponse.Fail("model saved failed"));
             }
             catch (Exception ex)

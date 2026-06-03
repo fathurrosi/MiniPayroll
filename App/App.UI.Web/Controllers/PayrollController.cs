@@ -16,5 +16,12 @@ namespace App.UI.Web.Controllers
             var model = new PageModel<EmployeeDto>();
             return View(model);
         }
+
+        public IActionResult Proccess()
+        {
+            var model = new PageModel<EmployeeDto>();
+            return View(model);
+        }
+
     }
 }

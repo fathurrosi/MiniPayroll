@@ -9,17 +9,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_UserRoles")]
-public partial class TblUserRole
+[Table("tbl_ShiftPattern")]
+public partial class TblShiftPattern
 {
     [Key]
-    public long Id { get; set; }
+    public int Id { get; set; }
 
-    public long UserId { get; set; }
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? PatternCode { get; set; }
 
-    public long RoleId { get; set; }
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? PatternName { get; set; }
 
-    public DateTime AssignedDate { get; set; }
+    public int? CycleLength { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }

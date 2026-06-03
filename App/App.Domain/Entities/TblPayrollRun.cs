@@ -9,29 +9,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_UserRoles")]
-public partial class TblUserRole
+[Table("tbl_PayrollRun")]
+public partial class TblPayrollRun
 {
     [Key]
-    public long Id { get; set; }
+    public int Id { get; set; }
 
-    public long UserId { get; set; }
+    public int? PeriodYear { get; set; }
 
-    public long RoleId { get; set; }
+    public int? PeriodMonth { get; set; }
 
-    public DateTime AssignedDate { get; set; }
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? Status { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }
 
-    [Column(TypeName = "datetime")]
-    public DateTime? UpdatedDate { get; set; }
-
     [StringLength(50)]
     [Unicode(false)]
     public string? CreatedBy { get; set; }
-
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? UpdatedBy { get; set; }
 }

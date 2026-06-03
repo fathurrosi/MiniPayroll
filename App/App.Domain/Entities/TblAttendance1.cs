@@ -9,26 +9,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-public partial class Approval
+[Table("tbl_Attendances")]
+public partial class TblAttendance1
 {
     [Key]
-    public long ApprovalId { get; set; }
+    public long Id { get; set; }
+
+    public long EmployeeId { get; set; }
+
+    public DateOnly AttendanceDate { get; set; }
+
+    public TimeOnly? CheckInTime { get; set; }
+
+    public TimeOnly? CheckOutTime { get; set; }
 
     [StringLength(50)]
-    [Unicode(false)]
-    public string? ReferenceType { get; set; }
-
-    public long? ReferenceId { get; set; }
-
-    public int? ApproverId { get; set; }
-
-    [StringLength(20)]
-    [Unicode(false)]
-    public string? ApprovalStatus { get; set; }
+    public string AttendanceStatus { get; set; } = null!;
 
     [StringLength(500)]
-    [Unicode(false)]
     public string? Remarks { get; set; }
 
-    public DateTime? ApprovedAt { get; set; }
+    public DateTime CreatedDate { get; set; }
 }

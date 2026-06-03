@@ -9,17 +9,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_UserRoles")]
-public partial class TblUserRole
+[Table("tbl_Shift")]
+public partial class TblShift
 {
     [Key]
-    public long Id { get; set; }
+    public int Id { get; set; }
 
-    public long UserId { get; set; }
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? ShiftCode { get; set; }
 
-    public long RoleId { get; set; }
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? ShiftName { get; set; }
 
-    public DateTime AssignedDate { get; set; }
+    public TimeOnly? StartTime { get; set; }
+
+    public TimeOnly? EndTime { get; set; }
+
+    public TimeOnly? BreakStart { get; set; }
+
+    public TimeOnly? BreakEnd { get; set; }
+
+    [Column(TypeName = "decimal(5, 2)")]
+    public decimal? WorkingHours { get; set; }
+
+    public bool? IsOvernight { get; set; }
+
+    public bool? IsActive { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }

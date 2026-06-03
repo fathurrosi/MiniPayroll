@@ -9,17 +9,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_UserRoles")]
-public partial class TblUserRole
+[Table("tbl_Departments")]
+public partial class TblDepartment
 {
     [Key]
-    public long Id { get; set; }
+    [StringLength(50)]
+    [Unicode(false)]
+    public string DepartmentCode { get; set; } = null!;
 
-    public long UserId { get; set; }
-
-    public long RoleId { get; set; }
-
-    public DateTime AssignedDate { get; set; }
+    [StringLength(100)]
+    [Unicode(false)]
+    public string DepartmentName { get; set; } = null!;
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }

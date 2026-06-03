@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using App.Domain.Models.Dto;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.UI.Web.Models
 {
@@ -15,5 +16,33 @@ namespace App.UI.Web.Models
 
         [Display(Name = "Remember Me")]
         public bool RememberMe { get; set; }
+    }
+
+
+    public class ShiftScheduleModel
+    {
+        public int Year { get; set; }
+        public int Month { get; set; }
+
+        public string DepartmentCode { get; set; }
+        public int? EmployeeId { get; set; }
+
+        public int PatternId { get; set; }
+        public bool OverwriteExisting { get; set; }
+        public List<EmployeeScheduleRow> Employees { get; set; } = new();
+        public List<ShiftDto> Shifts { get; set; } = new();
+        public List<ShiftPatternDto> ShiftPatterns { get; set; } = new();
+
+        public List<DepartmentDto> Departments { get; set; } = new();
+    }
+
+    public class EmployeeScheduleRow
+    {
+        public int EmployeeId { get; set; }
+
+        public string EmployeeNo { get; set; } = "";
+        public string EmployeeName { get; set; } = "";
+
+        public Dictionary<int, int?> DailyShifts { get; set; } = new();
     }
 }

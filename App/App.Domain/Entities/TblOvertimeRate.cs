@@ -9,20 +9,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-public partial class PayrollPeriod
+[Table("tbl_OvertimeRate")]
+public partial class TblOvertimeRate
 {
     [Key]
-    public int PayrollPeriodId { get; set; }
+    public int Id { get; set; }
 
-    public int PeriodMonth { get; set; }
+    public int? HourFrom { get; set; }
 
-    public int PeriodYear { get; set; }
+    public int? HourTo { get; set; }
 
-    public DateOnly? StartDate { get; set; }
+    [Column(TypeName = "decimal(10, 2)")]
+    public decimal? Multiplier { get; set; }
 
-    public DateOnly? EndDate { get; set; }
+    public DateOnly? EffectiveDate { get; set; }
 
-    public bool? IsClosed { get; set; }
-
-    public DateTime? CreatedAt { get; set; }
+    public bool? IsActive { get; set; }
 }

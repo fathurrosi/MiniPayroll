@@ -9,25 +9,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-public partial class PayrollDetail
+[Table("tbl_PTKP")]
+public partial class TblPtkp
 {
     [Key]
-    public long PayrollDetailId { get; set; }
+    public int Id { get; set; }
 
-    public long PayrollId { get; set; }
-
-    [StringLength(20)]
+    [Column("PTKPCode")]
+    [StringLength(10)]
     [Unicode(false)]
-    public string? ComponentType { get; set; }
+    public string Ptkpcode { get; set; } = null!;
 
+    [Column("PTKPName")]
     [StringLength(100)]
     [Unicode(false)]
-    public string? ComponentName { get; set; }
+    public string? Ptkpname { get; set; }
 
     [Column(TypeName = "decimal(18, 2)")]
-    public decimal? Amount { get; set; }
+    public decimal Amount { get; set; }
 
-    [ForeignKey("PayrollId")]
-    [InverseProperty("PayrollDetails")]
-    public virtual Payroll Payroll { get; set; } = null!;
+    public DateOnly EffectiveDate { get; set; }
+
+    public bool IsActive { get; set; }
 }

@@ -35,10 +35,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Departments]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[EmployeeLeaves]",
          "ObjectType": 0
       },
@@ -71,11 +67,15 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[Positions]",
+         "Name": "[dbo].[TaxBrackets]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[TaxBrackets]",
+         "Name": "[dbo].[tbl_Allowance]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Attendance]",
          "ObjectType": 0
       },
       {
@@ -87,7 +87,43 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_BiayaJabatanConfig]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_BPJSKesehatanConfig]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_BPJSKetenagakerjaanConfig]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_CompanyProfiles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Deduction]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Departments]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeeAllowance]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeeDeduction]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeePayroll]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeePayrollInfo]",
          "ObjectType": 0
       },
       {
@@ -95,11 +131,43 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_EmployeeShift]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeeShiftSchedule]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Holiday]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_LeaveRequest]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_LeaveRequests]",
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_LeaveType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_Menus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Overtime]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_OvertimeCalculation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_OvertimeRate]",
          "ObjectType": 0
       },
       {
@@ -111,11 +179,43 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_PayrollPolicy]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_PayrollResult]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_PayrollResultDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_PayrollRun]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_Payrolls]",
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_Payslip]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_Permissions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Positions]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_PPh21Bracket]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_PTKP]",
          "ObjectType": 0
       },
       {
@@ -124,6 +224,18 @@
       },
       {
          "Name": "[dbo].[tbl_Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Shift]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_ShiftPattern]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_ShiftPatternDetail]",
          "ObjectType": 0
       },
       {
