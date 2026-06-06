@@ -875,22 +875,34 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPtkp>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_PTKP__3214EC0731D8BA17");
+            entity.HasKey(e => e.Ptkpcode);
 
             entity.ToTable("tbl_PTKP");
 
-            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Ptkpcode)
-                .IsRequired()
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("PTKPCode");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.NominalMonthly).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.NominalYearly).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.Ptkpname)
-                .HasMaxLength(100)
+                .IsRequired()
+                .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("PTKPName");
+            entity.Property(e => e.Tercategory)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("TERCategory");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblRole>(entity =>

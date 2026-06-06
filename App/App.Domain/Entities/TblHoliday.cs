@@ -25,6 +25,9 @@ public partial class TblHoliday
     public bool? IsNationalHoliday { get; set; }
 
     [Column(TypeName = "datetime")]
+    public DateTime? CreatedDate { get; set; }
+
+    [Column(TypeName = "datetime")]
     public DateTime? UpdatedDate { get; set; }
 
     [StringLength(50)]
@@ -34,7 +37,4 @@ public partial class TblHoliday
     [StringLength(50)]
     [Unicode(false)]
     public string? UpdatedBy { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? CreatedDate { get; set; }
 }

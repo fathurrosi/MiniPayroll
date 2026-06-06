@@ -28,7 +28,7 @@ namespace App.Infrastructure.Services.Masters
             _userService = userService;
         }
 
-        public async Task<int> Delete(long code)
+        public async Task<int> DeleteAsync(string code)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace App.Infrastructure.Services.Masters
             }
         }
 
-        public async Task<DepartmentDto> GetByCode(string code)
+        public async Task<DepartmentDto> GetByCodeAsync(string code)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace App.Infrastructure.Services.Masters
             }
         }
 
-        public async Task<DepartmentDto> Save(DepartmentDto model)
+        public async Task<DepartmentDto> SaveAsync(DepartmentDto model)
         {
             try
             {

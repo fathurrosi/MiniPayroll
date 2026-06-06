@@ -201,7 +201,7 @@ namespace App.Infrastructure.Services.Transactions
             //    _ => 54_000_000
             //};
 
-            return ptkp?.Amount ?? 54000000;
+            return ptkp?.NominalYearly ?? 54000000;
         }
 
 

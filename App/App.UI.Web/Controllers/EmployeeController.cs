@@ -4,6 +4,7 @@ using App.Domain.Models;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
+using App.UI.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,15 +13,20 @@ namespace App.UI.Web.Controllers
     public class EmployeeController : BaseController
     {
         private readonly IEmployeeService _EmployeeService;
-        public EmployeeController(IEmployeeService employeeService)
+        private readonly IPtkpService _PtkpService;
+        public EmployeeController(IEmployeeService employeeService, IPtkpService ptkpService)
         {
             _EmployeeService = employeeService;
+            _PtkpService = ptkpService;
         }
 
         #region Employee
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var item = new PageModel<EmployeeDto>() { Title = "Employee" };
+            var item = new EmployeeModel() { Title = "Employee" };
+            item.PtkpList = await _PtkpService.GetListAsync();
+
+
             return View(item);
         }
 
@@ -51,7 +57,7 @@ namespace App.UI.Web.Controllers
             }
         }
 
-        [HttpGet] 
+        [HttpGet]
         public async Task<IActionResult> GetEmployee(string code)
         {
             try
@@ -67,7 +73,7 @@ namespace App.UI.Web.Controllers
         }
 
 
-        [HttpDelete] 
+        [HttpDelete]
         public async Task<IActionResult> DeleteEmployee(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
@@ -87,7 +93,7 @@ namespace App.UI.Web.Controllers
             }
         }
 
-        [HttpPost] 
+        [HttpPost]
         public async Task<IActionResult> AddEmployee(PageModel<EmployeeDto> model)
         {
             try

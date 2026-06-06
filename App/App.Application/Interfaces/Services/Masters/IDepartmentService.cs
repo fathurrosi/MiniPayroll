@@ -7,8 +7,8 @@ namespace App.Application.Interfaces.Services.Masters
     {
         Task<PagedResponse<DepartmentDto>> GetPagedAsync(DataTableRequest model);
         Task<List<DepartmentDto>> GetListAsync();
-        Task<DepartmentDto> Save(DepartmentDto model);
-        Task<int> Delete(string code);
-        Task<DepartmentDto> GetByCode(string code);
+        Task<DepartmentDto> SaveAsync(DepartmentDto model);
+        Task<int> DeleteAsync(string code);
+        Task<DepartmentDto> GetByCodeAsync(string code);
     }
 }

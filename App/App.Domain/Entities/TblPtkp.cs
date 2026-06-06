@@ -13,22 +13,40 @@ namespace App.Domain.Entities;
 public partial class TblPtkp
 {
     [Key]
-    public int Id { get; set; }
-
     [Column("PTKPCode")]
-    [StringLength(10)]
+    [StringLength(50)]
     [Unicode(false)]
     public string Ptkpcode { get; set; } = null!;
 
     [Column("PTKPName")]
-    [StringLength(100)]
+    [StringLength(255)]
     [Unicode(false)]
-    public string? Ptkpname { get; set; }
+    public string Ptkpname { get; set; } = null!;
 
     [Column(TypeName = "decimal(18, 2)")]
-    public decimal Amount { get; set; }
+    public decimal? NominalYearly { get; set; }
 
-    public DateOnly EffectiveDate { get; set; }
+    [Column(TypeName = "decimal(18, 2)")]
+    public decimal? NominalMonthly { get; set; }
 
-    public bool IsActive { get; set; }
+    [Column("TERCategory")]
+    [StringLength(1)]
+    [Unicode(false)]
+    public string? Tercategory { get; set; }
+
+    public bool? IsActive { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedDate { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 }

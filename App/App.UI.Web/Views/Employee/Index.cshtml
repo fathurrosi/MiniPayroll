@@ -1,6 +1,6 @@
 ﻿@using App.Domain.Models
 @using App.Domain.Models.Dto
-@model PageModel<EmployeeDto>
+@model EmployeeModel
 
 @{
     ViewData["Title"] = $"Data Master - {Model.Title}";
@@ -8,9 +8,8 @@
 
 <div class="row">
 
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="card shadow-sm full-height-card">
-           
             <div class="card-header py-2 px-3 bg-light">
 
                 <div class="d-flex align-items-center">
@@ -44,7 +43,6 @@
                 </div>
 
             </div>
-
             <!-- Body -->
             <div class="card-body p-2">
                 <div class="table-responsive">
@@ -55,281 +53,229 @@
                 </div>
 
             </div>
-
         </div>
     </div>
+</div>
 
-    <div class="col-md-4">
-        <div class="sticky-wrapper">
-            <div class="card shadow-sm full-height-card">
 
-                <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                    <strong>
-                        <i class="fa-solid fa-user-plus me-1"></i>
-                        Add New @Model.Title
-                    </strong>
-                </div>
+<div class="modal fade"
+     id="employeeModal"
+     tabindex="-1"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-building me-2"></i>
+                    <span id="modalTitle">
+                        Add @Model.Title
+                    </span>
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
 
-                <div class="card-body">
+            <div class="modal-body">
+                <form id="addEmployeeForm"
+                      asp-action="AddEmployee"
+                      method="post"
+                      autocomplete="off">
 
-                    <form id="addEmployeeForm"
-                          asp-action="AddEmployee"
-                          method="post"
-                          autocomplete="off">
+                    @Html.AntiForgeryToken()
 
-                        @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Mode)
+                    @Html.HiddenFor(model => model.Title)
+                    @Html.HiddenFor(model => model.Item.EmployeeId)
 
-                        @Html.HiddenFor(model => model.Mode)
-                        @Html.HiddenFor(model => model.Title)
-                        @Html.HiddenFor(model => model.Item.EmployeeId)
+                    <div class="row g-3">
 
-                        <div class="row g-3">
-
-                            <!-- Employee Code -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.EmployeeCode" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.EmployeeCode"
-                                       class="form-control"
-                                       placeholder="EMP001" />
-
-                                <span asp-validation-for="Item.EmployeeCode"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Full Name -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.FullName" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.FullName"
-                                       class="form-control"
-                                       placeholder="Employee Full Name" />
-
-                                <span asp-validation-for="Item.FullName"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Gender -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.Gender" class="form-label fw-semibold"></label>
-
-                                <select asp-for="Item.Gender"
-                                        class="form-select">
-
-                                    <option value="">-- Select Gender --</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-
-                                </select>
-
-                                <span asp-validation-for="Item.Gender"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Birth Date -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.BirthDate" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.BirthDate"
-                                       type="date"
-                                       class="form-control" />
-
-                                <span asp-validation-for="Item.BirthDate"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Hire Date -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.HireDate" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.HireDate"
-                                       type="date"
-                                       class="form-control" />
-
-                                <span asp-validation-for="Item.HireDate"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Resign Date -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.ResignDate" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.ResignDate"
-                                       type="date"
-                                       class="form-control" />
-
-                                <span asp-validation-for="Item.ResignDate"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Department -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.Department" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.Department"
-                                       class="form-control"
-                                       placeholder="Department" />
-
-                                <span asp-validation-for="Item.Department"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Position -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.Position" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.Position"
-                                       class="form-control"
-                                       placeholder="Position" />
-
-                                <span asp-validation-for="Item.Position"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Salary -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.BasicSalary" class="form-label fw-semibold"></label>
-
-                                <div class="input-group">
-                                    <span class="input-group-text">IDR</span>
-
-                                    <input asp-for="Item.BasicSalary"
-                                           type="number"
-                                           step="0.01"
-                                           class="form-control text-end"
-                                           placeholder="0.00" />
-                                </div>
-
-                                <span asp-validation-for="Item.BasicSalary"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Email -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.Email" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.Email"
-                                       type="email"
-                                       class="form-control"
-                                       placeholder="email@example.com" />
-
-                                <span asp-validation-for="Item.Email"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Phone -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.PhoneNumber" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.PhoneNumber"
-                                       class="form-control"
-                                       placeholder="+62xxxxxxxxxx" />
-
-                                <span asp-validation-for="Item.PhoneNumber"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Bank Name -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.BankName" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.BankName"
-                                       class="form-control"
-                                       placeholder="Bank Name" />
-
-                                <span asp-validation-for="Item.BankName"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Bank Account -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.BankAccountNumber" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.BankAccountNumber"
-                                       class="form-control"
-                                       placeholder="Bank Account Number" />
-
-                                <span asp-validation-for="Item.BankAccountNumber"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- NPWP -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.Npwp" class="form-label fw-semibold"></label>
-
-                                <input asp-for="Item.Npwp"
-                                       class="form-control"
-                                       placeholder="NPWP Number" />
-
-                                <span asp-validation-for="Item.Npwp"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Active -->
-                            <div class="col-md-6">
-                                <label asp-for="Item.IsActive" class="form-label fw-semibold"></label>
-
-                                <select asp-for="Item.IsActive"
-                                        class="form-select">
-
-                                    <option value="true">Active</option>
-                                    <option value="false">Inactive</option>
-
-                                </select>
-
-                                <span asp-validation-for="Item.IsActive"
-                                      class="text-danger small"></span>
-                            </div>
-
-                            <!-- Address -->
-                            <div class="col-12">
-                                <label asp-for="Item.Address" class="form-label fw-semibold"></label>
-
-                                <textarea asp-for="Item.Address"
-                                          rows="3"
-                                          class="form-control"
-                                          placeholder="Employee Address"></textarea>
-
-                                <span asp-validation-for="Item.Address"
-                                      class="text-danger small"></span>
-                            </div>
-
+                        <div class="col-md-6">
+                            <label asp-for="Item.FullName" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.FullName" class="form-control" placeholder="Employee Full Name" />
+                            <span asp-validation-for="Item.FullName" class="text-danger small"></span>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="d-grid gap-2 mt-4">
-
-                            <button id="submit-button"
-                                    type="submit"
-                                    class="btn btn-primary text-white">
-
-                                <i class="fa-solid fa-floppy-disk me-1"></i>
-                                Save @Model.Title
-
-                            </button>
-
-                            <button type="reset"
-                                    class="btn btn-outline-secondary">
-
-                                <i class="fa-solid fa-rotate-left me-1"></i>
-                                Reset Form
-
-                            </button>
-
+                        <div class="col-md-6">
+                            <label asp-for="Item.Gender" class="form-label fw-semibold"></label>
+                            <select asp-for="Item.Gender" class="form-select">
+                                <option value="">-- Select Gender --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <span asp-validation-for="Item.Gender" class="text-danger small"></span>
                         </div>
 
-                    </form>
+                        <div class="col-md-6">
+                            <label asp-for="Item.BirthDate" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.BirthDate" type="date" class="form-control" />
+                            <span asp-validation-for="Item.BirthDate" class="text-danger small"></span>
+                        </div>
 
-                </div>
+                        <div class="col-md-6">
+                            <label asp-for="Item.EmployeeCode" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.EmployeeCode" class="form-control" placeholder="EMP001" />
+                            <span asp-validation-for="Item.EmployeeCode" class="text-danger small"></span>
+                        </div>
 
+                        <div class="col-md-6">
+                            <label asp-for="Item.Department" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.Department" class="form-control" placeholder="Department" />
+                            <span asp-validation-for="Item.Department" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.Position" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.Position" class="form-control" placeholder="Position" />
+                            <span asp-validation-for="Item.Position" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.DefaultShift" class="form-label fw-semibold"></label>
+                            <select asp-for="Item.DefaultShift" class="form-select" asp-items="@(ViewBag.ShiftList as SelectList)">
+                                <option value="">-- Select Default Shift --</option>
+                            </select>
+                            <span asp-validation-for="Item.DefaultShift" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.IsActive" class="form-label fw-semibold"></label>
+                            <select asp-for="Item.IsActive" class="form-select">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                            <span asp-validation-for="Item.IsActive" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.HireDate" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.HireDate" type="date" class="form-control" />
+                            <span asp-validation-for="Item.HireDate" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.ResignDate" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.ResignDate" type="date" class="form-control" />
+                            <span asp-validation-for="Item.ResignDate" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.BasicSalary" class="form-label fw-semibold"></label>
+                            <div class="input-group">
+                                <span class="input-group-text">IDR</span>
+                                <input asp-for="Item.BasicSalary" type="number" step="0.01" class="form-control text-end" placeholder="0.00" />
+                            </div>
+                            <span asp-validation-for="Item.BasicSalary" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.Ptkpcode" class="form-label fw-semibold">PTKP Status</label>
+                              
+                            <select asp-for="Item.Ptkpcode" class="form-select">
+                                <option value=""> -- Select Tax Status -- </option>
+                                @foreach (var ptkp in Model.PtkpList)
+                                {
+                                    <option value="@ptkp.Ptkpcode">
+                                        @ptkp.Ptkpname
+                                    </option>
+                                }
+                            </select>
+
+                            @*  <label asp-for="Item.Ptkpcode" class="form-label fw-semibold">PTKP Status</label>
+                                <select asp-for="Item.Ptkpcode" class="form-select" asp-ite>
+                                <option value="">-- Select Tax Status --</option>
+                                <option value="TK/0">TK/0 - Tidak Kawin (0 Tanggungan)</option>
+                                <option value="TK/1">TK/1 - Tidak Kawin (1 Tanggungan)</option>
+                                <option value="TK/2">TK/2 - Tidak Kawin (2 Tanggungan)</option>
+                                <option value="TK/3">TK/3 - Tidak Kawin (3 Tanggungan)</option>
+                                <option value="K/0">K/0 - Kawin (0 Tanggungan)</option>
+                                <option value="K/1">K/1 - Kawin (1 Tanggungan)</option>
+                                <option value="K/2">K/2 - Kawin (2 Tanggungan)</option>
+                                <option value="K/3">K/3 - Kawin (3 Tanggungan)</option>
+                                <option value="K/I/0">K/I/0 - Kawin Istri Digabung (0 Tanggungan)</option>
+                            </select> *@
+                            <span asp-validation-for="Item.Ptkpcode" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.Npwp" class="form-label fw-semibold">NPWP / NIK</label>
+                            <input asp-for="Item.Npwp" class="form-control" placeholder="00.000.000.0-000.000" />
+                            <span asp-validation-for="Item.Npwp" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.BankName" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.BankName" class="form-control" placeholder="e.g. BCA, Mandiri, BNI" />
+                            <span asp-validation-for="Item.BankName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.BankAccountNumber" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.BankAccountNumber" class="form-control" placeholder="Bank Account Number" />
+                            <span asp-validation-for="Item.BankAccountNumber" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.Email" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.Email" type="email" class="form-control" placeholder="email@example.com" />
+                            <span asp-validation-for="Item.Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.PhoneNumber" class="form-label fw-semibold"></label>
+                            <input asp-for="Item.PhoneNumber" class="form-control" placeholder="e.g. 0812xxxxxxxx" />
+                            <span asp-validation-for="Item.PhoneNumber" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label asp-for="Item.Address" class="form-label fw-semibold"></label>
+                            <textarea asp-for="Item.Address" rows="3" class="form-control" placeholder="Complete Home Address"></textarea>
+                            <span asp-validation-for="Item.Address" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-left me-1"></i>
+                    Reset
+                </button>
+                <button id="save-button"
+                        type="button"
+                        class="btn btn-primary">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    Save
+                </button>
             </div>
         </div>
     </div>
 </div>
- 
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
+        function closeModal() {
+            const modalElement = document.getElementById('employeeModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            setReadonly(false);
+            if (modal) {
+                modal.hide();
+            }
+        }
+        function showModal(id) {
+            $('#modalTitle').text(
+                id > 0 ? 'Edit Company Profile' : 'Add Company Profile'
+            );
+
+            setReadonly(id > 0 ? true : false);
+            const modal = new bootstrap.Modal(
+                document.getElementById('employeeModal')
+            );
+            modal.show();
+        }
+
         $(document).ready(function () {
 
             const form = $('#addEmployeeForm');
@@ -515,17 +461,51 @@
             });
 
             $('#add-new').on('click', function () {
-                table.button('.buttons-pdf').trigger();
+                showModal();
             });
-                       
+            
+            $('#save-button').on('click', function () {
+                saveEmployee();
+            });
 
         });
-
-        // ====================================
+                
+        function saveEmployee() {
+            const form = $('#companyProfileForm')[0];
+            const formData = new FormData(form);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Add", "Profile")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('#save-button').prop('disabled', true);
+                },
+                success: function (response) {
+                    if (response.success) {
+                        notify.success(response.message);
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        closeModal();
+                    }
+                    else {
+                        notify.warning(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('An error occurred while saving Company Profile');
+                },
+                complete: function () {
+                    $('#save-button').prop('disabled', false);
+                }
+            });
+        }
+               // ====================================
         // Edit Employee
         // ====================================
         function editRow(id) {
-
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetEmployee", "Payroll")',
@@ -536,34 +516,54 @@
                         return;
                     }
 
+                    // Inline helper to safely chop off 'T00:00:00' from C# dates
+                    // This ensures HTML5 <input type="date"> renders the value correctly
+                    function formatDate(dateString) {
+                        if (!dateString) return '';
+                        return dateString.split('T')[0];
+                    }
+
+                    // 1. Hidden / System Identity
                     $('#Item_EmployeeId').val(data.employeeId);
-                    $('#Item_EmployeeCode').val(data.employeeCode);
+
+                    // 2. Personal Details
                     $('#Item_FullName').val(data.fullName);
                     $('#Item_Gender').val(data.gender);
-                    $('#Item_BirthDate').val(data.birthDate);
-                    $('#Item_HireDate').val(data.hireDate);
-                    $('#Item_ResignDate').val(data.resignDate);
+                    $('#Item_BirthDate').val(formatDate(data.birthDate));
+
+                    // 3. Employment Details
+                    $('#Item_EmployeeCode').val(data.employeeCode);
                     $('#Item_Department').val(data.department);
                     $('#Item_Position').val(data.position);
+                    $('#Item_DefaultShift').val(data.defaultShift); // <-- Added Mapping
+                    $('#Item_IsActive').val(data.isActive.toString());
+                    $('#Item_HireDate').val(formatDate(data.hireDate));
+                    $('#Item_ResignDate').val(formatDate(data.resignDate));
+
+                    // 4. Financial & Tax Details (Indonesia)
                     $('#Item_BasicSalary').val(data.basicSalary);
+                    $('#Item_PtkpCode').val(data.ptkpCode);         // <-- Added Mapping
+                    $('#Item_Npwp').val(data.npwp);
+                    $('#Item_BankName').val(data.bankName);
+                    $('#Item_BankAccountNumber').val(data.bankAccountNumber);
+
+                    // 5. Contact Details
                     $('#Item_Email').val(data.email);
                     $('#Item_PhoneNumber').val(data.phoneNumber);
                     $('#Item_Address').val(data.address);
-                    $('#Item_BankName').val(data.bankName);
-                    $('#Item_BankAccountNumber').val(data.bankAccountNumber);
-                    $('#Item_Npwp').val(data.npwp);
-                    $('#Item_IsActive').val(data.isActive.toString());
 
+                    // Smooth scroll up to the form panel
                     window.scrollTo({
                         top: 0,
                         behavior: 'smooth'
                     });
 
-                    notify.info('Employee loaded');
+                    notify.info('Employee data loaded successfully');
+            
+                    // Pro-Tip: If you use an AdminLTE modal wrapper, add this line:
+                    // $('#addEmployeeModal').modal('show');
                 },
-
                 error: function (xhr) {
-
                     if (xhr.status === 401 || xhr.status === 403)
                         return;
 
@@ -571,46 +571,32 @@
                 }
             });
         }
-
         // ====================================
         // Delete Employee
         // ====================================
         function deleteRow(id) {
-
             $.ajax({
                 type: 'DELETE',
                 url: '@Url.Action("DeleteEmployee", "Payroll")',
-
                 data: {
                     id: id
                 },
-
                 headers: {
                     'RequestVerificationToken':
                         $('input[name="__RequestVerificationToken"]').val()
                 },
-
                 success: function (response) {
-
                     if (response.success) {
-
                         $('#main-table').DataTable().ajax.reload(null, false);
-
                         resetForm();
-
                         notify.success(response.message);
-
                     } else {
-
                         notify.warning(response.message);
                     }
                 },
-
                 error: function (xhr) {
-
                     if (xhr.status === 401 || xhr.status === 403)
                         return;
-
                     notify.error('Failed to delete employee');
                 }
             });
@@ -620,11 +606,8 @@
         // Reset Form
         // ====================================
         function resetForm() {
-
             $('#addEmployeeForm')[0].reset();
-
             $('#Item_EmployeeId').val('');
-
             setReadonly(false);
         }
 
@@ -632,7 +615,6 @@
         // Readonly Mode
         // ====================================
         function setReadonly(isReadonly) {
-
             $('#Item_EmployeeCode').prop('readonly', isReadonly);
         }
     </script>

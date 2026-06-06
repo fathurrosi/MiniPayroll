@@ -316,7 +316,7 @@
                 processData: false,
                 contentType: false,
                 beforeSend: function () {
-                    $('#btnSave').prop('disabled', true);
+                    $('#save-button').prop('disabled', true);
                 },
                 success: function (response) {
                     if (response.success) {
@@ -334,7 +334,7 @@
                     notify.error('An error occurred while saving Company Holiday');
                 },
                 complete: function () {
-                    $('#btnSave').prop('disabled', false);
+                    $('#save-button').prop('disabled', false);
                 }
             });
         }

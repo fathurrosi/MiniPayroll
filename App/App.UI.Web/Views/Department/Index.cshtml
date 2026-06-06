@@ -1,6 +1,6 @@
 ﻿@using App.Domain.Models
 @using App.Domain.Models.Dto
-@model PageModel<ProfileDto>
+@model PageModel<DepartmentDto>
 @{
     ViewData["Title"] = $"Data Master - {Model.Title}";
 }
@@ -17,7 +17,6 @@
                     </h6>
 
                     <div class="ms-auto d-flex gap-2">
-
                         <button id="add-new"
                                 class="btn btn-sm btn-primary">
                             <i class="fa-solid fa-plus me-1"></i>
@@ -55,11 +54,11 @@
 </div>
  
 <div class="modal fade"
-     id="companyProfileModal"
+     id="DepartmentModal"
      tabindex="-1"
      aria-hidden="true">
 
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
@@ -74,122 +73,35 @@
             </div>
 
             <div class="modal-body">
-                <form id="companyProfileForm"
+                <form id="DepartmentForm"
                       asp-action="Save"
                       method="post"
                       enctype="multipart/form-data"
                       autocomplete="off">
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.Mode)
-                    @Html.HiddenFor(model => model.Title) 
-                    <input type="hidden"
-                           asp-for="Item.CompanyProfileId"
-                           asp-key="true" />
-                    <div class="row g-3">
-                       
-                        <!-- Company Name -->
-                        <div class="col-md-6">
-                            <label asp-for="Item.CompanyName"
+                    @Html.HiddenFor(model => model.Title)           
+                    <div class="row g-3">                    
+                        <div class="col-md-12">
+                            <label asp-for="Item.DepartmentCode"
                                    class="form-label fw-semibold"></label>
-                            <input asp-for="Item.CompanyName"
+                            <input asp-for="Item.DepartmentCode" asp-key="true"
                                    class="form-control"
-                                   placeholder="Company Name" />
-                            <span asp-validation-for="Item.CompanyName" 
+                                   placeholder="e.g. HR" />
+                            <span asp-validation-for="Item.DepartmentCode"
                                   class="text-danger small"></span>
                         </div>
-                        <!-- Phone Number -->
-                        <div class="col-md-6">
-                            <label asp-for="Item.PhoneNumber"
+
+                        <div class="col-md-12">
+                            <label asp-for="Item.DepartmentName"
                                    class="form-label fw-semibold"></label>
-                            <input asp-for="Item.PhoneNumber"
+                            <input asp-for="Item.DepartmentName" 
                                    class="form-control"
-                                   placeholder="+62xxxxxxxxxx" />
-                            <span asp-validation-for="Item.PhoneNumber"
-                                  class="text-danger small"></span>
-                        </div>
-                        <!-- Email -->
-                        <div class="col-md-6">
-                            <label asp-for="Item.Email"
-                                   class="form-label fw-semibold"></label>
-                            <input asp-for="Item.Email"
-                                   type="email"
-                                   class="form-control"
-                                   placeholder="company@example.com" />
-                            <span asp-validation-for="Item.Email"
+                                   placeholder="e.g. Human Resources" />
+                            <span asp-validation-for="Item.DepartmentName"
                                   class="text-danger small"></span>
                         </div>
 
-                        <!-- Website -->
-                        <div class="col-md-6">
-                            <label asp-for="Item.Website"
-                                   class="form-label fw-semibold"></label>
-                            <input asp-for="Item.Website"
-                                   class="form-control"
-                                   placeholder="https://www.company.com" />
-                            <span asp-validation-for="Item.Website"
-                                  class="text-danger small"></span>
-                        </div>
-                        <!-- Tax Number -->
-                        <div class="col-md-6">
-                            <label asp-for="Item.TaxNumber"
-                                   class="form-label fw-semibold"></label>
-                            <input asp-for="Item.TaxNumber"
-                                   class="form-control"
-                                   placeholder="NPWP / Tax Number" />
-                            <span asp-validation-for="Item.TaxNumber"
-                                  class="text-danger small"></span>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="col-md-6">
-                            <label asp-for="Item.IsActive"
-                                   class="form-label fw-semibold"></label>
-                            <select asp-for="Item.IsActive"
-                                    class="form-select">
-                                <option value="true">Active</option>
-                                <option value="false">Inactive</option>
-                            </select>
-                            <span asp-validation-for="Item.IsActive"
-                                  class="text-danger small"></span>
-                        </div>
-
-                        <!-- Logo Upload -->
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">
-                                Company Logo
-                            </label>
-
-                            <input type="file"
-                                   id="logoFile"
-                                   name="LogoFile"
-                                   accept=".png,.jpg,.jpeg,.svg"
-                                   class="form-control" />
-
-                            @Html.HiddenFor(model => model.Item.LogoFileName)
-                            @Html.HiddenFor(model => model.Item.LogoFilePath)
-
-                            <span asp-validation-for="Item.LogoFilePath"
-                                  class="text-danger small"></span>
-
-                            <div class="mt-3">
-                                <img id="logoPreview"
-                                     src="@Model.Item.LogoFilePath"
-                                     alt="Logo Preview"
-                                     style="max-height:150px; max-width:300px; @(string.IsNullOrEmpty(Model.Item.LogoFilePath) ? "display:none;" : "")" />
-                            </div>
-                        </div>
-
-                        <!-- Company Address -->
-                        <div class="col-6">
-                            <label asp-for="Item.CompanyAddress"
-                                   class="form-label fw-semibold"></label>
-                            <textarea asp-for="Item.CompanyAddress"
-                                      rows="4"
-                                      class="form-control"
-                                      placeholder="Company Address"></textarea>
-                            <span asp-validation-for="Item.CompanyAddress"
-                                  class="text-danger small"></span>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -214,21 +126,21 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         function closeModal() {
-            const modalElement = document.getElementById('companyProfileModal');
+            const modalElement = document.getElementById('DepartmentModal');
             const modal = bootstrap.Modal.getInstance(modalElement);
             setReadonly(false);
             if (modal) {
                 modal.hide();
             }
         }
-        function showModal(id) {
+        function showModal(code) {
             $('#modalTitle').text(
-                id > 0 ? 'Edit Company Profile' : 'Add Company Profile'
+                code ? 'Edit Department' : 'Add Department'
             );
 
-            setReadonly(id > 0 ? true : false);
+            setReadonly(code ? true : false);
             const modal = new bootstrap.Modal(
-                document.getElementById('companyProfileModal')
+                document.getElementById('DepartmentModal')
             );
             modal.show();
         }
@@ -250,10 +162,9 @@
                 responsive: true,
                 autoWidth: false,
                 filter: true,
-                orderMulti: false,
-                order: [[0, 'desc']],
+                orderMulti: false, 
                 ajax: {
-                    url: '@Url.Action("GetList", "Profile")',
+                    url: '@Url.Action("GetList", "Department")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (d) {
@@ -265,7 +176,7 @@
                     error: function (xhr) {
                         if (xhr.status === 401 || xhr.status === 403)
                             return;
-                        notify.error('Failed to load Profile data');
+                        notify.error('Failed to load Department data');
                     }
                 },
                 columnDefs: [
@@ -275,24 +186,8 @@
                     }
                 ],
                  columns: [
-                     { data: 'companyName', title: 'Company Name' },
-                     { data: 'phoneNumber', title: 'Phone Number', defaultContent: '-' },
-                     { data: 'email', title: 'Email', defaultContent: '-' },
-                     { data: 'website', title: 'Website', defaultContent: '-',
-                         render: function (data) {
-                             if (!data)
-                                 return '-';
-                             return `<a href="${data}" target="_blank">${data}</a>`;
-                         }
-                     },
-                     { data: 'taxNumber', title: 'Tax Number', defaultContent: '-' },
-                     { data: 'isActive', title: 'Status', className: 'text-center',
-                         render: function (data) {
-                             return data
-                                 ? '<span class="badge bg-success">Active</span>'
-                                 : '<span class="badge bg-danger">Inactive</span>';
-                         }
-                     },
+                     { data: 'departmentCode', title: 'Department Code', defaultContent: '-' },
+                     { data: 'departmentName', title: 'Department Name', defaultContent: '-' }, 
                      {
                          data: null,
                          title: 'Action',
@@ -304,19 +199,15 @@
                              return `
                                  <div class="d-flex justify-content-center align-items-center gap-2">
                                      <a href="javascript:void(0)"
-                                        onclick="editRow('${row.companyProfileId}')"
+                                        onclick="editRow('${row.departmentCode}')"
                                         title="Edit">
                                          <i class="fa-solid fa-pen-to-square text-primary"></i>
                                      </a>
                                      <a href="javascript:void(0)"
-                                        onclick="confirmDelete(() => deleteRow('${row.companyProfileId}'))"
+                                        onclick="confirmDelete(() => deleteRow('${row.departmentCode}'))"
                                         title="Delete">
                                          <i class="fa-solid fa-trash text-danger"></i>
-                                     </a>
-                                     <a href="/Profile/Info/${row.companyProfileId}"
-                                        title="View">
-                                         <i class="fa-solid fa-eye text-primary"></i>
-                                     </a>
+                                     </a> 
                                  </div>
                              `;
                          }
@@ -350,7 +241,7 @@
                 $('.btn-export-csv').trigger('click');
             });
 
-            $('#pdf-export').on('click', function () { 
+            $('#pdf-export').on('click', function () {
                 $('.btn-export-pdf').trigger('click');
             });
 
@@ -358,16 +249,16 @@
                 showModal();
             });
              $('#save-button').on('click', function () {
-                saveCompanyProfile();
+                saveDepartment();
             });
         });
 
-        function saveCompanyProfile() {
-            const form = $('#companyProfileForm')[0];
+        function saveDepartment() {
+            const form = $('#DepartmentForm')[0];
             const formData = new FormData(form);
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Add", "Profile")',
+                url: '@Url.Action("Add", "Department")',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -387,50 +278,41 @@
                 error: function (xhr) {
                     if (xhr.status === 401 || xhr.status === 403)
                         return;
-                    notify.error('An error occurred while saving Company Profile');
+                    notify.error('An error occurred while saving Company Department');
                 },
                 complete: function () {
                     $('#save-button').prop('disabled', false);
                 }
             });
         }
-        function editRow(id) {
+
+        function editRow(code) {
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetData", "Profile")',
-                data: { id: id },
+                url: '@Url.Action("GetData", "Department")',
+                data: { code: code },
                 success: function (data) {
                     if (!data) {
-                        notify.warning('Company Profile not found');
+                        notify.warning('Department not found');
                         return;
-                    }
-                    $('#Item_CompanyProfileId').val(data.companyProfileId);
-                    $('#Item_CompanyName').val(data.companyName);
-                    $('#Item_CompanyAddress').val(data.companyAddress);
-                    $('#Item_PhoneNumber').val(data.phoneNumber);
-                    $('#Item_Email').val(data.email);
-                    $('#Item_Website').val(data.website);
-                    $('#Item_TaxNumber').val(data.taxNumber);
-                    $('#Item_IsActive').val(data.isActive.toString());
-                    $('#Item_LogoFileName').val(data.logoFileName);
-                    $('#Item_LogoFilePath').val(data.logoFilePath);
-                    showModal(data.companyProfileId);
+                    }             
+                    $('#Item_DepartmentCode').val(data.departmentCode);                    
+                    $('#Item_DepartmentName').val(data.departmentName);                      
+                    showModal(data.departmentCode);
                 },
-
                 error: function (xhr) {
                     if (xhr.status === 401 || xhr.status === 403)
                         return;
-                    notify.error('Failed to retrieve Company Profile');
+                    notify.error('Failed to retrieve Company Department');
                 }
             });
-        }
-
-        function deleteRow(id) {
+        } 
+        function deleteRow(code) {
             $.ajax({
                 type: 'DELETE',
-                url: '@Url.Action("Delete", "Profile")',
+                url: '@Url.Action("Delete", "Department")',
                 data: {
-                    id: id
+                    code: code
                 },
                 headers: {
                     'RequestVerificationToken':
@@ -448,15 +330,12 @@
                 error: function (xhr) {
                     if (xhr.status === 401 || xhr.status === 403)
                         return;
-                    notify.error('Failed to delete Company Profile');
+                    notify.error('Failed to delete Company Department');
                 }
             });
         }
         function resetForm() {
-            $('#companyProfileForm')[0].reset();
-            $('#Item_CompanyProfileId').val('');
-            $('#Item_LogoFileName').val('');
-            $('#Item_LogoFilePath').val('');
+            $('#DepartmentForm')[0].reset();
         }
     </script>
 }
