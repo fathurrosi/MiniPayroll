@@ -1,10 +1,9 @@
-﻿
-using App.Application.Interfaces.Services;
+﻿using App.Application.Interfaces.Services;
 using App.Domain.Entities;
 using App.Domain.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MANDe.Web.Components
+namespace App.UI.Web.Components
 {
     public class SidebarViewComponent : ViewComponent
     {

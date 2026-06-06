@@ -130,7 +130,9 @@ public partial class AppDBContext : DbContext
             entity.HasKey(e => e.PayrollPeriodId).HasName("PK__PayrollP__06190D36A30FFDD5");
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.IsClosed).HasDefaultValue(false);
+            entity.Property(e => e.StartDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<TaxBracket>(entity =>
@@ -184,6 +186,7 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+            entity.Property(e => e.WorkDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<TblAttendance1>(entity =>
@@ -192,6 +195,7 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_Attendances");
 
+            entity.Property(e => e.AttendanceDate).HasColumnType("date");
             entity.Property(e => e.AttendanceStatus)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -219,6 +223,7 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_BiayaJabatanConfig");
 
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.MaxMonthly).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.MaxYearly).HasColumnType("decimal(18, 2)");
@@ -232,6 +237,7 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_BPJSKesehatanConfig");
 
             entity.Property(e => e.CompanyRate).HasColumnType("decimal(5, 4)");
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.EmployeeRate).HasColumnType("decimal(5, 4)");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.SalaryCap).HasColumnType("decimal(18, 2)");
@@ -243,6 +249,7 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_BPJSKetenagakerjaanConfig");
 
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.JhtCompanyRate)
                 .HasColumnType("decimal(5, 4)")
@@ -398,6 +405,8 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
@@ -408,6 +417,8 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_EmployeeDeduction");
 
             entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
@@ -418,6 +429,7 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_EmployeePayroll");
 
             entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.IsBpjskesehatan)
                 .HasDefaultValue(true)
@@ -466,6 +478,8 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.EffectiveFrom).HasColumnType("date");
+            entity.Property(e => e.EffectiveTo).HasColumnType("date");
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -499,6 +513,7 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.HolidayDate).HasColumnType("date");
             entity.Property(e => e.HolidayName)
                 .IsRequired()
                 .HasMaxLength(200)
@@ -519,9 +534,11 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.Reason)
                 .HasMaxLength(500)
                 .IsUnicode(false);
+            entity.Property(e => e.StartDate).HasColumnType("date");
             entity.Property(e => e.Status)
                 .IsRequired()
                 .HasMaxLength(20)
@@ -540,9 +557,11 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .HasDefaultValue("Pending");
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.LeaveType)
                 .IsRequired()
                 .HasMaxLength(100);
+            entity.Property(e => e.StartDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<TblLeaveType>(entity =>
@@ -608,6 +627,7 @@ public partial class AppDBContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.EndTime).HasColumnType("datetime");
+            entity.Property(e => e.OvertimeDate).HasColumnType("date");
             entity.Property(e => e.Reason)
                 .HasMaxLength(500)
                 .IsUnicode(false);
@@ -644,6 +664,7 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_OvertimeRate");
 
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Multiplier).HasColumnType("decimal(10, 2)");
         });
@@ -692,9 +713,11 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_PayrollPeriods");
 
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.PeriodCode)
                 .IsRequired()
                 .HasMaxLength(20);
+            entity.Property(e => e.StartDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<TblPayrollPolicy>(entity =>
@@ -704,6 +727,7 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_PayrollPolicy");
 
             entity.Property(e => e.EarlyOutPenaltyPerMinute).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.LatePenaltyPerMinute).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.PolicyName)
@@ -838,6 +862,7 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_PPh21Bracket");
 
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.MaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.MinAmount).HasColumnType("decimal(18, 2)");
@@ -851,6 +876,7 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_PTKP");
 
             entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Ptkpcode)
                 .IsRequired()
@@ -1098,7 +1124,7 @@ public partial class AppDBContext : DbContext
                 .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.FullName)
+            entity.Property(e => e.EmployeeName)
                 .IsRequired()
                 .HasMaxLength(255)
                 .IsUnicode(false);

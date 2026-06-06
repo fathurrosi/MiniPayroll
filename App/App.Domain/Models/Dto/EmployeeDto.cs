@@ -9,75 +9,96 @@ namespace App.Domain.Models.Dto
         [Display(Name = "Employee ID")]
         public int EmployeeId { get; set; }
 
-        [Required(ErrorMessage = "Employee code is required.")]
-        [StringLength(20, ErrorMessage = "Employee code cannot exceed 20 characters.")]
+        [Required(ErrorMessage = "Employee Code is required.")]
+        [StringLength(20, ErrorMessage = "Employee Code cannot exceed 20 characters.")]
         [Display(Name = "Employee Code")]
-        public string EmployeeCode { get; set; } = null!;
+        public string EmployeeCode { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Full name is required.")]
-        [StringLength(255, ErrorMessage = "Full name cannot exceed 255 characters.")]
+        [Required(ErrorMessage = "Full Name is required.")]
+        [StringLength(255, ErrorMessage = "Full Name cannot exceed 255 characters.")]
         [Display(Name = "Full Name")]
-        public string FullName { get; set; } = null!;
+        public string FullName { get; set; } = string.Empty;
 
-        [StringLength(20, ErrorMessage = "Gender cannot exceed 20 characters.")]
+        [StringLength(50)]
         [Display(Name = "Gender")]
         public string? Gender { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Birth Date")]
-        [DataType(DataType.Date)]
-        public DateOnly? BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Hire Date")]
-        [DataType(DataType.Date)]
-        public DateOnly? HireDate { get; set; }
+        public DateTime? HireDate { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Resign Date")]
-        [DataType(DataType.Date)]
-        public DateOnly? ResignDate { get; set; }
+        public DateTime? ResignDate { get; set; }
 
-        [StringLength(100, ErrorMessage = "Department cannot exceed 100 characters.")]
+        [StringLength(50)]
         [Display(Name = "Department")]
         public string? Department { get; set; }
 
-        [StringLength(100, ErrorMessage = "Position cannot exceed 100 characters.")]
+        [StringLength(50)]
         [Display(Name = "Position")]
         public string? Position { get; set; }
 
-        [Required(ErrorMessage = "Basic salary is required.")]
+        [Required(ErrorMessage = "Basic Salary is required.")]
         [Column(TypeName = "decimal(18,2)")]
-        [Range(0, 9999999999999999.99,
-            ErrorMessage = "Basic salary must be greater than or equal to 0.")]
+        [Range(0, double.MaxValue,
+            ErrorMessage = "Basic Salary must be greater than or equal to 0.")]
         [Display(Name = "Basic Salary")]
         public decimal BasicSalary { get; set; }
 
-        [EmailAddress(ErrorMessage = "Invalid email address format.")]
-        [StringLength(255, ErrorMessage = "Email cannot exceed 255 characters.")]
-        [Display(Name = "Email Address")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        [StringLength(255)]
+        [Display(Name = "Email")]
         public string? Email { get; set; }
 
         [Phone(ErrorMessage = "Invalid phone number format.")]
-        [StringLength(50, ErrorMessage = "Phone number cannot exceed 50 characters.")]
+        [StringLength(50)]
         [Display(Name = "Phone Number")]
         public string? PhoneNumber { get; set; }
 
-        [StringLength(1000, ErrorMessage = "Address cannot exceed 1000 characters.")]
+        [StringLength(1000)]
         [Display(Name = "Address")]
         public string? Address { get; set; }
 
-        [StringLength(100, ErrorMessage = "Bank name cannot exceed 100 characters.")]
+        [StringLength(100)]
         [Display(Name = "Bank Name")]
         public string? BankName { get; set; }
 
-        [StringLength(50, ErrorMessage = "Bank account number cannot exceed 50 characters.")]
+        [StringLength(50)]
         [Display(Name = "Bank Account Number")]
         public string? BankAccountNumber { get; set; }
 
-        [StringLength(50, ErrorMessage = "NPWP cannot exceed 50 characters.")]
+        [StringLength(50)]
         [Display(Name = "NPWP")]
         public string? Npwp { get; set; }
 
-        [Display(Name = "Active Status")]
-        public bool IsActive { get; set; } = true;
-         
+        [Display(Name = "Active")]
+        public bool IsActive { get; set; }
+
+        [Display(Name = "Created Date")]
+        public DateTime? CreatedDate { get; set; }
+
+        [Display(Name = "Updated Date")]
+        public DateTime? UpdatedDate { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Created By")]
+        public string? CreatedBy { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Updated By")]
+        public string? UpdatedBy { get; set; }
+
+        [Display(Name = "Default Shift")]
+        public int? DefaultShift { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "PTKP Code")]
+        public string? Ptkpcode { get; set; }
+
     }
 }

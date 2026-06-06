@@ -21,8 +21,6 @@ public partial class TblShiftPatternDetail
 
     public int? ShiftId { get; set; }
 
-    public bool? IsOffDay { get; set; }
-
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }
 

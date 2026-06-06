@@ -4,6 +4,7 @@ using App.Domain.Models;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
+using App.Infrastructure.Services.Masters;
 using App.UI.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,14 +12,16 @@ namespace App.UI.Web.Controllers
 {
     public class ShiftController : BaseController
     {
-
+        private readonly IEmployeeService _employeeService;
         private readonly IDepartmentService _departmentService;
         private readonly IShiftPatternService _ShiftPatternService;
         private readonly IShiftService _ShiftService;
         public ShiftController(IShiftService ShiftService
             , IDepartmentService departmentService
+            ,IEmployeeService employeeService
             , IShiftPatternService ShiftPatternService)
         {
+            _employeeService = employeeService;
             _ShiftService = ShiftService;
             _ShiftPatternService = ShiftPatternService;
             _departmentService = departmentService;
@@ -31,7 +34,6 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-
                 await _ShiftService.GenerateAsync(request);
                 return Json(ActionResponse.Ok("Schedule generated successfully"));
             }
@@ -39,7 +41,6 @@ namespace App.UI.Web.Controllers
             {
                 return Json(ActionResponse.Fail(ex.Message));
             }
-
         }
 
         public async Task<IActionResult> Index(int? year, int? month)
@@ -49,18 +50,27 @@ namespace App.UI.Web.Controllers
                 Year = year ?? DateTime.Now.Year,
                 Month = month ?? DateTime.Now.Month,
                 ShiftPatterns = await _ShiftPatternService.GetListAsync(),
-                Departments = await _departmentService.GetListAsync()
+                Departments = await _departmentService.GetListAsync(),
+                Employees = await _employeeService.GetListAsync(),
             };
 
             return View(model);
         }
 
-        //public IActionResult Index()
-        //{
-        //    var model = new PageModel<ShiftDto>() { Title = "Shift" };
-        //    model.Item = new ShiftDto();
-        //    return View(model);
-        //}
+
+        public async Task<IActionResult> Employee(int? year, int? month)
+        {
+            var model = new ShiftScheduleModel
+            {
+                Year = year ?? DateTime.Now.Year,
+                Month = month ?? DateTime.Now.Month,
+                ShiftPatterns = await _ShiftPatternService.GetListAsync(),
+                Departments = await _departmentService.GetListAsync(),
+                Employees = await _employeeService.GetListAsync(),
+            };
+
+            return View(model);
+        }
 
         public async Task<IActionResult> Info(int id)
         {

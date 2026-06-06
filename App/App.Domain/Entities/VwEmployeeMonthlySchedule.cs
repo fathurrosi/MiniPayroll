@@ -12,6 +12,8 @@ namespace App.Domain.Entities;
 [Keyless]
 public partial class VwEmployeeMonthlySchedule
 {
+    public long? RowNumber { get; set; }
+
     public int? EmployeeId { get; set; }
 
     [StringLength(20)]
@@ -20,7 +22,7 @@ public partial class VwEmployeeMonthlySchedule
 
     [StringLength(255)]
     [Unicode(false)]
-    public string FullName { get; set; } = null!;
+    public string EmployeeName { get; set; } = null!;
 
     public int? YearNo { get; set; }
 

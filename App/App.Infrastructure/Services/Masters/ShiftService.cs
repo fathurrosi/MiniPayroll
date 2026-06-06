@@ -5,10 +5,9 @@ using App.Domain.Entities;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
-using App.Infrastructure.Extensions;
-using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using App.Infrastructure.Extensions; 
+using MapsterMapper; 
+using Microsoft.Extensions.Logging; 
 
 namespace App.Infrastructure.Services.Masters
 {
@@ -44,61 +43,177 @@ namespace App.Infrastructure.Services.Masters
             _monthlyScheduleViewRepo = monthlyScheduleViewRepo;
         }
 
+
         public async Task GenerateAsync(GenerateScheduleRequest request)
         {
-
             var employees = await _empRepo.GetListAsync();
+            if (!employees.Any()) return;
 
-            var daysInMonth = DateTime.DaysInMonth(request.Year, request.Month);
+            var firstDate = new DateTime(request.Year, request.Month, 1);
+            var lastDate = firstDate.AddMonths(1);
+            int daysInMonth = DateTime.DaysInMonth(request.Year, request.Month);
+
+            // 1. Fetch Master Shifts into a Dictionary for instant O(1) lookups
+            var shifts = await _ShiftRepo.GetListAsync();
+            var shiftDict = shifts.ToDictionary(s => s.Id);
+
+            // 2. Fetch Pattern Details ONCE outside the loop
+            var rawPatternDetails = await _ShiftPatternDetailRepo.GetListAsync(x => x.PatternId == request.PatternId);
+            var orderedPattern = rawPatternDetails.OrderBy(x => x.SequenceNo).ToList();
+            int cycleLength = orderedPattern.Count;
+
+            var schedules = new List<TblEmployeeShiftSchedule>(employees.Count * daysInMonth);
 
             foreach (var employee in employees)
             {
+                // Define an Anchor Date. This is what the cycle mathematically rotates around.
+                // Replace 'employee.JoinDate' with wherever you track the start of their pattern.
+                // If not tracked, defaulting to the first of the month is a safe fallback.
+                DateTime anchorDate = firstDate;
+
                 for (int day = 1; day <= daysInMonth; day++)
                 {
-                    DateTime workDate = new DateTime(request.Year, request.Month, day);
+                    var workDate = new DateTime(request.Year, request.Month, day);
 
-                    int shiftId = await DetermineShiftAsync(employee, workDate, request.PatternId);
+                    int shiftId = employee.DefaultShift ?? 0;
+                    bool isRestDay = true;
 
-                    await _ShiftScheduleRepo.AddAsync(
-                        new TblEmployeeShiftSchedule
+                    // 3. Calculate the rotating sequence in memory
+                    if (cycleLength > 0)
+                    {
+                        int dayOffset = (workDate.Date - anchorDate.Date).Days;
+
+                        // Handle negative offsets gracefully if workDate is before anchorDate
+                        if (dayOffset < 0)
                         {
-                            EmployeeId = employee.EmployeeId,
-                            WorkDate = workDate,
-                            ShiftId = shiftId
-                        });
+                            int remainder = dayOffset % cycleLength;
+                            dayOffset = remainder == 0 ? 0 : remainder + cycleLength;
+                        }
+
+                        int index = dayOffset % cycleLength;
+                        shiftId = orderedPattern[index].ShiftId ?? employee.DefaultShift ?? 0;
+                    }
+
+                    // 4. Instant dictionary lookup instead of LINQ .Where()
+                    if (shiftDict.TryGetValue(shiftId, out var shift))
+                    {
+                        isRestDay = shift.WorkingHours == 0;
+                    }
+
+                    schedules.Add(new TblEmployeeShiftSchedule
+                    {
+                        EmployeeId = employee.EmployeeId,
+                        WorkDate = workDate,
+                        ShiftId = shiftId,
+                        IsRestDay = isRestDay
+                    });
                 }
             }
+
+            // 5. Clean up existing schedules
+            var existingSchedules = await _ShiftScheduleRepo.FindAllAsync(x =>
+                x.WorkDate >= firstDate &&
+                x.WorkDate < lastDate);
+
+            if (existingSchedules.Any())
+            {
+                await _ShiftScheduleRepo.RemoveRangeAsync(existingSchedules);
+            }
+
+            // 6. Bulk Insert
+            await _ShiftScheduleRepo.AddRangeAsync(schedules);
         }
 
-        private async Task<int> DetermineShiftAsync(TblEmployee employee, DateTime date, int patternId)
-        {
-            // 1. Get pattern details (ordered)
-            var patternDetails = await _ShiftPatternDetailRepo.GetListAsync(x => x.PatternId == patternId);
+        //public async Task GenerateAsync(GenerateScheduleRequest request)
+        //{
+        //    var employees = await _empRepo.GetListAsync();
+        //    var shifts = await _ShiftRepo.GetListAsync();
 
-            patternDetails = patternDetails.OrderBy(x => x.SequenceNo).ToList(); // Ensure correct order
+        //    if (!employees.Any())
+        //        return;
 
-            if (patternDetails == null || patternDetails.Count == 0)
-                return employee.DefaultShift ?? 0;
+        //    var firstDate = new DateTime(request.Year, request.Month, 1);
+        //    var lastDate = firstDate.AddMonths(1);
 
-            // 2. Determine cycle length
-            int cycleLength = patternDetails.Count;
+        //    int daysInMonth = DateTime.DaysInMonth(request.Year, request.Month);
 
-            // 3. Define cycle start (important for consistency)
-            DateTime startDate = employee.HireDate ?? date;
+        //    var schedules = new List<TblEmployeeShiftSchedule>(
+        //        employees.Count * daysInMonth);
 
-            int dayOffset = (date.Date - startDate.Date).Days;
+        //    foreach (var employee in employees)
+        //    {
+        //        for (int day = 1; day <= daysInMonth; day++)
+        //        {
+        //            var workDate = new DateTime(
+        //                request.Year,
+        //                request.Month,
+        //                day);
 
-            if (dayOffset < 0)
-                dayOffset = 0;
+        //            int shiftId = await DetermineShiftAsync(
+        //                employee,
+        //                workDate,
+        //                request.PatternId);
 
-            // 4. Get position in cycle
-            int index = dayOffset % cycleLength;
+        //            bool isRestDay = true;
+        //            var shift = shifts.Where(t => t.Id == shiftId).FirstOrDefault();
+        //            if (shift != null)
+        //            {
+        //                if (shift.ShiftName == "OFF")
+        //                {
+        //                    string test = shift.ShiftName;
+        //                }
+        //                isRestDay = shift.WorkingHours == 0;
+        //            }
+        //            schedules.Add(new TblEmployeeShiftSchedule
+        //            {
+        //                EmployeeId = employee.EmployeeId,
+        //                WorkDate = workDate,
+        //                ShiftId = shiftId,
+        //                IsRestDay = isRestDay
+        //            });
+        //        }
+        //    }
 
-            // 5. Get shift from pattern
-            var shift = patternDetails[index];
+        //    var existingSchedules =
+        //        await _ShiftScheduleRepo.FindAllAsync(x =>
+        //            x.WorkDate >= firstDate &&
+        //            x.WorkDate < lastDate);
 
-            return shift.ShiftId ?? employee.DefaultShift ?? 0;
-        }
+        //    if (existingSchedules.Any())
+        //    {
+        //        await _ShiftScheduleRepo.RemoveRangeAsync(existingSchedules);
+        //    }
+
+        //    await _ShiftScheduleRepo.AddRangeAsync(schedules);
+        //}
+
+        //private async Task<int> DetermineShiftAsync(TblEmployee employee, DateTime date, int patternId)
+        //{
+        //    // 1. Get pattern details (ordered)
+        //    var patternDetails = await _ShiftPatternDetailRepo.GetListAsync(x => x.PatternId == patternId);
+
+        //    patternDetails = patternDetails.OrderBy(x => x.SequenceNo).ToList(); // Ensure correct order
+
+        //    if (patternDetails == null || patternDetails.Count == 0)
+        //        return employee.DefaultShift ?? 0;
+
+        //    // 2. Determine cycle length
+        //    int cycleLength = patternDetails.Count;
+
+        //    DateTime startDate = date;
+        //    int dayOffset = (date.Date - startDate.Date).Days;
+
+        //    if (dayOffset < 0)
+        //        dayOffset = 0;
+
+        //    // 4. Get position in cycle
+        //    int index = dayOffset % cycleLength;
+
+        //    // 5. Get shift from pattern
+        //    var shift = patternDetails[index];
+
+        //    return shift.ShiftId ?? employee.DefaultShift ?? 0;
+        //}
 
         public async Task<List<ShiftDto>> GetListAsync()
         {

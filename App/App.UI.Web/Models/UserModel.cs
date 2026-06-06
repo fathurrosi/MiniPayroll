@@ -18,18 +18,17 @@ namespace App.UI.Web.Models
         public bool RememberMe { get; set; }
     }
 
-    public sealed class ScheduleModel
-    {
-        public int Year { get; set; }
-        public int Month { get; set; }
+    //public sealed class ScheduleModel
+    //{
+    //    public int Year { get; set; }
+    //    public int Month { get; set; }
+    //    public string DepartmentCode { get; set; }
+    //    public int? EmployeeId { get; set; }
 
-        public string DepartmentCode { get; set; }
-        public int? EmployeeId { get; set; }
 
-
-        public int PatternId { get; set; }
-        public bool OverwriteExisting { get; set; }
-    }
+    //    public int PatternId { get; set; }
+    //    public bool OverwriteExisting { get; set; }
+    //}
 
 
 
@@ -41,24 +40,21 @@ namespace App.UI.Web.Models
         public string DepartmentCode { get; set; }
         public int? EmployeeId { get; set; }
 
-        public ScheduleModel Modal { get; set; }
 
-        public int PatternId { get; set; }
-        public bool OverwriteExisting { get; set; }
-        public List<EmployeeScheduleRow> Employees { get; set; } = new();
+        public int ModalYear { get; set; }
+        public int ModalMonth { get; set; }
+
+        public string ModalDepartmentCode { get; set; }
+        public int? ModalEmployeeId { get; set; }
+        //public ScheduleModel Modal { get; set; }
+
+        public int ModalPatternId { get; set; }
+        public bool ModalOverwriteExisting { get; set; }
+        public List<EmployeeDto> Employees { get; set; } = new();
         public List<ShiftDto> Shifts { get; set; } = new();
         public List<ShiftPatternDto> ShiftPatterns { get; set; } = new();
 
         public List<DepartmentDto> Departments { get; set; } = new();
     }
 
-    public class EmployeeScheduleRow
-    {
-        public int EmployeeId { get; set; }
-
-        public string EmployeeNo { get; set; } = "";
-        public string EmployeeName { get; set; } = "";
-
-        public Dictionary<int, int?> DailyShifts { get; set; } = new();
-    }
 }
