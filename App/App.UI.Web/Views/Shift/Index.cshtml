@@ -18,9 +18,7 @@
     </div>
 
     <div class="card-body">
-
         <div class="row mb-3">
-
             <div class="col-md-2">
                 <select asp-for="Year"
                         class="form-select">
@@ -45,13 +43,13 @@
             </div>
 
             <div class="col-md-3">
-                <select class="form-select">
+                <select id="DepartmentCode" class="form-select">
                     <option>All Departments</option>
                 </select>
             </div>
 
             <div class="col-md-3">
-                <select class="form-select">
+                <select id="EmployeeId" class="form-select">
                     <option>All Employees</option>
                 </select>
             </div>
@@ -66,103 +64,92 @@
 
         <div class="mb-3">
 
-            @*     <button class="btn btn-success">
+            @*
+            <button class="btn btn-success">
                 Generate Schedule
-            </button> *@
+            </button> 
+            *@
             <button class="btn btn-success"
                     data-bs-toggle="modal"
                     data-bs-target="#generateScheduleModal">
                 <i class="bi bi-calendar-plus"></i>
                 Generate Schedule
             </button>
-
             <button class="btn btn-secondary">
                 Copy Previous Month
             </button>
-
             <button class="btn btn-outline-success">
                 Export Excel
             </button>
-
             <button class="btn btn-outline-danger">
                 Export PDF
             </button>
-
         </div>
 
-        <div class="table-responsive">
-
+        <div class="table-responsive">          
+            <table id="main-table"
+                   class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Emp No</th>
+                        <th>Employee</th>
+                        @for (int day = 1; day <= daysInMonth; day++)
+                        {
+                            <th>@day</th>
+                        }
+                    </tr>
+                </thead>
+            </table>
+        @*     
             <table class="table table-bordered table-sm align-middle">
-
                 <thead class="table-light">
-
                     <tr>
                         <th style="min-width:80px">
                             Emp No
                         </th>
-
                         <th style="min-width:220px">
                             Employee
                         </th>
-
                         @for (int day = 1; day <= daysInMonth; day++)
                         {
                             <th class="text-center">
                                 @day
                             </th>
                         }
-
                     </tr>
-
                 </thead>
-
                 <tbody>
-
                     @foreach (var emp in Model.Employees)
                     {
                         <tr>
-
                             <td>
                                 @emp.EmployeeNo
                             </td>
-
                             <td>
                                 @emp.EmployeeName
                             </td>
-
                             @for (int day = 1; day <= daysInMonth; day++)
                             {
                                 <td style="min-width:80px">
-
                                     <select class="form-select form-select-sm">
-
                                         <option value="">
                                             -
                                         </option>
-
                                         @foreach (var shift in Model.Shifts)
                                         {
                                             <option value="@shift.Id">
                                                 @shift.ShiftCode
                                             </option>
                                         }
-
                                     </select>
-
                                 </td>
                             }
-
                         </tr>
                     }
-
                 </tbody>
-
-            </table>
-
+            </table> *@
         </div>
-
     </div>
-
 </div>
 
 
@@ -185,7 +172,7 @@
                     <label class="form-label">
                         Year
                     </label>
-                    <select id="Year"
+                    <select id="Modal.Year"
                             class="form-select">
                         <option>2026</option>
                     </select>
@@ -194,17 +181,17 @@
                     <label class="form-label">
                         Month
                     </label>
-                    <select id="Month"
+                    <select id="Modal.Month"
                             class="form-select">
                         <option value="6">June</option>
                     </select>
                 </div>
                 <div class="mb-3">
                  
-                    <label asp-for="DepartmentCode" class="form-label">
+                    <label asp-for="Modal.DepartmentCode" class="form-label">
                         Department
                     </label>
-                    <select asp-for="DepartmentCode" class="form-select">
+                    <select asp-for="Modal.DepartmentCode" class="form-select">
                         <option value=""> -- Select Department -- </option>
                         @foreach (var department in Model.Departments)
                         {
@@ -216,10 +203,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="PatternId" class="form-label">
+                    <label asp-for="Modal.PatternId" class="form-label">
                         Schedule Pattern
                     </label>
-                    <select asp-for="PatternId" class="form-select">
+                    <select asp-for="Modal.PatternId" class="form-select">
                         <option value=""> -- Select Pattern -- </option>
                         @foreach (var pattern in Model.ShiftPatterns)
                         {
@@ -262,11 +249,121 @@
     </div>
 
 </div>
+<style>
+    th, td {
+        background-color: #fff; /* Or whatever matches your theme */
+    }
+</style>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
+            let table;
+            // function loadSchedule() {
+            //     let year = $('#Year').val();
+            //     let month = $('#Month').val();
+            //     let daysInMonth = new Date(year, month, 0).getDate();
+
+            //     if ($.fn.DataTable.isDataTable('#main-table')) {
+            //         table.destroy();
+            //         $('#main-table').empty();
+            //     }
+
+            //     table = $('#main-table').DataTable({
+            //         processing: true,
+            //         serverSide: true,
+            //         searching: true,
+            //         scrollX: true,         // Required for horizontal scrolling
+            //         scrollCollapse: true,  // Optional: visually cleaner if table has few rows
+            //         autoWidth: false,
+        
+            //         // --- ADD THIS BLOCK TO FREEZE THE COLUMNS ---
+            //         fixedColumns: {
+            //             left: 2 // Freezes the first 2 columns (Emp No and Employee)
+            //         },
+            //         // --------------------------------------------
+
+            //         ajax: {
+            //             url:  
+            //             type: 'POST',
+            //             contentType: 'application/json',
+            //             data: function (d) {
+            //                 d.year = year;
+            //                 d.month = month;
+            //                 d.departmentCode = $('#DepartmentCode').val();
+            //                 d.employeeId = $('#EmployeeId').val();
+            //                 return JSON.stringify(d);
+            //             }
+            //         },
+            //         columns: buildColumns(daysInMonth)
+            //     });
+            // }
+         function buildColumns(daysInMonth) {
+             let columns = [
+                 {
+                     data: 'employeeId',
+                     title: 'Emp No'
+                 },
+                 {
+                     data: 'fullName',
+                     title: 'Employee'
+                 }
+             ];
+         
+             for (let i = 1; i <= daysInMonth; i++) 
+             {
+                 columns.push({
+                     data: 'day' + i,
+                     title: i.toString(),
+                     className: 'text-center'
+                 });
+             }
+             return columns;
+         }
+
+  
+        function loadSchedule() {
+            let year = $('#Year').val();
+            let month = $('#Month').val();
+            let daysInMonth = new Date(year, month, 0).getDate();
+            if ($.fn.DataTable.isDataTable('#main-table')) {
+                table.destroy();
+                $('#main-table').empty();
+            }
+
+            table = $('#main-table').DataTable({
+                processing: true,
+                serverSide: true,
+                searching: true,
+                scrollX: true,
+                scrollCollapse: true,  // Optional: visually cleaner if table has few rows
+                autoWidth: false,
+                fixedColumns: {
+                    left: 2 // Freezes the first 2 columns (Emp No and Employee)
+                },
+                ajax: {
+                    url: '@Url.Action("GetList", "Shift")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (d) {
+                        d.year = year;
+                        d.month = month;
+                        d.departmentCode = $('#DepartmentCode').val();
+                        d.employeeId = $('#EmployeeId').val();
+                        return JSON.stringify(d);
+                    }
+                },
+                columns: buildColumns(daysInMonth)
+            });
+        }
+
         $(document).ready(function () {
+            // $('#btnSearch').on('click', function () {
+                loadSchedule();
+            // });
+
             $('#btnGenerate').click(function () {
                 $.ajax({
                     url: '@Url.Action("GenerateSchedule", "Shift")',
@@ -281,15 +378,13 @@
                     success: function (response) {
                         alert('okeee sukse' + response.success)
                         if (response.success) {
-
                             $('#generateScheduleModal').modal('hide');
-
                             location.reload();
                         }
                     }
                 });
-
             });
+
         });
     </script>
 }

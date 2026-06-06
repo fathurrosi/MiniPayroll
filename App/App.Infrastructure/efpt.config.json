@@ -19,51 +19,11 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[Approvals]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Attendances]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[AuditLogs]",
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[BPJSConfigurations]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[EmployeeLeaves]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Employees]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[EmployeeTHR]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[LeaveTypes]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Overtimes]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[PayrollDetails]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[PayrollPeriods]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Payrolls]",
          "ObjectType": 0
       },
       {
@@ -245,6 +205,10 @@
       {
          "Name": "[dbo].[tbl_Users]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[vw_EmployeeMonthlySchedule]",
+         "ObjectType": 3
       }
    ],
    "UiHint": null,

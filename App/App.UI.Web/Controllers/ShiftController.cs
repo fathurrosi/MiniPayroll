@@ -73,7 +73,7 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetList([FromBody] DataTableRequest model)
+        public async Task<IActionResult> GetList([FromBody] ScheduleDataTableRequest model)
         {
             try
             {

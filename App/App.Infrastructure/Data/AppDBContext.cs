@@ -108,6 +108,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblUserRole> TblUserRoles { get; set; }
 
+    public virtual DbSet<VwEmployeeMonthlySchedule> VwEmployeeMonthlySchedules { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AuditLog>(entity =>
@@ -991,6 +993,115 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<VwEmployeeMonthlySchedule>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_EmployeeMonthlySchedule");
+
+            entity.Property(e => e.Day1)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day10)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day11)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day12)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day13)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day14)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day15)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day16)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day17)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day18)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day19)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day2)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day20)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day21)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day22)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day23)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day24)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day25)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day26)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day27)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day28)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day29)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day3)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day30)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day31)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day4)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day5)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day6)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day7)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day8)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day9)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.EmployeeCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.FullName)
+                .IsRequired()
+                .HasMaxLength(255)
+                .IsUnicode(false);
         });
 
         OnModelCreatingPartial(modelBuilder);

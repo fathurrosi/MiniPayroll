@@ -22,15 +22,16 @@ namespace App.Infrastructure.Services.Masters
         private readonly IGenericRepository<TblShiftPatternDetail> _ShiftPatternDetailRepo;
         private readonly ILogger<ShiftService> _logger;
         private readonly IContextService _context;
+        private readonly IGenericRepository<VwEmployeeMonthlySchedule> _monthlyScheduleViewRepo;
         public ShiftService(
             ILogger<ShiftService> logger,
-           IGenericRepository<TblShift> ShiftRepo,
-           IContextService context, IGenericRepository<TblEmployee> empRepo,
-           IGenericRepository<TblEmployeeShiftSchedule> shiftScheduleRepo,
-       IGenericRepository<TblShiftPattern> ShiftPatternRepo,
-         IGenericRepository<TblShiftPatternDetail> ShiftPatternDetailRepo,
-
-        IMapper mapper)
+            IGenericRepository<TblShift> ShiftRepo,
+            IContextService context, IGenericRepository<TblEmployee> empRepo,
+            IGenericRepository<TblEmployeeShiftSchedule> shiftScheduleRepo,
+            IGenericRepository<TblShiftPattern> ShiftPatternRepo,
+            IGenericRepository<TblShiftPatternDetail> ShiftPatternDetailRepo,
+            IGenericRepository<VwEmployeeMonthlySchedule> monthlyScheduleViewRepo,
+            IMapper mapper)
         {
             _empRepo = empRepo;
             _logger = logger;
@@ -40,11 +41,12 @@ namespace App.Infrastructure.Services.Masters
             _context = context;
             _ShiftPatternRepo = ShiftPatternRepo;
             _ShiftPatternDetailRepo = ShiftPatternDetailRepo;
+            _monthlyScheduleViewRepo = monthlyScheduleViewRepo;
         }
 
         public async Task GenerateAsync(GenerateScheduleRequest request)
         {
-            //var employees = await _employeeRepo.GetByDepartmentAsync( request.DepartmentId);
+
             var employees = await _empRepo.GetListAsync();
 
             var daysInMonth = DateTime.DaysInMonth(request.Year, request.Month);
@@ -67,8 +69,8 @@ namespace App.Infrastructure.Services.Masters
                 }
             }
         }
-         
-        private async Task<int> DetermineShiftAsync( TblEmployee employee, DateTime date, int patternId)
+
+        private async Task<int> DetermineShiftAsync(TblEmployee employee, DateTime date, int patternId)
         {
             // 1. Get pattern details (ordered)
             var patternDetails = await _ShiftPatternDetailRepo.GetListAsync(x => x.PatternId == patternId);
@@ -124,12 +126,12 @@ namespace App.Infrastructure.Services.Masters
             return await _ShiftRepo.Remove(entity);
         }
 
-        public async Task<PagedResponse<ShiftDto>> GetPagedAsync(DataTableRequest model)
+        public async Task<PagedResponse<EmployeeMonthlyScheduleDto>> GetPagedAsync(ScheduleDataTableRequest model)
         {
             try
             {
-                var entityResult = await _ShiftRepo.GetPagedAsync(model);
-                return entityResult.MapPaged<TblShift, ShiftDto>(_mapper, model);
+                var entityResult = await _monthlyScheduleViewRepo.GetPagedAsync(model);
+                return entityResult.MapPaged<VwEmployeeMonthlySchedule, EmployeeMonthlyScheduleDto>(_mapper, model);
             }
             catch (Exception ex)
             {

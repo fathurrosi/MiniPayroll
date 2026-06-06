@@ -18,6 +18,20 @@ namespace App.UI.Web.Models
         public bool RememberMe { get; set; }
     }
 
+    public sealed class ScheduleModel
+    {
+        public int Year { get; set; }
+        public int Month { get; set; }
+
+        public string DepartmentCode { get; set; }
+        public int? EmployeeId { get; set; }
+
+
+        public int PatternId { get; set; }
+        public bool OverwriteExisting { get; set; }
+    }
+
+
 
     public class ShiftScheduleModel
     {
@@ -26,6 +40,8 @@ namespace App.UI.Web.Models
 
         public string DepartmentCode { get; set; }
         public int? EmployeeId { get; set; }
+
+        public ScheduleModel Modal { get; set; }
 
         public int PatternId { get; set; }
         public bool OverwriteExisting { get; set; }
