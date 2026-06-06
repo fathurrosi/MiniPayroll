@@ -510,15 +510,19 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_Holiday");
 
-            entity.Property(e => e.CreatedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.HolidayDate).HasColumnType("date");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.HolidayDate).HasColumnType("datetime");
             entity.Property(e => e.HolidayName)
                 .IsRequired()
                 .HasMaxLength(200)
                 .IsUnicode(false);
-            entity.Property(e => e.IsNationalHoliday).HasDefaultValue(true);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblLeaveRequest>(entity =>

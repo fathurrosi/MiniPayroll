@@ -15,13 +15,25 @@ public partial class TblHoliday
     [Key]
     public int Id { get; set; }
 
-    public DateOnly HolidayDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime HolidayDate { get; set; }
 
     [StringLength(200)]
     [Unicode(false)]
     public string HolidayName { get; set; } = null!;
 
-    public bool IsNationalHoliday { get; set; }
+    public bool? IsNationalHoliday { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }
