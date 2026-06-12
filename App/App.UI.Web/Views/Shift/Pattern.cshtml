@@ -1,0 +1,471 @@
+﻿@model ShiftScheduleModel
+
+@{
+    int daysInMonth = DateTime.DaysInMonth(Model.Year, Model.Month);
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm full-height-card">
+            <div class="card-header py-2 px-3 bg-light">
+
+                <div class="d-flex align-items-center">
+
+                    <h6 class="mb-0 fw-semibold">
+                        Shift Schedule
+                    </h6>
+
+                    <div class="ms-auto d-flex gap-2">
+                        <button type="button" class="btn btn-success" onclick="openShiftModal()">
+                            <i class="fas fa-plus mr-1"></i> Add New Shift
+                        </button>
+
+                        <button class="btn btn-success"
+                                data-bs-toggle="modal"
+                                data-bs-target="#generateScheduleModal">
+                            <i class="bi bi-calendar-plus"></i>
+                            Generate Schedule
+                        </button>
+
+                        <button class="btn btn-secondary">
+                            Copy Previous Month
+                        </button>
+
+                        <button class="btn btn-outline-success">
+                            Export Excel
+                        </button>
+
+                        <button class="btn btn-outline-danger">
+                            Export PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Body -->
+            <div class="card-body p-2">
+                
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <select asp-for="Year"
+                                class="form-select">
+                            @for (int i = DateTime.Now.Year - 2; i <= DateTime.Now.Year + 2; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select asp-for="Month"
+                                class="form-select">
+
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@i">
+                                    @(new DateTime(2000, i, 1).ToString("MMMM"))
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select asp-for="DepartmentCode" class="form-select">
+                            <option value=""> -- Select Department -- </option>
+                            @foreach (var department in Model.Departments)
+                            {
+                                <option value="@department.DepartmentCode">
+                                    @department.DepartmentName
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select asp-for="EmployeeId" class="form-select">
+                            <option value=""> -- Select Employee -- </option>
+                            @foreach (var emp in Model.Employees)
+                            {
+                                <option value="@emp.EmployeeId">
+                                    @emp.FullName
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 text-end">
+                        <button class="btn btn-primary">
+                            Search
+                        </button>
+                    </div>
+
+                </div>
+
+ 
+                <div class="table-responsive">
+                    <table id="main-table"
+                           class="table table-sm table-striped table-hover align-middle w-100 mb-0">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+</div>
+
+<div class="modal fade"
+     id="generateScheduleModal"
+     tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Generate Shift Schedule
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">
+                        Year
+                    </label>
+                    <select id="ModalYear"
+                            class="form-select">
+                        <option>2026</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        Month
+                    </label>
+                    <select id="ModalMonth"
+                            class="form-select">
+                        <option value="6">June</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                 
+                    <label asp-for="ModalDepartmentCode" class="form-label">
+                        Department
+                    </label>
+                    <select asp-for="ModalDepartmentCode" class="form-select">
+                        <option value=""> -- Select Department -- </option>
+                        @foreach (var department in Model.Departments)
+                        {
+                            <option value="@department.DepartmentCode">
+                                @department.DepartmentName
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ModalPatternId" class="form-label">
+                        Schedule Pattern
+                    </label>
+                    <select asp-for="ModalPatternId" class="form-select">
+                        <option value=""> -- Select Pattern -- </option>
+                        @foreach (var pattern in Model.ShiftPatterns)
+                        {
+                            <option value="@pattern.Id">
+                                @pattern.PatternName
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="ModalOverwriteExisting">
+                    <label class="form-check-label">
+                        Overwrite Existing Schedule
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button id="btnGenerate"
+                        type="button"
+                        class="btn btn-success">
+                    Generate
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal-shift-setup" tabindex="-1" role="dialog" aria-labelledby="shiftModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="shiftModalLabel"><i class="fas fa-clock mr-2"></i> Shift Setup</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form-shift-setup">
+                <div class="modal-body">
+                    <input type="hidden" id="ShiftId" name="Id" value="0" />
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="ShiftCode">Shift Code <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="ShiftCode" name="ShiftCode" placeholder="e.g., M, NIGHT12" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="ShiftName">Shift Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="ShiftName" name="ShiftName" placeholder="e.g., Morning Shift" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="StartTime">Start Time <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control" id="StartTime" name="StartTime" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="EndTime">End Time <span class="text-danger">*</span></label>
+                            <input type="time" class="form-control" id="EndTime" name="EndTime" required>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="BreakStart">Break Start</label>
+                            <input type="time" class="form-control" id="BreakStart" name="BreakStart">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="BreakEnd">Break End</label>
+                            <input type="time" class="form-control" id="BreakEnd" name="BreakEnd">
+                        </div>
+                    </div>
+
+                    <div class="row pt-2">
+                        <div class="col-md-4 form-group">
+                            <label for="WorkingHours">Working Hours <span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" class="form-control" id="WorkingHours" name="WorkingHours" placeholder="8.00" required>
+                        </div>
+                        
+                        <div class="col-md-4 form-group d-flex align-items-center justify-content-center" style="margin-top: 1.8rem;">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="IsOvernight" name="IsOvernight">
+                                <label for="IsOvernight" class="custom-control-label">Crosses Midnight (Overnight)</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 form-group d-flex align-items-center justify-content-center" style="margin-top: 1.8rem;">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" id="IsActive" name="IsActive" checked>
+                                <label for="IsActive" class="custom-control-label">Active</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save Shift</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    th, td {
+        background-color: #fff; /* Or whatever matches your theme */
+    }
+</style>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+         let table;
+         function buildColumns(daysInMonth) {
+             let columns = [
+                 {
+                     data: 'rowNumber',
+                     title: 'No.'
+                 },
+                 {
+                     data: 'employeeName',
+                     title: 'Employee'
+                 }
+             ];
+         
+             for (let i = 1; i <= daysInMonth; i++)
+             {
+                 columns.push({
+                     data: 'day' + i,
+                     title: 'Day ' + i.toString(),
+                     className: 'text-center'
+                 });
+             }
+             return columns;
+         }
+
+        
+        function loadSchedule() {
+            let year = $('#Year').val();
+            let month = $('#Month').val();
+            let daysInMonth = new Date(year, month, 0).getDate();
+            if ($.fn.DataTable.isDataTable('#main-table')) {
+                table.destroy();
+                $('#main-table').empty();
+            }
+
+            table = $('#main-table').DataTable({
+                processing: true,
+                serverSide: true,
+                searching: true,
+                scrollX: true,
+                scrollCollapse: true,  // Optional: visually cleaner if table has few rows
+                autoWidth: false,
+                fixedColumns: {
+                    left: 2 // Freezes the first 2 columns (Emp No and Employee)
+                },
+                ajax: {
+                    url: '@Url.Action("GetList", "Shift")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (d) {
+                        d.year = year;
+                        d.month = month;
+                        d.departmentCode = $('#DepartmentCode').val();
+                        d.employeeId = $('#EmployeeId').val();
+                        return JSON.stringify(d);
+                    }
+                },
+                columns: buildColumns(daysInMonth)
+            });
+        }
+
+        $(document).ready(function () {
+            // $('#btnSearch').on('click', function () {
+                loadSchedule();
+            // });
+
+            $('#btnGenerate').click(function () {
+                $.ajax({
+                    url: '@Url.Action("GenerateSchedule", "Shift")',
+                    type: 'POST',
+                    data: {
+                        year: $('#ModalYear').val(),
+                        month: $('#ModalMonth').val(),
+                        departmentCode: $('#ModalDepartmentCode').val(),
+                        patternId: $('#ModalPatternId').val(),
+                        overwriteExisting: $('#ModalOverwriteExisting').is(':checked')
+                    },
+                    success: function (response) {
+                        alert('okeee sukse' + response.success)
+                        if (response.success) {
+                            $('#generateScheduleModal').modal('hide');
+                            location.reload();
+                        }
+                    }
+                });
+            });
+
+             // Handle Form Submission via AJAX
+            $('#form-shift-setup').on('submit', function (e) {
+                e.preventDefault(); // Stop normal page reload
+
+                // Build the payload object matching tbl_Shift properties
+                let formData = {
+                    Id: parseInt($('#ShiftId').val()),
+                    ShiftCode: $('#ShiftCode').val(),
+                    ShiftName: $('#ShiftName').val(),
+                    StartTime: $('#StartTime').val(),
+                    EndTime: $('#EndTime').val(),
+                    BreakStart: $('#BreakStart').val() || null,
+                    BreakEnd: $('#BreakEnd').val() || null,
+                    WorkingHours: parseFloat($('#WorkingHours').val()),
+                    IsOvernight: $('#IsOvernight').is(':checked'),
+                    IsActive: $('#IsActive').is(':checked')
+                };
+
+                $.ajax({
+                    url: '@Url.Action("SaveShift", "Shift")', // Your Controller Action
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        if (response.success) {
+                            // Hide modal
+                            $('#modal-shift-setup').modal('hide');
+                
+                            // Refresh your master DataTables list if you have one on the screen
+                            if (typeof table !== 'undefined') { table.ajax.reload(); }
+                
+                            alert('Shift saved successfully!');
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Something went wrong communicating with the server.');
+                    }
+                });
+            });
+            // end onabort ready==============================================
+        });
+
+                // Function to open Modal for creating a NEW shift
+        function openShiftModal() {
+            // Reset form fields
+            $('#form-shift-setup')[0].reset();
+            $('#ShiftId').val(0); // 0 means new record
+            $('#IsActive').prop('checked', true);
+            $('#IsOvernight').prop('checked', false);
+    
+            // Change Title to Add
+            $('#shiftModalLabel').html('<i class="fas fa-plus mr-2"></i> Add New Shift');
+    
+            // Open the Bootstrap modal
+            $('#modal-shift-setup').modal('show');
+        }
+
+        // Function to open Modal for EDITING an existing shift
+        function editShift(shiftData) {
+            $('#shiftModalLabel').html('<i class="fas fa-edit mr-2"></i> Edit Shift');
+    
+            // Populate form fields from the database row data
+            $('#ShiftId').val(shiftData.id);
+            $('#ShiftCode').val(shiftData.shiftCode);
+            $('#ShiftName').val(shiftData.shiftName);
+    
+            // Time inputs usually accept "HH:mm" format, slice if server sends seconds
+            $('#StartTime').val(shiftData.startTime ? shiftData.startTime.substring(0,5) : '');
+            $('#EndTime').val(shiftData.endTime ? shiftData.endTime.substring(0,5) : '');
+            $('#BreakStart').val(shiftData.breakStart ? shiftData.breakStart.substring(0,5) : '');
+            $('#BreakEnd').val(shiftData.breakEnd ? shiftData.breakEnd.substring(0,5) : '');
+    
+            $('#WorkingHours').val(shiftData.workingHours);
+            $('#IsOvernight').prop('checked', shiftData.isOvernight);
+            $('#IsActive').prop('checked', shiftData.isActive);
+
+            $('#modal-shift-setup').modal('show');
+        }
+
+       
+    </script>
+}

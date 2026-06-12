@@ -1,0 +1,5 @@
+ .asp-key-readonly {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    pointer-events: none;
+}

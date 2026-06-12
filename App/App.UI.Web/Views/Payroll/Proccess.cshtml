@@ -1,0 +1,235 @@
+﻿@using App.Domain.Models
+@using App.Domain.Models.Dto
+@model PageModel<EmployeeDto>
+@{
+    ViewData["Title"] = "Create Profile";
+}
+
+<link href="~/css/payslip.css" rel="stylesheet" />
+ 
+
+<div class="container">
+    <div class="payslip-container">
+
+        <!-- Header -->
+        <div class="row align-items-start mb-4">
+            <div class="col-md-4">
+                <img src="/images/company-logo.png"
+                     alt="Company Logo"
+                     class="company-logo">
+
+                <div class="mt-2">
+                    <h4 class="mb-1">PT PANDAWA KARYA CITRA</h4>
+                    <div>
+                        Jl. Perintis Kemerdekaan, Pertokoan Pulomas Blok IV No. 10,
+                        Jakarta Timur
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 text-center">
+                <div class="payslip-title">Payslip - IDR</div>
+                <div class="mt-2">2026-04-28 (Apr)</div>
+            </div>
+
+            <div class="col-md-4 text-end">
+                <img src="/images/powered-logo.png"
+                     alt="Powered By"
+                     style="max-height: 40px;">
+            </div>
+        </div>
+
+        <!-- Employee Information -->
+        <div class="row">
+            <div class="col-md-6">
+                <table class="table table-borderless table-sm mb-0">
+                    <tr>
+                        <td class="label-col">Name</td>
+                        <td>: Fathur Rosi</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Gender</td>
+                        <td>: Male</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Employee No</td>
+                        <td>: 15481</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Position</td>
+                        <td>: .Net Developer</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Cost Center</td>
+                        <td>: P-17-0140-398</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Organization Unit</td>
+                        <td>: IT Staff Outs Dept</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Work Location</td>
+                        <td>: Project KEM</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Employment Status</td>
+                        <td>: Contract</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <table class="table table-borderless table-sm mb-0">
+                    <tr>
+                        <td class="label-col">Job Status</td>
+                        <td>: Direct Worker</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">IC/Passport</td>
+                        <td>: 3526132012840004</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Tax Ref No</td>
+                        <td>: -</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Tax Status</td>
+                        <td>: L-K3</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">BPJS KS Number</td>
+                        <td>: 0001716808195</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">BPJS TK Number</td>
+                        <td>: 25169154801</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Salary Section -->
+        <div class="section-card">
+
+            <div class="row g-0">
+
+                <!-- Allowance -->
+                <div class="col-md-6 border-end">
+                    <div class="section-header">
+                        Allowance
+                    </div>
+
+                    <table class="table table-borderless table-sm mb-0">
+                        <tr>
+                            <td>Salary</td>
+                            <td class="amount">9,500,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Competency</td>
+                            <td class="amount">850,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Jabatan</td>
+                            <td class="amount">1,500,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Uang Makan (OS)</td>
+                            <td class="amount">400,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Uang Transport</td>
+                            <td class="amount">649,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Tax Allowance</td>
+                            <td class="amount">151,357.00</td>
+                        </tr>
+
+                        <tr class="total-row">
+                            <td>Total</td>
+                            <td class="amount">13,050,357.00</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- Deduction -->
+                <div class="col-md-6">
+                    <div class="section-header">
+                        Deduction
+                    </div>
+
+                    <table class="table table-borderless table-sm mb-0">
+                        <tr>
+                            <td>JHT KARY</td>
+                            <td class="amount">190,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>BPJS Kesehatan KARY</td>
+                            <td class="amount">95,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Jaminan Pensiun KARY</td>
+                            <td class="amount">95,000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Tax</td>
+                            <td class="amount">539,266.00</td>
+                        </tr>
+
+                        <tr class="total-row">
+                            <td>Total</td>
+                            <td class="amount">919,266.00</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Other Information -->
+        <div class="section-card">
+
+            <div class="section-header">
+                Other Information
+            </div>
+
+            <table class="table table-borderless table-sm mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-end">Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Grade</td>
+                        <td class="amount">4.00</td>
+                    </tr>
+
+                    <tr>
+                        <td>Total WFH</td>
+                        <td class="amount">5.00</td>
+                    </tr>
+
+                    <tr>
+                        <td>Total WFO</td>
+                        <td class="amount">15.00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+ 
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

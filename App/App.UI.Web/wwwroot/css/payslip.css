@@ -1,0 +1,75 @@
+﻿body {
+    background-color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.payslip-container {
+    background: #fff;
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.company-logo {
+    max-height: 70px;
+}
+
+.section-card {
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.section-header {
+    background: #f1f1f1;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.table td {
+    padding: 4px 8px;
+    vertical-align: top;
+}
+
+.label-col {
+    width: 160px;
+    font-weight: 600;
+    color: #333;
+}
+
+.amount {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.total-row {
+    font-weight: 700;
+    border-top: 1px solid #ccc;
+}
+
+.payslip-title {
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.small-text {
+    font-size: 13px;
+    color: #666;
+}
+
+@media print {
+    body {
+        background: white;
+    }
+
+    .payslip-container {
+        box-shadow: none;
+        margin: 0;
+        max-width: 100%;
+    }
+}

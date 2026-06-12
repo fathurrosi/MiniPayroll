@@ -1,0 +1,91 @@
+﻿@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+}<style>
+ 
+     .breadcrumb-modern {
+         background: #fff;
+         padding: 10px 0;
+         font-family: "Segoe UI", Arial, sans-serif;
+         margin-left: 20px;
+     }
+
+        .breadcrumb-modern ol {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .breadcrumb-modern li {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            line-height: 1;
+        }
+
+            /* Separator */
+            .breadcrumb-modern li + li::before {
+                content: "›";
+                margin: 0 12px;
+                color: #c0c4cc;
+                font-size: 18px;
+                font-weight: 300;
+            }
+
+        .breadcrumb-modern a,
+        .breadcrumb-modern .active {
+            display: flex;
+            align-items: center;
+        }
+
+            .breadcrumb-modern a::before,
+            .breadcrumb-modern .active::before {
+                content: "";
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                border: 3px solid #5fa8ff;
+                margin-right: 8px;
+                box-sizing: border-box;
+                flex-shrink: 0;
+            }
+
+        .breadcrumb-modern .active {
+            color: #333;
+            font-weight: 500;
+        }
+
+            .breadcrumb-modern .active::before {
+                border-color: #555;
+            }
+</style>
+
+<nav class="breadcrumb-modern" aria-label="breadcrumb">
+    <ol>
+        <li>
+            <a asp-controller="Home"
+                   asp-action="Index">
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a asp-controller="@controller"
+                   asp-action="Index">
+                @controller
+            </a>
+        </li>
+          
+
+        @* @if (!string.Equals(action, "Index", StringComparison.OrdinalIgnoreCase))
+        { *@
+            <li>
+                <span class="active">@action</span>
+            </li>
+       @*  } *@
+    </ol>
+</nav> 
