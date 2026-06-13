@@ -27,6 +27,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[SERILOG]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[TaxBrackets]",
          "ObjectType": 0
       },
@@ -119,6 +123,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_Menus_02]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_Overtime]",
          "ObjectType": 0
       },
@@ -208,6 +216,14 @@
       },
       {
          "Name": "[dbo].[vw_EmployeeMonthlySchedule]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_EmployeeMonthlySchedule_backup]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_EmployeeMonthlySchedule_Without_IsRest_Field]",
          "ObjectType": 3
       }
    ],

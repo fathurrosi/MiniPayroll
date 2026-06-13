@@ -340,7 +340,7 @@ namespace App.Infrastructure.Services.Settings
             if (entity != null)
             {
                 user = _mapper.Map<UserDto>(entity);
-                var menuEntities = await _menuRepo.GetListAsync();
+                var menuEntities = await _menuRepo.GetListAsync(t=> t.Deleted != 1);
 
                 List<MenuDto> result = new List<MenuDto>();
                 var parentList = menuEntities.Where(t => string.IsNullOrEmpty(t.ParentId)).ToList();

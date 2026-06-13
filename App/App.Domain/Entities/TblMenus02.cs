@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_Menus")]
-public partial class TblMenu
+[Table("tbl_Menus_02")]
+public partial class TblMenus02
 {
     [Key]
     [StringLength(255)]
@@ -52,6 +52,4 @@ public partial class TblMenu
     [StringLength(50)]
     [Unicode(false)]
     public string? UpdatedBy { get; set; }
-
-    public int? Deleted { get; set; }
 }

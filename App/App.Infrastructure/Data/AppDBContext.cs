@@ -18,6 +18,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<PayrollPeriod> PayrollPeriods { get; set; }
 
+    public virtual DbSet<Serilog> Serilogs { get; set; }
+
     public virtual DbSet<TaxBracket> TaxBrackets { get; set; }
 
     public virtual DbSet<TblAllowance> TblAllowances { get; set; }
@@ -63,6 +65,8 @@ public partial class AppDBContext : DbContext
     public virtual DbSet<TblLeaveType> TblLeaveTypes { get; set; }
 
     public virtual DbSet<TblMenu> TblMenus { get; set; }
+
+    public virtual DbSet<TblMenus02> TblMenus02s { get; set; }
 
     public virtual DbSet<TblOvertime> TblOvertimes { get; set; }
 
@@ -110,6 +114,10 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<VwEmployeeMonthlySchedule> VwEmployeeMonthlySchedules { get; set; }
 
+    public virtual DbSet<VwEmployeeMonthlyScheduleBackup> VwEmployeeMonthlyScheduleBackups { get; set; }
+
+    public virtual DbSet<VwEmployeeMonthlyScheduleWithoutIsRestField> VwEmployeeMonthlyScheduleWithoutIsRestFields { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AuditLog>(entity =>
@@ -130,9 +138,17 @@ public partial class AppDBContext : DbContext
             entity.HasKey(e => e.PayrollPeriodId).HasName("PK__PayrollP__06190D36A30FFDD5");
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.IsClosed).HasDefaultValue(false);
-            entity.Property(e => e.StartDate).HasColumnType("date");
+        });
+
+        modelBuilder.Entity<Serilog>(entity =>
+        {
+            entity.ToTable("SERILOG");
+
+            entity.Property(e => e.Level).HasMaxLength(16);
+            entity.Property(e => e.MachineName).HasMaxLength(100);
+            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            entity.Property(e => e.Username).HasMaxLength(256);
         });
 
         modelBuilder.Entity<TaxBracket>(entity =>
@@ -186,7 +202,6 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
-            entity.Property(e => e.WorkDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<TblAttendance1>(entity =>
@@ -195,7 +210,6 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_Attendances");
 
-            entity.Property(e => e.AttendanceDate).HasColumnType("date");
             entity.Property(e => e.AttendanceStatus)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -223,7 +237,6 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_BiayaJabatanConfig");
 
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.MaxMonthly).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.MaxYearly).HasColumnType("decimal(18, 2)");
@@ -237,7 +250,6 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_BPJSKesehatanConfig");
 
             entity.Property(e => e.CompanyRate).HasColumnType("decimal(5, 4)");
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.EmployeeRate).HasColumnType("decimal(5, 4)");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.SalaryCap).HasColumnType("decimal(18, 2)");
@@ -249,7 +261,6 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_BPJSKetenagakerjaanConfig");
 
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.JhtCompanyRate)
                 .HasColumnType("decimal(5, 4)")
@@ -350,7 +361,9 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.BankName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.BasicSalary)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__Basic__625A9A57")
+                .HasColumnType("decimal(18, 2)");
             entity.Property(e => e.BirthDate).HasColumnType("datetime");
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(50)
@@ -405,8 +418,6 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
-            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
@@ -417,8 +428,6 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_EmployeeDeduction");
 
             entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
-            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
@@ -429,7 +438,6 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_EmployeePayroll");
 
             entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.IsBpjskesehatan)
                 .HasDefaultValue(true)
@@ -478,8 +486,6 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.EffectiveFrom).HasColumnType("date");
-            entity.Property(e => e.EffectiveTo).HasColumnType("date");
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -538,11 +544,9 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.Reason)
                 .HasMaxLength(500)
                 .IsUnicode(false);
-            entity.Property(e => e.StartDate).HasColumnType("date");
             entity.Property(e => e.Status)
                 .IsRequired()
                 .HasMaxLength(20)
@@ -561,11 +565,9 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .HasDefaultValue("Pending");
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.LeaveType)
                 .IsRequired()
                 .HasMaxLength(100);
-            entity.Property(e => e.StartDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<TblLeaveType>(entity =>
@@ -614,6 +616,36 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<TblMenus02>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Menu__3214EC07492916EA");
+
+            entity.ToTable("tbl_Menus_02");
+
+            entity.Property(e => e.Id).HasMaxLength(255);
+            entity.Property(e => e.Caption)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Css).HasMaxLength(255);
+            entity.Property(e => e.Icon).HasMaxLength(255);
+            entity.Property(e => e.Link)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.MenuTitle).HasMaxLength(255);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.ParentId).HasMaxLength(255);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<TblOvertime>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC07327E2243");
@@ -631,7 +663,6 @@ public partial class AppDBContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.EndTime).HasColumnType("datetime");
-            entity.Property(e => e.OvertimeDate).HasColumnType("date");
             entity.Property(e => e.Reason)
                 .HasMaxLength(500)
                 .IsUnicode(false);
@@ -668,7 +699,6 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_OvertimeRate");
 
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Multiplier).HasColumnType("decimal(10, 2)");
         });
@@ -717,11 +747,9 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_PayrollPeriods");
 
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.PeriodCode)
                 .IsRequired()
                 .HasMaxLength(20);
-            entity.Property(e => e.StartDate).HasColumnType("date");
         });
 
         modelBuilder.Entity<TblPayrollPolicy>(entity =>
@@ -731,7 +759,6 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_PayrollPolicy");
 
             entity.Property(e => e.EarlyOutPenaltyPerMinute).HasColumnType("decimal(18, 2)");
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.LatePenaltyPerMinute).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.PolicyName)
@@ -866,7 +893,6 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_PPh21Bracket");
 
-            entity.Property(e => e.EffectiveDate).HasColumnType("date");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.MaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.MinAmount).HasColumnType("decimal(18, 2)");
@@ -1042,6 +1068,224 @@ public partial class AppDBContext : DbContext
             entity
                 .HasNoKey()
                 .ToView("vw_EmployeeMonthlySchedule");
+
+            entity.Property(e => e.Day1)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day10)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day11)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day12)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day13)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day14)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day15)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day16)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day17)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day18)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day19)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day2)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day20)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day21)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day22)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day23)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day24)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day25)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day26)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day27)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day28)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day29)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day3)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day30)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day31)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day4)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day5)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day6)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day7)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day8)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day9)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.EmployeeCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.EmployeeName)
+                .IsRequired()
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<VwEmployeeMonthlyScheduleBackup>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_EmployeeMonthlySchedule_backup");
+
+            entity.Property(e => e.Day1)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day10)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day11)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day12)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day13)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day14)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day15)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day16)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day17)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day18)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day19)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day2)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day20)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day21)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day22)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day23)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day24)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day25)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day26)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day27)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day28)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day29)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day3)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day30)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day31)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day4)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day5)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day6)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day7)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day8)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.Day9)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.EmployeeCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.FullName)
+                .IsRequired()
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<VwEmployeeMonthlyScheduleWithoutIsRestField>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_EmployeeMonthlySchedule_Without_IsRest_Field");
 
             entity.Property(e => e.Day1)
                 .HasMaxLength(20)
