@@ -154,7 +154,9 @@ namespace App.Infrastructure.Services.Masters
         {
             try
             {
-                var entityResult = await _monthlyScheduleViewRepo.GetPagedAsync(t => t.MonthNo == model.Month && t.YearNo == model.Year, model);
+                var entityResult = await _monthlyScheduleViewRepo.GetPagedAsync(t =>
+                t.MonthNo == model.Month &&
+                t.YearNo == model.Year && (t.EmployeeId.ToString() == model.EmployeeId || string.IsNullOrEmpty(model.EmployeeId)), model);
                 return entityResult.MapPaged<VwEmployeeMonthlySchedule, EmployeeMonthlyScheduleDto>(_mapper, model);
             }
             catch (Exception ex)

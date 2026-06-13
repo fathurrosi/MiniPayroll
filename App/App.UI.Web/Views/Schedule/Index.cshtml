@@ -217,16 +217,7 @@
         </div>
     </div>
 </div>
-
-@*  
-<style>
-    th, td {
-        background-color: #fff; 
-    }
-</style>
- *@
-
-
+ 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
@@ -276,7 +267,7 @@
                     left: 2  
                 },
                 ajax: {
-                    url: '@Url.Action("GetEmployeeShiftList", "Shift")',
+                    url: '@Url.Action("GetList", "Schedule")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (d) {
@@ -331,7 +322,7 @@
             $('#btnGenerate').click(function () {
                 var $btn = $(this);
                 $.ajax({
-                    url: '@Url.Action("GenerateSchedule", "Shift")',
+                    url: '@Url.Action("GenerateSchedule", "Schedule")',
                     type: 'POST',
                     data: {
                         dateFrom : $('#ModalDateFrom').val(),

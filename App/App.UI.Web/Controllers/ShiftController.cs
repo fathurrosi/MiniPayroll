@@ -3,8 +3,7 @@ using App.Domain.Enums;
 using App.Domain.Models;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
-using App.Domain.Models.Response;
-using App.Infrastructure.Services.Masters;
+using App.Domain.Models.Response; 
 using App.UI.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,104 +28,7 @@ namespace App.UI.Web.Controllers
             _departmentService = departmentService;
             _logger = logger;
         }
-
-
-        //#region Shift_Pattern
-
-
-
-        //[HttpDelete]
-        //public async Task<IActionResult> DeletePattern(int id)
-        //{
-        //    if (id <= 0)
-        //        return BadRequest("model ID is required");
-
-        //    try
-        //    {
-        //        var result = await _ShiftPatternService.DeleteAsync(id);
-        //        if (result > 0)
-        //            return Ok(ActionResponse.Ok($"model {id} deleted successfully"));
-
-        //        return Ok(ActionResponse.Fail("Failed to delete model"));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(ActionResponse.Fail(ex.Message));
-        //    }
-        //}
-
-
-        //public async Task<IActionResult> Pattern(int? year, int? month)
-        //{
-        //    var model = new PageModel<ShiftPatternDto>() { Title = "Shift" };
-        //    model.Item = new ShiftPatternDto();
-        //    return View(model);
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> SavePattern(ShiftPatternModel model)
-        //{
-        //    try
-        //    {
-        //        await _ShiftPatternService.SaveAsync(model.Item);
-        //        return RedirectToAction(nameof(Pattern));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.ToString());
-        //    }
-
-        //    model.Shifts = await _ShiftService.GetListAsync();
-        //    return View("Detail", model);
-        //}
-
-        //public async Task<IActionResult> Detail(int id)
-        //{
-        //    var model = new ShiftPatternModel() { Title = "Shift Pattern" };
-
-        //    var shiftPatteen = await _ShiftPatternService.GetByIdAsync(id);
-        //    if (shiftPatteen == null)
-        //    {
-        //        shiftPatteen = new ShiftPatternDto();
-        //        shiftPatteen.Details = new List<ShiftPatternDetailDto>();
-        //    }
-
-        //    model.Item = shiftPatteen;
-        //    model.Shifts = await _ShiftService.GetListAsync();
-        //    return View(model);
-        //}
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> GetPatternList([FromBody] DataTableRequest model)
-        //{
-        //    try
-        //    {
-        //        var result = await _ShiftService.GetPagedPatternAsync(model);
-
-        //        return Json(new
-        //        {
-        //            draw = model.Draw,
-        //            recordsTotal = result.TotalCount,
-        //            recordsFiltered = result.TotalFilteredCount,
-        //            data = result.Items
-        //        });
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(500, new
-        //        {
-        //            draw = model.Draw,
-        //            recordsTotal = 0,
-        //            recordsFiltered = 0,
-        //            data = Array.Empty<object>()
-        //        });
-        //    }
-        //}
-
-        //#endregion
-
+         
 
         #region Shift 
 
@@ -281,9 +183,6 @@ namespace App.UI.Web.Controllers
             return View(model);
         }
 
-
-
-
         #region CRUD_Shift_Schedule
         public async Task<IActionResult> Employee(int? year, int? month)
         {
@@ -301,6 +200,7 @@ namespace App.UI.Web.Controllers
                 ShiftPatterns = await _ShiftPatternService.GetListAsync(),
                 Departments = await _departmentService.GetListAsync(),
                 Employees = await _employeeService.GetListAsync(),
+                Title = "Employee Shift Schedule"
             };
 
             return View(model);
