@@ -1,0 +1,162 @@
+﻿@model ShiftPatternModel
+<form asp-action="SavePattern" method="post">
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header">
+            <h5>Create Shift Pattern</h5>
+        </div>
+
+        <div class="card-body">
+            <!-- Header -->
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label asp-for="Item.PatternCode"></label>
+                    <input asp-for="Item.PatternCode"
+                           class="form-control" />
+                    <span asp-validation-for="Item.PatternCode"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-5">
+                    <label asp-for="Item.PatternName"></label>
+                    <input asp-for="Item.PatternName"
+                           class="form-control" />
+                    <span asp-validation-for="Item.PatternName"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-2">
+                    <label asp-for="Item.CycleLength"></label>
+                    <input asp-for="Item.CycleLength"
+                           readonly
+                           class="form-control" />
+                </div>
+
+            </div>
+
+            <!-- Details -->
+            <div class="d-flex justify-content-between mb-2">
+                <h6>Pattern Details</h6>
+                <button type="button"
+                        id="btnAddRow"
+                        class="btn btn-success btn-sm">
+                    <i class="fa fa-plus"></i>
+                    Add Shift
+                </button>
+            </div>
+            <table class="table table-bordered"
+                   id="detailTable">
+                <thead>
+                    <tr>
+                        <th width="120">Day</th>
+                        <th>Shift</th>
+                        <th width="80"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Item.Details.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden"
+                                       asp-for="Item.Details[i].Id" />
+                                <input asp-for="Item.Details[i].SequenceNo"
+                                       readonly
+                                       class="form-control sequence-no" />
+                            </td>
+                            <td>
+                                <select name="Item.Details[i].ShiftId" class="form-select">
+                                    <option value="">-- Select Shift --</option>
+                                    @foreach (var shift in Model.Shifts)
+                                    {                                         
+                                        <option value="@shift.Id"
+                                                selected="@(Model.Item.Details[i].ShiftId == shift.Id)">
+                                            @shift.ShiftName
+                                        </option>
+                                    }
+                                </select>
+                            </td>
+
+                            <td class="text-center">
+                                <button type="button" class="btn btn-danger btn-sm remove-row">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card-footer text-end">
+            <a asp-action="Index"
+                   class="btn btn-secondary">
+                Cancel
+            </a>
+            <button type="submit"
+                    class="btn btn-primary">
+                Save
+            </button>
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <script>
+        let rowIndex = 0;
+        $('#btnAddRow').click(function () {
+            const row = `
+            <tr>
+                <td>
+                    <input type="hidden" name="Item.Details[${rowIndex}].Id" value="0" />
+                    <input type="number" name="Item.Details[${rowIndex}].SequenceNo"
+                           value="${rowIndex + 1}"
+                           readonly
+                           class="form-control sequence-no" />
+                </td>
+                <td>
+                    <select name="Item.Details[${rowIndex}].ShiftId" class="form-select">
+                        <option value="">-- Select Shift --</option>
+                        @foreach (var shift in Model.Shifts)
+                        {
+                                <option value="@shift.Id">@shift.ShiftName </option>
+                        }
+                    </select>
+                </td>
+                <td class="text-center">
+                    <button type="button"
+                            class="btn btn-danger btn-sm remove-row">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </td>
+            </tr>`;
+
+            $('#detailTable tbody').append(row);
+            rowIndex++;
+            refreshSequence();
+        });
+
+        $(document).on('click', '.remove-row', function () {
+            $(this).closest('tr').remove();
+            refreshSequence();
+        });
+
+        function refreshSequence()
+        { 
+            $('#detailTable tbody tr').each(function(index){
+                $(this)
+                  .find('.sequence-no')
+                  .val(index + 1);
+                $(this)
+                  .find('input[name$=".SequenceNo"]')
+                  .val(index + 1);
+            });
+            $('#Item_CycleLength').val(
+                $('#detailTable tbody tr').length
+            ); 
+        }
+
+    </script>
+}

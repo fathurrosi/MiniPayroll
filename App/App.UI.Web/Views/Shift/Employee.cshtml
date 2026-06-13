@@ -3,8 +3,6 @@
 @{
     int daysInMonth = DateTime.DaysInMonth(Model.Year, Model.Month);
 }
-
-
 <div class="row">
     <div class="col-md-12">
         <div class="card shadow-sm full-height-card">
@@ -13,32 +11,8 @@
                 <div class="d-flex align-items-center">
 
                     <h6 class="mb-0 fw-semibold">
-                        Shift Schedule
+                        Filter Shift Schedule
                     </h6>
-
-                    <div class="ms-auto d-flex gap-2">
-                  
-                        <button class="btn btn-success"
-                                data-bs-toggle="modal"
-                                data-bs-target="#generateScheduleModal">
-                            <i class="bi bi-calendar-plus"></i>
-                            Generate Schedule
-                        </button>
-
-                        <button class="btn btn-secondary">
-                            Copy Previous Month
-                        </button>
-
-                        <button class="btn btn-outline-success">
-                            Export Excel
-                        </button>
-
-                        <button class="btn btn-outline-danger">
-                            Export PDF
-                        </button>
-
-                    </div>
-
                 </div>
 
             </div>
@@ -69,7 +43,7 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <select asp-for="DepartmentCode" class="form-select">
                             <option value=""> -- Select Department -- </option>
                             @foreach (var department in Model.Departments)
@@ -93,15 +67,61 @@
                         </select>
                     </div>
 
-                    <div class="col-md-2 text-end">
-                        <button class="btn btn-primary">
+                    <div class="col-md-1 text-end">
+                        <button id="btnSearch" class="btn btn-primary col-md-12">
                             Search
                         </button>
                     </div>
 
                 </div>
 
- 
+            </div>
+        </div>
+    </div>
+     
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm full-height-card">
+            <div class="card-header py-2 px-3 bg-light">
+
+                <div class="d-flex align-items-center">
+
+                    <h6 class="mb-0 fw-semibold">
+                        Existing Shift Schedule
+                    </h6>
+
+                    <div class="ms-auto d-flex gap-2">
+                  
+                        <button class="btn btn-success"
+                                data-bs-toggle="modal"
+                                data-bs-target="#generateScheduleModal">
+                            <i class="bi bi-calendar-plus"></i>
+                            Generate Schedule
+                        </button>
+
+                        <button class="btn btn-secondary">
+                            Copy Previous Month
+                        </button>
+
+                        <button class="btn btn-outline-success">
+                            Export Excel
+                        </button>
+
+                        <button class="btn btn-outline-danger">
+                            Export PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Body -->
+            <div class="card-body p-2">
+
+                
                 <div class="table-responsive">
                     <table id="main-table"
                            class="table table-sm table-striped table-hover align-middle w-100 mb-0">
@@ -128,7 +148,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="mb-3">
+                @* <div class="mb-3">
                     <label class="form-label">
                         Year
                     </label>
@@ -154,6 +174,22 @@
                             </option>
                         }
                     </select>
+                </div> *@                
+                <div class="mb-3">
+                    <label asp-for="ModalDateFrom" class="form-label">
+                        From Date
+                    </label>
+                    <input asp-for="ModalDateFrom"
+                           type="date"
+                           class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ModalDateTo" class="form-label">
+                        To Date
+                    </label>
+                    <input asp-for="ModalDateTo"
+                           type="date"
+                           class="form-control" />
                 </div>
                 <div class="mb-3">
                  
@@ -264,11 +300,12 @@
                 scrollX: true,
                 scrollCollapse: true,  // Optional: visually cleaner if table has few rows
                 autoWidth: false,
+                // order: [[0, 'asc']], // First column ascending
                 fixedColumns: {
                     left: 2 // Freezes the first 2 columns (Emp No and Employee)
                 },
                 ajax: {
-                    url: '@Url.Action("GetList", "Shift")',
+                    url: '@Url.Action("GetEmployeeShiftList", "Shift")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (d) {
@@ -284,9 +321,11 @@
         }
 
         $(document).ready(function () {
-            // $('#btnSearch').on('click', function () {
+            loadSchedule();
+            $('#btnSearch').click(function () {
+                alert('btnSearch');
                 loadSchedule();
-            // });
+            });
 
             $('#btnGenerate').click(function () {
                 var $btn = $(this);
@@ -294,8 +333,8 @@
                     url: '@Url.Action("GenerateSchedule", "Shift")',
                     type: 'POST',
                     data: {
-                        year: $('#ModalYear').val(),
-                        month: $('#ModalMonth').val(),
+                        dateFrom : $('#ModalDateFrom').val(),
+                        dateTo : $('#ModalDateTo').val(),
                         departmentCode: $('#ModalDepartmentCode').val(),
                         patternId: $('#ModalPatternId').val(),
                         overwriteExisting: $('#ModalOverwriteExisting').is(':checked')

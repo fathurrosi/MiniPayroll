@@ -393,11 +393,7 @@ namespace App.Infrastructure.Services.Settings
         {
             throw new NotImplementedException();
         }
-
-        Task<UserDto?> IUserService.GetUserAsync()
-        {
-            return GetUserAsync();
-        }
+         
     }
 
 }

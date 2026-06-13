@@ -40,9 +40,9 @@ namespace App.UI.Web.Models
         public string DepartmentCode { get; set; }
         public int? EmployeeId { get; set; }
 
-
-        public int ModalYear { get; set; }
-        public int ModalMonth { get; set; }
+        
+        public DateTime ModalDateFrom { get; set; }
+        public DateTime ModalDateTo { get; set; }
 
         public string ModalDepartmentCode { get; set; }
         public int? ModalEmployeeId { get; set; }

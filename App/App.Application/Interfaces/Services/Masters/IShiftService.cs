@@ -10,7 +10,11 @@ namespace App.Application.Interfaces.Services.Masters
         Task<List<ShiftDto>> GetListAsync();
         Task<ShiftDto?> GetByIdAsync(int id);  
         Task<int> DeleteAsync(int id);
-        Task<PagedResponse<EmployeeMonthlyScheduleDto>> GetPagedAsync(ScheduleDataTableRequest model); 
+        Task<PagedResponse<EmployeeMonthlyScheduleDto>> GetPagedEmplooyeeScheduleAsync(ScheduleDataTableRequest model);
+
+        Task<PagedResponse<ShiftDto>> GetPagedAsync(DataTableRequest model);
+
+        Task<PagedResponse<ShiftPatternDto>> GetPagedPatternAsync(DataTableRequest model);
         Task<ShiftDto> SaveAsync(ShiftDto model);  
     }
 }

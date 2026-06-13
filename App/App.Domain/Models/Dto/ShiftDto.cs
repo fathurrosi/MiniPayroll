@@ -12,7 +12,7 @@ namespace App.Domain.Models.Dto
     {
 
         public long? RowNumber { get; set; }
-        public int? EmployeeId { get; set; }
+        //public int? EmployeeId { get; set; }
         public string EmployeeCode { get; set; } = null!;
         public string EmployeeName { get; set; } = null!;
         public int? YearNo { get; set; }
@@ -66,8 +66,8 @@ namespace App.Domain.Models.Dto
 
         public decimal? WorkingHours { get; set; }
 
-        public bool? IsOvernight { get; set; }
+        public bool IsOvernight { get; set; }
 
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
     }
 }
