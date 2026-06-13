@@ -51,3 +51,16 @@
 /.gitignore
 /App/App.UI.Web/Logs
 /App/App.Infrastructure/efpt.config.json
+/App/App.Application/obj/App.Application.csproj.nuget.dgspec.json
+/App/App.Application/obj/project.assets.json
+/App/App.Application/obj/project.nuget.cache
+/App/App.Domain/obj/App.Domain.csproj.nuget.dgspec.json
+/App/App.Domain/obj/project.assets.json
+/App/App.Domain/obj/project.nuget.cache
+/App/App.Infrastructure/obj/Debug/net10.0/App.Infrastructure.assets.cache
+/App/App.Infrastructure/obj/Debug/net10.0/App.Infrastructure.csproj.FileListAbsolute.txt
+/App/App.Infrastructure/obj/Debug/net10.0/App.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/App/App.Infrastructure/obj/Debug/net10.0/App.Infrastructure.genruntimeconfig.cache
+/App/App.Infrastructure/obj/App.Infrastructure.csproj.nuget.dgspec.json
+/App/App.Infrastructure/obj/project.assets.json
+/App/App.Infrastructure/obj/project.nuget.cache
