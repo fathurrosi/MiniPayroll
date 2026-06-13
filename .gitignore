@@ -70,3 +70,15 @@
 /App/.vs/ProjectEvaluation
 /App/App.Application/obj
 /App/.vs/App/v18
+/App/.vs/App/FileContentIndex
+/App/.vs/App/DesignTimeBuild/.dtbcache.v2
+/App/App.WebAPI/obj/Debug/net8.0/App.WebAPI.csproj.CoreCompileInputs.cache
+/App/App.WebAPI/obj/Debug/net8.0/App.WebAPI.csproj.FileListAbsolute.txt
+/App/App.WebAPI/obj/Debug/net8.0/App.WebAPI.sourcelink.json
+/App/App.Application/bin/Debug/net8.0/App.Application.deps.json
+/App/App.Application/bin/Debug/net8.0/App.Application.dll
+/App/App.Application/bin/Debug/net8.0/App.Application.pdb
+/App/App.Application/bin/Debug/net8.0/App.Domain.dll
+/App/App.Application/bin/Debug/net8.0/App.Domain.pdb
+/App/App.Application/obj/Debug/net8.0/ref/App.Application.dll
+/App/App.Application/obj/Debug/net8.0/refint/App.Application.dll

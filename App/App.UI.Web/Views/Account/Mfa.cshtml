@@ -1,0 +1,163 @@
+﻿@model OtpModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MFA Verification - Transmittal Module</title>
+    <link href="~/css/mfa.css" rel="stylesheet" />
+    <style type="text/css">
+    
+            /* .custom-breadcrumb {
+                background-color: transparent !important; /* Forces no background */
+                padding: 0.5rem 0;
+                display: flex;
+                align-items: center;
+                list-style: none;
+                font-size: 1rem;
+                color: #3b71ca;
+            }
+
+                /* 2. The Circle (Blue by default) */
+                .custom-breadcrumb .circle {
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    border: 2px solid #3b71ca; /* Blue circle */
+                    border-radius: 50%;
+                    margin-right: 6px;
+                    vertical-align: middle;
+                }
+
+                /* 3. Link styling (Blue text to match circle) */
+                .custom-breadcrumb .breadcrumb-item a {
+                    color: #3b71ca !important;
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+
+                    .custom-breadcrumb .breadcrumb-item a:hover {
+                        text-decoration: underline;
+                    }
+
+                /* 4. Active Item styling (Gray text, Gray circle, No background) */
+                .custom-breadcrumb .breadcrumb-item.active {
+                    color: #4f4f4f !important; /* Dark gray for final item */
+                    background: none !important;
+                }
+
+                    .custom-breadcrumb .breadcrumb-item.active .circle {
+                        border-color: #4f4f4f; /* Gray circle for active item */
+                    }
+
+                /* 5. Custom Separator ('>') */
+                .custom-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+                    content: ">";
+                    color: #adb5bd; /* Light gray separator */
+                    padding: 0 5px;
+                }
+
+                /* 6. Ellipsis '...' styling */
+                .custom-breadcrumb .ellipsis {
+                    color: #3b71ca;
+                    display: flex;
+                    align-items: center;
+                }
+
+                    .custom-breadcrumb .ellipsis::before {
+                        content: ">"; /* Keeps the separator before the dots */
+                        color: #adb5bd;
+                        padding: 0 5px;
+                    }
+
+                    
+            nav {
+                padding-bottom: 5px !important;
+            } */
+    </style>
+
+
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="brand-container">
+                <img src="~/images/Logo_Pertamina_Hulu_Energi.png" alt="Logo PHE" class="brand-logo"
+                     onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/b/b8/Logo_Pertamina.png'" />
+                <div class="step-indicator">Step 2 of 2</div>
+                <h2>Two-Factor Verification</h2>
+            </div>
+
+            <p class="instruction">
+                Open <strong>Microsoft Authenticator</strong> or <strong>Duo</strong> <br>
+                and enter the 6-digit code below.
+            </p>
+
+            <form asp-controller="Account" asp-action="SendOtp" method="post" id="mfaForm">
+                <div class="otp-inputs">
+                    <input asp-for="Otp1" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" autocomplete="one-time-code" required />
+                    <input asp-for="Otp2" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" required />
+                    <input asp-for="Otp3" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" required />
+                    <input asp-for="Otp4" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" required />
+                    <input asp-for="Otp5" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" required />
+                    <input asp-for="Otp6" class="otp-input" maxlength="1" pattern="\d*" inputmode="numeric" required />
+                </div>
+
+                <button type="submit" id="btnSendOtp" class="btn-verify">Verify & Sign In</button>
+            </form>
+
+            <div class="timer-text">
+                Code expires in <strong>00:24</strong>
+            </div>
+
+            <div class="mfa-footer">
+                <span class="mfa-reset-link">⚙ Reset MFA (Admin Only)</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const inputs = document.querySelectorAll(".otp-input");
+                const form = document.getElementById("mfaForm");
+
+                inputs.forEach((input, index) => {
+                    if (index === 0) input.focus();
+
+                    input.addEventListener("input", () => {
+                        if (input.value.length === 1 && index < inputs.length - 1) {
+                            inputs[index + 1].focus();
+                        }
+
+                        const allFilled = Array.from(inputs).every(i => i.value.length === 1);
+                        if (allFilled) {
+                            // Jika ingin auto-submit saat kotak ke-6 diisi:
+                            // form.submit();
+                        }
+                    });
+
+                    input.addEventListener("keydown", (e) => {
+                        if (e.key === "Backspace" && !input.value && index > 0) {
+                            inputs[index - 1].focus();
+                        }
+                    });
+                });
+
+                inputs[0].addEventListener("paste", (e) => {
+                    const pasteData = e.clipboardData.getData("text").trim();
+                    if (pasteData.length === 6 && /^\d+$/.test(pasteData)) {
+                        inputs.forEach((input, i) => {
+                            input.value = pasteData[i] || "";
+                        });
+                        form.submit();
+                    }
+                });
+            });
+    </script>
+</body>
+</html>

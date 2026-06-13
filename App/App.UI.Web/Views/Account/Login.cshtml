@@ -1,0 +1,172 @@
+﻿@model UserModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>Login - Enterprise System</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Icons --> 
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <!-- AdminLTE -->
+    <link rel="stylesheet"
+          href="~/dist/css/adminlte.css" />
+
+    <style>
+
+            body {
+                background-color: #f4f6f9;
+            }
+
+            .login-page {
+                min-height: 100vh;
+            }
+
+            .login-card {
+                width: 100%;
+                max-width: 420px;
+            }
+
+    </style>
+
+</head>
+
+<body class="login-page d-flex justify-content-center align-items-center">
+
+    <div class="login-card">
+
+        <div class="card shadow-lg border-0 rounded-4">
+
+            <div class="card-body p-5">
+
+                <!-- Logo -->
+                <div class="text-center mb-4">
+
+                    <h2 class="fw-bold">
+                        Payroll System
+                    </h2>
+
+                    <p class="text-muted">
+                        Sign in to start your session
+                    </p>
+
+                </div>
+
+                <!-- Validation -->
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <!-- Login Form -->
+                <form asp-controller="Account"
+                      asp-action="Login"
+                      method="post">
+
+                    <!-- Username -->
+                    <div class="mb-3">
+
+                        <label asp-for="Username"
+                               class="form-label">
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                <i class="bi bi-person"></i>
+                            </span>
+
+                            <input asp-for="Username"
+                                   class="form-control"
+                                   placeholder="Enter username" />
+
+                        </div>
+
+                        <span asp-validation-for="Username"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-4">
+
+                        <label asp-for="Password"
+                               class="form-label">
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                <i class="bi bi-lock"></i>
+                            </span>
+
+                            <input asp-for="Password"
+                                   type="password"
+                                   class="form-control"
+                                   placeholder="Enter password" />
+
+                        </div>
+
+                        <span asp-validation-for="Password"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- Remember Me -->
+                    <div class="form-check mb-4">
+
+                        <input asp-for="RememberMe"
+                               class="form-check-input" />
+
+                        <label asp-for="RememberMe"
+                               class="form-check-label">
+                        </label>
+
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit"
+                            class="btn btn-primary w-100">
+
+                        <i class="bi bi-box-arrow-in-right me-1"></i>
+
+                        Login
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Validation -->
+    <partial name="_ValidationScriptsPartial" />
+
+</body>
+
+</html>

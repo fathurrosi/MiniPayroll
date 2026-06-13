@@ -1,0 +1,178 @@
+﻿@using App.Domain.Models
+@using App.Domain.Models.Dto
+
+@model PageModel<ProfileDto>
+
+@Html.AntiForgeryToken()
+@Html.HiddenFor(model => model.Mode)
+@Html.HiddenFor(model => model.Title)
+<input type="hidden"
+       asp-for="Item.CompanyProfileId"
+       asp-key="true" />
+@Html.HiddenFor(model => model.Item.LogoFileName)
+@Html.HiddenFor(model => model.Item.LogoFilePath)
+
+<div asp-validation-summary="ModelOnly"
+     class="alert alert-danger d-none"
+     role="alert">
+</div>
+
+<div class="row g-4">
+
+    <!-- Basic Information -->
+    <div class="col-md-6">
+
+        <div class="row g-3">
+
+            <div class="col-md-12">
+                <label asp-for="Item.CompanyName"
+                       class="form-label fw-semibold">
+                </label>
+
+                <input asp-for="Item.CompanyName"
+                       class="form-control"
+                       placeholder="Enter company name" />
+
+                <span asp-validation-for="Item.CompanyName"
+                      class="text-danger small">
+                </span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="Item.PhoneNumber"
+                       class="form-label fw-semibold">
+                </label>
+
+                <input asp-for="Item.PhoneNumber"
+                       class="form-control"
+                       placeholder="+62xxxxxxxxxx" />
+
+                <span asp-validation-for="Item.PhoneNumber"
+                      class="text-danger small">
+                </span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="Item.Email"
+                       class="form-label fw-semibold">
+                </label>
+
+                <input asp-for="Item.Email"
+                       type="email"
+                       class="form-control"
+                       placeholder="company@example.com" />
+
+                <span asp-validation-for="Item.Email"
+                      class="text-danger small">
+                </span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="Item.Website"
+                       class="form-label fw-semibold">
+                </label>
+
+                <input asp-for="Item.Website"
+                       class="form-control"
+                       placeholder="https://www.company.com" />
+
+                <span asp-validation-for="Item.Website"
+                      class="text-danger small">
+                </span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="Item.TaxNumber"
+                       class="form-label fw-semibold">
+                </label>
+
+                <input asp-for="Item.TaxNumber"
+                       class="form-control"
+                       placeholder="NPWP / Tax Number" />
+
+                <span asp-validation-for="Item.TaxNumber"
+                      class="text-danger small">
+                </span>
+            </div>
+
+            <div class="col-md-12">
+                <label asp-for="Item.IsActive"
+                       class="form-label fw-semibold">
+                </label>
+
+                <select asp-for="Item.IsActive"
+                        class="form-select">
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+
+                <span asp-validation-for="Item.IsActive"
+                      class="text-danger small">
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Company Logo -->
+    <div class="col-md-4">
+
+        <label class="form-label fw-semibold">
+            Company Logo
+        </label>
+
+        <input type="file"
+               id="logoFile"
+               name="LogoFile"
+               accept=".png,.jpg,.jpeg,.svg"
+               class="form-control mb-3" />
+
+        <span asp-validation-for="Item.LogoFilePath"
+              class="text-danger small">
+        </span>
+
+        <div class="border rounded bg-light text-center p-3">
+
+            <img id="logoPreview"
+                 src="@Model.Item.LogoFilePath"
+                 alt="Logo Preview"
+                 class="img-fluid img-thumbnail"
+                 style="max-height:180px; @(string.IsNullOrWhiteSpace(Model.Item.LogoFilePath) ? "display:none;" : "")"
+                 onerror="this.style.display='none';" />
+
+            <div id="logoPlaceholder"
+                 class="text-muted @(string.IsNullOrWhiteSpace(Model.Item.LogoFilePath) ? "" : "d-none")">
+                <i class="fa-regular fa-image fa-3x mb-2"></i>
+                <div>No logo uploaded</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Address -->
+    <div class="col-12">
+
+        <label asp-for="Item.CompanyAddress"
+               class="form-label fw-semibold">
+        </label>
+
+        <textarea asp-for="Item.CompanyAddress"
+                  rows="4"
+                  class="form-control"
+                      placeholder="Enter company address">
+                            </textarea>
+
+            <span asp-validation-for="Item.CompanyAddress"
+                  class="text-danger small">
+            </span>
+
+        </div>
+
+    </div>
+
+ 
+
+ 
+             

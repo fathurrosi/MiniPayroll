@@ -56,3 +56,12 @@ C:\Projects\Github\MiniPayroll\App\App.Infrastructure\obj\Debug\net8.0\refint\Ap
 C:\Projects\Github\MiniPayroll\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.pdb
 C:\Projects\Github\MiniPayroll\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.genruntimeconfig.cache
 C:\Projects\Github\MiniPayroll\App\App.Infrastructure\obj\Debug\net8.0\ref\App.Infrastructure.dll
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.csproj.AssemblyReference.cache
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.AssemblyInfoInputs.cache
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.AssemblyInfo.cs
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.sourcelink.json
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.dll
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\refint\App.Infrastructure.dll
+C:\Local\Backup\New folder\Payslip\App\App\App.Infrastructure\obj\Debug\net8.0\App.Infrastructure.pdb

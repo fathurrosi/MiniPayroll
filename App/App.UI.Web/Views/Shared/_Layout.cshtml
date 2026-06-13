@@ -1,0 +1,227 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <title>AdminLTE 4 | Sidebar Mini</title>
+
+    <!-- Responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+    <!-- Theme -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color"
+          content="#007bff"
+          media="(prefers-color-scheme: light)" />
+
+    <meta name="theme-color"
+          content="#1a1a1a"
+          media="(prefers-color-scheme: dark)" />
+
+    <!-- SEO -->
+    <meta name="title" content="AdminLTE 4 | Sidebar Mini" />
+
+    <meta name="author" content="ColorlibHQ" />
+
+    <meta name="description"
+          content="AdminLTE is a Free Bootstrap 5 Admin Dashboard with DataTables integration." />
+
+    <!-- =========================
+         FONTS
+    ========================== -->
+    <!-- Google Font (replace broken local Source Sans files) -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap"
+          rel="stylesheet" />
+
+    <!-- =========================
+         CSS
+    ========================== -->
+    <!-- Bootstrap Icons -->
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css"
+          rel="stylesheet" />
+
+    <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" />
+    <!-- Overlay Scrollbars -->
+    <link href="~/lib/overlayscrollbars/styles/overlayscrollbars.min.css"
+          rel="stylesheet" />
+
+    <!-- Select2 -->
+    <link href="~/lib/select2/css/select2.min.css"
+          rel="stylesheet" />
+
+    <!-- DataTables Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" />
+    
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css" />
+@*     <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/5.0.1/css/fixedColumns.dataTables.min.css"> *@
+
+    <!-- AdminLTE -->
+    <link rel="stylesheet"
+          href="~/css/adminlte.css" />
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+    <!-- jQuery -->
+    @*  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+ 
+
+    <!-- Bootstrap Bundle -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Overlay Scrollbars -->
+    <script src="~/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
+    <!-- DataTables Bootstrap 5 -->
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/pdfmake/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+
+
+    <!-- Select2 -->
+    <script src="~/lib/select2/js/select2.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+
+    <!-- AdminLTE -->
+    <script src="~/js/adminlte.js"></script>
+
+    <!-- Site -->
+    <script src="~/js/site.js"></script>
+
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+<body class="layout-fixed sidebar-expand-lg sidebar-mini sidebar-collapse bg-body-tertiary">
+    <!--begin::App Wrapper-->
+    <div class="app-wrapper">
+        <!--begin::Header-->
+        <nav class="app-header navbar navbar-expand bg-body">
+            <!--begin::Container-->
+            <div class="container-fluid">
+                <!--begin::Start Navbar Links-->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                            <i class="bi bi-list"></i>
+                        </a>
+                    </li>
+                </ul>
+                @await Component.InvokeAsync("Header")
+            </div>
+            <!--end::Container-->
+        </nav>
+        <!--end::Header-->
+        <!--begin::Sidebar-->
+        @await Component.InvokeAsync("Sidebar")
+        <!--end::Sidebar-->
+        <!--begin::App Main-->
+        <main class="app-main">
+            @*      <partial name="Layout/_Header" /> *@
+            @await Component.InvokeAsync("Breadcrumb")
+            <!--begin::App Content-->
+            <div class="app-content">
+                <!--begin::Container-->
+                <div class="container-fluid">
+                    @RenderBody()
+                  
+                    @*    <!--begin::Row-->
+                    <div class="row">
+                        <div class="col-12">
+                            <!-- Default box -->
+                         
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"> @ViewData["Title"]</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button"
+                                                class="btn btn-tool"
+                                                data-lte-toggle="card-collapse"
+                                                title="Collapse">
+                                            <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
+                                            <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-tool"
+                                                data-lte-toggle="card-remove"
+                                                title="Remove">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                  
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">Footer</div>
+                                <!-- /.card-footer-->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                    </div>
+                    <!--end::Row--> *@
+                </div>
+                <!--end::Container-->
+            </div>
+            <!--end::App Content-->
+        </main>
+        <!--end::App Main-->
+        <!--begin::Footer-->
+        @*  <partial name="Layout/_Footer" /> *@
+        @await Component.InvokeAsync("Footer")
+        <!--end::Footer-->
+    </div>
+    <!--end::App Wrapper-->
+
+
+    <script>
+        const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+        const Default = {
+        scrollbarTheme: 'os-theme-light',
+        scrollbarAutoHide: 'leave',
+        scrollbarClickScroll: true,
+        };
+        document.addEventListener('DOMContentLoaded', function () {
+        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+
+        // Disable OverlayScrollbars on mobile devices to prevent touch interference
+        const isMobile = window.innerWidth <= 992;
+
+        if (
+        sidebarWrapper &&
+        OverlayScrollbarsGlobal?.OverlayScrollbars !== undefined &&
+        !isMobile
+        ) {
+        OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+        scrollbars: {
+        theme: Default.scrollbarTheme,
+        autoHide: Default.scrollbarAutoHide,
+        clickScroll: Default.scrollbarClickScroll,
+        },
+        });
+        }
+        });
+    </script>
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
