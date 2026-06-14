@@ -52,7 +52,9 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblEmployeePayrollInfo> TblEmployeePayrollInfos { get; set; }
 
-    public virtual DbSet<TblEmployeeSalaryComponent> TblEmployeeSalaryComponents { get; set; }
+    public virtual DbSet<TblEmployeeSalary> TblEmployeeSalaries { get; set; }
+
+    public virtual DbSet<TblEmployeeSalaryDetail> TblEmployeeSalaryDetails { get; set; }
 
     public virtual DbSet<TblEmployeeShift> TblEmployeeShifts { get; set; }
 
@@ -480,20 +482,31 @@ public partial class AppDBContext : DbContext
                 .HasColumnName("PTKPCode");
         });
 
-        modelBuilder.Entity<TblEmployeeSalaryComponent>(entity =>
+        modelBuilder.Entity<TblEmployeeSalary>(entity =>
         {
-            entity.HasKey(e => new { e.EmployeeId, e.ComponentCode, e.EffectiveDate }).HasName("PK__tbl_Empl__F45FCCDB0111CE3F");
+            entity.HasKey(e => e.EmployeeSalaryId);
 
-            entity.ToTable("tbl_EmployeeSalaryComponents");
+            entity.ToTable("tbl_EmployeeSalary");
 
-            entity.Property(e => e.EmployeeId)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.ComponentCode)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.EffectiveDate).HasColumnType("datetime");
+            entity.Property(e => e.EmployeeSalaryId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<TblEmployeeSalaryDetail>(entity =>
+        {
+            entity.HasKey(e => e.EmployeeSalaryDetailId);
+
+            entity.ToTable("tbl_EmployeeSalaryDetail");
+
+            entity.Property(e => e.EmployeeSalaryDetailId).HasDefaultValueSql("(newid())");
             entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.ComponentCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblEmployeeShift>(entity =>

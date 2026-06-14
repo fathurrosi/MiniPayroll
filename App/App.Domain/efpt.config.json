@@ -95,7 +95,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tbl_EmployeeSalaryComponents]",
+         "Name": "[dbo].[tbl_EmployeeSalary]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeeSalaryDetail]",
          "ObjectType": 0
       },
       {

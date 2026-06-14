@@ -9,16 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[PrimaryKey("EmployeeId", "ComponentCode", "EffectiveDate")]
-[Table("tbl_EmployeeSalaryComponents")]
-public partial class TblEmployeeSalaryComponent
+[Table("tbl_EmployeeSalaryDetail")]
+public partial class TblEmployeeSalaryDetail
 {
     [Key]
-    [StringLength(20)]
-    [Unicode(false)]
-    public string EmployeeId { get; set; } = null!;
+    public Guid EmployeeSalaryDetailId { get; set; }
 
-    [Key]
+    public Guid EmployeeSalaryId { get; set; }
+
     [StringLength(20)]
     [Unicode(false)]
     public string ComponentCode { get; set; } = null!;
@@ -26,7 +24,6 @@ public partial class TblEmployeeSalaryComponent
     [Column(TypeName = "decimal(18, 2)")]
     public decimal Amount { get; set; }
 
-    [Key]
     [Column(TypeName = "datetime")]
-    public DateTime EffectiveDate { get; set; }
+    public DateTime? CreatedDate { get; set; }
 }
