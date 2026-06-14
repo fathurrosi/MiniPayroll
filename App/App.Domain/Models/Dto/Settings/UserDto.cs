@@ -1,10 +1,6 @@
 ﻿using App.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace App.Domain.Models.Dto
+ 
+namespace App.Domain.Models.Dto.Settings
 {
     public sealed class UserDto : BaseDto<TblUser>
     {

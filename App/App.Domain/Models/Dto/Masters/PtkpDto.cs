@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace App.Domain.Models.Dto
+namespace App.Domain.Models.Dto.Masters
 {
     public sealed class PtkpDto : BaseDto<TblPtkp>
     {

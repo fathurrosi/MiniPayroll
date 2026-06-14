@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace App.Infrastructure.Services.Transactions
+namespace App.Infrastructure.Services.Payroll
 {
     public sealed class OvertimeService
     {

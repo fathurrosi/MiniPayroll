@@ -10,31 +10,22 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace App.Infrastructure.Services.Transactions
+namespace App.Infrastructure.Services.Payroll
 {
     public class PayrollService
     {
         private readonly IMapper _mapper;
-
-
-
-        private readonly IGenericRepository<TblOvertimeCalculation> _overtimeCalculationRepo;
-        
+        private readonly IGenericRepository<TblOvertimeCalculation> _overtimeCalculationRepo;        
         private readonly IGenericRepository<TblEmployeeAllowance> _allowanceRepo;
         private readonly IGenericRepository<TblLeaveRequest> _LeaveRequestRepo;
         private readonly IGenericRepository<TblAttendance> _attendanceRepo;
         private readonly IGenericRepository<TblOvertime> _overtimeRepo;
         private readonly IGenericRepository<TblPayrollResult> _payrollResultRepo;
         private readonly IGenericRepository<TblPayrollRun> _payrollRunRepo;
-
         private readonly IGenericRepository<TblEmployeePayroll> _employeePayrollRepo;
-
         private readonly IGenericRepository<TblBpjskesehatanConfig> _BpjskesehatantRepo;
-
         private readonly IGenericRepository<TblBpjsketenagakerjaanConfig> _BpjsketenagakerjaanRepo;
-
         private readonly IGenericRepository<TblBiayaJabatanConfig> _BiayaJabatanRepo;
-
         private readonly IGenericRepository<TblPayrollPolicy> _payrollPolicyRepo;
 
         //var bpjsKes = await _db.tbl_BPJSKesehatanConfig

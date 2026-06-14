@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace App.Domain.Models.Dto
+namespace App.Domain.Models.Dto.Masters
 {
     public partial class ShiftPatternDetailDto : BaseDto<TblShiftPatternDetail>
     {

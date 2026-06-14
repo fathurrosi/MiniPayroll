@@ -1,4 +1,4 @@
-﻿using App.Domain.Models.Dto;
+﻿using App.Domain.Models.Dto.Settings;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 

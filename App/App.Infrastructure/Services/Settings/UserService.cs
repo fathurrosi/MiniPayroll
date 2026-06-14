@@ -3,6 +3,7 @@ using App.Application.Interfaces.Services;
 using App.Application.Interfaces.Services.Settings;
 using App.Domain.Entities;
 using App.Domain.Models.Dto;
+using App.Domain.Models.Dto.Settings;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Extensions;
@@ -341,9 +342,9 @@ namespace App.Infrastructure.Services.Settings
             {
                 user = _mapper.Map<UserDto>(entity);
                 var menuEntities = await _menuRepo.GetListAsync(t=> t.Deleted != 1);
-
+                ;
                 List<MenuDto> result = new List<MenuDto>();
-                var parentList = menuEntities.Where(t => string.IsNullOrEmpty(t.ParentId)).ToList();
+                var parentList = menuEntities.Where(t => string.IsNullOrEmpty(t.ParentId)).OrderBy(t => t.Sort).ToList();
                 foreach (var parent in parentList)
                 {
                     var parentManu = _mapper.Map<MenuDto>(parent);

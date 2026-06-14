@@ -1,11 +1,11 @@
 ﻿using App.Application.Interfaces.Services.Masters;
 using App.Application.Interfaces.Services.Payroll;
 using App.Domain.Enums;
-using App.Domain.Models; 
-using App.Domain.Models.Dto.Payroll;
+using App.Domain.Models;
+using App.Domain.Models.Dto.Masters;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
-using Microsoft.AspNetCore.Mvc;  
+using Microsoft.AspNetCore.Mvc;
 
 namespace App.UI.Web.Controllers
 {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace App.Domain.Models.Dto
+namespace App.Domain.Models.Dto.Masters
 {
     public sealed class EmployeeDto : BaseDto<TblEmployee>
     {

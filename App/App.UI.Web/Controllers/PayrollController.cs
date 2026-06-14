@@ -1,5 +1,5 @@
 ﻿using App.Domain.Models;
-using App.Domain.Models.Dto;
+using App.Domain.Models.Dto.Masters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.UI.Web.Controllers

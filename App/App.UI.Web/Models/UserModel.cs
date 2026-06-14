@@ -1,5 +1,5 @@
 ﻿using App.Domain.Models;
-using App.Domain.Models.Dto;
+using App.Domain.Models.Dto.Masters;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.UI.Web.Models

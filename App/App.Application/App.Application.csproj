@@ -10,16 +10,19 @@
     <Compile Remove="Attribute\**" />
     <Compile Remove="Filters\**" />
     <Compile Remove="Handlers\**" />
+    <Compile Remove="Interfaces\Services\Transactions\**" />
     <Compile Remove="Provider\**" />
     <Compile Remove="Requirement\**" />
     <EmbeddedResource Remove="Attribute\**" />
     <EmbeddedResource Remove="Filters\**" />
     <EmbeddedResource Remove="Handlers\**" />
+    <EmbeddedResource Remove="Interfaces\Services\Transactions\**" />
     <EmbeddedResource Remove="Provider\**" />
     <EmbeddedResource Remove="Requirement\**" />
     <None Remove="Attribute\**" />
     <None Remove="Filters\**" />
     <None Remove="Handlers\**" />
+    <None Remove="Interfaces\Services\Transactions\**" />
     <None Remove="Provider\**" />
     <None Remove="Requirement\**" />
   </ItemGroup>
@@ -37,10 +40,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\App.Domain\App.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\Services\Transactions\" />
   </ItemGroup>
 
 </Project>

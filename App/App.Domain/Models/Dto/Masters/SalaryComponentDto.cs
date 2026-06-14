@@ -2,7 +2,7 @@
 using App.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace App.Domain.Models.Dto.Payroll
+namespace App.Domain.Models.Dto.Masters
 {
     public class SalaryComponentDto : BaseDto<TblSalaryComponent>
     {
