@@ -52,6 +52,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblEmployeePayrollInfo> TblEmployeePayrollInfos { get; set; }
 
+    public virtual DbSet<TblEmployeeSalaryComponent> TblEmployeeSalaryComponents { get; set; }
+
     public virtual DbSet<TblEmployeeShift> TblEmployeeShifts { get; set; }
 
     public virtual DbSet<TblEmployeeShiftSchedule> TblEmployeeShiftSchedules { get; set; }
@@ -101,6 +103,8 @@ public partial class AppDBContext : DbContext
     public virtual DbSet<TblRole> TblRoles { get; set; }
 
     public virtual DbSet<TblRolePermission> TblRolePermissions { get; set; }
+
+    public virtual DbSet<TblSalaryComponent> TblSalaryComponents { get; set; }
 
     public virtual DbSet<TblShift> TblShifts { get; set; }
 
@@ -474,6 +478,22 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("PTKPCode");
+        });
+
+        modelBuilder.Entity<TblEmployeeSalaryComponent>(entity =>
+        {
+            entity.HasKey(e => new { e.EmployeeId, e.ComponentCode, e.EffectiveDate }).HasName("PK__tbl_Empl__F45FCCDB0111CE3F");
+
+            entity.ToTable("tbl_EmployeeSalaryComponents");
+
+            entity.Property(e => e.EmployeeId)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.ComponentCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.EffectiveDate).HasColumnType("datetime");
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
         });
 
         modelBuilder.Entity<TblEmployeeShift>(entity =>
@@ -961,6 +981,38 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_RolePermissions");
 
             entity.Property(e => e.AssignedDate).HasDefaultValueSql("(getdate())");
+        });
+
+        modelBuilder.Entity<TblSalaryComponent>(entity =>
+        {
+            entity.HasKey(e => e.ComponentCode).HasName("PK__tbl_Sala__898CFBF91F9E5C13");
+
+            entity.ToTable("tbl_SalaryComponents");
+
+            entity.Property(e => e.ComponentCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.CalculationType)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.ComponentName)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ComponentType)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.DefaultAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblShift>(entity =>

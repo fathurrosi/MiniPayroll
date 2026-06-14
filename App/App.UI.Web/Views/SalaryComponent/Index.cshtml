@@ -1,0 +1,485 @@
+﻿@using App.Domain.Enums
+@using App.Domain.Models  
+@using App.Domain.Models.Dto.Payroll
+@model PageModel<SalaryComponentDto>
+@{
+    ViewData["Title"] = $"Data Master - {Model.Title}";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm full-height-card">
+            <div class="card-header py-2 px-3 bg-light">
+
+                <div class="d-flex align-items-center">
+
+                    <h6 class="mb-0 fw-semibold">
+                        Existing @Model.Title
+                    </h6>
+
+                    <div class="ms-auto d-flex gap-2">
+
+                        <button id="add-new"
+                                class="btn btn-sm btn-primary">
+                            <i class="fa-solid fa-plus me-1"></i>
+                            Add New
+                        </button>
+
+                        <button id="csv-export"
+                                class="btn btn-sm btn-outline-success">
+                            <i class="fa-solid fa-file-excel me-1"></i>
+                            Export CSV
+                        </button>
+
+                        <button id="pdf-export"
+                                class="btn btn-sm btn-outline-danger">
+                            <i class="fa-solid fa-file-pdf me-1"></i>
+                            Export PDF
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Body -->
+            <div class="card-body p-2">
+                <div class="table-responsive">
+                    <table id="main-table"
+                           class="table table-sm table-striped table-hover align-middle w-100 mb-0">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+</div>
+ 
+<div class="modal fade"
+     id="SalaryComponentModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-building me-2"></i>
+                    <span id="modalTitle">
+                        Add @Model.Title
+                    </span>
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="SalaryComponentForm"
+                      asp-action="Save"
+                      method="post"
+                      autocomplete="off">
+
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Mode)
+                    @Html.HiddenFor(model => model.Title)
+                    <div class="row g-3">
+
+                        <!-- Component Code -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.ComponentCode"
+                                   class="form-label fw-semibold">
+                                Component Code
+                            </label>
+
+                            <input asp-for="Item.ComponentCode"
+                                   class="form-control"
+                                   placeholder="BASIC, MEAL, BPJS, TAX" />
+
+                            <span asp-validation-for="Item.ComponentCode"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Component Name -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.ComponentName"
+                                   class="form-label fw-semibold">
+                                Component Name
+                            </label>
+
+                            <input asp-for="Item.ComponentName"
+                                   class="form-control"
+                                   placeholder="Basic Salary" />
+
+                            <span asp-validation-for="Item.ComponentName"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Component Type -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.ComponentType"
+                                   class="form-label fw-semibold">
+                                Component Type
+                            </label>
+                             
+
+                            <select asp-for="Item.ComponentType"
+                                    asp-items="Html.GetEnumSelectList<SalaryComponentType>()"
+                                    class="form-select">
+                                <option value="">-- Select Type --</option>
+                            </select>
+
+                            <span asp-validation-for="Item.ComponentType"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Calculation Type -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.CalculationType"
+                                   class="form-label fw-semibold">
+                                Calculation Type
+                            </label>
+                             
+                            <select asp-for="Item.CalculationType"
+                                    asp-items="Html.GetEnumSelectList<CalculationType>()"
+                                    class="form-select">
+                                <option value="">-- Select Calculation Type --</option>
+                            </select>
+                            <span asp-validation-for="Item.CalculationType"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Default Amount -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.DefaultAmount"
+                                   class="form-label fw-semibold">
+                                Default Amount
+                            </label>
+
+                            <input asp-for="Item.DefaultAmount"
+                                   type="number"
+                                   step="0.01"
+                                   class="form-control text-end"
+                                   placeholder="0.00" />
+
+                            <span asp-validation-for="Item.DefaultAmount"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Sort Order -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.SortOrder"
+                                   class="form-label fw-semibold">
+                                Sort Order
+                            </label>
+
+                            <input asp-for="Item.SortOrder"
+                                   type="number"
+                                   class="form-control"
+                                   placeholder="0" />
+
+                            <span asp-validation-for="Item.SortOrder"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Taxable -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.IsTaxable"
+                                   class="form-label fw-semibold">
+                                Taxable
+                            </label>
+
+                            <select asp-for="Item.IsTaxable"
+                                    class="form-select">
+                                <option value="true">Yes</option>
+                                <option value="false">No</option>
+                            </select>
+
+                            <span asp-validation-for="Item.IsTaxable"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Active -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.IsActive"
+                                   class="form-label fw-semibold">
+                                Status
+                            </label>
+
+                            <select asp-for="Item.IsActive"
+                                    class="form-select">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+
+                            <span asp-validation-for="Item.IsActive"
+                                  class="text-danger small"></span>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-left me-1"></i>
+                    Reset
+                </button>
+                <button id="save-button"
+                        type="button"
+                        class="btn btn-primary">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function closeModal() {
+            const modalElement = document.getElementById('SalaryComponentModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);            
+            setReadonly(false);
+            if (modal) {
+                modal.hide();
+            }
+        }
+        function showModal(isEdit) {
+            $('#modalTitle').text(
+                isEdit ? 'Edit Company SalaryComponent' : 'Add Company SalaryComponent'
+            );
+
+            setReadonly(isEdit);
+            const modal = new bootstrap.Modal(
+                document.getElementById('SalaryComponentModal')
+            );
+            modal.show();
+        }
+        $(document).ready(function () {
+             $('#logoFile').on('change', function () {
+                 const file = this.files[0];
+                 const preview = document.getElementById('logoPreview');
+                 if (!file) {
+                     preview.style.display = 'none';
+                     return;
+                 }
+                 preview.src = URL.createObjectURL(file);
+                 preview.style.display = 'block';
+            });
+
+            const table =  $('#main-table').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                autoWidth: false,
+                filter: true,
+                orderMulti: false,
+                order: [[0, 'desc']],
+                ajax: {
+                    url: '@Url.Action("GetList", "SalaryComponent")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    },
+                    dataSrc: function (json) {
+                        return json.data || [];
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 401 || xhr.status === 403)
+                            return;
+                        notify.error('Failed to load SalaryComponent data');
+                    }
+                },
+                columnDefs: [
+                    {
+                        targets: -1,
+                        className: 'not-export'
+                    }
+                ],
+                 columns: [
+                     { data: 'componentCode', title: 'Code' },
+                     { data: 'componentName', title: 'Name' },
+                     { data: 'componentTypeText', title: 'Type' },
+                     { data: 'calculationTypeText', title: 'Calculation' },
+                     {
+                         data: 'defaultAmount',
+                         title: 'Default Amount',
+                         className: 'text-end',
+                         render: $.fn.dataTable.render.number(',', '.', 2)
+                     },
+                     {
+                         data: 'isTaxable',
+                         title: 'Taxable',
+                         render: d => d ? 'Yes' : 'No'
+                     },
+                     {
+                         data: 'isActive',
+                         title: 'Active',
+                         render: d => d
+                             ? '<span class="badge bg-success">Active</span>'
+                             : '<span class="badge bg-danger">Inactive</span>'
+                     },        
+                     {
+                         data: null,
+                         title: 'Action',
+                         orderable: false,
+                         searchable: false,
+                         className: 'text-center action-col',
+                         width: '100px',
+                         render: function (data, type, row) {
+                             return `
+                                 <div class="d-flex justify-content-center align-items-center gap-2">
+                                     <a href="javascript:void(0)"
+                                        onclick="editRow('${row.componentCode}')"
+                                        title="Edit">
+                                         <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                     </a>
+                                     <a href="javascript:void(0)"
+                                        onclick="confirmDelete(() => deleteRow('${row.componentCode}'))"
+                                        title="Delete">
+                                         <i class="fa-solid fa-trash text-danger"></i>
+                                     </a>                                     
+                                 </div>
+                             `;
+                         }
+                     }
+                 ] ,
+                dom:
+                    "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
+                    "rt" +
+                    "<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        className: 'btn-export-csv d-none',
+                        title: '@Model.Title',
+                        exportOptions: {
+                            columns: ':not(.not-export)'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        className: 'btn-export-pdf d-none',
+                        title: '@Model.Title',
+                        exportOptions: {
+                            columns: ':not(.not-export)'
+                        }
+                    }
+                ]
+            });
+            
+            $('#csv-export').on('click', function () {
+                $('.btn-export-csv').trigger('click');
+            });
+
+            $('#pdf-export').on('click', function () { 
+                $('.btn-export-pdf').trigger('click');
+            });
+
+            $('#add-new').on('click', function () {
+                resetForm();
+                showModal();
+            });
+             $('#save-button').on('click', function () {
+                saveSalaryComponent();
+            });
+        });
+
+        function saveSalaryComponent() {
+            const form = $('#SalaryComponentForm')[0];
+            const formData = new FormData(form);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Add", "SalaryComponent")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('#save-button').prop('disabled', true);
+                },
+                success: function (response) {
+                    if (response.success) {
+                        notify.success(response.message);
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        closeModal();
+                    }
+                    else {
+                        notify.warning(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('An error occurred while saving Company SalaryComponent');
+                },
+                complete: function () {
+                    $('#save-button').prop('disabled', false);
+                }
+            });
+        }
+        function editRow(code) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetData", "SalaryComponent")',
+                data: { code: code },
+                success: function (data) {
+
+                    if (!data) {
+                        notify.warning('Salary Component not found');
+                        return;
+                    }
+                    $('#Item_ComponentCode').val(data.componentCode);
+                    $('#Item_ComponentName').val(data.componentName);
+                    $('#Item_ComponentType').val(data.componentType);
+                    $('#Item_CalculationType').val(data.calculationType);
+                    $('#Item_DefaultAmount').val(data.defaultAmount);
+                    $('#Item_IsTaxable').val(data.isTaxable.toString());
+                    $('#Item_IsActive').val(data.isActive.toString());
+                    $('#Item_SortOrder').val(data.sortOrder);
+                    showModal(true);
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('Failed to retrieve Salary Component');
+                }
+            });
+        }
+
+        function deleteRow(code) {
+            $.ajax({
+                type: 'DELETE',
+                url: '@Url.Action("Delete", "SalaryComponent")',
+                data: {
+                    code: code
+                },
+                headers: {
+                    'RequestVerificationToken':
+                        $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        resetForm();
+                        notify.success(response.message);
+                    } else {
+                        notify.warning(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('Failed to delete Company SalaryComponent');
+                }
+            });
+        }
+        function resetForm() {
+            $('#SalaryComponentForm')[0].reset(); 
+        }
+    </script>
+}

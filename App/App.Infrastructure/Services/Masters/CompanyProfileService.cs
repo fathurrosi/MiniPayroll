@@ -6,8 +6,7 @@ using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Extensions;
-using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
+using MapsterMapper; 
 using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Services.Masters
