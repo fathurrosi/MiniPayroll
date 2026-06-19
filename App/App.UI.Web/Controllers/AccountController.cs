@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace App.UI.Web.Controllers
 {
-
+    [AllowAnonymous]
     public sealed class AccountController : BaseController
     {
         private readonly ILogger<AccountController> _logger;

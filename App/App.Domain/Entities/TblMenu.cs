@@ -52,4 +52,6 @@ public partial class TblMenu
     [StringLength(50)]
     [Unicode(false)]
     public string? UpdatedBy { get; set; }
+
+    public int? Deleted { get; set; }
 }

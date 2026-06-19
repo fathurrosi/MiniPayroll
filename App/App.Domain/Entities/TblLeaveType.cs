@@ -23,9 +23,23 @@ public partial class TblLeaveType
     [Unicode(false)]
     public string? LeaveName { get; set; }
 
-    public int? AnnualQuota { get; set; }
+    public int? DefaultAnnualQuota { get; set; }
 
     public bool IsPaid { get; set; }
 
     public bool IsActive { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedDate { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 }

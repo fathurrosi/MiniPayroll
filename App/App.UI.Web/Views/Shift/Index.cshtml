@@ -391,23 +391,26 @@
 
                 // Build the payload object matching tbl_Shift properties
                 let formData = {
-                    Id: parseInt($('#ShiftId').val()),
-                    ShiftCode: $('#ShiftCode').val(),
-                    ShiftName: $('#ShiftName').val(),
-                    StartTime: $('#StartTime').val(),
-                    EndTime: $('#EndTime').val(),
-                    BreakStart: $('#BreakStart').val() || null,
-                    BreakEnd: $('#BreakEnd').val() || null,
-                    WorkingHours: parseFloat($('#WorkingHours').val()),
-                    IsOvernight: $('#IsOvernight').is(':checked'),
-                    IsActive: $('#IsActive').is(':checked')
+                    Item: {
+                        Id: parseInt($('#ShiftId').val()),
+                        ShiftCode: $('#ShiftCode').val(),
+                        ShiftName: $('#ShiftName').val(),
+                        StartTime: $('#StartTime').val(),
+                        EndTime: $('#EndTime').val(),
+                        BreakStart: $('#BreakStart').val() || null,
+                        BreakEnd: $('#BreakEnd').val() || null,
+                        WorkingHours: parseFloat($('#WorkingHours').val()),
+                        IsOvernight: $('#IsOvernight').is(':checked'),
+                        IsActive: $('#IsActive').is(':checked')
+                    }
                 };
-
+                console.log('Submitting form data:', formData); // Debugging line
                 $.ajax({
-                    url: '@Url.Action("SaveShift", "Shift")', // Your Controller Action
+                    url: '@Url.Action("Add", "Shift")', // Your Controller Action
                     type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(formData),
+                    // contentType: 'application/json',
+                    // data: JSON.stringify(formData),
+                    data: formData,
                     success: function (response) {
                         if (response.success) {
                             // Hide modal
