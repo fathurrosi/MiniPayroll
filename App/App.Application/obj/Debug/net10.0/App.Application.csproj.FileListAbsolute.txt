@@ -1,0 +1,16 @@
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\bin\Debug\net10.0\App.Application.deps.json
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\bin\Debug\net10.0\App.Application.dll
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\bin\Debug\net10.0\App.Application.pdb
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\bin\Debug\net10.0\App.Domain.dll
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\bin\Debug\net10.0\App.Domain.pdb
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Application.csproj.AssemblyReference.cache
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Application.AssemblyInfoInputs.cache
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Application.AssemblyInfo.cs
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Application.csproj.CoreCompileInputs.cache
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Application.sourcelink.json
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Appl.090A7001.Up2Date
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Application.dll
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\refint\App.Application.dll
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\App.Application.pdb
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Application\obj\Debug\net10.0\ref\App.Application.dll

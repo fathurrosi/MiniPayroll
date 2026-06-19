@@ -1,0 +1,66 @@
+[
+  {
+    "ContainingType": "App.UI.Web.Controllers.LeaveTypeController",
+    "Method": "Delete",
+    "RelativePath": "api/LeaveType/delete/{code}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "App.UI.Web.Controllers.LeaveTypeController",
+    "Method": "GetData",
+    "RelativePath": "api/LeaveType/get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "App.UI.Web.Controllers.LeaveTypeController",
+    "Method": "GetList",
+    "RelativePath": "api/LeaveType/list",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "App.Domain.Models.Request.DataTableRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "App.UI.Web.Controllers.LeaveTypeController",
+    "Method": "SaveAsync",
+    "RelativePath": "api/LeaveType/save",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "App.Domain.Models.PageModel\u00601[[App.Domain.Models.Dto.LeaveTypeDto, App.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

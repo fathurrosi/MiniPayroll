@@ -1,0 +1,15 @@
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\bin\Debug\net10.0\App.Domain.deps.json
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\bin\Debug\net10.0\App.Domain.runtimeconfig.json
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\bin\Debug\net10.0\App.Domain.dll
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\bin\Debug\net10.0\App.Domain.pdb
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.csproj.AssemblyReference.cache
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.AssemblyInfoInputs.cache
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.AssemblyInfo.cs
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.csproj.CoreCompileInputs.cache
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.sourcelink.json
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.dll
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\refint\App.Domain.dll
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.pdb
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\App.Domain.genruntimeconfig.cache
+C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.Domain\obj\Debug\net10.0\ref\App.Domain.dll

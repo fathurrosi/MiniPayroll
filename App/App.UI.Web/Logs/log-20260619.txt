@@ -2433,3 +2433,1245 @@ FROM [tbl_Menus] AS [t]
 2026-06-19 19:27:22.926 +07:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7000/LeaveType, Response status code: 404
 2026-06-19 19:27:24.452 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
 2026-06-19 19:27:24.453 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 1.0924ms
+2026-06-19 20:06:10.591 +07:00 [INF] User profile is available. Using 'C:\Users\asus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-19 20:06:12.103 +07:00 [INF] Now listening on: https://localhost:7000
+2026-06-19 20:06:12.104 +07:00 [INF] Now listening on: http://localhost:8000
+2026-06-19 20:06:12.202 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-19 20:06:12.203 +07:00 [INF] Hosting environment: Development
+2026-06-19 20:06:12.203 +07:00 [INF] Content root path: C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web
+2026-06-19 20:06:12.647 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/ - null null
+2026-06-19 20:06:15.441 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:06:15.465 +07:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller App.UI.Web.Controllers.HomeController (App.UI.Web).
+2026-06-19 20:06:15.486 +07:00 [INF] Executing ViewResult, running view Index.
+2026-06-19 20:06:17.848 +07:00 [INF] Executed DbCommand (51ms) [Parameters=[@__username_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[Email], [t].[FullName], [t].[IsActive], [t].[LastLoginDate], [t].[PasswordHash], [t].[UpdatedBy], [t].[UpdatedDate], [t].[Username]
+FROM [tbl_Users] AS [t]
+WHERE [t].[Username] = @__username_0
+2026-06-19 20:06:18.030 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT [t].[Id], [t].[Caption], [t].[CreatedBy], [t].[CreatedDate], [t].[Css], [t].[Deleted], [t].[Icon], [t].[Link], [t].[MenuTitle], [t].[Name], [t].[ParentId], [t].[Sort], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_Menus] AS [t]
+2026-06-19 20:06:18.269 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.html - null null
+2026-06-19 20:06:18.379 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - null null
+2026-06-19 20:06:18.379 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - null null
+2026-06-19 20:06:18.395 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - null null
+2026-06-19 20:06:18.399 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - null null
+2026-06-19 20:06:18.432 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/css/adminlte.css - null null
+2026-06-19 20:06:18.435 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - null null
+2026-06-19 20:06:18.465 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - null null
+2026-06-19 20:06:18.467 +07:00 [INF] Executed ViewResult - view Index executed in 2903.3198ms.
+2026-06-19 20:06:18.470 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.470 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.471 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.471 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.471 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.471 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.473 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.483 +07:00 [INF] Executed action App.UI.Web.Controllers.HomeController.Index (App.UI.Web) in 3015.8744ms
+2026-06-19 20:06:18.484 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:06:18.533 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.html - 304 null null 265.4932ms
+2026-06-19 20:06:18.533 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/ - 200 null text/html; charset=utf-8 5902.865ms
+2026-06-19 20:06:18.543 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2026-06-19 20:06:18.543 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - null null
+2026-06-19 20:06:18.544 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.545 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.545 +07:00 [INF] Sending file. Request path: 'lib/overlayscrollbars/styles/overlayscrollbars.min.css'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\993p3es7wv-{0}-iv6c2xil46-iv6c2xil46.gz'
+2026-06-19 20:06:18.545 +07:00 [INF] Sending file. Request path: 'lib/select2/css/select2.min.css'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\ebtlf0mnm0-{0}-2b36fav156-2b36fav156.gz'
+2026-06-19 20:06:18.545 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - null null
+2026-06-19 20:06:18.545 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - null null
+2026-06-19 20:06:18.545 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - null null
+2026-06-19 20:06:18.546 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - null null
+2026-06-19 20:06:18.546 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.546 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.546 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - 200 2589 text/css 151.6758ms
+2026-06-19 20:06:18.546 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - 200 1998 text/css 147.1291ms
+2026-06-19 20:06:18.548 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/adminlte.js - null null
+2026-06-19 20:06:18.548 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/site.js - null null
+2026-06-19 20:06:18.553 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.553 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.556 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.557 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.557 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.557 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.557 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - null null
+2026-06-19 20:06:18.557 +07:00 [INF] Sending file. Request path: 'js/site.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\k0qkslzlqj-{0}-kzzsn7tisv-kzzsn7tisv.gz'
+2026-06-19 20:06:18.558 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.558 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/site.js - 200 1407 text/javascript 9.6053ms
+2026-06-19 20:06:18.558 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - null null
+2026-06-19 20:06:18.558 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.559 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.559 +07:00 [INF] The file assets/img/user1-128x128.jpg was not modified
+2026-06-19 20:06:18.559 +07:00 [INF] The file assets/img/user8-128x128.jpg was not modified
+2026-06-19 20:06:18.559 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.559 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.560 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - 304 null image/jpeg 2.1526ms
+2026-06-19 20:06:18.560 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - 304 null image/jpeg 1.4041ms
+2026-06-19 20:06:18.573 +07:00 [INF] Sending file. Request path: 'lib/bootstrap-icons/font/bootstrap-icons.min.css'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\9mdyb4xtv6-{0}-79l73tsp3y-79l73tsp3y.gz'
+2026-06-19 20:06:18.573 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.574 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - 200 13887 text/css 194.1342ms
+2026-06-19 20:06:18.576 +07:00 [INF] Sending file. Request path: 'lib/sweetalert2/sweetalert2.all.min.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\98og3lhjva-{0}-rud4guendm-rud4guendm.gz'
+2026-06-19 20:06:18.576 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.578 +07:00 [INF] Sending file. Request path: 'js/adminlte.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\xg2debpac7-{0}-qhbdtqisnl-qhbdtqisnl.gz'
+2026-06-19 20:06:18.578 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.578 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/adminlte.js - 200 7619 text/javascript 30.2086ms
+2026-06-19 20:06:18.579 +07:00 [INF] Sending file. Request path: 'lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\0oi8dh3hky-{0}-f4mrji3qn3-f4mrji3qn3.gz'
+2026-06-19 20:06:18.579 +07:00 [INF] Sending file. Request path: 'lib/jquery/dist/jquery.min.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\4moo1lp9wl-{0}-m9qm4tazc0-m9qm4tazc0.gz'
+2026-06-19 20:06:18.579 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.579 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.579 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - 200 14375 text/javascript 35.8909ms
+2026-06-19 20:06:18.592 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - 200 20286 text/javascript 142.0457ms
+2026-06-19 20:06:18.592 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - 200 30420 text/javascript 114.1256ms
+2026-06-19 20:06:18.608 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - null null
+2026-06-19 20:06:18.608 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.css - null null
+2026-06-19 20:06:18.608 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:06:18.608 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-19 20:06:18.609 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - null null
+2026-06-19 20:06:18.609 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - null null
+2026-06-19 20:06:18.611 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.js - null null
+2026-06-19 20:06:18.612 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.js - 304 null null 1.1968ms
+2026-06-19 20:06:18.612 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - null null
+2026-06-19 20:06:18.615 +07:00 [INF] Sending file. Request path: 'lib/fontawesome/css/all.css'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\7p9iokqhjn-{0}-m0nhzrbhcc-m0nhzrbhcc.gz'
+2026-06-19 20:06:18.615 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.615 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - 200 24051 text/css 236.8853ms
+2026-06-19 20:06:18.616 +07:00 [INF] Sending file. Request path: 'lib/select2/js/select2.min.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\8tfkm8zhfa-{0}-xe5rc2fxks-xe5rc2fxks.gz'
+2026-06-19 20:06:18.616 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.616 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - 200 19908 text/javascript 70.6116ms
+2026-06-19 20:06:18.617 +07:00 [INF] Sending file. Request path: 'lib/bootstrap/dist/js/bootstrap.bundle.min.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\f8ksjtwz2y-{0}-hd3gran6i8-hd3gran6i8.gz'
+2026-06-19 20:06:18.618 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.619 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 200 23807 text/javascript 75.334ms
+2026-06-19 20:06:18.619 +07:00 [INF] Sending file. Request path: 'css/adminlte.css'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\pq1swxgex2-{0}-0me9qcuev1-0me9qcuev1.gz'
+2026-06-19 20:06:18.619 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.619 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/css/adminlte.css - 200 45917 text/css 212.3773ms
+2026-06-19 20:06:18.625 +07:00 [INF] Sending file. Request path: 'lib/jszip/jszip.min.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\djk6n5y78x-{0}-vs4bnby5cr-vs4bnby5cr.gz'
+2026-06-19 20:06:18.625 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.625 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - 200 28478 text/javascript 80.0001ms
+2026-06-19 20:06:18.629 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:06:18.632 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.css - 304 null null 24.1358ms
+2026-06-19 20:06:18.633 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - 304 null null 24.5809ms
+2026-06-19 20:06:18.636 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - 304 null null 28.3412ms
+2026-06-19 20:06:18.642 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - 304 null null 31.0779ms
+2026-06-19 20:06:18.662 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 53.9915ms
+2026-06-19 20:06:18.719 +07:00 [INF] Sending file. Request path: 'lib/pdfmake/vfs_fonts.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\0u6bd9y5hn-{0}-magak51srw-magak51srw.gz'
+2026-06-19 20:06:18.719 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.719 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.720 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - 200 429747 text/javascript 173.4806ms
+2026-06-19 20:06:18.725 +07:00 [INF] Sending file. Request path: 'lib/pdfmake/pdfmake.min.js'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\k0e4042owj-{0}-bsl028xg91-bsl028xg91.gz'
+2026-06-19 20:06:18.725 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.726 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - 200 543353 text/javascript 180.3602ms
+2026-06-19 20:06:18.726 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.726 +07:00 [INF] The file assets/img/user2-160x160.jpg was not modified
+2026-06-19 20:06:18.726 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.726 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - 304 null image/jpeg 114.3508ms
+2026-06-19 20:06:18.726 +07:00 [INF] The file assets/img/user3-128x128.jpg was not modified
+2026-06-19 20:06:18.726 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.726 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - 304 null image/jpeg 117.3685ms
+2026-06-19 20:06:18.750 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:06:18.751 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - null null
+2026-06-19 20:06:18.752 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.752 +07:00 [INF] The file assets/img/AdminLTELogo.png was not modified
+2026-06-19 20:06:18.752 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.752 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - 304 null image/png 1.378ms
+2026-06-19 20:06:18.753 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 2.3325ms
+2026-06-19 20:06:18.819 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:06:18.831 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 202.7238ms
+2026-06-19 20:06:18.832 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 12.7696ms
+2026-06-19 20:06:18.885 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - null null
+2026-06-19 20:06:18.889 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-06-19 20:06:18.894 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.895 +07:00 [INF] The file lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2 was not modified
+2026-06-19 20:06:18.895 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.895 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - 304 null font/woff2 10.7048ms
+2026-06-19 20:06:18.896 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.897 +07:00 [INF] The file lib/fontawesome/webfonts/fa-solid-900.woff2 was not modified
+2026-06-19 20:06:18.897 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:06:18.897 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - 304 null font/woff2 8.2422ms
+2026-06-19 20:06:18.903 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - null null
+2026-06-19 20:06:18.919 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 16.1018ms
+2026-06-19 20:40:43.794 +07:00 [INF] User profile is available. Using 'C:\Users\asus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-19 20:40:45.032 +07:00 [INF] Now listening on: https://localhost:7000
+2026-06-19 20:40:45.033 +07:00 [INF] Now listening on: http://localhost:8000
+2026-06-19 20:40:45.119 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-19 20:40:45.129 +07:00 [INF] Hosting environment: Development
+2026-06-19 20:40:45.130 +07:00 [INF] Content root path: C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web
+2026-06-19 20:40:45.732 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/ - null null
+2026-06-19 20:40:48.076 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:40:48.093 +07:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller App.UI.Web.Controllers.HomeController (App.UI.Web).
+2026-06-19 20:40:48.106 +07:00 [INF] Executing ViewResult, running view Index.
+2026-06-19 20:40:49.684 +07:00 [INF] Executed DbCommand (42ms) [Parameters=[@__username_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[Email], [t].[FullName], [t].[IsActive], [t].[LastLoginDate], [t].[PasswordHash], [t].[UpdatedBy], [t].[UpdatedDate], [t].[Username]
+FROM [tbl_Users] AS [t]
+WHERE [t].[Username] = @__username_0
+2026-06-19 20:40:49.919 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT [t].[Id], [t].[Caption], [t].[CreatedBy], [t].[CreatedDate], [t].[Css], [t].[Deleted], [t].[Icon], [t].[Link], [t].[MenuTitle], [t].[Name], [t].[ParentId], [t].[Sort], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_Menus] AS [t]
+2026-06-19 20:40:50.164 +07:00 [INF] Executed ViewResult - view Index executed in 2059.7538ms.
+2026-06-19 20:40:50.165 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - null null
+2026-06-19 20:40:50.165 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - null null
+2026-06-19 20:40:50.168 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - null null
+2026-06-19 20:40:50.172 +07:00 [INF] Executed action App.UI.Web.Controllers.HomeController.Index (App.UI.Web) in 2077.8968ms
+2026-06-19 20:40:50.202 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:40:50.234 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.234 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.234 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.243 +07:00 [INF] The file lib/bootstrap-icons/font/bootstrap-icons.min.css was not modified
+2026-06-19 20:40:50.243 +07:00 [INF] The file lib/overlayscrollbars/styles/overlayscrollbars.min.css was not modified
+2026-06-19 20:40:50.243 +07:00 [INF] The file lib/fontawesome/css/all.css was not modified
+2026-06-19 20:40:50.244 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.244 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.244 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.246 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - 304 null text/css 76.9249ms
+2026-06-19 20:40:50.246 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - 304 null text/css 80.5541ms
+2026-06-19 20:40:50.246 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - 304 null text/css 80.5575ms
+2026-06-19 20:40:50.252 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - null null
+2026-06-19 20:40:50.254 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/ - 200 null text/html; charset=utf-8 4527.3458ms
+2026-06-19 20:40:50.261 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/css/adminlte.css - null null
+2026-06-19 20:40:50.261 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - null null
+2026-06-19 20:40:50.265 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.265 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.265 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.266 +07:00 [INF] The file css/adminlte.css was not modified
+2026-06-19 20:40:50.266 +07:00 [INF] The file lib/select2/css/select2.min.css was not modified
+2026-06-19 20:40:50.266 +07:00 [INF] The file lib/jquery/dist/jquery.min.js was not modified
+2026-06-19 20:40:50.266 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.266 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.266 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.266 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/css/adminlte.css - 304 null text/css 4.9916ms
+2026-06-19 20:40:50.266 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - 304 null text/css 14.7259ms
+2026-06-19 20:40:50.266 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - 304 null text/javascript 4.7451ms
+2026-06-19 20:40:50.272 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2026-06-19 20:40:50.272 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - null null
+2026-06-19 20:40:50.274 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.274 +07:00 [INF] The file lib/bootstrap/dist/js/bootstrap.bundle.min.js was not modified
+2026-06-19 20:40:50.274 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.275 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 304 null text/javascript 2.3364ms
+2026-06-19 20:40:50.291 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - null null
+2026-06-19 20:40:50.292 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.292 +07:00 [INF] The file lib/jszip/jszip.min.js was not modified
+2026-06-19 20:40:50.292 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.292 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - null null
+2026-06-19 20:40:50.292 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - 304 null text/javascript 1.6371ms
+2026-06-19 20:40:50.293 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.293 +07:00 [INF] The file lib/pdfmake/pdfmake.min.js was not modified
+2026-06-19 20:40:50.293 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.293 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - 304 null text/javascript 1.1168ms
+2026-06-19 20:40:50.303 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - null null
+2026-06-19 20:40:50.305 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.305 +07:00 [INF] The file lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js was not modified
+2026-06-19 20:40:50.305 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.305 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - 304 null text/javascript 32.9053ms
+2026-06-19 20:40:50.317 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.318 +07:00 [INF] The file lib/pdfmake/vfs_fonts.js was not modified
+2026-06-19 20:40:50.318 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.318 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - 304 null text/javascript 14.6579ms
+2026-06-19 20:40:50.343 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - null null
+2026-06-19 20:40:50.343 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - null null
+2026-06-19 20:40:50.344 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.344 +07:00 [INF] The file lib/sweetalert2/sweetalert2.all.min.js was not modified
+2026-06-19 20:40:50.344 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.345 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - 304 null text/javascript 1.5888ms
+2026-06-19 20:40:50.345 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.345 +07:00 [INF] The file lib/select2/js/select2.min.js was not modified
+2026-06-19 20:40:50.345 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.345 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - 304 null text/javascript 2.5221ms
+2026-06-19 20:40:50.351 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/adminlte.js - null null
+2026-06-19 20:40:50.351 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.352 +07:00 [INF] The file js/adminlte.js was not modified
+2026-06-19 20:40:50.352 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.352 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/adminlte.js - 304 null text/javascript 1.4061ms
+2026-06-19 20:40:50.360 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/site.js - null null
+2026-06-19 20:40:50.360 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - null null
+2026-06-19 20:40:50.360 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - null null
+2026-06-19 20:40:50.361 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.361 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.361 +07:00 [INF] The file assets/img/user1-128x128.jpg was not modified
+2026-06-19 20:40:50.361 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.361 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - 304 null image/jpeg 1.7336ms
+2026-06-19 20:40:50.361 +07:00 [INF] The file assets/img/user8-128x128.jpg was not modified
+2026-06-19 20:40:50.362 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.362 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - 304 null image/jpeg 2.073ms
+2026-06-19 20:40:50.371 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - null null
+2026-06-19 20:40:50.372 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - null null
+2026-06-19 20:40:50.374 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.374 +07:00 [INF] The file js/site.js was not modified
+2026-06-19 20:40:50.375 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.375 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/site.js - 304 null text/javascript 14.8278ms
+2026-06-19 20:40:50.379 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:40:50.384 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 5.3158ms
+2026-06-19 20:40:50.388 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - null null
+2026-06-19 20:40:50.413 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.413 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.413 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.414 +07:00 [INF] The file assets/img/user3-128x128.jpg was not modified
+2026-06-19 20:40:50.414 +07:00 [INF] The file assets/img/user2-160x160.jpg was not modified
+2026-06-19 20:40:50.414 +07:00 [INF] The file assets/img/AdminLTELogo.png was not modified
+2026-06-19 20:40:50.414 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.414 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.414 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.414 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - 304 null image/png 26.0834ms
+2026-06-19 20:40:50.414 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - 304 null image/jpeg 42.5372ms
+2026-06-19 20:40:50.414 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - 304 null image/jpeg 42.5556ms
+2026-06-19 20:40:50.484 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - null null
+2026-06-19 20:40:50.484 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-06-19 20:40:50.487 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.488 +07:00 [INF] The file lib/fontawesome/webfonts/fa-solid-900.woff2 was not modified
+2026-06-19 20:40:50.488 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.488 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - 304 null font/woff2 4.0242ms
+2026-06-19 20:40:50.492 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.492 +07:00 [INF] The file lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2 was not modified
+2026-06-19 20:40:50.493 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:40:50.493 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - 304 null font/woff2 8.9945ms
+2026-06-19 20:40:50.495 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:40:50.535 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 40.5422ms
+2026-06-19 20:40:56.002 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.html - null null
+2026-06-19 20:40:56.103 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.html - 304 null null 101.5299ms
+2026-06-19 20:40:56.116 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - null null
+2026-06-19 20:40:56.116 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.css - null null
+2026-06-19 20:40:56.116 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - null null
+2026-06-19 20:40:56.116 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-19 20:40:56.116 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.js - null null
+2026-06-19 20:40:56.117 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.js - 304 null null 0.7892ms
+2026-06-19 20:40:56.118 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:40:56.119 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 1.502ms
+2026-06-19 20:40:56.133 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - 304 null null 17.5722ms
+2026-06-19 20:40:56.133 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.css - 304 null null 17.518ms
+2026-06-19 20:40:56.133 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - 304 null null 17.135ms
+2026-06-19 20:40:56.140 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:40:56.153 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - 304 null null 36.613ms
+2026-06-19 20:40:56.187 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 46.6518ms
+2026-06-19 20:40:56.279 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - null null
+2026-06-19 20:40:56.287 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 8.0935ms
+2026-06-19 20:42:36.994 +07:00 [INF] User profile is available. Using 'C:\Users\asus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-19 20:42:37.986 +07:00 [INF] Now listening on: https://localhost:7000
+2026-06-19 20:42:37.987 +07:00 [INF] Now listening on: http://localhost:8000
+2026-06-19 20:42:38.053 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-19 20:42:38.053 +07:00 [INF] Hosting environment: Development
+2026-06-19 20:42:38.053 +07:00 [INF] Content root path: C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web
+2026-06-19 20:42:38.456 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/ - null null
+2026-06-19 20:42:40.929 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:42:40.944 +07:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller App.UI.Web.Controllers.HomeController (App.UI.Web).
+2026-06-19 20:42:40.956 +07:00 [INF] Executing ViewResult, running view Index.
+2026-06-19 20:42:43.183 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.html - null null
+2026-06-19 20:42:43.402 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.html - 304 null null 218.825ms
+2026-06-19 20:42:43.423 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - null null
+2026-06-19 20:42:43.423 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.css - null null
+2026-06-19 20:42:43.424 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:42:43.450 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - 304 null null 27.5099ms
+2026-06-19 20:42:43.450 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-19 20:42:43.452 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - 304 null null 1.532ms
+2026-06-19 20:42:43.452 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.js - null null
+2026-06-19 20:42:43.453 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.js - 304 null null 0.6923ms
+2026-06-19 20:42:43.450 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.css - 304 null null 26.6709ms
+2026-06-19 20:42:43.459 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - null null
+2026-06-19 20:42:43.465 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:42:43.477 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - 304 null null 17.5599ms
+2026-06-19 20:42:43.486 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 62.1383ms
+2026-06-19 20:42:43.548 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 83.6344ms
+2026-06-19 20:42:43.555 +07:00 [INF] Executed DbCommand (167ms) [Parameters=[@__username_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[Email], [t].[FullName], [t].[IsActive], [t].[LastLoginDate], [t].[PasswordHash], [t].[UpdatedBy], [t].[UpdatedDate], [t].[Username]
+FROM [tbl_Users] AS [t]
+WHERE [t].[Username] = @__username_0
+2026-06-19 20:42:43.625 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - null null
+2026-06-19 20:42:43.638 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 13.6749ms
+2026-06-19 20:42:43.743 +07:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT [t].[Id], [t].[Caption], [t].[CreatedBy], [t].[CreatedDate], [t].[Css], [t].[Deleted], [t].[Icon], [t].[Link], [t].[MenuTitle], [t].[Name], [t].[ParentId], [t].[Sort], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_Menus] AS [t]
+2026-06-19 20:42:43.972 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - null null
+2026-06-19 20:42:43.972 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - null null
+2026-06-19 20:42:43.979 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - null null
+2026-06-19 20:42:43.982 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - null null
+2026-06-19 20:42:43.982 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/css/adminlte.css - null null
+2026-06-19 20:42:43.992 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:43.992 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:43.993 +07:00 [INF] Executed ViewResult - view Index executed in 3033.7554ms.
+2026-06-19 20:42:43.995 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:43.995 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:43.995 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.001 +07:00 [INF] The file lib/bootstrap-icons/font/bootstrap-icons.min.css was not modified
+2026-06-19 20:42:44.001 +07:00 [INF] The file lib/fontawesome/css/all.css was not modified
+2026-06-19 20:42:44.003 +07:00 [INF] The file lib/overlayscrollbars/styles/overlayscrollbars.min.css was not modified
+2026-06-19 20:42:44.001 +07:00 [INF] The file lib/select2/css/select2.min.css was not modified
+2026-06-19 20:42:44.003 +07:00 [INF] The file css/adminlte.css was not modified
+2026-06-19 20:42:44.004 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.004 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.004 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - 304 null text/css 25.2496ms
+2026-06-19 20:42:44.004 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.004 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.004 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/css/adminlte.css - 304 null text/css 21.8872ms
+2026-06-19 20:42:44.004 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - 304 null text/css 21.984ms
+2026-06-19 20:42:44.007 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.008 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - 304 null text/css 35.6493ms
+2026-06-19 20:42:44.004 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - 304 null text/css 31.7783ms
+2026-06-19 20:42:44.013 +07:00 [INF] Executed action App.UI.Web.Controllers.HomeController.Index (App.UI.Web) in 3068.1078ms
+2026-06-19 20:42:44.014 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:42:44.018 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - null null
+2026-06-19 20:42:44.018 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2026-06-19 20:42:44.018 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - null null
+2026-06-19 20:42:44.019 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - null null
+2026-06-19 20:42:44.019 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - null null
+2026-06-19 20:42:44.019 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - null null
+2026-06-19 20:42:44.038 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.038 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.038 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.038 +07:00 [INF] The file lib/pdfmake/vfs_fonts.js was not modified
+2026-06-19 20:42:44.038 +07:00 [INF] The file lib/jszip/jszip.min.js was not modified
+2026-06-19 20:42:44.038 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.038 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - 304 null text/javascript 19.4927ms
+2026-06-19 20:42:44.039 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - null null
+2026-06-19 20:42:44.040 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.041 +07:00 [INF] The file lib/pdfmake/pdfmake.min.js was not modified
+2026-06-19 20:42:44.041 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.041 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.041 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - 304 null text/javascript 22.0816ms
+2026-06-19 20:42:44.041 +07:00 [INF] The file lib/select2/js/select2.min.js was not modified
+2026-06-19 20:42:44.041 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - null null
+2026-06-19 20:42:44.041 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.041 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - 304 null text/javascript 1.9424ms
+2026-06-19 20:42:44.041 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.042 +07:00 [INF] The file lib/sweetalert2/sweetalert2.all.min.js was not modified
+2026-06-19 20:42:44.042 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.042 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/adminlte.js - null null
+2026-06-19 20:42:44.042 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - 304 null text/javascript 0.7987ms
+2026-06-19 20:42:44.042 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.038 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.038 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.038 +07:00 [INF] The file lib/jquery/dist/jquery.min.js was not modified
+2026-06-19 20:42:44.042 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - 304 null text/javascript 23.7144ms
+2026-06-19 20:42:44.042 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.042 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - 304 null text/javascript 24.3228ms
+2026-06-19 20:42:44.043 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/site.js - null null
+2026-06-19 20:42:44.043 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.043 +07:00 [INF] The file js/site.js was not modified
+2026-06-19 20:42:44.043 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.043 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - null null
+2026-06-19 20:42:44.043 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/site.js - 304 null text/javascript 0.6569ms
+2026-06-19 20:42:44.043 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - null null
+2026-06-19 20:42:44.042 +07:00 [INF] The file js/adminlte.js was not modified
+2026-06-19 20:42:44.044 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.044 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/adminlte.js - 304 null text/javascript 2.0042ms
+2026-06-19 20:42:44.045 +07:00 [INF] The file lib/bootstrap/dist/js/bootstrap.bundle.min.js was not modified
+2026-06-19 20:42:44.045 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/ - 200 null text/html; charset=utf-8 5602.0963ms
+2026-06-19 20:42:44.045 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.045 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 304 null text/javascript 26.8115ms
+2026-06-19 20:42:44.051 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.051 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.051 +07:00 [INF] The file assets/img/user8-128x128.jpg was not modified
+2026-06-19 20:42:44.051 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.051 +07:00 [INF] The file assets/img/user1-128x128.jpg was not modified
+2026-06-19 20:42:44.051 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - 304 null image/jpeg 7.7389ms
+2026-06-19 20:42:44.051 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.051 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - 304 null image/jpeg 8.0329ms
+2026-06-19 20:42:44.069 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - null null
+2026-06-19 20:42:44.069 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - null null
+2026-06-19 20:42:44.075 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.076 +07:00 [INF] The file lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js was not modified
+2026-06-19 20:42:44.076 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.076 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - 304 null text/javascript 57.3987ms
+2026-06-19 20:42:44.112 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.112 +07:00 [INF] The file assets/img/user2-160x160.jpg was not modified
+2026-06-19 20:42:44.112 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.112 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.113 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - 304 null image/jpeg 43.6654ms
+2026-06-19 20:42:44.113 +07:00 [INF] The file assets/img/user3-128x128.jpg was not modified
+2026-06-19 20:42:44.113 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.113 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - 304 null image/jpeg 44.0437ms
+2026-06-19 20:42:44.115 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:42:44.118 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 2.4428ms
+2026-06-19 20:42:44.119 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - null null
+2026-06-19 20:42:44.119 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:42:44.120 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.120 +07:00 [INF] The file assets/img/AdminLTELogo.png was not modified
+2026-06-19 20:42:44.120 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.120 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - 304 null image/png 1.4627ms
+2026-06-19 20:42:44.143 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 23.6662ms
+2026-06-19 20:42:44.208 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-06-19 20:42:44.208 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - null null
+2026-06-19 20:42:44.214 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.214 +07:00 [INF] The file lib/fontawesome/webfonts/fa-solid-900.woff2 was not modified
+2026-06-19 20:42:44.215 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.215 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - 304 null font/woff2 7.0727ms
+2026-06-19 20:42:44.219 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.263 +07:00 [INF] The file lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2 was not modified
+2026-06-19 20:42:44.264 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:42:44.264 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - 304 null font/woff2 55.6406ms
+2026-06-19 20:45:32.905 +07:00 [INF] User profile is available. Using 'C:\Users\asus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-19 20:45:34.404 +07:00 [INF] Now listening on: https://localhost:7000
+2026-06-19 20:45:34.404 +07:00 [INF] Now listening on: http://localhost:8000
+2026-06-19 20:45:34.495 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-19 20:45:34.495 +07:00 [INF] Hosting environment: Development
+2026-06-19 20:45:34.495 +07:00 [INF] Content root path: C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web
+2026-06-19 20:45:35.167 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/ - null null
+2026-06-19 20:45:37.712 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:45:37.729 +07:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller App.UI.Web.Controllers.HomeController (App.UI.Web).
+2026-06-19 20:45:37.743 +07:00 [INF] Executing ViewResult, running view Index.
+2026-06-19 20:45:40.016 +07:00 [INF] Executed DbCommand (37ms) [Parameters=[@__username_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[Email], [t].[FullName], [t].[IsActive], [t].[LastLoginDate], [t].[PasswordHash], [t].[UpdatedBy], [t].[UpdatedDate], [t].[Username]
+FROM [tbl_Users] AS [t]
+WHERE [t].[Username] = @__username_0
+2026-06-19 20:45:40.151 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT [t].[Id], [t].[Caption], [t].[CreatedBy], [t].[CreatedDate], [t].[Css], [t].[Deleted], [t].[Icon], [t].[Link], [t].[MenuTitle], [t].[Name], [t].[ParentId], [t].[Sort], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_Menus] AS [t]
+2026-06-19 20:45:40.376 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - null null
+2026-06-19 20:45:40.376 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - null null
+2026-06-19 20:45:40.377 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - null null
+2026-06-19 20:45:40.378 +07:00 [INF] Executed ViewResult - view Index executed in 2631.9156ms.
+2026-06-19 20:45:40.403 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - null null
+2026-06-19 20:45:40.434 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - null null
+2026-06-19 20:45:40.435 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/css/adminlte.css - null null
+2026-06-19 20:45:40.474 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2026-06-19 20:45:40.476 +07:00 [INF] Executed action App.UI.Web.Controllers.HomeController.Index (App.UI.Web) in 2745.6561ms
+2026-06-19 20:45:40.477 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.477 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.477 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.477 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.477 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.478 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:45:40.478 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.479 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.484 +07:00 [INF] The file lib/jquery/dist/jquery.min.js was not modified
+2026-06-19 20:45:40.485 +07:00 [INF] The file lib/overlayscrollbars/styles/overlayscrollbars.min.css was not modified
+2026-06-19 20:45:40.485 +07:00 [INF] The file css/adminlte.css was not modified
+2026-06-19 20:45:40.485 +07:00 [INF] The file lib/bootstrap-icons/font/bootstrap-icons.min.css was not modified
+2026-06-19 20:45:40.485 +07:00 [INF] The file lib/bootstrap/dist/js/bootstrap.bundle.min.js was not modified
+2026-06-19 20:45:40.484 +07:00 [INF] The file lib/select2/css/select2.min.css was not modified
+2026-06-19 20:45:40.485 +07:00 [INF] The file lib/fontawesome/css/all.css was not modified
+2026-06-19 20:45:40.486 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.486 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.486 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.486 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.486 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.486 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.486 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.489 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - 304 null text/javascript 54.1574ms
+2026-06-19 20:45:40.489 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - 304 null text/css 111.5589ms
+2026-06-19 20:45:40.489 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 304 null text/javascript 14.2233ms
+2026-06-19 20:45:40.489 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - 304 null text/css 111.9381ms
+2026-06-19 20:45:40.489 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - 304 null text/css 85.3423ms
+2026-06-19 20:45:40.490 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - 304 null text/css 111.9503ms
+2026-06-19 20:45:40.490 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/css/adminlte.css - 304 null text/css 53.5654ms
+2026-06-19 20:45:40.499 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - null null
+2026-06-19 20:45:40.499 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - null null
+2026-06-19 20:45:40.500 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - null null
+2026-06-19 20:45:40.500 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - null null
+2026-06-19 20:45:40.500 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - null null
+2026-06-19 20:45:40.500 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.500 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.501 +07:00 [INF] The file lib/jszip/jszip.min.js was not modified
+2026-06-19 20:45:40.501 +07:00 [INF] The file lib/pdfmake/vfs_fonts.js was not modified
+2026-06-19 20:45:40.501 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.501 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - null null
+2026-06-19 20:45:40.501 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - 304 null text/javascript 1.4088ms
+2026-06-19 20:45:40.501 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.501 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.501 +07:00 [INF] The file lib/sweetalert2/sweetalert2.all.min.js was not modified
+2026-06-19 20:45:40.501 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.501 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - 304 null text/javascript 0.9348ms
+2026-06-19 20:45:40.502 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/adminlte.js - null null
+2026-06-19 20:45:40.503 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/site.js - null null
+2026-06-19 20:45:40.503 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - null null
+2026-06-19 20:45:40.501 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.500 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.503 +07:00 [INF] The file lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js was not modified
+2026-06-19 20:45:40.503 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.503 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - 304 null text/javascript 3.1091ms
+2026-06-19 20:45:40.503 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - null null
+2026-06-19 20:45:40.503 +07:00 [INF] The file lib/pdfmake/pdfmake.min.js was not modified
+2026-06-19 20:45:40.503 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.503 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - 304 null text/javascript 3.4307ms
+2026-06-19 20:45:40.501 +07:00 [INF] The file lib/select2/js/select2.min.js was not modified
+2026-06-19 20:45:40.503 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.505 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.506 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - 304 null text/javascript 6.3398ms
+2026-06-19 20:45:40.506 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - 304 null text/javascript 5.5637ms
+2026-06-19 20:45:40.513 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.514 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/ - 200 null text/html; charset=utf-8 5359.0721ms
+2026-06-19 20:45:40.514 +07:00 [INF] The file assets/img/user8-128x128.jpg was not modified
+2026-06-19 20:45:40.514 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.514 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - 304 null image/jpeg 10.7914ms
+2026-06-19 20:45:40.513 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.513 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.513 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.517 +07:00 [INF] The file assets/img/user1-128x128.jpg was not modified
+2026-06-19 20:45:40.517 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.517 +07:00 [INF] The file js/site.js was not modified
+2026-06-19 20:45:40.518 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - 304 null image/jpeg 14.9375ms
+2026-06-19 20:45:40.518 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.518 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/site.js - 304 null text/javascript 15.2568ms
+2026-06-19 20:45:40.519 +07:00 [INF] The file js/adminlte.js was not modified
+2026-06-19 20:45:40.519 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.519 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/adminlte.js - 304 null text/javascript 16.7715ms
+2026-06-19 20:45:40.551 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - null null
+2026-06-19 20:45:40.552 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - null null
+2026-06-19 20:45:40.587 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:45:40.588 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - null null
+2026-06-19 20:45:40.595 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:45:40.598 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.598 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.598 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.598 +07:00 [INF] The file assets/img/AdminLTELogo.png was not modified
+2026-06-19 20:45:40.598 +07:00 [INF] The file assets/img/user3-128x128.jpg was not modified
+2026-06-19 20:45:40.598 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.598 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.598 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - 304 null image/png 10.0033ms
+2026-06-19 20:45:40.598 +07:00 [INF] The file assets/img/user2-160x160.jpg was not modified
+2026-06-19 20:45:40.598 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - 304 null image/jpeg 47.1117ms
+2026-06-19 20:45:40.599 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.599 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - 304 null image/jpeg 47.4772ms
+2026-06-19 20:45:40.609 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 22.3723ms
+2026-06-19 20:45:40.664 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 69.0066ms
+2026-06-19 20:45:40.673 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - null null
+2026-06-19 20:45:40.674 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-06-19 20:45:40.682 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.683 +07:00 [INF] The file lib/fontawesome/webfonts/fa-solid-900.woff2 was not modified
+2026-06-19 20:45:40.683 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.683 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - 304 null font/woff2 9.2404ms
+2026-06-19 20:45:40.691 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.691 +07:00 [INF] The file lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2 was not modified
+2026-06-19 20:45:40.691 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:45:40.692 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - 304 null font/woff2 18.692ms
+2026-06-19 20:45:45.354 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.html - null null
+2026-06-19 20:45:45.444 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.html - 304 null null 90.4443ms
+2026-06-19 20:45:45.458 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - null null
+2026-06-19 20:45:45.458 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.css - null null
+2026-06-19 20:45:45.458 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.js - null null
+2026-06-19 20:45:45.458 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-19 20:45:45.458 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - null null
+2026-06-19 20:45:45.458 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:45:45.459 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.js - 304 null null 0.6212ms
+2026-06-19 20:45:45.459 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 0.4884ms
+2026-06-19 20:45:45.467 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - 304 null null 8.8021ms
+2026-06-19 20:45:45.467 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - 304 null null 9.7765ms
+2026-06-19 20:45:45.467 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.css - 304 null null 9.0978ms
+2026-06-19 20:45:45.471 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - 304 null null 12.9752ms
+2026-06-19 20:45:45.493 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:45:45.550 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 57.1233ms
+2026-06-19 20:45:45.605 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - null null
+2026-06-19 20:45:45.616 +07:00 [ERR] An unhandled exception has occurred while executing the request.
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Ambiguous HTTP method for action - App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web). Actions require an explicit HttpMethod binding for Swagger/OpenAPI 3.0
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.PrepareGenerateOperation(IGrouping`2 group)
+   at System.Linq.Enumerable.IteratorSelectIterator`2.MoveNext()
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperationsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository, Func`4 operationsGenerator)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePathsAsync(OpenApiDocument document, IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-19 20:45:45.643 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - 500 null text/plain; charset=utf-8 38.2016ms
+2026-06-19 20:50:55.679 +07:00 [INF] User profile is available. Using 'C:\Users\asus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-19 20:50:56.859 +07:00 [INF] Now listening on: https://localhost:7000
+2026-06-19 20:50:56.860 +07:00 [INF] Now listening on: http://localhost:8000
+2026-06-19 20:50:56.940 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-19 20:50:56.941 +07:00 [INF] Hosting environment: Development
+2026-06-19 20:50:56.941 +07:00 [INF] Content root path: C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web
+2026-06-19 20:50:57.570 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/ - null null
+2026-06-19 20:51:00.284 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:51:00.298 +07:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller App.UI.Web.Controllers.HomeController (App.UI.Web).
+2026-06-19 20:51:00.313 +07:00 [INF] Executing ViewResult, running view Index.
+2026-06-19 20:51:02.098 +07:00 [INF] Executed DbCommand (39ms) [Parameters=[@__username_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[Email], [t].[FullName], [t].[IsActive], [t].[LastLoginDate], [t].[PasswordHash], [t].[UpdatedBy], [t].[UpdatedDate], [t].[Username]
+FROM [tbl_Users] AS [t]
+WHERE [t].[Username] = @__username_0
+2026-06-19 20:51:02.234 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT [t].[Id], [t].[Caption], [t].[CreatedBy], [t].[CreatedDate], [t].[Css], [t].[Deleted], [t].[Icon], [t].[Link], [t].[MenuTitle], [t].[Name], [t].[ParentId], [t].[Sort], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_Menus] AS [t]
+2026-06-19 20:51:02.503 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - null null
+2026-06-19 20:51:02.503 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - null null
+2026-06-19 20:51:02.506 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - null null
+2026-06-19 20:51:02.509 +07:00 [INF] Executed ViewResult - view Index executed in 2194.9017ms.
+2026-06-19 20:51:02.519 +07:00 [INF] Executed action App.UI.Web.Controllers.HomeController.Index (App.UI.Web) in 2218.6487ms
+2026-06-19 20:51:02.519 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.520 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 20:51:02.525 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.531 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - null null
+2026-06-19 20:51:02.544 +07:00 [INF] The file lib/select2/css/select2.min.css was not modified
+2026-06-19 20:51:02.544 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.546 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.548 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.548 +07:00 [INF] The file lib/fontawesome/css/all.css was not modified
+2026-06-19 20:51:02.548 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.548 +07:00 [INF] The file lib/overlayscrollbars/styles/overlayscrollbars.min.css was not modified
+2026-06-19 20:51:02.548 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.549 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - 304 null text/css 45.6751ms
+2026-06-19 20:51:02.549 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - 304 null text/css 45.4256ms
+2026-06-19 20:51:02.548 +07:00 [INF] The file lib/bootstrap-icons/font/bootstrap-icons.min.css was not modified
+2026-06-19 20:51:02.549 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.549 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - 304 null text/css 18.3268ms
+2026-06-19 20:51:02.550 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - 304 null text/css 43.6723ms
+2026-06-19 20:51:02.576 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2026-06-19 20:51:02.576 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - null null
+2026-06-19 20:51:02.577 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - null null
+2026-06-19 20:51:02.577 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - null null
+2026-06-19 20:51:02.577 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - null null
+2026-06-19 20:51:02.577 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/css/adminlte.css - null null
+2026-06-19 20:51:02.577 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - null null
+2026-06-19 20:51:02.578 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - null null
+2026-06-19 20:51:02.580 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/ - 200 null text/html; charset=utf-8 5024.0861ms
+2026-06-19 20:51:02.583 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/site.js - null null
+2026-06-19 20:51:02.583 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.584 +07:00 [INF] The file css/adminlte.css was not modified
+2026-06-19 20:51:02.584 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.584 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.584 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/css/adminlte.css - 304 null text/css 32.4957ms
+2026-06-19 20:51:02.584 +07:00 [INF] The file js/site.js was not modified
+2026-06-19 20:51:02.584 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.584 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/site.js - 304 null text/javascript 1.0459ms
+2026-06-19 20:51:02.585 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/adminlte.js - null null
+2026-06-19 20:51:02.585 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - null null
+2026-06-19 20:51:02.586 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.586 +07:00 [INF] The file lib/pdfmake/vfs_fonts.js was not modified
+2026-06-19 20:51:02.586 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.586 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - 304 null text/javascript 9.8297ms
+2026-06-19 20:51:02.587 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - null null
+2026-06-19 20:51:02.587 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.587 +07:00 [INF] The file lib/select2/js/select2.min.js was not modified
+2026-06-19 20:51:02.587 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.587 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.587 +07:00 [INF] The file lib/jszip/jszip.min.js was not modified
+2026-06-19 20:51:02.587 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - 304 null text/javascript 9.7414ms
+2026-06-19 20:51:02.586 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.587 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.589 +07:00 [INF] The file lib/sweetalert2/sweetalert2.all.min.js was not modified
+2026-06-19 20:51:02.589 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.589 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - 304 null text/javascript 10.6453ms
+2026-06-19 20:51:02.589 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - null null
+2026-06-19 20:51:02.590 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.590 +07:00 [INF] The file lib/jquery/dist/jquery.min.js was not modified
+2026-06-19 20:51:02.591 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.588 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.588 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.592 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.595 +07:00 [INF] The file assets/img/user1-128x128.jpg was not modified
+2026-06-19 20:51:02.587 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.595 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.595 +07:00 [INF] The file lib/pdfmake/pdfmake.min.js was not modified
+2026-06-19 20:51:02.595 +07:00 [INF] The file lib/bootstrap/dist/js/bootstrap.bundle.min.js was not modified
+2026-06-19 20:51:02.595 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.595 +07:00 [INF] The file assets/img/user8-128x128.jpg was not modified
+2026-06-19 20:51:02.595 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.595 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.595 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.595 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 304 null text/javascript 19.2473ms
+2026-06-19 20:51:02.595 +07:00 [INF] The file js/adminlte.js was not modified
+2026-06-19 20:51:02.595 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - 304 null text/javascript 18.4589ms
+2026-06-19 20:51:02.595 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.595 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - 304 null text/javascript 6.2181ms
+2026-06-19 20:51:02.595 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/adminlte.js - 304 null text/javascript 10.8258ms
+2026-06-19 20:51:02.597 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - 304 null text/javascript 18.5055ms
+2026-06-19 20:51:02.599 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - 304 null image/jpeg 10.1185ms
+2026-06-19 20:51:02.599 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - 304 null image/jpeg 8.8226ms
+2026-06-19 20:51:02.627 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.627 +07:00 [INF] The file lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js was not modified
+2026-06-19 20:51:02.627 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.627 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - 304 null text/javascript 50.7676ms
+2026-06-19 20:51:02.633 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - null null
+2026-06-19 20:51:02.633 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - null null
+2026-06-19 20:51:02.672 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:51:02.675 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - null null
+2026-06-19 20:51:02.676 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.676 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.676 +07:00 [INF] The file assets/img/user2-160x160.jpg was not modified
+2026-06-19 20:51:02.676 +07:00 [INF] The file assets/img/user3-128x128.jpg was not modified
+2026-06-19 20:51:02.676 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.676 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.676 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - 304 null image/jpeg 43.3256ms
+2026-06-19 20:51:02.676 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:51:02.676 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - 304 null image/jpeg 43.3904ms
+2026-06-19 20:51:02.676 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.677 +07:00 [INF] The file assets/img/AdminLTELogo.png was not modified
+2026-06-19 20:51:02.677 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.677 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - 304 null image/png 2.1ms
+2026-06-19 20:51:02.692 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 20.1973ms
+2026-06-19 20:51:02.739 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 62.5915ms
+2026-06-19 20:51:02.765 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - null null
+2026-06-19 20:51:02.767 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-06-19 20:51:02.772 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.772 +07:00 [INF] The file lib/fontawesome/webfonts/fa-solid-900.woff2 was not modified
+2026-06-19 20:51:02.772 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.772 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - 304 null font/woff2 5.1436ms
+2026-06-19 20:51:02.777 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.777 +07:00 [INF] The file lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2 was not modified
+2026-06-19 20:51:02.777 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 20:51:02.777 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - 304 null font/woff2 12.7588ms
+2026-06-19 20:51:08.049 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.html - null null
+2026-06-19 20:51:08.132 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.html - 304 null null 83.2245ms
+2026-06-19 20:51:08.144 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.css - null null
+2026-06-19 20:51:08.145 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 20:51:08.145 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - null null
+2026-06-19 20:51:08.145 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-19 20:51:08.146 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - null null
+2026-06-19 20:51:08.146 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.js - null null
+2026-06-19 20:51:08.147 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 1.9107ms
+2026-06-19 20:51:08.147 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.js - 304 null null 0.9573ms
+2026-06-19 20:51:08.165 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.css - 304 null null 21.0986ms
+2026-06-19 20:51:08.166 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - 304 null null 20.686ms
+2026-06-19 20:51:08.166 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - 304 null null 20.9149ms
+2026-06-19 20:51:08.174 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - 304 null null 28.8026ms
+2026-06-19 20:51:08.178 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 20:51:08.218 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 39.4791ms
+2026-06-19 20:51:08.295 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - null null
+2026-06-19 20:51:08.310 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 14.9533ms
+2026-06-19 20:51:14.496 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - null null
+2026-06-19 20:51:14.511 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 15.156ms
+2026-06-19 20:52:30.566 +07:00 [INF] Request starting HTTP/1.1 DELETE https://localhost:7000/api/LeaveType/delete/string - null null
+2026-06-19 20:52:30.569 +07:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-06-19 20:52:30.573 +07:00 [INF] AuthenticationScheme: Cookies was challenged.
+2026-06-19 20:52:30.575 +07:00 [INF] Request finished HTTP/1.1 DELETE https://localhost:7000/api/LeaveType/delete/string - 401 0 null 9.6821ms
+2026-06-19 20:53:06.773 +07:00 [INF] Request starting HTTP/2 DELETE https://localhost:7000/api/LeaveType/delete/string - null null
+2026-06-19 20:53:06.780 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.LeaveTypeController.Delete (App.UI.Web)'
+2026-06-19 20:53:06.804 +07:00 [INF] Route matched with {action = "Delete", controller = "LeaveType"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(System.String) on controller App.UI.Web.Controllers.LeaveTypeController (App.UI.Web).
+2026-06-19 20:53:06.907 +07:00 [INF] Executed DbCommand (5ms) [Parameters=[@__code_0='?' (Size = 20) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[DefaultAnnualQuota], [t].[IsActive], [t].[IsPaid], [t].[LeaveCode], [t].[LeaveName], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_LeaveType] AS [t]
+WHERE [t].[LeaveCode] = @__code_0
+2026-06-19 20:53:07.077 +07:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='3600']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [tbl_LeaveType]
+OUTPUT 1
+WHERE [Id] = @p0;
+2026-06-19 20:53:07.111 +07:00 [INF] Executing OkObjectResult, writing value of type 'App.Domain.Models.Response.ActionResponse'.
+2026-06-19 20:53:07.121 +07:00 [INF] Executed action App.UI.Web.Controllers.LeaveTypeController.Delete (App.UI.Web) in 316.6922ms
+2026-06-19 20:53:07.121 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.LeaveTypeController.Delete (App.UI.Web)'
+2026-06-19 20:53:07.122 +07:00 [INF] Request finished HTTP/2 DELETE https://localhost:7000/api/LeaveType/delete/string - 200 null application/json; charset=utf-8 348.2191ms
+2026-06-19 20:53:38.137 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7000/api/LeaveType/save - application/json 329
+2026-06-19 20:53:38.138 +07:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-06-19 20:53:38.138 +07:00 [INF] AuthenticationScheme: Cookies was challenged.
+2026-06-19 20:53:38.138 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7000/api/LeaveType/save - 401 0 null 1.0567ms
+2026-06-19 20:54:00.587 +07:00 [INF] Request starting HTTP/1.1 POST https://localhost:7000/api/LeaveType/save - application/json 329
+2026-06-19 20:54:00.587 +07:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+2026-06-19 20:54:00.587 +07:00 [INF] AuthenticationScheme: Cookies was challenged.
+2026-06-19 20:54:00.587 +07:00 [INF] Request finished HTTP/1.1 POST https://localhost:7000/api/LeaveType/save - 401 0 null 0.4887ms
+2026-06-19 21:09:28.417 +07:00 [INF] User profile is available. Using 'C:\Users\asus\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-19 21:09:29.796 +07:00 [INF] Now listening on: https://localhost:7000
+2026-06-19 21:09:29.797 +07:00 [INF] Now listening on: http://localhost:8000
+2026-06-19 21:09:29.903 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-19 21:09:29.903 +07:00 [INF] Hosting environment: Development
+2026-06-19 21:09:29.903 +07:00 [INF] Content root path: C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web
+2026-06-19 21:09:30.218 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/ - null null
+2026-06-19 21:09:32.833 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 21:09:32.857 +07:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller App.UI.Web.Controllers.HomeController (App.UI.Web).
+2026-06-19 21:09:32.876 +07:00 [INF] Executing ViewResult, running view Index.
+2026-06-19 21:09:34.230 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.html - null null
+2026-06-19 21:09:34.557 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.html - 304 null null 325.8522ms
+2026-06-19 21:09:34.582 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.css - null null
+2026-06-19 21:09:34.582 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 21:09:34.583 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - null null
+2026-06-19 21:09:34.588 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-19 21:09:34.602 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.js - null null
+2026-06-19 21:09:34.602 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 21:09:34.640 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.js - 304 null null 38.6966ms
+2026-06-19 21:09:34.641 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - null null
+2026-06-19 21:09:34.643 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.css - 304 null null 60.9043ms
+2026-06-19 21:09:34.645 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - 304 null null 56.4716ms
+2026-06-19 21:09:34.645 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - 304 null null 61.4451ms
+2026-06-19 21:09:34.660 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - 304 null null 19.427ms
+2026-06-19 21:09:34.675 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 92.2552ms
+2026-06-19 21:09:34.733 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 130.0495ms
+2026-06-19 21:09:34.816 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - null null
+2026-06-19 21:09:35.217 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 400.4916ms
+2026-06-19 21:09:36.393 +07:00 [INF] Executed DbCommand (39ms) [Parameters=[@__username_0='?' (Size = 100)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[Email], [t].[FullName], [t].[IsActive], [t].[LastLoginDate], [t].[PasswordHash], [t].[UpdatedBy], [t].[UpdatedDate], [t].[Username]
+FROM [tbl_Users] AS [t]
+WHERE [t].[Username] = @__username_0
+2026-06-19 21:09:36.550 +07:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT [t].[Id], [t].[Caption], [t].[CreatedBy], [t].[CreatedDate], [t].[Css], [t].[Deleted], [t].[Icon], [t].[Link], [t].[MenuTitle], [t].[Name], [t].[ParentId], [t].[Sort], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_Menus] AS [t]
+2026-06-19 21:09:36.784 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - null null
+2026-06-19 21:09:36.797 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - null null
+2026-06-19 21:09:36.798 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - null null
+2026-06-19 21:09:36.798 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/site.js - null null
+2026-06-19 21:09:36.799 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - null null
+2026-06-19 21:09:36.799 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - null null
+2026-06-19 21:09:36.799 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - null null
+2026-06-19 21:09:36.809 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.809 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.810 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.810 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.810 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.810 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.810 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.819 +07:00 [INF] Executed ViewResult - view Index executed in 3935.2613ms.
+2026-06-19 21:09:36.819 +07:00 [INF] The file assets/img/user8-128x128.jpg was not modified
+2026-06-19 21:09:36.819 +07:00 [INF] The file lib/jquery/dist/jquery.min.js was not modified
+2026-06-19 21:09:36.819 +07:00 [INF] The file js/site.js was not modified
+2026-06-19 21:09:36.819 +07:00 [INF] The file lib/fontawesome/css/all.css was not modified
+2026-06-19 21:09:36.819 +07:00 [INF] The file lib/select2/css/select2.min.css was not modified
+2026-06-19 21:09:36.819 +07:00 [INF] The file lib/pdfmake/vfs_fonts.js was not modified
+2026-06-19 21:09:36.819 +07:00 [INF] The file lib/bootstrap-icons/font/bootstrap-icons.min.css was not modified
+2026-06-19 21:09:36.822 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.822 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.822 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.822 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.822 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - 304 null image/jpeg 23.4921ms
+2026-06-19 21:09:36.822 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - 304 null text/css 24.8426ms
+2026-06-19 21:09:36.822 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.822 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.822 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.822 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - 304 null text/javascript 23.4106ms
+2026-06-19 21:09:36.822 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - 304 null text/css 38.6121ms
+2026-06-19 21:09:36.822 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - 304 null text/javascript 22.8953ms
+2026-06-19 21:09:36.822 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/site.js - 304 null text/javascript 23.8165ms
+2026-06-19 21:09:36.823 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - 304 null text/css 24.6971ms
+2026-06-19 21:09:36.826 +07:00 [INF] Executed action App.UI.Web.Controllers.HomeController.Index (App.UI.Web) in 3968.5252ms
+2026-06-19 21:09:36.827 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 21:09:36.847 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - null null
+2026-06-19 21:09:36.848 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/css/adminlte.css - null null
+2026-06-19 21:09:36.848 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - null null
+2026-06-19 21:09:36.849 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2026-06-19 21:09:36.849 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - null null
+2026-06-19 21:09:36.848 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - null null
+2026-06-19 21:09:36.849 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/ - 200 null text/html; charset=utf-8 6647.7771ms
+2026-06-19 21:09:36.853 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - null null
+2026-06-19 21:09:36.862 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.862 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.862 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.862 +07:00 [INF] The file lib/select2/js/select2.min.js was not modified
+2026-06-19 21:09:36.862 +07:00 [INF] The file lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js was not modified
+2026-06-19 21:09:36.862 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.862 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.862 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.862 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - 304 null text/javascript 9.4938ms
+2026-06-19 21:09:36.862 +07:00 [INF] The file lib/bootstrap/dist/js/bootstrap.bundle.min.js was not modified
+2026-06-19 21:09:36.863 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.863 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 304 null text/javascript 14.3058ms
+2026-06-19 21:09:36.862 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.863 +07:00 [INF] The file lib/jszip/jszip.min.js was not modified
+2026-06-19 21:09:36.863 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.863 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - 304 null text/javascript 15.2177ms
+2026-06-19 21:09:36.863 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - null null
+2026-06-19 21:09:36.862 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.864 +07:00 [INF] The file lib/overlayscrollbars/styles/overlayscrollbars.min.css was not modified
+2026-06-19 21:09:36.864 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.864 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - 304 null text/css 15.9872ms
+2026-06-19 21:09:36.864 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - null null
+2026-06-19 21:09:36.862 +07:00 [INF] The file css/adminlte.css was not modified
+2026-06-19 21:09:36.862 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - 304 null text/javascript 15.4019ms
+2026-06-19 21:09:36.864 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.864 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/css/adminlte.css - 304 null text/css 16.7059ms
+2026-06-19 21:09:36.863 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/adminlte.js - null null
+2026-06-19 21:09:36.864 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.866 +07:00 [INF] The file lib/sweetalert2/sweetalert2.all.min.js was not modified
+2026-06-19 21:09:36.866 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.866 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - 304 null text/javascript 2.8387ms
+2026-06-19 21:09:36.869 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - null null
+2026-06-19 21:09:36.873 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.873 +07:00 [INF] The file lib/pdfmake/pdfmake.min.js was not modified
+2026-06-19 21:09:36.873 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.873 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - 304 null text/javascript 24.5414ms
+2026-06-19 21:09:36.880 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.881 +07:00 [INF] The file js/adminlte.js was not modified
+2026-06-19 21:09:36.881 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.881 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/adminlte.js - 304 null text/javascript 17.5076ms
+2026-06-19 21:09:36.914 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.914 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.915 +07:00 [INF] The file assets/img/user1-128x128.jpg was not modified
+2026-06-19 21:09:36.915 +07:00 [INF] The file assets/img/user3-128x128.jpg was not modified
+2026-06-19 21:09:36.915 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.915 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.915 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - 304 null image/jpeg 50.8388ms
+2026-06-19 21:09:36.915 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - 304 null image/jpeg 45.4388ms
+2026-06-19 21:09:36.922 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 21:09:36.922 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - null null
+2026-06-19 21:09:36.923 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - null null
+2026-06-19 21:09:36.922 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 21:09:36.923 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.924 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.924 +07:00 [INF] The file assets/img/AdminLTELogo.png was not modified
+2026-06-19 21:09:36.924 +07:00 [INF] The file assets/img/user2-160x160.jpg was not modified
+2026-06-19 21:09:36.924 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.924 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:36.924 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - 304 null image/png 1.4541ms
+2026-06-19 21:09:36.924 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - 304 null image/jpeg 1.4794ms
+2026-06-19 21:09:36.924 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 2.2003ms
+2026-06-19 21:09:36.945 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 22.9294ms
+2026-06-19 21:09:36.999 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-06-19 21:09:36.999 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - null null
+2026-06-19 21:09:37.005 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:37.007 +07:00 [INF] The file lib/fontawesome/webfonts/fa-solid-900.woff2 was not modified
+2026-06-19 21:09:37.007 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:37.007 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - 304 null font/woff2 8.3313ms
+2026-06-19 21:09:37.018 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:37.018 +07:00 [INF] The file lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2 was not modified
+2026-06-19 21:09:37.019 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:09:37.019 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - 304 null font/woff2 19.4742ms
+2026-06-19 21:09:42.327 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7000/api/LeaveType/save - application/json 325
+2026-06-19 21:09:42.329 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web)'
+2026-06-19 21:09:42.349 +07:00 [INF] Route matched with {action = "Save", controller = "LeaveType"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SaveAsync(App.Domain.Models.PageModel`1[App.Domain.Models.Dto.LeaveTypeDto]) on controller App.UI.Web.Controllers.LeaveTypeController (App.UI.Web).
+2026-06-19 21:09:42.374 +07:00 [INF] Executed action App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web) in 24.5989ms
+2026-06-19 21:09:42.375 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web)'
+2026-06-19 21:09:42.377 +07:00 [ERR] An unhandled exception has occurred while executing the request.
+System.InvalidOperationException: The JSON property name for 'App.Domain.Models.Dto.LeaveTypeDto.createdBy' collides with another property.
+   at System.Text.Json.ThrowHelper.ThrowInvalidOperationException_SerializerPropertyNameConflict(Type type, String propertyName)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.JsonPropertyInfoList.AddPropertyWithConflictResolution(JsonPropertyInfo jsonPropertyInfo, PropertyHierarchyResolutionState& state)
+   at System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver.AddMembersDeclaredBySuperType(JsonTypeInfo typeInfo, Type currentType, NullabilityInfoContext nullabilityCtx, Boolean constructorHasSetsRequiredMembersAttribute, PropertyHierarchyResolutionState& state)
+   at System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver.PopulateProperties(JsonTypeInfo typeInfo, NullabilityInfoContext nullabilityCtx)
+   at System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver.CreateTypeInfoCore(Type type, JsonConverter converter, JsonSerializerOptions options)
+   at System.Text.Json.Serialization.Metadata.DefaultJsonTypeInfoResolver.GetTypeInfo(Type type, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializerOptions.GetTypeInfoNoCaching(Type type)
+   at System.Text.Json.JsonSerializerOptions.CachingContext.CreateCacheEntry(Type type, CachingContext context)
+--- End of stack trace from previous location ---
+   at System.Text.Json.JsonSerializerOptions.CachingContext.GetOrAddTypeInfo(Type type, Boolean fallBackToNearestAncestorType)
+   at System.Text.Json.Serialization.Metadata.JsonPropertyInfo.Configure()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.ConfigureProperties()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.Configure()
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo.<EnsureConfigured>g__ConfigureSynchronized|174_0()
+   at System.Text.Json.JsonSerializerOptions.GetTypeInfoInternal(Type type, Boolean ensureConfigured, Nullable`1 ensureNotNull, Boolean resolveIfMutable, Boolean fallBackToNearestAncestorType)
+   at System.Text.Json.JsonSerializerOptions.GetTypeInfoForRootType(Type type, Boolean fallBackToNearestAncestorType)
+   at System.Text.Json.JsonSerializer.DeserializeAsync(PipeReader utf8Json, Type returnType, JsonSerializerOptions options, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter.ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter.ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder.BindModelAsync(ModelBindingContext bindingContext)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.BindModelAsync(ActionContext actionContext, IModelBinder modelBinder, IValueProvider valueProvider, ParameterDescriptor parameter, ModelMetadata metadata, Object value, Object container)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerBinderDelegateProvider.<>c__DisplayClass0_0.<<CreateBinderDelegate>g__Bind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2026-06-19 21:09:42.415 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7000/api/LeaveType/save - 500 null text/plain; charset=utf-8 87.3355ms
+2026-06-19 21:15:05.750 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/ - null null
+2026-06-19 21:15:05.760 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 21:15:05.762 +07:00 [INF] Route matched with {action = "Index", controller = "Home"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller App.UI.Web.Controllers.HomeController (App.UI.Web).
+2026-06-19 21:15:05.765 +07:00 [INF] Executing ViewResult, running view Index.
+2026-06-19 21:15:05.769 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.html - null null
+2026-06-19 21:15:05.772 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.html - 304 null null 3.0065ms
+2026-06-19 21:15:05.800 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - null null
+2026-06-19 21:15:05.800 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.css - null null
+2026-06-19 21:15:05.800 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui.css - 304 null null 0.5561ms
+2026-06-19 21:15:05.800 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.css - 304 null null 0.3852ms
+2026-06-19 21:15:05.800 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - null null
+2026-06-19 21:15:05.800 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-bundle.js - 304 null null 0.1279ms
+2026-06-19 21:15:05.825 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - null null
+2026-06-19 21:15:05.825 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/swagger-ui-standalone-preset.js - 304 null null 0.4129ms
+2026-06-19 21:15:05.831 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 21:15:05.831 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/index.js - null null
+2026-06-19 21:15:05.832 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/index.js - 304 null null 0.8295ms
+2026-06-19 21:15:05.832 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 1.2579ms
+2026-06-19 21:15:05.896 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 21:15:05.902 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 6.3627ms
+2026-06-19 21:15:05.929 +07:00 [INF] Executed ViewResult - view Index executed in 165.6083ms.
+2026-06-19 21:15:05.929 +07:00 [INF] Executed action App.UI.Web.Controllers.HomeController.Index (App.UI.Web) in 166.5622ms
+2026-06-19 21:15:05.929 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.HomeController.Index (App.UI.Web)'
+2026-06-19 21:15:05.929 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/ - 200 null text/html; charset=utf-8 179.7323ms
+2026-06-19 21:15:05.949 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - null null
+2026-06-19 21:15:05.953 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - null null
+2026-06-19 21:15:05.954 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:05.954 +07:00 [INF] The file lib/fontawesome/css/all.css was not modified
+2026-06-19 21:15:05.954 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:05.955 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/css/all.css - 304 null text/css 1.5423ms
+2026-06-19 21:15:05.957 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:05.957 +07:00 [INF] The file lib/bootstrap-icons/font/bootstrap-icons.min.css was not modified
+2026-06-19 21:15:05.958 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:05.960 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/bootstrap-icons.min.css - 304 null text/css 11.1611ms
+2026-06-19 21:15:05.961 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - null null
+2026-06-19 21:15:05.961 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - null null
+2026-06-19 21:15:05.961 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/css/adminlte.css - null null
+2026-06-19 21:15:05.961 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - null null
+2026-06-19 21:15:05.961 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - null null
+2026-06-19 21:15:05.993 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - null null
+2026-06-19 21:15:05.993 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - null null
+2026-06-19 21:15:05.994 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - null null
+2026-06-19 21:15:06.024 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - null null
+2026-06-19 21:15:06.025 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.026 +07:00 [INF] The file css/adminlte.css was not modified
+2026-06-19 21:15:06.026 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.026 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/css/adminlte.css - 304 null text/css 65.4482ms
+2026-06-19 21:15:06.053 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.053 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.053 +07:00 [INF] The file lib/jszip/jszip.min.js was not modified
+2026-06-19 21:15:06.053 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.053 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.053 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.053 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.053 +07:00 [INF] The file lib/pdfmake/pdfmake.min.js was not modified
+2026-06-19 21:15:06.053 +07:00 [INF] The file lib/select2/css/select2.min.css was not modified
+2026-06-19 21:15:06.054 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.054 +07:00 [INF] The file lib/jquery/dist/jquery.min.js was not modified
+2026-06-19 21:15:06.054 +07:00 [INF] The file lib/bootstrap/dist/js/bootstrap.bundle.min.js was not modified
+2026-06-19 21:15:06.027 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - null null
+2026-06-19 21:15:06.053 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.053 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.053 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.054 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jszip/jszip.min.js - 304 null text/javascript 61.2084ms
+2026-06-19 21:15:06.053 +07:00 [INF] The file lib/pdfmake/vfs_fonts.js was not modified
+2026-06-19 21:15:06.054 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.054 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.054 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - null null
+2026-06-19 21:15:06.054 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.054 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/pdfmake.min.js - 304 null text/javascript 59.6424ms
+2026-06-19 21:15:06.054 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/jquery/dist/jquery.min.js - 304 null text/javascript 93.1255ms
+2026-06-19 21:15:06.054 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap/dist/js/bootstrap.bundle.min.js - 304 null text/javascript 92.852ms
+2026-06-19 21:15:06.054 +07:00 [INF] The file lib/overlayscrollbars/styles/overlayscrollbars.min.css was not modified
+2026-06-19 21:15:06.083 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/css/select2.min.css - 304 null text/css 93.7969ms
+2026-06-19 21:15:06.054 +07:00 [INF] The file lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js was not modified
+2026-06-19 21:15:06.083 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.083 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/browser/overlayscrollbars.browser.es6.min.js - 304 null text/javascript 90.7646ms
+2026-06-19 21:15:06.083 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.083 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - null null
+2026-06-19 21:15:06.084 +07:00 [INF] The file lib/sweetalert2/sweetalert2.all.min.js was not modified
+2026-06-19 21:15:06.084 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.084 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/sweetalert2/sweetalert2.all.min.js - 304 null text/javascript 30.2534ms
+2026-06-19 21:15:06.084 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.084 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - null null
+2026-06-19 21:15:06.084 +07:00 [INF] The file assets/img/user8-128x128.jpg was not modified
+2026-06-19 21:15:06.084 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.084 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/swagger/favicon-32x32.png - null null
+2026-06-19 21:15:06.084 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user8-128x128.jpg - 304 null image/jpeg 0.7851ms
+2026-06-19 21:15:06.083 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.083 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/site.js - null null
+2026-06-19 21:15:06.054 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.083 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.054 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/js/adminlte.js - null null
+2026-06-19 21:15:06.085 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/overlayscrollbars/styles/overlayscrollbars.min.css - 304 null text/css 124.4986ms
+2026-06-19 21:15:06.085 +07:00 [INF] The file lib/select2/js/select2.min.js was not modified
+2026-06-19 21:15:06.085 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/pdfmake/vfs_fonts.js - 304 null text/javascript 88.1874ms
+2026-06-19 21:15:06.085 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.085 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.085 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/select2/js/select2.min.js - 304 null text/javascript 58.146ms
+2026-06-19 21:15:06.085 +07:00 [INF] The file js/site.js was not modified
+2026-06-19 21:15:06.085 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.085 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.086 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/site.js - 304 null text/javascript 2.961ms
+2026-06-19 21:15:06.086 +07:00 [INF] The file js/adminlte.js was not modified
+2026-06-19 21:15:06.086 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.086 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/js/adminlte.js - 304 null text/javascript 31.9375ms
+2026-06-19 21:15:06.117 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - null null
+2026-06-19 21:15:06.118 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - null null
+2026-06-19 21:15:06.120 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/favicon-32x32.png - 200 628 image/png 35.614ms
+2026-06-19 21:15:06.132 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-19 21:15:06.133 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - null null
+2026-06-19 21:15:06.133 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - null null
+2026-06-19 21:15:06.133 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/_vs/browserLink - null null
+2026-06-19 21:15:06.133 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_framework/aspnetcore-browser-refresh.js - 200 14925 application/javascript; charset=utf-8 0.8827ms
+2026-06-19 21:15:06.141 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/_vs/browserLink - 200 null text/javascript; charset=UTF-8 8.6444ms
+2026-06-19 21:15:06.152 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - null null
+2026-06-19 21:15:06.153 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.153 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.153 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.153 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.153 +07:00 [INF] The file assets/img/user3-128x128.jpg was not modified
+2026-06-19 21:15:06.153 +07:00 [INF] The file assets/img/user2-160x160.jpg was not modified
+2026-06-19 21:15:06.153 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.153 +07:00 [INF] The file assets/img/AdminLTELogo.png was not modified
+2026-06-19 21:15:06.153 +07:00 [INF] The file assets/img/user1-128x128.jpg was not modified
+2026-06-19 21:15:06.153 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.153 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.153 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.153 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/AdminLTELogo.png - 304 null image/png 20.8017ms
+2026-06-19 21:15:06.153 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user3-128x128.jpg - 304 null image/jpeg 36.1658ms
+2026-06-19 21:15:06.153 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user1-128x128.jpg - 304 null image/jpeg 67.7476ms
+2026-06-19 21:15:06.153 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/assets/img/user2-160x160.jpg - 304 null image/jpeg 20.8134ms
+2026-06-19 21:15:06.153 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - null null
+2026-06-19 21:15:06.158 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.158 +07:00 [INF] The file lib/fontawesome/webfonts/fa-solid-900.woff2 was not modified
+2026-06-19 21:15:06.158 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.159 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/fontawesome/webfonts/fa-solid-900.woff2 - 304 null font/woff2 5.0477ms
+2026-06-19 21:15:06.163 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.163 +07:00 [INF] The file lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2 was not modified
+2026-06-19 21:15:06.163 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.163 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/lib/bootstrap-icons/font/fonts/bootstrap-icons.woff2?e34853135f9e39acf64315236852cd5a - 304 null font/woff2 11.4813ms
+2026-06-19 21:15:06.170 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 86.2789ms
+2026-06-19 21:15:06.237 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/favicon.ico - null null
+2026-06-19 21:15:06.238 +07:00 [INF] Executing endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.302 +07:00 [INF] Sending file. Request path: 'favicon.ico'. Physical path: 'C:\Users\asus\OneDrive\HRIS\HRIS_Custom\MiniPayroll\App\App.UI.Web\obj\Debug\net10.0\compressed\vzi8tl1scj-{0}-61n19gt1b8-61n19gt1b8.gz'
+2026-06-19 21:15:06.303 +07:00 [INF] Executed endpoint 'Microsoft.AspNetCore.Routing.RouteEndpoint'
+2026-06-19 21:15:06.303 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/favicon.ico - 200 2432 image/x-icon 66.6114ms
+2026-06-19 21:15:19.419 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7000/api/LeaveType/save - application/json 325
+2026-06-19 21:15:19.420 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web)'
+2026-06-19 21:15:19.431 +07:00 [INF] Route matched with {action = "Save", controller = "LeaveType"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SaveAsync(App.Domain.Models.PageModel`1[App.Domain.Models.Dto.LeaveTypeDto]) on controller App.UI.Web.Controllers.LeaveTypeController (App.UI.Web).
+2026-06-19 21:15:19.562 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[@__code_0='?' (Size = 20) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[DefaultAnnualQuota], [t].[IsActive], [t].[IsPaid], [t].[LeaveCode], [t].[LeaveName], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_LeaveType] AS [t]
+WHERE [t].[LeaveCode] = @__code_0
+2026-06-19 21:15:19.598 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@__model_LeaveCode_0='?' (Size = 20) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[DefaultAnnualQuota], [t].[IsActive], [t].[IsPaid], [t].[LeaveCode], [t].[LeaveName], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_LeaveType] AS [t]
+WHERE [t].[LeaveCode] = @__model_LeaveCode_0
+2026-06-19 21:15:19.809 +07:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (Size = 50) (DbType = AnsiString), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int32), @p3='?' (Size = 20) (DbType = AnsiString), @p4='?' (Size = 100) (DbType = AnsiString), @p5='?' (Size = 50) (DbType = AnsiString), @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='3600']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [tbl_LeaveType] ([CreatedBy], [CreatedDate], [DefaultAnnualQuota], [LeaveCode], [LeaveName], [UpdatedBy], [UpdatedDate])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive], INSERTED.[IsPaid]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-06-19 21:15:19.848 +07:00 [INF] Executing JsonResult, writing value of type 'App.Domain.Models.Response.ActionResponse'.
+2026-06-19 21:15:19.850 +07:00 [INF] Executed action App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web) in 419.4669ms
+2026-06-19 21:15:19.850 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web)'
+2026-06-19 21:15:19.851 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7000/api/LeaveType/save - 200 null application/json; charset=utf-8 431.9324ms
+2026-06-19 21:15:38.124 +07:00 [INF] Request starting HTTP/2 DELETE https://localhost:7000/api/LeaveType/delete/string - null null
+2026-06-19 21:15:38.125 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.LeaveTypeController.Delete (App.UI.Web)'
+2026-06-19 21:15:38.136 +07:00 [INF] Route matched with {action = "Delete", controller = "LeaveType"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(System.String) on controller App.UI.Web.Controllers.LeaveTypeController (App.UI.Web).
+2026-06-19 21:15:38.175 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[@__code_0='?' (Size = 20) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[DefaultAnnualQuota], [t].[IsActive], [t].[IsPaid], [t].[LeaveCode], [t].[LeaveName], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_LeaveType] AS [t]
+WHERE [t].[LeaveCode] = @__code_0
+2026-06-19 21:15:38.203 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='3600']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+DELETE FROM [tbl_LeaveType]
+OUTPUT 1
+WHERE [Id] = @p0;
+2026-06-19 21:15:38.213 +07:00 [INF] Executing OkObjectResult, writing value of type 'App.Domain.Models.Response.ActionResponse'.
+2026-06-19 21:15:38.215 +07:00 [INF] Executed action App.UI.Web.Controllers.LeaveTypeController.Delete (App.UI.Web) in 79.2757ms
+2026-06-19 21:15:38.216 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.LeaveTypeController.Delete (App.UI.Web)'
+2026-06-19 21:15:38.216 +07:00 [INF] Request finished HTTP/2 DELETE https://localhost:7000/api/LeaveType/delete/string - 200 null application/json; charset=utf-8 91.6625ms
+2026-06-19 21:15:49.485 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7000/api/LeaveType/save - application/json 325
+2026-06-19 21:15:49.486 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web)'
+2026-06-19 21:15:49.486 +07:00 [INF] Route matched with {action = "Save", controller = "LeaveType"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] SaveAsync(App.Domain.Models.PageModel`1[App.Domain.Models.Dto.LeaveTypeDto]) on controller App.UI.Web.Controllers.LeaveTypeController (App.UI.Web).
+2026-06-19 21:15:49.490 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[@__code_0='?' (Size = 20) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[DefaultAnnualQuota], [t].[IsActive], [t].[IsPaid], [t].[LeaveCode], [t].[LeaveName], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_LeaveType] AS [t]
+WHERE [t].[LeaveCode] = @__code_0
+2026-06-19 21:15:49.491 +07:00 [INF] Executed DbCommand (0ms) [Parameters=[@__model_LeaveCode_0='?' (Size = 20) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[DefaultAnnualQuota], [t].[IsActive], [t].[IsPaid], [t].[LeaveCode], [t].[LeaveName], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_LeaveType] AS [t]
+WHERE [t].[LeaveCode] = @__model_LeaveCode_0
+2026-06-19 21:15:49.497 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (Size = 50) (DbType = AnsiString), @p1='?' (DbType = DateTime), @p2='?' (DbType = Int32), @p3='?' (Size = 20) (DbType = AnsiString), @p4='?' (Size = 100) (DbType = AnsiString), @p5='?' (Size = 50) (DbType = AnsiString), @p6='?' (DbType = DateTime)], CommandType='"Text"', CommandTimeout='3600']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [tbl_LeaveType] ([CreatedBy], [CreatedDate], [DefaultAnnualQuota], [LeaveCode], [LeaveName], [UpdatedBy], [UpdatedDate])
+OUTPUT INSERTED.[Id], INSERTED.[IsActive], INSERTED.[IsPaid]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-06-19 21:15:49.498 +07:00 [INF] Executing JsonResult, writing value of type 'App.Domain.Models.Response.ActionResponse'.
+2026-06-19 21:15:49.499 +07:00 [INF] Executed action App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web) in 12.4545ms
+2026-06-19 21:15:49.499 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.LeaveTypeController.SaveAsync (App.UI.Web)'
+2026-06-19 21:15:49.499 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7000/api/LeaveType/save - 200 null application/json; charset=utf-8 14.0002ms
+2026-06-19 21:16:02.864 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7000/api/LeaveType/list - application/json 437
+2026-06-19 21:16:02.865 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.LeaveTypeController.GetList (App.UI.Web)'
+2026-06-19 21:16:02.871 +07:00 [INF] Route matched with {action = "GetList", controller = "LeaveType"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetList(App.Domain.Models.Request.DataTableRequest) on controller App.UI.Web.Controllers.LeaveTypeController (App.UI.Web).
+2026-06-19 21:16:02.916 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[DefaultAnnualQuota], [t].[IsActive], [t].[IsPaid], [t].[LeaveCode], [t].[LeaveName], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_LeaveType] AS [t]
+WHERE 0 = 1
+2026-06-19 21:16:02.955 +07:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT COUNT(*)
+FROM [tbl_LeaveType] AS [t]
+WHERE 0 = 1
+2026-06-19 21:16:02.962 +07:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='3600']
+SELECT COUNT(*)
+FROM [tbl_LeaveType] AS [t]
+2026-06-19 21:16:02.983 +07:00 [INF] Executing JsonResult, writing value of type '<>f__AnonymousType0`4[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[App.Domain.Models.Dto.LeaveTypeDto, App.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-06-19 21:16:02.986 +07:00 [INF] Executed action App.UI.Web.Controllers.LeaveTypeController.GetList (App.UI.Web) in 115.3897ms
+2026-06-19 21:16:02.986 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.LeaveTypeController.GetList (App.UI.Web)'
+2026-06-19 21:16:02.987 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7000/api/LeaveType/list - 200 null application/json; charset=utf-8 122.3567ms
+2026-06-19 21:16:16.395 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7000/api/LeaveType/get?code=string - null null
+2026-06-19 21:16:16.396 +07:00 [INF] Executing endpoint 'App.UI.Web.Controllers.LeaveTypeController.GetData (App.UI.Web)'
+2026-06-19 21:16:16.403 +07:00 [INF] Route matched with {action = "GetData", controller = "LeaveType"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetData(System.String) on controller App.UI.Web.Controllers.LeaveTypeController (App.UI.Web).
+2026-06-19 21:16:16.413 +07:00 [INF] Executed DbCommand (3ms) [Parameters=[@__code_0='?' (Size = 20) (DbType = AnsiString)], CommandType='"Text"', CommandTimeout='3600']
+SELECT TOP(1) [t].[Id], [t].[CreatedBy], [t].[CreatedDate], [t].[DefaultAnnualQuota], [t].[IsActive], [t].[IsPaid], [t].[LeaveCode], [t].[LeaveName], [t].[UpdatedBy], [t].[UpdatedDate]
+FROM [tbl_LeaveType] AS [t]
+WHERE [t].[LeaveCode] = @__code_0
+2026-06-19 21:16:16.413 +07:00 [INF] Executing JsonResult, writing value of type 'App.Domain.Models.Dto.LeaveTypeDto'.
+2026-06-19 21:16:16.415 +07:00 [INF] Executed action App.UI.Web.Controllers.LeaveTypeController.GetData (App.UI.Web) in 12.1174ms
+2026-06-19 21:16:16.415 +07:00 [INF] Executed endpoint 'App.UI.Web.Controllers.LeaveTypeController.GetData (App.UI.Web)'
+2026-06-19 21:16:16.415 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7000/api/LeaveType/get?code=string - 200 null application/json; charset=utf-8 20.4911ms
