@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace App.UI.Web.Models
 {
-    public class EmployeeSalaryModel : PageModel<EmployeeSalaryDto>
+    public class EmployeeSalaryModel : PageModel<List<EmployeeSalaryDto>>
     {
-        public List<EmployeeSalaryDetailDto> Details { get; set; }
+        public List<EmployeeDto> Employees { get; set; }
+        public List<SalaryComponentDto> Components { get; set; }
     }
 }
