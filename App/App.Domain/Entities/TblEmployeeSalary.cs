@@ -15,7 +15,7 @@ public partial class TblEmployeeSalary
     [Key]
     public Guid EmployeeSalaryId { get; set; }
 
-    public Guid EmployeeId { get; set; }
+    public int EmployeeId { get; set; }
 
     public DateOnly EffectiveDate { get; set; }
 

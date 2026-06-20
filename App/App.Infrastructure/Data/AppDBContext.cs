@@ -488,9 +488,13 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_EmployeeSalary");
 
-            entity.Property(e => e.EmployeeSalaryId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.EmployeeSalaryId)
+                .HasDefaultValueSql("(newid())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__Emplo__4460231C");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__IsAct__45544755");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 

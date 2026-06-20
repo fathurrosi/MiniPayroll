@@ -12,23 +12,30 @@ namespace App.UI.Web.Controllers
 {
     public class EmployeeSalaryController : BaseController
     {
+        private readonly IEmployeeService _EmployeeService;
+
+        private readonly ISalaryComponentService _SalaryComponentService;
         private readonly IEmployeeSalaryService _EmployeeSalaryService;
         private readonly IPtkpService _PtkpService;
-        public EmployeeSalaryController(IEmployeeSalaryService EmployeeSalaryService, IPtkpService ptkpService)
+        public EmployeeSalaryController(IEmployeeSalaryService EmployeeSalaryService
+            , IPtkpService ptkpService
+            , IEmployeeService employeeService
+            , ISalaryComponentService salaryComponentService)
         {
             _EmployeeSalaryService = EmployeeSalaryService;
             _PtkpService = ptkpService;
+            _EmployeeService = employeeService;
+            _SalaryComponentService = salaryComponentService;
         }
 
         #region EmployeeSalary
         public async Task<IActionResult> Index()
         {
-            //EmployeeSalaryModel
             var model = new EmployeeSalaryModel () { Title = "Employee Salary" };
-            //model.PtkpList = await _PtkpService.GetListAsync();
 
-            model.Item = new EmployeeSalaryDto();
-            model.Details = new List<EmployeeSalaryDetailDto>();
+            model.Item = new List<EmployeeSalaryDto>();
+            model.Employees = await _EmployeeService.GetListAsync();
+            model.Components = await _SalaryComponentService.GetListAsync();
             return View(model);
         }
 

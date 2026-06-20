@@ -53,6 +53,8 @@ namespace App.Domain.Models.Dto.Masters
                 return CalculationType.ToString();
             }
         }
+
+        public int? Sequence { get; set; }
     }
     //public class SalaryComponentDto : BaseDto<TblSalaryComponent>
     //{
