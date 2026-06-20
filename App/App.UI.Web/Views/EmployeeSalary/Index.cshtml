@@ -1,6 +1,7 @@
 ﻿@model EmployeeSalaryModel
 
 @{
+    ViewData["Title"] = $"Data Master - {Model.Title}";
     var orderedComponents = Model.Components
         .OrderBy(c => c.SortOrder)
         .ToList();
@@ -34,8 +35,7 @@
                     <div class="ms-auto d-flex gap-2">
                   
                         <button class="btn btn-success"
-                                data-bs-toggle="modal"
-                                data-bs-target="#generateScheduleModal">
+                              id="add-new">
                             <i class="bi bi-plus"></i>
                             Add Employee Salary
                         </button>
@@ -282,6 +282,9 @@
 
         $('#pdf-export').on('click', function () {
             $('.btn-export-pdf').trigger('click');
+        });
+        $('#add-new').on('click', function () {
+            window.location.href = '@Url.Action("Detail", "EmployeeSalary")';
         });
 
         $('#tblSalary').on(

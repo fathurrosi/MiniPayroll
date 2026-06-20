@@ -4,11 +4,31 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace App.UI.Web.Models
 {
+    public class EmployeeSalaryCreateModel : PageModel<List<EmployeeSalaryDto>>
+    {
+        public string EmployeeId { get; set; }
+        public string? DepartmentCode { get; set; }
+
+        public string? PositionCode { get; set; }
+
+        public List<int> EmployeeIds { get; set; } = new();
+
+        public List<SalaryComponentDto> Components { get; set; }
+            = new();
+
+
+        public List<EmployeeDto> Employees { get; set; } 
+
+        public List<DepartmentDto> Departments { get; set; } 
+
+        public List<PositionDto> Positions { get; set; } 
+    }
+
     public class EmployeeSalaryModel : PageModel<List<EmployeeSalaryDto>>
     {
         public Guid EmployeeSalaryId { get; set; }
 
-        public Guid EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         public int Year { get; set; }
 

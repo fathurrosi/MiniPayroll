@@ -49,6 +49,17 @@ namespace App.UI.Web.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Detail()
+        {
+            var model = new EmployeeSalaryCreateModel() { Title = "Add Employee Salary" };
+
+            model.Item = new List<EmployeeSalaryDto>();
+            model.Employees = await _EmployeeService.GetListAsync();
+            model.Components = await _SalaryComponentService.GetListAsync();
+            model.Departments = await _departmentService.GetListAsync();
+            model.Positions = await _positionService.GetListAsync();
+            return View(model);
+        }
         [HttpPost]
         public async Task<IActionResult> GetList([FromBody] EmployeeSalaryDataTableRequest model)
         {
