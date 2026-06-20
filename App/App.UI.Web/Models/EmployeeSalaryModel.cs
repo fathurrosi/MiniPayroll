@@ -17,8 +17,11 @@ namespace App.UI.Web.Models
         public List<EmployeeDto> Employees { get; set; }
         public List<SalaryComponentDto> Components { get; set; }
 
+
         public List<DepartmentDto> Departments { get; set; }
         public string DepartmentCode { get; set; }
 
+        public List<PositionDto> Positions { get; set; }
+        public string PositionCode { get; set; }
     }
 }

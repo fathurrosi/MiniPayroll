@@ -23,4 +23,12 @@ public partial class VwEmployeeSalary
     public string EmployeeName { get; set; } = null!;
 
     public Guid? EmployeeSalaryId { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? Position { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? Department { get; set; }
 }

@@ -3,7 +3,7 @@
 @{
     int daysInMonth = DateTime.DaysInMonth(Model.Year, Model.Month);
 }
-<div class="row">
+@* <div class="row">
     <div class="col-md-12">
         <div class="card shadow-sm full-height-card">
             <div class="card-header py-2 px-3 bg-light">
@@ -79,7 +79,7 @@
         </div>
     </div>
      
-</div>
+</div> *@
 
 <div class="row">
     <div class="col-md-12">
@@ -120,6 +120,62 @@
             <div class="card-body p-2">
 
                 
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <select asp-for="Year"
+                                class="form-select">
+                            @for (int i = DateTime.Now.Year - 2; i <= DateTime.Now.Year + 2; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select asp-for="Month"
+                                class="form-select">
+
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@i">
+                                    @(new DateTime(2000, i, 1).ToString("MMMM"))
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select asp-for="DepartmentCode" class="form-select">
+                            <option value=""> -- Select Department -- </option>
+                            @foreach (var department in Model.Departments)
+                            {
+                                <option value="@department.DepartmentCode">
+                                    @department.DepartmentName
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select asp-for="EmployeeId" class="form-select">
+                            <option value=""> -- Select Employee -- </option>
+                            @foreach (var emp in Model.Employees)
+                            {
+                                <option value="@emp.EmployeeId">
+                                    @emp.FullName
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-1 text-end">
+                        <button id="btnSearch" class="btn btn-primary col-md-12">
+                            Search
+                        </button>
+                    </div>
+
+                </div>
+
                 <div class="table-responsive">
                     <table id="main-table"
                            class="table table-sm table-striped table-hover align-middle w-100 mb-0">

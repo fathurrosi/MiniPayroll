@@ -9,7 +9,7 @@ using App.Infrastructure.Extensions;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace App.Infrastructure.Services.Masters
 {
     public class EmployeeSalaryService : IEmployeeSalaryService
@@ -83,11 +83,28 @@ namespace App.Infrastructure.Services.Masters
             }
         }
 
-        public async Task<PagedResponse<VwEmployeeSalaryDto>> GetPagedAsync(DataTableRequest model)
+        public async Task<PagedResponse<VwEmployeeSalaryDto>> GetPagedAsync(EmployeeSalaryDataTableRequest model)
         {
             try
             {
-                var entityResult = await _VwEmployeeSalaryRepo.GetPagedAsync(model);
+                //var entityResult = await _VwEmployeeSalaryRepo.GetPagedAsync(t => 
+                //(t.EmployeeId == model.EmployeeId || model.EmployeeId == 0) &&
+                //(t.Position == model.PositionCode || string.IsNullOrEmpty(model.PositionCode)) &&
+                //(t.Department == model.DepartmentCode || string.IsNullOrEmpty(model.DepartmentCode))
+                //, model);
+
+                int employeeId = 0;
+                int.TryParse(model.EmployeeId, out employeeId);
+
+                var entityResult = await _VwEmployeeSalaryRepo.GetPagedAsync(
+                                t =>
+                                    (employeeId ==0|| t.EmployeeId == employeeId) &&
+                                    (string.IsNullOrWhiteSpace(model.PositionCode) ||
+                                     t.Position == model.PositionCode) &&
+                                    (string.IsNullOrWhiteSpace(model.DepartmentCode) ||
+                                     t.Department == model.DepartmentCode),
+                                model);
+
                 var results = entityResult.MapPaged<VwEmployeeSalary, VwEmployeeSalaryDto>(_mapper, model);
                 var salaryComponents = await _TblSalaryComponentRepo.GetListAsync();
                 var orderedComponents = salaryComponents.OrderBy(c => c.SortOrder).ToList();

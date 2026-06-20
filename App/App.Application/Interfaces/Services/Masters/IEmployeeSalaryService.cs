@@ -12,7 +12,8 @@ namespace App.Application.Interfaces.Services.Masters
         Task<List<EmployeeSalaryDto>> GetListAsync();
         Task<EmployeeSalaryDto?> GetByCodeAsync(string componentCode);
         Task<int> DeleteAsync(string code);
-        Task<PagedResponse<VwEmployeeSalaryDto>> GetPagedAsync(DataTableRequest model);
+        //Task<PagedResponse<VwEmployeeSalaryDto>> GetPagedAsync(DataTableRequest model);
+        Task<PagedResponse<VwEmployeeSalaryDto>> GetPagedAsync(EmployeeSalaryDataTableRequest model);
         Task<EmployeeSalaryDto> SaveAsync(EmployeeSalaryDto model);
     }
 }

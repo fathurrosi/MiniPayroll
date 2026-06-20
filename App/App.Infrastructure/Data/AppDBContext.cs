@@ -1475,6 +1475,9 @@ public partial class AppDBContext : DbContext
                 .HasNoKey()
                 .ToView("vw_EmployeeSalary");
 
+            entity.Property(e => e.Department)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.EmployeeCode)
                 .IsRequired()
                 .HasMaxLength(20)
@@ -1482,6 +1485,9 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.EmployeeName)
                 .IsRequired()
                 .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Position)
+                .HasMaxLength(50)
                 .IsUnicode(false);
         });
 

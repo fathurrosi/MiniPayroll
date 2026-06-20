@@ -19,10 +19,13 @@ namespace App.UI.Web.Controllers
         private readonly IEmployeeSalaryService _EmployeeSalaryService;
         private readonly IPtkpService _PtkpService;
         private readonly IDepartmentService _departmentService;
+
+        private readonly IPositionService _positionService;
         public EmployeeSalaryController(IEmployeeSalaryService EmployeeSalaryService
             , IPtkpService ptkpService
             , IEmployeeService employeeService
             , IDepartmentService departmentService
+, IPositionService positionService
             , ISalaryComponentService salaryComponentService)
         {
             _EmployeeSalaryService = EmployeeSalaryService;
@@ -30,6 +33,7 @@ namespace App.UI.Web.Controllers
             _EmployeeService = employeeService;
             _SalaryComponentService = salaryComponentService;
             _departmentService = departmentService;
+            _positionService = positionService;
         }
 
         #region EmployeeSalary
@@ -41,11 +45,12 @@ namespace App.UI.Web.Controllers
             model.Employees = await _EmployeeService.GetListAsync();
             model.Components = await _SalaryComponentService.GetListAsync();
             model.Departments = await _departmentService.GetListAsync();
+            model.Positions = await _positionService.GetListAsync();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetList([FromBody] DataTableRequest model)
+        public async Task<IActionResult> GetList([FromBody] EmployeeSalaryDataTableRequest model)
         {
             try
             {
