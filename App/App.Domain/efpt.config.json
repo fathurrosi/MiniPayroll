@@ -95,6 +95,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_EmployeeSalary]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeeSalaryDetail]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_EmployeeShift]",
          "ObjectType": 0
       },
@@ -192,6 +200,10 @@
       },
       {
          "Name": "[dbo].[tbl_Roles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_SalaryComponents]",
          "ObjectType": 0
       },
       {

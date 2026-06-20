@@ -1,5 +1,5 @@
 ﻿using App.Domain.Models;
-using App.Domain.Models.Dto;
+using App.Domain.Models.Dto.Masters;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.UI.Web.Models
@@ -28,10 +28,11 @@ namespace App.UI.Web.Models
         public int? EmployeeId { get; set; }
 
 
+        public DateTime ModalDateFrom { get; set; }
+        public DateTime ModalDateTo { get; set; }
 
         public string ModalDepartmentCode { get; set; }
         public int? ModalEmployeeId { get; set; }
-        //public ScheduleModel Modal { get; set; }
 
         public int ModalPatternId { get; set; }
         public bool ModalOverwriteExisting { get; set; }
