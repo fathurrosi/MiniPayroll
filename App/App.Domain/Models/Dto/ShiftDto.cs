@@ -66,8 +66,6 @@ namespace App.Domain.Models.Dto
 
         public decimal? WorkingHours { get; set; }
 
-        public bool IsOvernight { get; set; }
 
-        public bool IsActive { get; set; }
     }
 }

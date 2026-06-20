@@ -1,6 +1,6 @@
 ﻿using App.Application.Interfaces.Services;
 using App.Domain.Entities;
-using App.Domain.Models.Dto;
+using App.Domain.Models.Dto.Settings;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.UI.Web.Components

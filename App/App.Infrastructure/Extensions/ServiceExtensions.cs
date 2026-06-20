@@ -28,12 +28,14 @@ namespace App.Infrastructure.Extensions
 
             services.Scan(scan => scan
                 .FromAssemblies(typeof(global::App.Infrastructure.AssemblyReference).Assembly)
-                .AddClasses(classes => classes
-                    .InNamespaces("App.Infrastructure.Services")
+                .AddClasses(classes => classes .InNamespaces(
+                    "App.Infrastructure.Services",
+                    "App.Infrastructure.Services.Masters",
+                    "App.Infrastructure.Services.Payroll",
+                    "App.Infrastructure.Services.Settings" )
                     .Where(type => type.Name.EndsWith("Service")))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
-
 
             var mapsterConfig = TypeAdapterConfig.GlobalSettings;
 

@@ -64,3 +64,15 @@
 /App/App.Infrastructure/obj/App.Infrastructure.csproj.nuget.dgspec.json
 /App/App.Infrastructure/obj/project.assets.json
 /App/App.Infrastructure/obj/project.nuget.cache
+/App/.vs/App/v18/DocumentLayout.backup.json
+/App/.vs/App/v18/DocumentLayout.json
+/App/.vs/App/v18/.suo
+/App/App.Infrastructure/obj/Debug/net10.0/.NETCoreApp,Version=v10.0.AssemblyAttributes.cs
+/App/App.Application/obj/Debug/net10.0/App.Application.AssemblyInfo.cs
+/App/App.Application/obj/App.Application.csproj.nuget.g.targets
+/App/App.Application/obj/project.nuget.cache
+*.targets
+/App/App.Infrastructure/obj/Debug/net10.0/App.Infrastructure.AssemblyInfo.cs
+/App/App.Infrastructure/obj/Debug/net10.0/App.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/App/App.Infrastructure/obj/Debug/net10.0/App.Infrastructure.GlobalUsings.g.cs
+/App/App.UI.Web/bin/Debug/net10.0/appsettings.json

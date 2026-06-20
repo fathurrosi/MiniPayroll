@@ -1,7 +1,7 @@
 ﻿using App.Application.Interfaces.Services.Masters;
 using App.Domain.Enums;
 using App.Domain.Models;
-using App.Domain.Models.Dto;
+using App.Domain.Models.Dto.Masters;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.UI.Web.Models;

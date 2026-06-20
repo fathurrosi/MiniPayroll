@@ -45,14 +45,7 @@ namespace App.Infrastructure.Services.Masters
             var entity = await _ShiftPatternRepo.GetFirstOrDefaultAsync(x =>
                     x.Id == id);
 
-            ShiftPatternDto result = _mapper.Map<ShiftPatternDto>(entity);
-
-            if (result != null)
-            {
-                var entityDetails = await _ShiftPatternDetailRepo.GetListAsync(t => t.PatternId == id);
-                result.Details = entityDetails.Select(t => _mapper.Map<ShiftPatternDetailDto>(t)).ToList();
-
-            }
+        }
             return result;
         }
 
@@ -97,39 +90,12 @@ namespace App.Infrastructure.Services.Masters
                     var item = _mapper.Map<TblShiftPattern>(model);
                     item.CreatedBy = _context.Username;
                     item.CreatedDate = DateTime.Now;
-                    item.CycleLength = model.Details.Count;
-                    existingItem = await _ShiftPatternRepo.AddAsync(item);
-                    result = _mapper.Map<ShiftPatternDto>(existingItem);
                 }
                 else
                 {
                     _mapper.Map(model, existingItem);
                     existingItem.UpdatedBy = _context.Username;
                     existingItem.UpdatedDate = DateTime.Now;
-                    existingItem.CycleLength = model.Details.Count;
-                    existingItem = await _ShiftPatternRepo.UpdateAsync(existingItem);
-                    result = _mapper.Map<ShiftPatternDto>(existingItem);
-                }
-
-                // Details
-                if (model.Details != null)
-                {
-                    var details = await _ShiftPatternDetailRepo.FindAllAsync(t => t.PatternId == existingItem.Id);
-                    await _ShiftPatternDetailRepo.RemoveRangeAsync(details);
-                    List<TblShiftPatternDetail> patternDetails = new List<TblShiftPatternDetail>();
-                    foreach (var detail in model.Details)
-                    {
-                        patternDetails.Add(new TblShiftPatternDetail
-                        {
-                            PatternId = existingItem.Id,
-                            SequenceNo = detail.SequenceNo,
-                            ShiftId = detail.ShiftId,
-                            CreatedBy = _context.Username,
-                            CreatedDate = DateTime.Now
-                        });
-                    }
-                    var detailEntities = await _ShiftPatternDetailRepo.AddRangeAsync(patternDetails);
-                    result.Details = detailEntities.Select(t => _mapper.Map<ShiftPatternDetailDto>(t)).ToList();
                 }
 
                 return result;

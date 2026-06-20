@@ -5,9 +5,9 @@ using App.Domain.Entities;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
-using App.Infrastructure.Extensions;
-using MapsterMapper;
-using Microsoft.Extensions.Logging;
+using App.Infrastructure.Extensions; 
+using MapsterMapper; 
+using Microsoft.Extensions.Logging; 
 
 namespace App.Infrastructure.Services.Masters
 {
@@ -73,7 +73,6 @@ namespace App.Infrastructure.Services.Masters
 
                 for (int day = 1; day <= daysInMonth; day++)
                 {
-                    var workDate = firstDate.AddDays(day - 1);
 
                     int shiftId = employee.DefaultShift ?? 0;
                     bool isRestDay = true;
@@ -124,6 +123,97 @@ namespace App.Infrastructure.Services.Masters
             await _ShiftScheduleRepo.AddRangeAsync(schedules);
         }
 
+        //public async Task GenerateAsync(GenerateScheduleRequest request)
+        //{
+        //    var employees = await _empRepo.GetListAsync();
+        //    var shifts = await _ShiftRepo.GetListAsync();
+
+        //    if (!employees.Any())
+        //        return;
+
+        //    var firstDate = new DateTime(request.Year, request.Month, 1);
+        //    var lastDate = firstDate.AddMonths(1);
+
+        //    int daysInMonth = DateTime.DaysInMonth(request.Year, request.Month);
+
+        //    var schedules = new List<TblEmployeeShiftSchedule>(
+        //        employees.Count * daysInMonth);
+
+        //    foreach (var employee in employees)
+        //    {
+        //        for (int day = 1; day <= daysInMonth; day++)
+        //        {
+        //            var workDate = new DateTime(
+        //                request.Year,
+        //                request.Month,
+        //                day);
+
+        //            int shiftId = await DetermineShiftAsync(
+        //                employee,
+        //                workDate,
+        //                request.PatternId);
+
+        //            bool isRestDay = true;
+        //            var shift = shifts.Where(t => t.Id == shiftId).FirstOrDefault();
+        //            if (shift != null)
+        //            {
+        //                if (shift.ShiftName == "OFF")
+        //                {
+        //                    string test = shift.ShiftName;
+        //                }
+        //                isRestDay = shift.WorkingHours == 0;
+        //            }
+        //            schedules.Add(new TblEmployeeShiftSchedule
+        //            {
+        //                EmployeeId = employee.EmployeeId,
+        //                WorkDate = workDate,
+        //                ShiftId = shiftId,
+        //                IsRestDay = isRestDay
+        //            });
+        //        }
+        //    }
+
+        //    var existingSchedules =
+        //        await _ShiftScheduleRepo.FindAllAsync(x =>
+        //            x.WorkDate >= firstDate &&
+        //            x.WorkDate < lastDate);
+
+        //    if (existingSchedules.Any())
+        //    {
+        //        await _ShiftScheduleRepo.RemoveRangeAsync(existingSchedules);
+        //    }
+
+        //    await _ShiftScheduleRepo.AddRangeAsync(schedules);
+        //}
+
+        //private async Task<int> DetermineShiftAsync(TblEmployee employee, DateTime date, int patternId)
+        //{
+        //    // 1. Get pattern details (ordered)
+        //    var patternDetails = await _ShiftPatternDetailRepo.GetListAsync(x => x.PatternId == patternId);
+
+        //    patternDetails = patternDetails.OrderBy(x => x.SequenceNo).ToList(); // Ensure correct order
+
+        //    if (patternDetails == null || patternDetails.Count == 0)
+        //        return employee.DefaultShift ?? 0;
+
+        //    // 2. Determine cycle length
+        //    int cycleLength = patternDetails.Count;
+
+        //    DateTime startDate = date;
+        //    int dayOffset = (date.Date - startDate.Date).Days;
+
+        //    if (dayOffset < 0)
+        //        dayOffset = 0;
+
+        //    // 4. Get position in cycle
+        //    int index = dayOffset % cycleLength;
+
+        //    // 5. Get shift from pattern
+        //    var shift = patternDetails[index];
+
+        //    return shift.ShiftId ?? employee.DefaultShift ?? 0;
+        //}
+
         public async Task<List<ShiftDto>> GetListAsync()
         {
             var entities = await _ShiftRepo.GetListAsync();
@@ -150,13 +240,9 @@ namespace App.Infrastructure.Services.Masters
             return await _ShiftRepo.Remove(entity);
         }
 
-        public async Task<PagedResponse<EmployeeMonthlyScheduleDto>> GetPagedEmplooyeeScheduleAsync(ScheduleDataTableRequest model)
         {
             try
             {
-                var entityResult = await _monthlyScheduleViewRepo.GetPagedAsync(t =>
-                t.MonthNo == model.Month &&
-                t.YearNo == model.Year && (t.EmployeeId.ToString() == model.EmployeeId || string.IsNullOrEmpty(model.EmployeeId)), model);
                 return entityResult.MapPaged<VwEmployeeMonthlySchedule, EmployeeMonthlyScheduleDto>(_mapper, model);
             }
             catch (Exception ex)
@@ -167,32 +253,6 @@ namespace App.Infrastructure.Services.Masters
         }
 
 
-        public async Task<PagedResponse<ShiftPatternDto>> GetPagedPatternAsync(DataTableRequest model)
-        {
-            try
-            {
-                var entityResult = await _ShiftPatternRepo.GetPagedAsync(model);
-                return entityResult.MapPaged<TblShiftPattern, ShiftPatternDto>(_mapper, model);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting paged Shifts");
-                throw;
-            }
-        }
-        public async Task<PagedResponse<ShiftDto>> GetPagedAsync(DataTableRequest model)
-        {
-            try
-            {
-                var entityResult = await _ShiftRepo.GetPagedAsync(model);
-                return entityResult.MapPaged<TblShift, ShiftDto>(_mapper, model);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting paged Shifts");
-                throw;
-            }
-        }
         public async Task<ShiftDto> SaveAsync(ShiftDto model)
         {
             try

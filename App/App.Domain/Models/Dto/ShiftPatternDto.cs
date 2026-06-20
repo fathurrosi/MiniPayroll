@@ -18,9 +18,9 @@ namespace App.Domain.Models.Dto
         public int? ShiftId { get; set; }
     }
     public partial class ShiftPatternDto : BaseDto<TblShiftPattern>
-    {
+    {  
         public int Id { get; set; }
-        public string? PatternCode { get; set; }
+        public string? PatternCode { get; set; } 
         public string? PatternName { get; set; }
         public int? CycleLength { get; set; }
 
