@@ -124,6 +124,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<VwEmployeeMonthlyScheduleWithoutIsRestField> VwEmployeeMonthlyScheduleWithoutIsRestFields { get; set; }
 
+    public virtual DbSet<VwEmployeeSalary> VwEmployeeSalaries { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AuditLog>(entity =>
@@ -488,9 +490,13 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_EmployeeSalary");
 
-            entity.Property(e => e.EmployeeSalaryId).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.EmployeeSalaryId)
+                .HasDefaultValueSql("(newid())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__Emplo__4460231C");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__IsAct__45544755");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
@@ -1453,6 +1459,22 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.Day9)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.EmployeeCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.EmployeeName)
+                .IsRequired()
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<VwEmployeeSalary>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_EmployeeSalary");
+
             entity.Property(e => e.EmployeeCode)
                 .IsRequired()
                 .HasMaxLength(20)

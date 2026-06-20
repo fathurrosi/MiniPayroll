@@ -1,8 +1,23 @@
 ﻿
 using App.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.Domain.Models.Dto.Masters
 {
+    public sealed class VwEmployeeSalaryDto : BaseDto<VwEmployeeSalary>
+    {
+        public int EmployeeId { get; set; }
+         
+        public string EmployeeCode { get; set; } = null!;
+         
+        public string EmployeeName { get; set; } = null!;
+
+        public Guid? EmployeeSalaryId { get; set; }
+
+        public Dictionary<string, decimal> Components { get; set; }
+            = new();
+    }
     public sealed class EmployeeSalaryDetailDto : BaseDto<TblEmployeeSalaryDetail>
     {
         public Guid EmployeeSalaryDetailId { get; set; }

@@ -237,6 +237,10 @@
       {
          "Name": "[dbo].[vw_EmployeeMonthlySchedule_Without_IsRest_Field]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_EmployeeSalary]",
+         "ObjectType": 3
       }
    ],
    "UiHint": null,

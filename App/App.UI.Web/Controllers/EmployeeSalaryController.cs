@@ -5,6 +5,7 @@ using App.Domain.Models;
 using App.Domain.Models.Dto.Masters;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
+using App.Infrastructure.Services.Masters;
 using App.UI.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,30 +18,34 @@ namespace App.UI.Web.Controllers
         private readonly ISalaryComponentService _SalaryComponentService;
         private readonly IEmployeeSalaryService _EmployeeSalaryService;
         private readonly IPtkpService _PtkpService;
+        private readonly IDepartmentService _departmentService;
         public EmployeeSalaryController(IEmployeeSalaryService EmployeeSalaryService
             , IPtkpService ptkpService
             , IEmployeeService employeeService
+            , IDepartmentService departmentService
             , ISalaryComponentService salaryComponentService)
         {
             _EmployeeSalaryService = EmployeeSalaryService;
             _PtkpService = ptkpService;
             _EmployeeService = employeeService;
             _SalaryComponentService = salaryComponentService;
+            _departmentService = departmentService;
         }
 
         #region EmployeeSalary
         public async Task<IActionResult> Index()
         {
-            var model = new EmployeeSalaryModel () { Title = "Employee Salary" };
+            var model = new EmployeeSalaryModel() { Title = "Employee Salary" };
 
             model.Item = new List<EmployeeSalaryDto>();
             model.Employees = await _EmployeeService.GetListAsync();
             model.Components = await _SalaryComponentService.GetListAsync();
+            model.Departments = await _departmentService.GetListAsync();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetEmployeeSalarys([FromBody] DataTableRequest model)
+        public async Task<IActionResult> GetList([FromBody] DataTableRequest model)
         {
             try
             {

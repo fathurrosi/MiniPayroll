@@ -9,23 +9,34 @@ using App.Infrastructure.Extensions;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace App.Infrastructure.Services.Masters
 {
     public class EmployeeSalaryService : IEmployeeSalaryService
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<TblEmployeeSalary> _EmployeeSalaryRepo;
+        private readonly IGenericRepository<TblEmployeeSalaryDetail> _EmployeeSalaryDetailRepo;
+        private readonly IGenericRepository<VwEmployeeSalary> _VwEmployeeSalaryRepo;
+        private readonly IGenericRepository<TblSalaryComponent> _TblSalaryComponentRepo;
         private readonly ILogger<EmployeeSalaryService> _logger;
         private readonly IContextService _userService;
         public EmployeeSalaryService(IGenericRepository<TblEmployeeSalary> EmployeeSalaryRepo
+            , IGenericRepository<VwEmployeeSalary> VwEmployeeSalaryRepo
+            , IGenericRepository<TblSalaryComponent> TblSalaryComponentRepo
+
+            , IGenericRepository<TblEmployeeSalaryDetail> EmployeeSalaryDetailRepo
             , IMapper mapper
             , ILogger<EmployeeSalaryService> logger
             , IContextService userService)
         {
             _EmployeeSalaryRepo = EmployeeSalaryRepo;
+            _VwEmployeeSalaryRepo = VwEmployeeSalaryRepo;
             _mapper = mapper;
             _logger = logger;
             _userService = userService;
+            _TblSalaryComponentRepo = TblSalaryComponentRepo;
+            _EmployeeSalaryDetailRepo = EmployeeSalaryDetailRepo;
         }
 
 
@@ -72,12 +83,28 @@ namespace App.Infrastructure.Services.Masters
             }
         }
 
-        public async Task<PagedResponse<EmployeeSalaryDto>> GetPagedAsync(DataTableRequest model)
+        public async Task<PagedResponse<VwEmployeeSalaryDto>> GetPagedAsync(DataTableRequest model)
         {
             try
             {
-                var entityResult = await _EmployeeSalaryRepo.GetPagedAsync(model);
-                return entityResult.MapPaged<TblEmployeeSalary, EmployeeSalaryDto>(_mapper, model);
+                var entityResult = await _VwEmployeeSalaryRepo.GetPagedAsync(model);
+                var results = entityResult.MapPaged<VwEmployeeSalary, VwEmployeeSalaryDto>(_mapper, model);
+                var salaryComponents = await _TblSalaryComponentRepo.GetListAsync();
+                var orderedComponents = salaryComponents.OrderBy(c => c.SortOrder).ToList();
+                var details = await _EmployeeSalaryDetailRepo.GetListAsync();
+                for (int i = 0; i < results.Items.Count; i++)
+                {
+                    var result = results.Items[i];
+                    var employeeDetails = details.Where(d => d.EmployeeSalaryId == result.EmployeeSalaryId).ToList();
+                    foreach (var c in orderedComponents)
+                    {
+                        decimal amount = employeeDetails.FirstOrDefault(d => d.ComponentCode == c.ComponentCode)?.Amount ?? 0;
+                        result.Components[c.ComponentCode] = amount;
+                    }
+                }
+
+
+                return results;
             }
             catch (Exception ex)
             {
@@ -85,6 +112,7 @@ namespace App.Infrastructure.Services.Masters
                 throw;
             }
         }
+
 
         public async Task<List<EmployeeSalaryDto>> GetListAsync()
         {

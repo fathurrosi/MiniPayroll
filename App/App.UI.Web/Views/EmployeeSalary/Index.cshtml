@@ -1,98 +1,286 @@
-﻿@using App.Domain.Models
-@using App.Domain.Models.Dto.Masters
-@model EmployeeSalaryModel
+﻿@model EmployeeSalaryModel
+
 @{
-    var orderedComponents = Model.Components.OrderBy(c => c.SortOrder).ToList();
-    var employees = Model.Employees.OrderBy(t => t.EmployeeCode).ToList();
-
+    var orderedComponents = Model.Components
+        .OrderBy(c => c.SortOrder)
+        .ToList();
 }
+
 <style>
-    #tblSalary th {
-        vertical-align: middle;
-        white-space: nowrap;
-    }
-
-    #tblSalary td {
-        vertical-align: middle;
-        white-space: nowrap;
-    }
-
     .salary-input {
         min-width: 120px;
         text-align: right;
     }
 
+    #tblSalary th,
+    #tblSalary td {
+        vertical-align: middle;
+        white-space: nowrap;
+    }
 </style>
-<div class="card-body p-0">
-    <div class="table-responsive">
 
-        <table id="tblSalary"
-               class="table table-bordered table-sm table-hover mb-0">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
 
-            <thead class="table-light">
+            <div class="card-header py-2 px-3 bg-light">
+                <h6 class="mb-0 fw-semibold">
+                    Employee Salary
+                </h6>
+            </div>
 
-                <tr>
+            <div class="card-body">
 
-                    <th style="min-width:100px">
-                        Employee No
-                    </th>
+                <div class="row mb-3">
 
-                    <th style="min-width:200px">
-                        Employee Name
-                    </th>
+                    <div class="col-md-3">
+                        <select asp-for="Year" class="form-select">
+                            @for (int i = DateTime.Now.Year - 2;
+                                   i <= DateTime.Now.Year + 2;
+                                   i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                    </div>
 
-                    @foreach (var c in orderedComponents)
-                    {
-                        <th class="text-center"
-                            style="min-width:150px">
+                    <div class="col-md-3">
+                        <select asp-for="Month" class="form-select">
 
-                            @c.ComponentName
+                            @for (int i = 1; i <= 12; i++)
+                            {
+                                <option value="@i">
+                                    @(new DateTime(2000, i, 1)
+                                        .ToString("MMMM"))
+                                </option>
+                            }
 
-                        </th>
-                    }
+                        </select>
+                    </div>
 
-                </tr>
+                    <div class="col-md-4">
+                        <select asp-for="DepartmentCode"
+                                class="form-select">
 
-            </thead>
+                            <option value="">
+                                -- Select Department --
+                            </option>
 
-            <tbody>
+                            @foreach (var department in Model.Departments)
+                            {
+                                <option value="@department.DepartmentCode">
+                                    @department.DepartmentName
+                                </option>
+                            }
 
-                @foreach (var employee in employees)
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button id="btnSearch"
+                                class="btn btn-primary w-100">
+                            Search
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="table-responsive">
+                    <table id="tblSalary"
+                           class="table table-sm table-bordered table-hover w-100">
+                    </table>
+                </div>
+
+                <div class="mt-3 text-end">
+                    <button id="btnSave"
+                            class="btn btn-success">
+                        Save
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+>
+@section Scripts
+{    
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        let table;
+
+        function buildColumns() {
+
+            let columns = [
                 {
-                    var employeeItem = employees.FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
-                    var employeeSalaryItem = Model.Item.FirstOrDefault(s => s.EmployeeId == employee.EmployeeId);
-                    if (employeeSalaryItem == null) employeeSalaryItem = new EmployeeSalaryDto();
-                    <tr data-employee-id="@employee.EmployeeId"
-                        data-salary-id="@employeeSalaryItem.EmployeeSalaryId">
-                        <td>
-                            @employeeItem.EmployeeCode
-                        </td>
+                    data: 'employeeCode',
+                    title: 'Employee No'
+                },
+                {
+                    data: 'employeeName',
+                    title: 'Employee Name'
+                }
+            ];
 
-                        <td>
-                            @employeeItem.FullName
-                        </td>
+            @foreach (var c in orderedComponents)
+            {
+                    <text>
 
-                        @foreach (var c in orderedComponents)
-                        {
-                            decimal amount = employeeSalaryItem.Details.FirstOrDefault(d => d.ComponentCode == c.ComponentCode)?.Amount ?? 0;
-                            <td>
+                        columns.push({
+                            data: 'components.@c.ComponentCode',
+                            title: '@c.ComponentName',
+                            className: 'text-end',
+                            orderable: false,
+                            render: function (data, type, row) {
 
-                                <input type="number"
-                                       class="form-control form-control-sm salary-input"
-                                       data-component="@c.ComponentCode"
-                                       value="@amount" />
+                                data = data ?? 0;
 
-                            </td>
-                        }
+                                return `
+                                    <input
+                type="number"
+                class="form-control
+                                               form-control-sm
+                                               salary-input"
+                data-component="@c.ComponentCode"
+                value="${data}" />
+                                `;
+                            }
+                        });
 
-                    </tr>
+                    </text>
+            }
+
+            return columns;
+        }
+
+        function loadSalary() {
+
+            if ($.fn.DataTable.isDataTable('#tblSalary')) {
+                table.destroy();
+                $('#tblSalary').empty();
+            }
+
+            table = $('#tblSalary').DataTable({
+
+                processing: true,
+                serverSide: true,
+                searching: false,
+                ordering: false,
+
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: false,
+
+                fixedColumns: {
+                    left: 2
+                },
+
+                ajax: {
+                    url: '@Url.Action("GetList", "EmployeeSalary")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (d) {
+
+                        d.year = $('#Year').val();
+                        d.month = $('#Month').val();
+                        d.departmentCode =
+                            $('#DepartmentCode').val();
+
+                        return JSON.stringify(d);
+                    }
+                },
+
+                columns: buildColumns()
+            });
+        }
+
+        $(document).ready(function () {
+
+            loadSalary();
+
+            $('#btnSearch').click(function () {
+                loadSalary();
+            });
+
+        });
+
+        $('#tblSalary').on(
+            'change',
+            '.salary-input',
+            function () {
+
+                let input = $(this);
+                let tr = input.closest('tr');
+                let row = table.row(tr).data();
+
+                let componentCode =
+                    input.data('component');
+
+                let amount =
+                    parseFloat(input.val()) || 0;
+
+                row.components[componentCode] =
+                    amount;
+            });
+
+        $('#btnSave').click(function () {
+
+            let salaries = [];
+
+            table.rows().every(function () {
+
+                let row = this.data();
+
+                let details = [];
+
+                for (const componentCode
+                        in row.components) {
+
+                    details.push({
+                        componentCode: componentCode,
+                        amount:
+                            parseFloat(
+                                row.components[componentCode]
+                            ) || 0
+                    });
                 }
 
-            </tbody>
+                salaries.push({
+                    employeeSalaryId:
+                        row.employeeSalaryId,
+                    employeeId:
+                        row.employeeId,
+                    year:
+                        $('#Year').val(),
+                    month:
+                        $('#Month').val(),
+                    details: details
+                });
+            });
 
-        </table>
+            $.ajax({
+                url:
+                    '@Url.Action("Save", "EmployeeSalary")',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(salaries),
+                success: function (response) {
 
-    </div>
+                    if (response.success) {
+                        toastr.success('Saved');
+                    }
+                    else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function () {
+                    toastr.error('Server error.');
+                }
+            });
 
-</div>
- 
+        });
+
+    </script>
+}
