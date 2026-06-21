@@ -32,7 +32,7 @@ GO
 ALTER TABLE [dbo].[tbl_LeaveType] ADD  DEFAULT ((1)) FOR [IsActive]
 GO
 
---//update pancingan
+--//update pancinga
 
 /****** Object:  Table [dbo].[tbl_Branches]    Script Date: 21/06/2026 20:41:03 ******/
 drop table [dbo].[tbl_Branches]
