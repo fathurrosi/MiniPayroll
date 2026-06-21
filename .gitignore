@@ -81,3 +81,4 @@
 /App/App.Infrastructure/obj/Debug/net10.0/App.Infr.D9A1D18F.Up2Date
 *.BuildWithSkipAnalyzers
 *.json
+/App/App.UI.Web/appsettings.json
