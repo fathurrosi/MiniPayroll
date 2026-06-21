@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 namespace App.UI.Web.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    //[ApiController]
     public class LeaveTypeController : BaseController
     {
         private readonly ILeaveTypeService _leaveTypeService;
@@ -22,15 +21,16 @@ namespace App.UI.Web.Controllers
         }
 
         #region LeaveType
-        [HttpGet("index")]
+        [HttpGet("/LeaveType")]
+        [HttpGet("/LeaveType/Index")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Index()
         {
-            var model = new PageModel<LeaveTypeDto>() { Title = "Leaave Type" };
+            var model = new PageModel<LeaveTypeDto>() { Title = "Leave Type" };
             model.Item = new LeaveTypeDto();
             return View(model);
         }
-        [HttpPost("list")]
+        [HttpPost("GetList")]
         public async Task<IActionResult> GetList([FromBody] DataTableRequest model)
         {
             try
@@ -55,7 +55,7 @@ namespace App.UI.Web.Controllers
                 });
             }
         }
-        [HttpGet("get")]
+        [HttpGet("GetData")]
         public async Task<IActionResult> GetData(string code)
         {
             try
@@ -70,7 +70,7 @@ namespace App.UI.Web.Controllers
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
-        [HttpDelete("delete/{code}")]
+        [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
@@ -89,7 +89,7 @@ namespace App.UI.Web.Controllers
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
-        [HttpPost("save")]
+        [HttpPost("/LeaveType/SaveAsync")]
         public async Task<IActionResult> SaveAsync(PageModel<LeaveTypeDto> model)
         {
             try
