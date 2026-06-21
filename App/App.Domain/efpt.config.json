@@ -5,7 +5,7 @@
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "IrregularWords": null,
-   "MinimumProductVersion": "2.6.1465",
+   "MinimumProductVersion": "2.6.1604",
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Entities",
@@ -63,6 +63,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_Branches]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_CompanyProfiles]",
          "ObjectType": 0
       },
@@ -115,10 +119,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tbl_LeaveRequest]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[tbl_LeaveRequests]",
          "ObjectType": 0
       },
@@ -128,10 +128,6 @@
       },
       {
          "Name": "[dbo].[tbl_Menus]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[tbl_Menus_02]",
          "ObjectType": 0
       },
       {
