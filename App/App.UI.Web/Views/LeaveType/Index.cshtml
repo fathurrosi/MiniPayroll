@@ -208,6 +208,32 @@
                      { data: 'leaveCode', title: 'Leave Code', defaultContent: '-' },
                      { data: 'leaveName', title: 'Leave Name', defaultContent: '-' },
                      {
+                        data: 'isPaid',
+                        title: 'Is Paid',
+                        className: 'text-center',
+                        render: function (data) {
+                            return data
+                                ? '<span class="badge bg-success">Yes</span>'
+                                : '<span class="badge bg-secondary">No</span>';
+                        }
+                     },
+                     {
+                        data: 'isActive',
+                        title: 'Is Active',
+                        className: 'text-center',
+                        orderable: false,
+                        searchable: false,
+                        render: function (data, type, row) {
+                            const checked = data ? 'checked' : '';
+                            return `
+                                <div class="form-check form-switch d-flex justify-content-center">
+                                    <input class="form-check-input status-switch" type="checkbox" role="switch" ${checked}
+                                    onclick="confirmStatusChange('${row.leaveCode}', this)">
+                                </div>
+                            `;
+                        }
+                     },
+                     {
                          data: null,
                          title: 'Action',
                          orderable: false,
@@ -271,6 +297,55 @@
                 saveLeaveType();
             });
         });
+
+        function confirmStatusChange(leaveCode, element) {
+            const isChecked = $(element).is(':checked');
+            const statusText = isChecked ? 'ACTIVATE' : 'DEACTIVATE';
+            const alertClass = isChecked ? 'text-success' : 'text-danger';
+
+            Swal.fire({
+                title: 'Are you sure?',
+                html: `You are about to <b class="${alertClass}">${statusText}</b> Leave Code: <b>${leaveCode}</b>.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: isChecked ? '#28a745' : '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, change it!',
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    executeStatusUpdate(leaveCode, isChecked, element);
+                } else {
+                    $(element).prop('checked', !isChecked);
+                }
+            });
+        }
+
+        function executeStatusUpdate(leaveCode, isChecked, element) {
+            $.ajax({
+                type: 'POST',
+                url: '/LeaveType/UpdateStatus',
+                data: {
+                    code: leaveCode,
+                    isActive: isChecked
+                },
+                success: function (response) {
+                    if (response.success) {
+                        notify.success(response.message || 'Status updated successfully.');
+                    } else {
+                        notify.warning(response.message || 'Failed to update status.');
+                        // Kembalikan posisi switch jika ditolak oleh server backend
+                        $(element).prop('checked', !isChecked);
+                    }
+                },
+                error: function () {
+                    notify.error('An error occurred while communicating with the server.');
+                    // Kembalikan posisi switch jika terjadi error jaringan / 500
+                    $(element).prop('checked', !isChecked);
+                }
+            });
+        }
 
         function saveLeaveType() {
             const form = $('#LeaveTypeForm')[0];

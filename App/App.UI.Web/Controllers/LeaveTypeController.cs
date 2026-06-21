@@ -130,6 +130,31 @@ namespace App.UI.Web.Controllers
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
+        [HttpPost("/LeaveType/UpdateStatus")]
+        public async Task<IActionResult> UpdateStatus(string code, bool isActive)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(code))
+                    return Json(ActionResponse.Fail("Invalid Leave Code."));
+
+                var existingItem = await _leaveTypeService.GetByCodeAsync(code);
+                if (existingItem == null)
+                    return Json(ActionResponse.Fail("Leave Type not found."));
+
+                existingItem.IsActive = isActive;
+                var result = await _leaveTypeService.SaveAsync(existingItem);
+
+                return (result != null)
+                    ? Json(ActionResponse.Ok("Status updated successfully."))
+                    : Json(ActionResponse.Fail("Failed to update status."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating status for LeaveType {code}", code);
+                return Json(ActionResponse.Fail(ex.Message));
+            }
+        }
         #endregion
     }
 }
