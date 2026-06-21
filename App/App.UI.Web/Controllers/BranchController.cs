@@ -7,35 +7,38 @@ using App.Domain.Models.Response;
 using App.Infrastructure.Services.Masters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 namespace App.UI.Web.Controllers
 {
-    [Route("LeaveType")]
-    public class LeaveTypeController : BaseController
+    [Route("Branch")]
+    public class BranchController : BaseController
     {
-        private readonly ILeaveTypeService _leaveTypeService;
-        private readonly ILogger<LeaveTypeController> _logger;
-        public LeaveTypeController(ILeaveTypeService leaveTypeService, ILogger<LeaveTypeController> logger)
+        private readonly IBranchService _branchService;
+        private readonly ILogger<BranchController> _logger;
+
+        public BranchController(IBranchService branchService, ILogger<BranchController> logger)
         {
-            _leaveTypeService = leaveTypeService;
+            _branchService = branchService;
             _logger = logger;
         }
 
-        #region LeaveType
-        [HttpGet("/LeaveType")]
-        [HttpGet("/LeaveType/Index")]
+        #region Branch
+        [HttpGet("/Branch")]
+        [HttpGet("/Branch/Index")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult Index()
         {
-            var model = new PageModel<LeaveTypeDto>() { Title = "Leave Type" };
-            model.Item = new LeaveTypeDto();
+            var model = new PageModel<BranchDto>() { Title = "Branch" };
+            model.Item = new BranchDto();
             return View(model);
         }
+
         [HttpPost("GetList")]
         public async Task<IActionResult> GetList([FromBody] DataTableRequest model)
         {
             try
             {
-                var result = await _leaveTypeService.GetPagedAsync(model);
+                var result = await _branchService.GetPagedAsync(model);
                 return Json(new
                 {
                     draw = model.Draw,
@@ -60,12 +63,12 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-                var result = await _leaveTypeService.GetByCodeAsync(code);
+                var result = await _branchService.GetByCodeAsync(code);
                 return Json(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving LeaveType with code {code}", code);
+                _logger.LogError(ex, "Error retrieving Branch with code {code}", code);
                 //return StatusCode(500, new { error = "An error occurred while retrieving data." });
                 return Json(ActionResponse.Fail(ex.Message));
             }
@@ -78,7 +81,7 @@ namespace App.UI.Web.Controllers
 
             try
             {
-                var result = await _leaveTypeService.DeleteAsync(code);
+                var result = await _branchService.DeleteAsync(code);
                 if (result > 0)
                     return Ok(ActionResponse.Ok($"model {code} deleted successfully"));
 
@@ -89,8 +92,8 @@ namespace App.UI.Web.Controllers
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
-        [HttpPost("/LeaveType/SaveAsync")]
-        public async Task<IActionResult> SaveAsync(PageModel<LeaveTypeDto> model)
+        [HttpPost("/Branch/SaveAsync")]
+        public async Task<IActionResult> SaveAsync(PageModel<BranchDto> model)
         {
             try
             {
@@ -100,50 +103,50 @@ namespace App.UI.Web.Controllers
                     return Json(ActionResponse.Fail("Request data is missing or invalid."));
                 }
                 // 2. Model Validation (Returns immediately without throwing expensive exceptions)
-                if (string.IsNullOrWhiteSpace(model.Item.LeaveCode))
+                if (string.IsNullOrWhiteSpace(model.Item.BranchCode))
                 {
-                    return Json(ActionResponse.Fail("Please select a valid Leave Code."));
+                    return Json(ActionResponse.Fail("Please select a valid Branch Code."));
                 }
-                if (string.IsNullOrWhiteSpace(model.Item.LeaveName))
+                if (string.IsNullOrWhiteSpace(model.Item.BranchName))
                 {
-                    return Json(ActionResponse.Fail("Leave name is mandatory."));
+                    return Json(ActionResponse.Fail("Branch name is mandatory."));
                 }
-                // 3. Prevent Duplicate Departments on the Same Date
+                // 3. Prevent Duplicate Branch on the Same Date
                 if (model.Mode == FormMode.Create)
                 {
                     // Pro-Tip: Change your service to look up by Code instead of ID for creation checks
-                    var existingItem = await _leaveTypeService.GetByCodeAsync(model.Item.LeaveCode);
+                    var existingItem = await _branchService.GetByCodeAsync(model.Item.BranchCode);
                     if (existingItem != null)
                     {
-                        return Json(ActionResponse.Fail($"A Leave Type already exists with this code: {existingItem.LeaveName}"));
+                        return Json(ActionResponse.Fail($"A Branch already exists with this code: {existingItem.BranchName}"));
                     }
                 }
                 // 4. Execute Save Operation
-                var result = await _leaveTypeService.SaveAsync(model.Item);
+                var result = await _branchService.SaveAsync(model.Item);
                 return (result != null)
-                    ? Json(ActionResponse.Ok("Leave Type saved successfully."))
-                    : Json(ActionResponse.Fail("Failed to save the Leave Type."));
+                    ? Json(ActionResponse.Ok("Branch saved successfully."))
+                    : Json(ActionResponse.Fail("Failed to save the Branch."));
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error saving LeaveType with code {code}", model?.Item?.LeaveCode);
+                _logger.LogError(ex, "Error saving Branch with code {code}", model?.Item?.BranchCode);
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
-        [HttpPost("/LeaveType/UpdateStatus")]
+        [HttpPost("/Branch/UpdateStatus")]
         public async Task<IActionResult> UpdateStatus(string code, bool isActive)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(code))
-                    return Json(ActionResponse.Fail("Invalid Leave Code."));
+                    return Json(ActionResponse.Fail("Invalid Branch Code."));
 
-                var existingItem = await _leaveTypeService.GetByCodeAsync(code);
+                var existingItem = await _branchService.GetByCodeAsync(code);
                 if (existingItem == null)
-                    return Json(ActionResponse.Fail("Leave Type not found."));
+                    return Json(ActionResponse.Fail("Branch not found."));
 
                 existingItem.IsActive = isActive;
-                var result = await _leaveTypeService.SaveAsync(existingItem);
+                var result = await _branchService.SaveAsync(existingItem);
 
                 return (result != null)
                     ? Json(ActionResponse.Ok("Status updated successfully."))
@@ -151,7 +154,7 @@ namespace App.UI.Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating status for LeaveType {code}", code);
+                _logger.LogError(ex, "Error updating status for Branch {code}", code);
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }

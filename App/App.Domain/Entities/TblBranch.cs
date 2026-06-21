@@ -9,35 +9,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_Menus_02")]
-public partial class TblMenus02
+[Table("tbl_Branches")]
+public partial class TblBranch
 {
     [Key]
-    [StringLength(255)]
-    public string Id { get; set; } = null!;
+    public int Id { get; set; }
 
-    [StringLength(255)]
-    public string Name { get; set; } = null!;
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? BranchCode { get; set; }
 
-    [StringLength(255)]
-    public string Caption { get; set; } = null!;
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? BranchName { get; set; }
 
-    [StringLength(255)]
-    public string Link { get; set; } = null!;
+    [StringLength(191)]
+    [Unicode(false)]
+    public string? Address { get; set; }
 
-    [StringLength(255)]
-    public string? Icon { get; set; }
+    public int? BranchHeadEmployeeId { get; set; }
 
-    public int Sort { get; set; }
+    public int CompanyProfileId { get; set; }
 
-    [StringLength(255)]
-    public string? Css { get; set; }
-
-    [StringLength(255)]
-    public string? MenuTitle { get; set; }
-
-    [StringLength(255)]
-    public string? ParentId { get; set; }
+    public bool IsActive { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }

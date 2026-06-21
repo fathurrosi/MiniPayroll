@@ -8,6 +8,7 @@ namespace App.Domain.Models.Dto.Masters
         [Required(ErrorMessage = "Leave code is required.")]
         [StringLength(20, ErrorMessage = "Leave code cannot exceed 20 characters.")]
         [RegularExpression(@"^[A-Z]+$", ErrorMessage = "Leave code must be uppercase only and contain no spaces.")]
+        [Display(Name = "Leave Code")]
         public string LeaveCode { get; set; }
 
         [Required(ErrorMessage = "Leave Name is required.")]
