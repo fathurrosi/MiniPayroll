@@ -82,3 +82,5 @@
 *.BuildWithSkipAnalyzers
 *.json
 /App/App.UI.Web/appsettings.json
+/App/App.UI.Web/appsettings.Development.json
+/App/App.UI.Web/appsettings.Development.json
