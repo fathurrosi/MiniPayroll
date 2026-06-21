@@ -1,0 +1,106 @@
+﻿@using App.Domain.Models.Dto
+@using App.Domain.Models.Dto.Settings
+@{
+    var routeData = Context.GetRouteData();
+    var controller = routeData?.Values["controller"]?.ToString() ?? string.Empty;
+    var action = routeData?.Values["action"]?.ToString() ?? "Index";
+    var expectedLink = action.Equals("Index", StringComparison.OrdinalIgnoreCase)
+        ? $"/{controller}"
+        : $"/{controller}/{action}";
+}
+@model UserDto
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <!--begin::Sidebar Brand-->
+    <div class="sidebar-brand">
+        <!--begin::Brand Link-->
+        <a asp-controller="Home"
+               asp-action="Index" class="brand-link">
+            <!--begin::Brand Image-->
+            <img src="~/assets/img/AdminLTELogo.png"
+                 alt="AdminLTE Logo"
+                 class="brand-image opacity-75 shadow" />
+            <!--end::Brand Image-->
+            <!--begin::Brand Text-->
+            <span class="brand-text fw-light">Enterprise System</span>
+            <!--end::Brand Text-->
+        </a>
+        <!--end::Brand Link-->
+    </div>
+    <!--end::Sidebar Brand-->
+    <!--begin::Sidebar Wrapper-->
+    <div class="sidebar-wrapper">
+        <nav class="mt-2">
+            <ul class="nav sidebar-menu flex-column"
+                data-lte-toggle="treeview"
+                role="navigation"
+                aria-label="Main navigation"
+                data-accordion="false"
+                id="navigation">
+                                
+                @if (Model != null && Model.MenuList?.Count > 0)
+                {
+                    for (int i = 0; i < Model.MenuList.Count; i++)
+                    {
+                        var menu = Model.MenuList[i];
+                        if (menu.ChildList?.Count > 0)
+                        {
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="@menu.Icon"></i>
+                                    <p>@menu.Caption</p>
+                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    @foreach (var child in menu.ChildList)
+                                    {
+                                        string isActive = "";
+                                        if (controller.Equals(menu.Link, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            isActive = "active";
+                                        }
+                                        <li class="nav-item @isActive">
+                                            <a href="@Url.Content(menu.Link)"
+                                                   class="nav-link">
+                                                <i class="@menu.Icon"></i>
+                                                <p>@menu.Caption</p>
+                                            </a>
+                                        </li>
+                                    }
+
+                                    <li class="nav-item">
+                                        <a asp-controller="Employee"
+                                               asp-action="Index"
+                                               class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Employees</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            string isActive = "";
+                            if (controller.Equals(
+                                menu.Link,
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                isActive = "active";
+                            }
+
+                            <li class="nav-item @isActive">
+                                <a href="@Url.Content(menu.Link)"
+                                       class="nav-link">
+                                    <i class="@menu.Icon"></i>
+                                    <p>@menu.Caption</p>
+                                </a>
+                            </li>
+                        }
+                    }
+                }
+
+                
+            </ul>
+        </nav>
+    </div>
+</aside>

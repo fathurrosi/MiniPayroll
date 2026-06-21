@@ -1,4 +1,5 @@
-﻿using App.Domain.Models.Dto;
+﻿using App.Domain.Models;
+using App.Domain.Models.Dto.Masters;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.UI.Web.Models
@@ -18,21 +19,7 @@ namespace App.UI.Web.Models
         public bool RememberMe { get; set; }
     }
 
-    //public sealed class ScheduleModel
-    //{
-    //    public int Year { get; set; }
-    //    public int Month { get; set; }
-    //    public string DepartmentCode { get; set; }
-    //    public int? EmployeeId { get; set; }
-
-
-    //    public int PatternId { get; set; }
-    //    public bool OverwriteExisting { get; set; }
-    //}
-
-
-
-    public class ShiftScheduleModel
+    public class ShiftScheduleModel : PageModel<ShiftDto>
     {
         public int Year { get; set; }
         public int Month { get; set; }
@@ -41,12 +28,11 @@ namespace App.UI.Web.Models
         public int? EmployeeId { get; set; }
 
 
-        public int ModalYear { get; set; }
-        public int ModalMonth { get; set; }
+        public DateTime ModalDateFrom { get; set; }
+        public DateTime ModalDateTo { get; set; }
 
         public string ModalDepartmentCode { get; set; }
         public int? ModalEmployeeId { get; set; }
-        //public ScheduleModel Modal { get; set; }
 
         public int ModalPatternId { get; set; }
         public bool ModalOverwriteExisting { get; set; }

@@ -2,10 +2,10 @@
 using App.Application.Interfaces.Services;
 using App.Application.Interfaces.Services.Masters;
 using App.Domain.Entities;
-using App.Domain.Models.Dto;
+using App.Domain.Models.Dto.Masters;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
-using App.Infrastructure.Extensions; 
+using App.Infrastructure.Extensions;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

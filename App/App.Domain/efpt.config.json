@@ -5,7 +5,7 @@
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "IrregularWords": null,
-   "MinimumProductVersion": "2.6.1604",
+   "MinimumProductVersion": "2.6.1465",
    "ModelNamespace": null,
    "OutputContextPath": null,
    "OutputPath": "Entities",
@@ -95,6 +95,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_EmployeeSalary]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeeSalaryDetail]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_EmployeeShift]",
          "ObjectType": 0
       },
@@ -120,6 +128,10 @@
       },
       {
          "Name": "[dbo].[tbl_Menus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Menus_02]",
          "ObjectType": 0
       },
       {
@@ -191,6 +203,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_SalaryComponents]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_Shift]",
          "ObjectType": 0
       },
@@ -220,6 +236,10 @@
       },
       {
          "Name": "[dbo].[vw_EmployeeMonthlySchedule_Without_IsRest_Field]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_EmployeeSalary]",
          "ObjectType": 3
       }
    ],

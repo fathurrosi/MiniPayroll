@@ -1,0 +1,47 @@
+﻿<style>
+    /* Change default Bootstrap separator to black '>' chevron */
+      .breadcrumb-item + .breadcrumb-item::before {
+        content: ">" !important;
+        color: #000000 !important;  
+        padding-left: 14px;
+        padding-right: 14px;
+        font-weight: normal;
+    }
+ /* 
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "" !important;  
+        display: inline-block;
+        width: 12px; 
+        height: 12px; 
+        background-color: #000000 !important;  
+        border-radius: 50%;  
+        
+        margin-left: 14px;
+        margin-right: 14px;
+        align-self: center;
+    } */
+</style>
+
+<nav aria-label="breadcrumb" class="w-100">
+    <ol class="breadcrumb d-flex w-100 align-items-center px-4 py-1 m-0 rounded-0"
+        style="background-color: AppWorkspace !important; list-style: none; font-family: 'Source Sans Pro', 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1rem !important;">
+        
+        <li class="breadcrumb-item d-flex align-items-center">
+            <a href="@Url.Action("Index", "Home")" class="text-dark p-2 rounded-circle d-inline-flex justify-content-center align-items-center" style="background-color: rgba(0,0,0,0.08); width: 28px; height: 28px;">
+                <i class="fas fa-home" style="font-size: 0.75rem; color: #000000;"></i>
+            </a>
+        </li>
+
+        <li class="breadcrumb-item fw-normal">
+            <a href="@Url.Action("Index", "Home")" class="text-dark text-decoration-none ms-2" style="color: #000000 !important;">Home</a>
+        </li>
+
+        <li class="breadcrumb-item fw-normal">
+            <a href="@Url.Action("Profile", "User")" class="text-dark text-decoration-none" style="color: #000000 !important;">Profile</a>
+        </li>
+
+        <li class="breadcrumb-item active fw-normal" aria-current="page" style="color: #4b5563 !important;">
+            Settings
+        </li>
+    </ol>
+</nav>

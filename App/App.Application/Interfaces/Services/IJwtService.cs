@@ -5,6 +5,6 @@ namespace App.Application.Interfaces.Services
 {
     public interface IJwtService
     {
-        public LoginResponse<TblUser> Authenticate(Domain.Models.Request.LoginRequest request);
+        public LoginResponse<User> Authenticate(Domain.Models.Request.LoginRequest request);
     }
 }

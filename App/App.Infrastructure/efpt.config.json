@@ -1,20 +1,20 @@
 ﻿{
    "CodeGenerationMode": 4,
    "ContextClassName": "AppDBContext",
-   "ContextNamespace": "Data",
+   "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "IrregularWords": null,
-   "MinimumProductVersion": "2.6.1604",
+   "MinimumProductVersion": "2.6.1465",
    "ModelNamespace": null,
-   "OutputContextPath": "Data",
-   "OutputPath": "..\\..\\App.Domain\\Entities",
+   "OutputContextPath": null,
+   "OutputPath": "Data",
    "PluralRules": null,
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "App.Infrastructure",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 2,
-   "SelectedToBeGenerated": 0,
+   "SelectedToBeGenerated": 1,
    "SingularRules": null,
    "T4TemplatePath": null,
    "Tables": [
@@ -95,6 +95,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_EmployeeSalary]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_EmployeeSalaryDetail]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_EmployeeShift]",
          "ObjectType": 0
       },
@@ -120,6 +128,10 @@
       },
       {
          "Name": "[dbo].[tbl_Menus]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_Menus_02]",
          "ObjectType": 0
       },
       {
@@ -191,6 +203,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_SalaryComponents]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_Shift]",
          "ObjectType": 0
       },
@@ -221,6 +237,10 @@
       {
          "Name": "[dbo].[vw_EmployeeMonthlySchedule_Without_IsRest_Field]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_EmployeeSalary]",
+         "ObjectType": 3
       }
    ],
    "UiHint": null,
@@ -243,7 +263,7 @@
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
-   "UseNullableReferences": true,
+   "UseNullableReferences": false,
    "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,

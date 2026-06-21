@@ -1,4 +1,5 @@
 ﻿@using App.Domain.Models.Dto
+@using App.Domain.Models.Dto.Settings
 @{
     var routeData = Context.GetRouteData();
     var controller = routeData?.Values["controller"]?.ToString() ?? string.Empty;
@@ -43,7 +44,9 @@
                         var menu = Model.MenuList[i];
                         if (menu.ChildList?.Count > 0)
                         {
-                            <li class="nav-item">
+                            bool parentActive = menu.ChildList.Where(t => controller.Equals(t.Name, StringComparison.OrdinalIgnoreCase)).Count() > 0;
+                            string parentOpen = parentActive ? "nav-item menu-open" : "nav-item";
+                            <li class="@parentOpen">
                                 <a href="#" class="nav-link">
                                     <i class="@menu.Icon"></i>
                                     <p>@menu.Caption</p>
@@ -52,40 +55,27 @@
                                 <ul class="nav nav-treeview">
                                     @foreach (var child in menu.ChildList)
                                     {
-                                        string isActive = "";
-                                        if (controller == child.Link)
-                                        {
-                                            isActive = "active";
-                                        }
-                                        <li class="nav-item @isActive">
+                                        bool childActive = controller.Equals(child.Name, StringComparison.OrdinalIgnoreCase);
+                                        string childOpen = childActive ? "nav-item menu-open" : "nav-item";
+                                        string linkActive = childActive ? "nav-link active" : "nav-link";
+                                        <li class="@childOpen">
                                             <a href="@Url.Content(child.Link)"
-                                                   class="nav-link">
+                                                   class="@linkActive">
                                                 <i class="@child.Icon"></i>
                                                 <p>@child.Caption</p>
                                             </a>
                                         </li>
                                     }
-
-                                  @*   <li class="nav-item">
-                                        <a asp-controller="Employee"
-                                               asp-action="Index"
-                                               class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Employees</p>
-                                        </a>
-                                    </li>     *@                               
+                                                                
                                 </ul>
                             </li>
                         }
                         else
                         {
-                            string isActive = "";
-                            if (controller == menu.Link)
-                            {
-                                isActive = "active";
-                            }
-
-                            <li class="nav-item @isActive">
+                            bool parentActive = controller.Equals(menu.Name, StringComparison.OrdinalIgnoreCase);
+                            string parentOpen = parentActive ? "nav-item menu-open" : "nav-item";
+                            string linkActive = parentActive ? "nav-link active" : "nav-link";
+                            <li class="nav-item">
                                 <a href="@Url.Content(menu.Link)"
                                        class="nav-link">
                                     <i class="@menu.Icon"></i>
@@ -95,74 +85,8 @@
                         }
                     }
                 }
-
-                @*
-                <li class="nav-item">
-                    <a asp-controller="Home"
-                           asp-action="Index"
-                           class="nav-link">
-                        <i class="nav-icon bi bi-speedometer"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li> 
-                <li class="nav-item">
-                    <a href="#"
-                           class="nav-link">
-                        <i class="nav-icon bi bi-cash-stack"></i>
-                        <p>
-                            Payroll
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a asp-controller="Employee"
-                                   asp-action="Index"
-                                   class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Employees</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-controller="Payroll"
-                                   asp-action="Index"
-                                   class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Payroll Process</p>
-                            </a>
-                        </li>
-                    
-                    </ul>
-                </li>
-                 
-                <li class="nav-item">
-                    <a asp-controller="Workflow"
-                           asp-action="Index"
-                           class="nav-link">
-                        <i class="nav-icon bi bi-diagram-3"></i>
-                        <p>Workflow</p>
-                    </a>
-                </li>
-            
-                <li class="nav-item">
-                    <a asp-controller="Document"
-                           asp-action="Index"
-                           class="nav-link">
-                        <i class="nav-icon bi bi-folder"></i>
-                        <p>Documents</p>
-                    </a>
-                </li>
-                 
-                <li class="nav-item">
-                    <a asp-controller="Setting"
-                           asp-action="Index"
-                           class="nav-link">
-                        <i class="nav-icon bi bi-gear"></i>
-                        <p>Settings</p>
-                    </a>
-                </li>
-                  *@       
             </ul>
+             
         </nav>
     </div>
 </aside>

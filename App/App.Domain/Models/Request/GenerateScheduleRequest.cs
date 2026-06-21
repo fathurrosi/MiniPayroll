@@ -6,8 +6,8 @@ namespace App.Domain.Models.Request
 {
     public sealed class GenerateScheduleRequest
     {
-        public int Year { get; set; }
-        public int Month { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
 
         public string DepartmentCode { get; set; }
 

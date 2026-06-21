@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace App.UI.Web.Controllers
 {
-    [Authorize]
-    // aktifkan jika sudah di production
-    //[ApiExplorerSettings(IgnoreApi = true)]
+
+    [ApiExplorerSettings(IgnoreApi = true)]
     public abstract class BaseController : Controller
     {
         protected bool IsAuthenticated =>

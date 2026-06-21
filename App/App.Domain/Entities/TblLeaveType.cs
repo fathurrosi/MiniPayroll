@@ -23,7 +23,7 @@ public partial class TblLeaveType
     [Unicode(false)]
     public string? LeaveName { get; set; }
 
-    public int? DefaultAnnualQuota { get; set; }
+    public int? AnnualQuota { get; set; }
 
     public bool IsPaid { get; set; }
 
