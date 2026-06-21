@@ -4,7 +4,7 @@ using System.Security.Claims;
 namespace App.UI.Web.Controllers
 {
 
-    [ApiExplorerSettings(IgnoreApi = true)]
+    //[ApiExplorerSettings(IgnoreApi = true)] --aktifkan lagi jika di production
     public abstract class BaseController : Controller
     {
         protected bool IsAuthenticated =>

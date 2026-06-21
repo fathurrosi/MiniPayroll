@@ -1,6 +1,6 @@
 ﻿using App.Domain.Entities;
 
-namespace App.Domain.Models.Dto
+namespace App.Domain.Models.Dto.Masters
 {
     public sealed class LeaveTypeDto : BaseDto<TblLeaveType>
     {
