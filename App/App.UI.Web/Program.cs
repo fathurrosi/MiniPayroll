@@ -7,7 +7,7 @@ builder.Services.AddServices(builder.Configuration, builder.Environment);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//swagger --non aktifkan jika sudah di production
+//swagger --non aktifkan jika sudah di production -test commit
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
