@@ -12,12 +12,24 @@ namespace App.UI.Web.Controllers
 {
     public class EmployeeController : BaseController
     {
+        private readonly IDepartmentService _departmentService;
+        private readonly IPositionService _positionService;
         private readonly IEmployeeService _EmployeeService;
         private readonly IPtkpService _PtkpService;
-        public EmployeeController(IEmployeeService employeeService, IPtkpService ptkpService)
+        private readonly ILogger<BranchController> _logger;
+
+        public EmployeeController(
+            IDepartmentService departmentService,
+            IPositionService positionService,
+            IEmployeeService employeeService, 
+            IPtkpService ptkpService,
+            ILogger<BranchController> logger)
         {
+            _departmentService = departmentService;
+            _positionService = positionService;
             _EmployeeService = employeeService;
             _PtkpService = ptkpService;
+            _logger = logger;
         }
 
         #region Employee
@@ -112,7 +124,91 @@ namespace App.UI.Web.Controllers
             }
         }
 
+        [HttpGet("GetDepartmentDropdown")]
+        public async Task<IActionResult> GetDepartmentDropdown(string searchTerm)
+        {
+            try
+            {
+                // Proteksi ekstra jika objek service ternyata tidak ter-resolve (null)
+                if (_departmentService == null)
+                {
+                    return Json(Array.Empty<object>());
+                }
 
+                var allDepartments = await _departmentService.GetListAsync();
+
+                // Jika data kosong atau null dari internal service, langsung return array kosong
+                if (allDepartments == null || !allDepartments.Any())
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var filteredDeparments = allDepartments.Where(p => p != null && p.IsActive);
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    filteredDeparments = filteredDeparments.Where(p =>
+                        p.DepartmentName != null && p.DepartmentName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                    );
+                }
+
+                var result = filteredDeparments.Select(p => new
+                {
+                    id = p.DepartmentCode.ToString(),
+                    text = p.DepartmentName ?? "Unknown Department"
+                }).ToList();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching Department dropdown data");
+                return Json(Array.Empty<object>());
+            }
+        }
+
+        [HttpGet("GetPositionDropdown")]
+        public async Task<IActionResult> GetPositionDropdown(string searchTerm)
+        {
+            try
+            {
+                // Proteksi ekstra jika objek service ternyata tidak ter-resolve (null)
+                if (_positionService == null)
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var allPositions = await _positionService.GetListAsync();
+
+                // Jika data kosong atau null dari internal service, langsung return array kosong
+                if (allPositions == null || !allPositions.Any())
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var filteredPositions = allPositions.Where(p => p != null && p.IsActive);
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    filteredPositions = filteredPositions.Where(p =>
+                        p.PositionName != null && p.PositionName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                    );
+                }
+
+                var result = filteredPositions.Select(p => new
+                {
+                    id = p.PositionCode.ToString(),
+                    text = p.PositionName ?? "Unknown Position"
+                }).ToList();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching Position dropdown data");
+                return Json(Array.Empty<object>());
+            }
+        }
         #endregion
 
     }

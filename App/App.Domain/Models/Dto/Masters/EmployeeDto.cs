@@ -76,7 +76,7 @@ namespace App.Domain.Models.Dto.Masters
         [Display(Name = "NPWP")]
         public string? Npwp { get; set; }
 
-        [Display(Name = "Active")]
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
         [Display(Name = "Created Date")]

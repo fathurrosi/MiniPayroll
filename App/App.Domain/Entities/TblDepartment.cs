@@ -21,6 +21,8 @@ public partial class TblDepartment
     [Unicode(false)]
     public string DepartmentName { get; set; } = null!;
 
+    public bool IsActive { get; set; }
+
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }
 

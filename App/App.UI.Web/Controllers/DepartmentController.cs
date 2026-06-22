@@ -4,6 +4,7 @@ using App.Domain.Models;
 using App.Domain.Models.Dto.Masters;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
+using App.Infrastructure.Services.Masters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -136,6 +137,32 @@ namespace App.UI.Web.Controllers
                 _logger.LogError(ex, "Error occurred while saving Department");
 
                 return Json(ActionResponse.Fail($"Internal server error: {ex.Message}"));
+            }
+        }
+
+        [HttpPost("/Department/UpdateStatus")]
+        public async Task<IActionResult> UpdateStatus(string code, bool isActive)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(code))
+                    return Json(ActionResponse.Fail("Invalid Department Code."));
+
+                var existingItem = await _DepartmentService.GetByCodeAsync(code);
+                if (existingItem == null)
+                    return Json(ActionResponse.Fail("Department not found."));
+
+                existingItem.IsActive = isActive;
+                var result = await _DepartmentService.SaveAsync(existingItem);
+
+                return (result != null)
+                    ? Json(ActionResponse.Ok("Status updated successfully."))
+                    : Json(ActionResponse.Fail("Failed to update status."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating status for Department {code}", code);
+                return Json(ActionResponse.Fail(ex.Message));
             }
         }
 

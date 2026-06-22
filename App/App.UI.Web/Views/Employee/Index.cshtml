@@ -6,90 +6,90 @@
     ViewData["Title"] = $"Data Master - {Model.Title}";
 }
 
-<div class="row">
+<link rel="stylesheet" href="~/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
+<style>
+    /* Mengatasi select2 yang sering overflow atau terlalu mepet di bootstrap 4 theme */
+    .select2-container--bootstrap4 .select2-selection--single {
+        height: calc(2.25rem + 2px) !important;
+        border: 1px solid #ced4da !important;
+        border-radius: 0.25rem !important;
+        background-color: #fff !important;
+    }
+
+        .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
+            line-height: 2.25rem !important;
+            padding-left: 0.75rem !important;
+            color: #495057 !important;
+        }
+
+        .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow {
+            height: 2.25rem !important;
+        }
+    /* Memperbaiki jarak dropdown list parent di dalam modal */
+    .select2-dropdown {
+        border: 1px solid #ced4da !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    /* Mengubah warna border saat dropdown select2 fokus aktif diketik */
+    .select2-container--bootstrap4.select2-container--focus .select2-selection--single {
+        border-color: #80bdff !important;
+        outline: 0 !important;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+    }
+</style>
+
+<div class="row">
     <div class="col-md-12">
         <div class="card shadow-sm full-height-card">
             <div class="card-header py-2 px-3 bg-light">
-
                 <div class="d-flex align-items-center">
-
                     <h6 class="mb-0 fw-semibold">
                         Existing @Model.Title
                     </h6>
-
                     <div class="ms-auto d-flex gap-2">
-
-                        <button id="add-new"
-                                class="btn btn-sm btn-primary">
-                            <i class="fa-solid fa-plus me-1"></i>
-                            Add New
+                        <button id="add-new" class="btn btn-sm btn-primary">
+                            <i class="fa-solid fa-plus me-1"></i> Add New
                         </button>
-
-                        <button id="csv-export"
-                                class="btn btn-sm btn-outline-success">
-                            <i class="fa-solid fa-file-excel me-1"></i>
-                            Export CSV
+                        <button id="csv-export" class="btn btn-sm btn-outline-success">
+                            <i class="fa-solid fa-file-excel me-1"></i> Export CSV
                         </button>
-
-                        <button id="pdf-export"
-                                class="btn btn-sm btn-outline-danger">
-                            <i class="fa-solid fa-file-pdf me-1"></i>
-                            Export PDF
+                        <button id="pdf-export" class="btn btn-sm btn-outline-danger">
+                            <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
                         </button>
-
                     </div>
-
                 </div>
-
             </div>
-            <!-- Body -->
             <div class="card-body p-2">
                 <div class="table-responsive">
-                    <table id="main-table"
-                           class="table table-sm table-striped table-hover align-middle w-100 mb-0">
+                    <table id="main-table" class="table table-sm table-striped table-hover align-middle w-100 mb-0">
                     </table>
-
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="modal fade"
-     id="employeeModal"
-     tabindex="-1"
-     aria-hidden="true">
+<div class="modal fade" id="employeeModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
                     <i class="fa-solid fa-building me-2"></i>
-                    <span id="modalTitle">
-                        Add @Model.Title
-                    </span>
+                    <span id="modalTitle">Add @Model.Title</span>
                 </h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
             <div class="modal-body">
-                <form id="addEmployeeForm"
-                      asp-action="AddEmployee"
-                      method="post"
-                      autocomplete="off">
-
+                <form id="addEmployeeForm" asp-action="AddEmployee" method="post" autocomplete="off">
                     @Html.AntiForgeryToken()
-
                     @Html.HiddenFor(model => model.Mode)
                     @Html.HiddenFor(model => model.Title)
                     @Html.HiddenFor(model => model.Item.EmployeeId)
 
                     <div class="row g-3">
-
                         <div class="col-md-6">
                             <label asp-for="Item.FullName" class="form-label fw-semibold"></label>
                             <input asp-for="Item.FullName" class="form-control" placeholder="Employee Full Name" />
@@ -120,13 +120,17 @@
 
                         <div class="col-md-6">
                             <label asp-for="Item.Department" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.Department" class="form-control" placeholder="Department" />
+                            <div class="w-100">
+                                <select asp-for="Item.Department" id="Item_Department" class="form-control select2" style="width: 100%;" data-placeholder="Search Department..."></select>
+                            </div>
                             <span asp-validation-for="Item.Department" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="Item.Position" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.Position" class="form-control" placeholder="Position" />
+                            <div class="w-100">
+                                <select asp-for="Item.Position" id="Item_Position" class="form-control select2" style="width: 100%;" data-placeholder="Search Position..."></select>
+                            </div>
                             <span asp-validation-for="Item.Position" class="text-danger small"></span>
                         </div>
 
@@ -170,83 +174,63 @@
 
                         <div class="col-md-6">
                             <label asp-for="Item.Ptkpcode" class="form-label fw-semibold">PTKP Status</label>
-                              
-                            <select asp-for="Item.Ptkpcode" class="form-select">
+                            <select asp-for="Item.Ptkpcode" id="Item_PtkpCode" class="form-select">
                                 <option value=""> -- Select Tax Status -- </option>
-                                @foreach (var ptkp in Model.PtkpList)
+                                @if (Model.PtkpList != null)
                                 {
-                                    <option value="@ptkp.Ptkpcode">
-                                        @ptkp.Ptkpname
-                                    </option>
+                                    foreach (var ptkp in Model.PtkpList)
+                                    {
+                                        <option value="@ptkp.Ptkpcode">@ptkp.Ptkpname</option>
+                                    }
                                 }
                             </select>
-
-                            @*  <label asp-for="Item.Ptkpcode" class="form-label fw-semibold">PTKP Status</label>
-                                <select asp-for="Item.Ptkpcode" class="form-select" asp-ite>
-                                <option value="">-- Select Tax Status --</option>
-                                <option value="TK/0">TK/0 - Tidak Kawin (0 Tanggungan)</option>
-                                <option value="TK/1">TK/1 - Tidak Kawin (1 Tanggungan)</option>
-                                <option value="TK/2">TK/2 - Tidak Kawin (2 Tanggungan)</option>
-                                <option value="TK/3">TK/3 - Tidak Kawin (3 Tanggungan)</option>
-                                <option value="K/0">K/0 - Kawin (0 Tanggungan)</option>
-                                <option value="K/1">K/1 - Kawin (1 Tanggungan)</option>
-                                <option value="K/2">K/2 - Kawin (2 Tanggungan)</option>
-                                <option value="K/3">K/3 - Kawin (3 Tanggungan)</option>
-                                <option value="K/I/0">K/I/0 - Kawin Istri Digabung (0 Tanggungan)</option>
-                            </select> *@
                             <span asp-validation-for="Item.Ptkpcode" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="Item.Npwp" class="form-label fw-semibold">NPWP / NIK</label>
-                            <input asp-for="Item.Npwp" class="form-control" placeholder="00.000.000.0-000.000" />
+                            <input asp-for="Item.Npwp" id="Item_Npwp" class="form-control" placeholder="00.000.000.0-000.000" />
                             <span asp-validation-for="Item.Npwp" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="Item.BankName" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.BankName" class="form-control" placeholder="e.g. BCA, Mandiri, BNI" />
+                            <input asp-for="Item.BankName" id="Item_BankName" class="form-control" placeholder="e.g. BCA, Mandiri, BNI" />
                             <span asp-validation-for="Item.BankName" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="Item.BankAccountNumber" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.BankAccountNumber" class="form-control" placeholder="Bank Account Number" />
+                            <input asp-for="Item.BankAccountNumber" id="Item_BankAccountNumber" class="form-control" placeholder="Bank Account Number" />
                             <span asp-validation-for="Item.BankAccountNumber" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="Item.Email" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.Email" type="email" class="form-control" placeholder="email@example.com" />
+                            <input asp-for="Item.Email" id="Item_Email" type="email" class="form-control" placeholder="email@example.com" />
                             <span asp-validation-for="Item.Email" class="text-danger small"></span>
                         </div>
 
                         <div class="col-md-6">
                             <label asp-for="Item.PhoneNumber" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.PhoneNumber" class="form-control" placeholder="e.g. 0812xxxxxxxx" />
+                            <input asp-for="Item.PhoneNumber" id="Item_PhoneNumber" class="form-control" placeholder="e.g. 0812xxxxxxxx" />
                             <span asp-validation-for="Item.PhoneNumber" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12">
                             <label asp-for="Item.Address" class="form-label fw-semibold"></label>
-                            <textarea asp-for="Item.Address" rows="3" class="form-control" placeholder="Complete Home Address"></textarea>
+                            <textarea asp-for="Item.Address" id="Item_Address" rows="3" class="form-control" placeholder="Complete Home Address"></textarea>
                             <span asp-validation-for="Item.Address" class="text-danger small"></span>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-outline-secondary"
-                        onclick="resetForm()">
-                    <i class="fa-solid fa-rotate-left me-1"></i>
-                    Reset
+                <button type="button" class="btn btn-outline-secondary" onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-left me-1"></i> Reset
                 </button>
-                <button id="save-button"
-                        type="button"
-                        class="btn btn-primary">
-                    <i class="fa-solid fa-floppy-disk me-1"></i>
-                    Save
+                <button id="save-button" type="button" class="btn btn-primary">
+                    <i class="fa-solid fa-floppy-disk me-1"></i> Save
                 </button>
             </div>
         </div>
@@ -255,6 +239,7 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/plugins/select2/js/select2.full.min.js"></script>
     <script>
         function closeModal() {
             const modalElement = document.getElementById('employeeModal');
@@ -264,22 +249,57 @@
                 modal.hide();
             }
         }
-        function showModal(id) {
-            $('#modalTitle').text(
-                id > 0 ? 'Edit Employee' : 'Add Employee'
-            );
 
-            setReadonly(id > 0 ? true : false);
-            const modal = new bootstrap.Modal(
-                document.getElementById('employeeModal')
-            );
+        function showModal(code) {
+            $('#modalTitle').text(code ? 'Edit Employee' : 'Add Employee');
+            if (!code) {
+                resetForm();
+                $('input[name="Mode"]').val('1'); // FormMode.Create
+                $('#Item_BranchCode').prop('readonly', false);
+            } else {
+                $('input[name="Mode"]').val('2'); // FormMode.Update
+                $('#Item_BranchCode').prop('readonly', true);
+            }
+            const modal = new bootstrap.Modal(document.getElementById('employeeModal'));
             modal.show();
         }
 
         $(document).ready(function () {
-
             const form = $('#addEmployeeForm');
             const tableElement = $('#main-table');
+
+            // ================================================
+            // INITIALIZE SELECT2 FOR DEPARTMENT & POSITION
+            // ================================================
+            $('#Item_Department').select2({
+                theme: 'bootstrap4',
+                dropdownParent: $('#employeeModal'),
+                allowClear: true,
+                placeholder: 'Search Department...',
+                ajax: {
+                    url: '@Url.Action("GetDepartmentDropdown", "Employee")', // Arahkan ke endpoint controller Anda
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) { return { searchTerm: params.term }; },
+                    processResults: function (data) { return { results: data }; },
+                    cache: true
+                }
+            });
+
+            $('#Item_Position').select2({
+                theme: 'bootstrap4',
+                dropdownParent: $('#employeeModal'),
+                allowClear: true,
+                placeholder: 'Search Position...',
+                ajax: {
+                    url: '@Url.Action("GetPositionDropdown", "Employee")', // Arahkan ke endpoint controller Anda
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) { return { searchTerm: params.term }; },
+                    processResults: function (data) { return { results: data }; },
+                    cache: true
+                }
+            });
 
             // ================================
             // DataTable Initialization
@@ -291,300 +311,205 @@
                 autoWidth: false,
                 filter: true,
                 orderMulti: false,
-
                 ajax: {
                     url: '@Url.Action("GetEmployees", "Employee")',
                     type: 'POST',
                     contentType: 'application/json',
-                    data: function (d) {
-                        return JSON.stringify(d);
-                    },
-                    dataSrc: function (json) {
-                        return json.data || [];
-                    },
+                    data: function (d) { return JSON.stringify(d); },
+                    dataSrc: function (json) { return json.data || []; },
                     error: function (xhr) {
-                        if (xhr.status === 401 || xhr.status === 403)
-                            return;
-                        notify.error('Failed to load employee data');
-                    }
-                },
-
-                columns: [
-
-                    {
-                        data: 'employeeCode',
-                        title: 'Employee Code'
-                    },
-
-                    {
-                        data: 'fullName',
-                        title: 'Full Name'
-                    },
-
-                    {
-                        data: 'department',
-                        title: 'Department',
-                        defaultContent: '-'
-                    },
-
-                    {
-                        data: 'position',
-                        title: 'Position',
-                        defaultContent: '-'
-                    },
-
-                    {
-                        data: 'basicSalary',
-                        title: 'Basic Salary',
-                        className: 'text-end',
-                        render: function (data) {
-
-                            if (data == null)
-                                return '-';
-
-                            return new Intl.NumberFormat('id-ID', {
-                                style: 'currency',
-                                currency: 'IDR',
-                                minimumFractionDigits: 2
-                            }).format(data);
+                        if (xhr.status === 401 || xhr.status === 403) return;
+                            notify.error('Failed to load employee data');
                         }
                     },
-
-                    {
-                        data: 'isActive',
-                        title: 'Status',
-                        className: 'text-center',
-                        render: function (data) {
-
-                            return data
+                    columns: [
+                        { data: 'employeeCode', title: 'Employee Code' },
+                        { data: 'fullName', title: 'Full Name' },
+                        { data: 'department', title: 'Department', defaultContent: '-' },
+                        { data: 'position', title: 'Position', defaultContent: '-' },
+                        {
+                            data: 'basicSalary',
+                            title: 'Basic Salary',
+                            className: 'text-end',
+                            render: function (data) {
+                                if (data == null) return '-';
+                                return new Intl.NumberFormat('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR',
+                                    minimumFractionDigits: 2
+                                }).format(data);
+                            }
+                        },
+                        {
+                            data: 'isActive',
+                            title: 'Status',
+                            className: 'text-center',
+                            render: function (data) {
+                                return data
                                 ? '<span class="badge bg-success">Active</span>'
                                 : '<span class="badge bg-danger">Inactive</span>';
-                        }
-                    },
-                    {
-                        data: null,
-                        title: 'Action',
-                        orderable: false,
-                        searchable: false,
-                        className: 'text-center action-col',
-                        width: '110px',
-                        render: function (data, type, row) {
-                            const payslipUrl = `@Url.Action("Payslip", "Payroll")/${row.employeeId}`;
-                            return `
+                            }
+                        },
+                        {
+                            data: null,
+                            title: 'Action',
+                            orderable: false,
+                            searchable: false,
+                            className: 'text-center action-col',
+                            width: '110px',
+                            render: function (data, type, row) {
+                                const payslipUrl = `@Url.Action("Payslip", "Payroll")/${row.employeeId}`;
+                                return `
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <a href="javascript:void(0)"
-                                       onclick="editRow('${row.employeeId}')"
-                                       title="Edit"
-                                       class="text-decoration-none">
-                                        <i class="fa-solid fa-pen-to-square text-primary"></i></a>
-                                    <a href="javascript:void(0)"
-                                       onclick="confirmDelete(() => deleteRow('${row.employeeId}'))"
-                                       title="Delete"
-                                       class="text-decoration-none">
-                                        <i class="fa-solid fa-trash text-danger"></i></a>
-                                    <a href="${payslipUrl}"
-                                       title="View Payslip"
-                                       class="text-decoration-none">
-                                        <i class="fa-solid fa-file-invoice-dollar text-success"></i></a>
-
+                                    <a href="javascript:void(0)" onclick="editRow('${row.employeeCode}')" title="Edit" class="text-decoration-none">
+                                        <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="confirmDelete(() => deleteRow('${row.employeeCode}'))" title="Delete" class="text-decoration-none">
+                                        <i class="fa-solid fa-trash text-danger"></i>
+                                    </a>
+                                    <a href="${payslipUrl}" title="View Payslip" class="text-decoration-none">
+                                        <i class="fa-solid fa-file-invoice-dollar text-success"></i>
+                                    </a>
                                 </div>
-                            `;
+                                `;
+                            }
                         }
-                    }
-                ],
-
-                dom:
-                    "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
-                    "rt" +
-                    "<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
-                buttons: [
-                    {
-                        extend: 'csvHtml5',
-                        title: '@Model.Title',
-                        className: 'd-none'
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        title: '@Model.Title',
-                        className: 'd-none'
-                    }
-                ]
-            });
-
-            // ================================
-            // Form Submit
-            // ================================
-            form.on('submit', function (event) {
-                event.preventDefault();
-                if (!form.valid())
-                    return;
-
-                const submitButton = $('#submit-button');
-                submitButton.prop('disabled', true);
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("AddEmployee", "Payroll")',
-                    data: form.serialize(),
-                    success: function (response) {
-                        if (response.success) {
-                            table.ajax.reload(null, false);
-                            resetForm();
-                            notify.success(response.message);
-                        } else {
-                            notify.warning(response.message);
-                        }
-                    },
-
-                    error: function (xhr) {
-                        if (xhr.status === 401 || xhr.status === 403)
-                            return;
-                        notify.error('@Model.Title save failed');
-                    },
-
-                    complete: function () {
-                        submitButton.prop('disabled', false);
-                    }
+                    ],
+                    dom: "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>rt<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
+                    buttons: [
+                        { extend: 'csvHtml5', title: '@Model.Title', className: 'd-none' },
+                        { extend: 'pdfHtml5', title: '@Model.Title', className: 'd-none' }
+                    ]
                 });
-            });
 
-            // ================================
-            // Export Buttons
-            // ================================
-            $('#csv-export').on('click', function () {
+                form.on('submit', function (event) {
+                    event.preventDefault();
+                    if (!form.valid()) return;
 
-                table.button('.buttons-csv').trigger();
-            });
+                    const submitButton = $('#submit-button');
+                    submitButton.prop('disabled', true);
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddEmployee", "Employee")',
+                        data: form.serialize(),
+                        success: function (response) {
+                            if (response.success) {
+                                table.ajax.reload(null, false);
+                                resetForm();
+                                notify.success(response.message);
+                            } else {
+                                notify.warning(response.message);
+                            }
+                        },
+                        error: function (xhr) {
+                            if (xhr.status === 401 || xhr.status === 403) return;
+                            notify.error('@Model.Title save failed');
+                        },
+                        complete: function () { submitButton.prop('disabled', false); }
+                    });
+                });
 
-            $('#pdf-export').on('click', function () {
-
-                table.button('.buttons-pdf').trigger();
-            });
-
-            $('#add-new').on('click', function () {
-                showModal();
-            });
-            
-            $('#save-button').on('click', function () {
-                saveEmployee();
-            });
-
+                $('#csv-export').on('click', function () { table.button('.buttons-csv').trigger(); });
+                $('#pdf-export').on('click', function () { table.button('.buttons-pdf').trigger(); });
+                $('#add-new').on('click', function () { showModal(); });
+                $('#save-button').on('click', function () { saveEmployee(); });
         });
-                
+
         function saveEmployee() {
-            const form = $('#companyProfileForm')[0];
-            const formData = new FormData(form);
+            // Memperbaiki binding selector form yang benar ke #addEmployeeForm
+            const formElement = $('#addEmployeeForm')[0];
+            const formData = new FormData(formElement);
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Add", "Profile")',
+                url: '@Url.Action("AddEmployee", "Employee")',
                 data: formData,
                 processData: false,
                 contentType: false,
-                beforeSend: function () {
-                    $('#save-button').prop('disabled', true);
-                },
+                beforeSend: function () { $('#save-button').prop('disabled', true); },
                 success: function (response) {
                     if (response.success) {
                         notify.success(response.message);
                         $('#main-table').DataTable().ajax.reload(null, false);
                         closeModal();
-                    }
-                    else {
+                    } else {
                         notify.warning(response.message);
                     }
                 },
                 error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('An error occurred while saving Company Profile');
+                    if (xhr.status === 401 || xhr.status === 403) return;
+                    notify.error('An error occurred while saving Employee Profile');
                 },
-                complete: function () {
-                    $('#save-button').prop('disabled', false);
-                }
+                complete: function () { $('#save-button').prop('disabled', false); }
             });
         }
-               // ====================================
-        // Edit Employee
-        // ====================================
-        function editRow(id) {
+
+        function editRow(code) {
             $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetEmployee", "Payroll")',
-                data: { id: id },
-                success: function (data) {
-                    if (!data) {
-                        notify.warning('Employee data not found');
-                        return;
-                    }
+            type: 'GET',
+            url: '@Url.Action("GetEmployee", "Employee")',
+            data: { code: code },
+            success: function (data) {
+                if (!data) {
+                    notify.warning('Employee data not found');
+                    return;
+                }
 
-                    // Inline helper to safely chop off 'T00:00:00' from C# dates
-                    // This ensures HTML5 <input type="date"> renders the value correctly
-                    function formatDate(dateString) {
-                        if (!dateString) return '';
-                        return dateString.split('T')[0];
-                    }
+                function formatDate(dateString) {
+                    if (!dateString) return '';
+                    return dateString.split('T')[0];
+                }
 
-                    // 1. Hidden / System Identity
-                    $('#Item_EmployeeId').val(data.employeeId);
+                $('#Item_EmployeeId').val(data.employeeId);
+                $('#Item_FullName').val(data.fullName);
+                $('#Item_Gender').val(data.gender);
+                $('#Item_BirthDate').val(formatDate(data.birthDate));
+                $('#Item_EmployeeCode').val(data.employeeCode);
+                $('#Item_DefaultShift').val(data.defaultShift);
+                $('#Item_IsActive').val(data.isActive.toString());
+                $('#Item_HireDate').val(formatDate(data.hireDate));
+                $('#Item_ResignDate').val(formatDate(data.resignDate));
+                $('#Item_BasicSalary').val(data.basicSalary);
+                $('#Item_PtkpCode').val(data.ptkpcode || data.ptkpCode);
+                $('#Item_Npwp').val(data.npwp);
+                $('#Item_BankName').val(data.bankName);
+                $('#Item_BankAccountNumber').val(data.bankAccountNumber);
+                $('#Item_Email').val(data.email);
+                $('#Item_PhoneNumber').val(data.phoneNumber);
+                $('#Item_Address').val(data.address);
 
-                    // 2. Personal Details
-                    $('#Item_FullName').val(data.fullName);
-                    $('#Item_Gender').val(data.gender);
-                    $('#Item_BirthDate').val(formatDate(data.birthDate));
+                // ==========================================================
+                // POPULATE SELECT2 DATA FOR DEPARTMENT & POSITION ON EDIT
+                // ==========================================================
+                if (data.department) {
+                    var deptOption = new Option(data.department, data.department, true, true);
+                    $('#Item_Department').append(deptOption).trigger('change');
+                } else {
+                    $('#Item_Department').val(null).trigger('change');
+                }
 
-                    // 3. Employment Details
-                    $('#Item_EmployeeCode').val(data.employeeCode);
-                    $('#Item_Department').val(data.department);
-                    $('#Item_Position').val(data.position);
-                    $('#Item_DefaultShift').val(data.defaultShift); // <-- Added Mapping
-                    $('#Item_IsActive').val(data.isActive.toString());
-                    $('#Item_HireDate').val(formatDate(data.hireDate));
-                    $('#Item_ResignDate').val(formatDate(data.resignDate));
-
-                    // 4. Financial & Tax Details (Indonesia)
-                    $('#Item_BasicSalary').val(data.basicSalary);
-                    $('#Item_PtkpCode').val(data.ptkpCode);         // <-- Added Mapping
-                    $('#Item_Npwp').val(data.npwp);
-                    $('#Item_BankName').val(data.bankName);
-                    $('#Item_BankAccountNumber').val(data.bankAccountNumber);
-
-                    // 5. Contact Details
-                    $('#Item_Email').val(data.email);
-                    $('#Item_PhoneNumber').val(data.phoneNumber);
-                    $('#Item_Address').val(data.address);
-
-                    // Smooth scroll up to the form panel
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-
-                    notify.info('Employee data loaded successfully');
-            
-                    // Pro-Tip: If you use an AdminLTE modal wrapper, add this line:
-                    // $('#addEmployeeModal').modal('show');
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-
+                if (data.position) {
+                    var posOption = new Option(data.position, data.position, true, true);
+                    $('#Item_Position').append(posOption).trigger('change');
+                } else {
+                    $('#Item_Position').val(null).trigger('change');
+                }
+                
+                showModal(data.employeeCode);
+                notify.info('Employee data loaded successfully');
+            },
+            error: function (xhr) {
+                if (xhr.status === 401 || xhr.status === 403) return;
                     notify.error('Failed to retrieve employee data');
                 }
             });
         }
-        // ====================================
-        // Delete Employee
-        // ====================================
-        function deleteRow(id) {
+
+        function deleteRow(code) {
             $.ajax({
                 type: 'DELETE',
-                url: '@Url.Action("DeleteEmployee", "Payroll")',
-                data: {
-                    id: id
-                },
-                headers: {
-                    'RequestVerificationToken':
-                        $('input[name="__RequestVerificationToken"]').val()
-                },
+                url: '@Url.Action("DeleteEmployee", "Employee")',
+                data: { code: code },
+                headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
                 success: function (response) {
                     if (response.success) {
                         $('#main-table').DataTable().ajax.reload(null, false);
@@ -595,25 +520,23 @@
                     }
                 },
                 error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
+                    if (xhr.status === 401 || xhr.status === 403) return;
                     notify.error('Failed to delete employee');
                 }
             });
         }
 
-        // ====================================
-        // Reset Form
-        // ====================================
         function resetForm() {
             $('#addEmployeeForm')[0].reset();
             $('#Item_EmployeeId').val('');
+
+            // Clear / Reset Tampilan Select2 agar kosong kembali
+            $('#Item_Department').val(null).trigger('change');
+            $('#Item_Position').val(null).trigger('change');
+
             setReadonly(false);
         }
 
-        // ====================================
-        // Readonly Mode
-        // ====================================
         function setReadonly(isReadonly) {
             $('#Item_EmployeeCode').prop('readonly', isReadonly);
         }

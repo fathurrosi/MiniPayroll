@@ -12,18 +12,29 @@
     /* Mengatasi select2 yang sering overflow atau terlalu mepet di bootstrap 4 theme */
     .select2-container--bootstrap4 .select2-selection--single {
         height: calc(2.25rem + 2px) !important;
+        /* Memaksa bingkai form muncul serasi dengan input text biasa */
+        border: 1px solid #ced4da !important;
+        border-radius: 0.25rem !important;
+        background-color: #fff !important;
     }
     .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
         line-height: 2.25rem !important;
         padding-left: 0.75rem !important;
+        color: #495057 !important;
     }
     .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow {
         height: 2.25rem !important;
     }
-    /* Memperbaiki jarak dropdown parent di dalam modal */
+    /* Memperbaiki jarak dropdown list parent di dalam modal */
     .select2-dropdown {
         border: 1px solid #ced4da !important;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    /* Mengubah warna border saat dropdown select2 fokus aktif diketik */
+    .select2-container--bootstrap4.select2-container--focus .select2-selection--single {
+        border-color: #80bdff !important;
+        outline: 0 !important;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
     }
 </style>
 
@@ -371,7 +382,7 @@
             });
         }
 
-function editRow(code) {
+        function editRow(code) {
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetData", "Branch")',
@@ -387,32 +398,23 @@ function editRow(code) {
                     $('#Item_Address').val(data.address);                      
                     $('#Item_IsActive').prop('checked', data.isActive);                      
 
-                    // ====================================================================
-                    // TAMBAHKAN DI SINI: Proses set nilai ID untuk Dropdown Select2 AJAX
-                    // ====================================================================
-                    
                     // Untuk Dropdown Branch Head (Menggunakan Employee Code sebagai ID)
-                    if (data.branchHeadEmployee) { // Sesuaikan nama properti JSON dari backend Anda
-                        // Format Option: new Option("Teks yang Tampil", "Nilai ID yang disimpan", true, true)
-                        var empText = `[${data.branchHeadEmployee}] ${data.branchHeadEmployeeName || ''}`;
-                        var empOption = new Option(empText, data.branchHeadEmployee, true, true);
-                        
-                        $('#Item_BranchHeadEmployee').append(empOption).trigger('change');
+                    if (data.branchHeadEmployeeId) { 
+                        var empText = `[${data.branchHeadEmployeeId}] ${data.branchHeadEmployeeName || ''}`;
+                        var empOption = new Option(empText, data.branchHeadEmployeeId, true, true);
+                        $('#Item_BranchHeadEmployeeId').append(empOption).trigger('change');
                     } else {
-                        $('#Item_BranchHeadEmployee').val(null).trigger('change');
+                        $('#Item_BranchHeadEmployeeId').val(null).trigger('change');
                     }
 
                     // Untuk Dropdown Company (Menggunakan CompanyProfileId sebagai ID angka)
-                    if (data.company) { // Jika dari backend nama propertinya data.company / data.companyProfileId
-                        var compOption = new Option(data.companyName || 'Selected Company', data.company, true, true);
-                        
-                        $('#Item_Company').append(compOption).trigger('change');
+                    if (data.companyProfileId) { 
+                        var compOption = new Option(data.companyName || 'Selected Company', data.companyProfileId, true, true);
+                        $('#Item_CompanyProfileId').append(compOption).trigger('change');
                     } else {
-                        $('#Item_Company').val(null).trigger('change');
+                        $('#Item_CompanyProfileId').val(null).trigger('change');
                     }
                     
-                    // ====================================================================
-
                     // 2. Tampilkan modal setelah semua data terisi
                     showModal(data.branchCode);
                 },
@@ -445,8 +447,9 @@ function editRow(code) {
 
         function resetForm() {
             $('#BranchForm')[0].reset();
-            $('#Item_BranchHeadEmployee').val(null).trigger('change');
-            $('#Item_Company').val(null).trigger('change');
+            // Memperbaiki pembersihan selector menggunakan ID elemen yang benar
+            $('#Item_BranchHeadEmployeeId').val(null).trigger('change');
+            $('#Item_CompanyProfileId').val(null).trigger('change');
         }
     </script>
 }

@@ -61,3 +61,60 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+
+
+USE [MANDE_03]
+GO
+
+/****** Object:  Table [dbo].[tbl_Departments]    Script Date: 22/06/2026 21:19:17 ******/
+drop table [tbl_Departments]
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[tbl_Departments](
+	[DepartmentCode] [varchar](50) NOT NULL,
+	[DepartmentName] [varchar](100) NOT NULL,
+
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NULL,
+	[UpdatedDate] [datetime] NULL,
+	[CreatedBy] [varchar](50) NULL,
+	[UpdatedBy] [varchar](50) NULL,
+ CONSTRAINT [PK__Departme__B2079BED1D3A0B65] PRIMARY KEY CLUSTERED 
+(
+	[DepartmentCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+USE [MANDE_03]
+GO
+
+/****** Object:  Table [dbo].[tbl_Positions]    Script Date: 22/06/2026 21:25:47 ******/
+drop table [dbo].[tbl_Positions]
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[tbl_Positions](
+	[PositionCode] [varchar](50) NOT NULL,
+	[PositionName] [varchar](100) NULL,
+	[GradeLevel] [varchar](20) NULL,
+
+	[IsActive] [bit] NOT NULL,
+	[CreatedDate] [datetime] NULL,
+	[UpdatedDate] [datetime] NULL,
+	[CreatedBy] [varchar](50) NULL,
+	[UpdatedBy] [varchar](50) NULL,
+ CONSTRAINT [PK__Position__60BB9A799D578AAB] PRIMARY KEY CLUSTERED 
+(
+	[PositionCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+

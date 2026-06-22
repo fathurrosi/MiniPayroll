@@ -25,6 +25,8 @@ public partial class TblPosition
     [Unicode(false)]
     public string? GradeLevel { get; set; }
 
+    public bool IsActive { get; set; }
+
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }
 

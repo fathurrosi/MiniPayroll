@@ -85,11 +85,11 @@
                               
                     <div class="row g-3">
                         <div class="col-md-12">
-                            <label asp-for="Item.PositionCode"
+                            <label asp-for="Item.PositionCode" 
                                    class="form-label fw-semibold"></label>
-                            <input asp-for="Item.PositionCode" asp-key="true"
+                            <input asp-for="Item.PositionCode" asp-key="true" id="Item_PositionCodes"
                                    class="form-control"
-                                   placeholder="e.g. HR" />
+                                   placeholder="e.g. SD" />
                             <span asp-validation-for="Item.PositionCode"
                                   class="text-danger small"></span>
                         </div>
@@ -100,11 +100,18 @@
                                    class="form-label fw-semibold"></label>
                             <input asp-for="Item.PositionName"
                                    class="form-control"
-                                   placeholder="e.g. Human Resources" />
+                                   placeholder="e.g. Senior Developer" />
                             <span asp-validation-for="Item.PositionName"
                                   class="text-danger small"></span>
                         </div>
  
+                        <div class="col-md-12 mt-2">
+                            <div class="form-check form-switch d-flex align-items-center gap-3 ps-0">
+                                <input asp-for="Item.IsActive" id="Item_IsActive" class="form-check-input ms-0" type="checkbox" role="switch" style="cursor: pointer;" />
+                                <label asp-for="Item.IsActive" class="form-check-label fw-semibold" style="cursor: pointer;"></label>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
             </div>
@@ -148,15 +155,16 @@
             modal.show();
         }
         $(document).ready(function () {
-             $('#logoFile').on('change', function () {
-                 const file = this.files[0];
-                 const preview = document.getElementById('logoPreview');
-                 if (!file) {
-                     preview.style.display = 'none';
-                     return;
-                 }
-                 preview.src = URL.createObjectURL(file);
-                 preview.style.display = 'block';
+
+            // Validasi input manual BranchCode
+            $('#Item_PositionCodes').on('keydown', function (e) {
+                if (e.key === " ") {
+                    e.preventDefault();
+                }
+            });
+
+            $('#Item_PositionCodes').on('input', function () {
+                this.value = this.value.toUpperCase().replace(/\s+/g, '');
             });
 
             const table =  $('#main-table').DataTable({
@@ -191,7 +199,22 @@
                  columns: [ 
                      { data: 'positionCode', title: 'Position Code', defaultContent: '-' },
                      { data: 'positionName', title: 'Position Name', defaultContent: '-' },
-                     
+                     {
+                        data: 'isActive',
+                        title: 'Is Active',
+                        className: 'text-center',
+                        orderable: false,
+                        searchable: false,
+                        render: function (data, type, row) {
+                            const checked = data ? 'checked' : '';
+                            return `
+                                <div class="form-check form-switch d-flex justify-content-center">
+                                    <input class="form-check-input status-switch" type="checkbox" role="switch" ${checked}
+                                    onclick="confirmStatusChange('${row.positionCode}', this)">
+                                </div>
+                            `;
+                        }
+                     },
                      {
                          data: null,
                          title: 'Action',
@@ -256,6 +279,54 @@
                 savePosition();
             });
         });
+
+
+        function confirmStatusChange(positionCode, element) {
+            const isChecked = $(element).is(':checked');
+            const statusText = isChecked ? 'ACTIVATE' : 'DEACTIVATE';
+            const alertClass = isChecked ? 'text-success' : 'text-danger';
+
+            Swal.fire({
+                title: 'Are you sure?',
+                html: `You are about to <b class="${alertClass}">${statusText}</b> Position Code: <b>${positionCode}</b>.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: isChecked ? '#28a745' : '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, change it!',
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    executeStatusUpdate(positionCode, isChecked, element);
+                } else {
+                    $(element).prop('checked', !isChecked);
+                }
+            });
+        }
+
+        function executeStatusUpdate(positionCode, isChecked, element) {
+            $.ajax({
+                type: 'POST',
+                url: '/Position/UpdateStatus',
+                data: {
+                    code: positionCode,
+                    isActive: isChecked
+                },
+                success: function (response) {
+                    if (response.success) {
+                        notify.success(response.message || 'Status updated successfully.');
+                    } else {
+                        notify.warning(response.message || 'Failed to update status.');
+                        $(element).prop('checked', !isChecked);
+                    }
+                },
+                error: function () {
+                    notify.error('An error occurred while communicating with the server.');
+                    $(element).prop('checked', !isChecked);
+                }
+            });
+        }
 
         function savePosition() {
             const form = $('#PositionForm')[0];

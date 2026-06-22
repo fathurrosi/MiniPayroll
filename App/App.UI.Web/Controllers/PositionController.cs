@@ -4,6 +4,7 @@ using App.Domain.Models;
 using App.Domain.Models.Dto.Masters;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
+using App.Infrastructure.Services.Masters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -138,6 +139,31 @@ namespace App.UI.Web.Controllers
             }
         }
 
+        [HttpPost("/Position/UpdateStatus")]
+        public async Task<IActionResult> UpdateStatus(string code, bool isActive)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(code))
+                    return Json(ActionResponse.Fail("Invalid Position Code."));
+
+                var existingItem = await _PositionService.GetByCodeAsync(code);
+                if (existingItem == null)
+                    return Json(ActionResponse.Fail("Position not found."));
+
+                existingItem.IsActive = isActive;
+                var result = await _PositionService.SaveAsync(existingItem);
+
+                return (result != null)
+                    ? Json(ActionResponse.Ok("Status updated successfully."))
+                    : Json(ActionResponse.Fail("Failed to update status."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating status for Position {code}", code);
+                return Json(ActionResponse.Fail(ex.Message));
+            }
+        }
         #endregion
 
     }
