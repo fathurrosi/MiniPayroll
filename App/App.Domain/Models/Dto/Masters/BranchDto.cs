@@ -21,5 +21,8 @@ namespace App.Domain.Models.Dto.Masters
 
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; } = false;
+
+        public int BranchHeadEmployeeId { get; set; }
+        public int CompanyProfileId { get; set; }
     }
 }

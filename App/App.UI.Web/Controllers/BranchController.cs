@@ -14,11 +14,19 @@ namespace App.UI.Web.Controllers
     public class BranchController : BaseController
     {
         private readonly IBranchService _branchService;
+        private readonly IEmployeeService _employeeService;
+        private readonly IProfileService _profileService;
         private readonly ILogger<BranchController> _logger;
 
-        public BranchController(IBranchService branchService, ILogger<BranchController> logger)
+        public BranchController(
+            IBranchService branchService,
+            IEmployeeService employeeService,
+            IProfileService profileService,
+            ILogger<BranchController> logger)
         {
             _branchService = branchService;
+            _employeeService = employeeService;
+            _profileService = profileService;
             _logger = logger;
         }
 
@@ -58,6 +66,7 @@ namespace App.UI.Web.Controllers
                 });
             }
         }
+
         [HttpGet("GetData")]
         public async Task<IActionResult> GetData(string code)
         {
@@ -69,10 +78,10 @@ namespace App.UI.Web.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving Branch with code {code}", code);
-                //return StatusCode(500, new { error = "An error occurred while retrieving data." });
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
+
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(string code)
         {
@@ -92,17 +101,16 @@ namespace App.UI.Web.Controllers
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
+
         [HttpPost("/Branch/SaveAsync")]
         public async Task<IActionResult> SaveAsync(PageModel<BranchDto> model)
         {
             try
             {
-                // 1. Guard Clause
                 if (model?.Item == null)
                 {
                     return Json(ActionResponse.Fail("Request data is missing or invalid."));
                 }
-                // 2. Model Validation (Returns immediately without throwing expensive exceptions)
                 if (string.IsNullOrWhiteSpace(model.Item.BranchCode))
                 {
                     return Json(ActionResponse.Fail("Please select a valid Branch Code."));
@@ -111,17 +119,14 @@ namespace App.UI.Web.Controllers
                 {
                     return Json(ActionResponse.Fail("Branch name is mandatory."));
                 }
-                // 3. Prevent Duplicate Branch on the Same Date
                 if (model.Mode == FormMode.Create)
                 {
-                    // Pro-Tip: Change your service to look up by Code instead of ID for creation checks
                     var existingItem = await _branchService.GetByCodeAsync(model.Item.BranchCode);
                     if (existingItem != null)
                     {
                         return Json(ActionResponse.Fail($"A Branch already exists with this code: {existingItem.BranchName}"));
                     }
                 }
-                // 4. Execute Save Operation
                 var result = await _branchService.SaveAsync(model.Item);
                 return (result != null)
                     ? Json(ActionResponse.Ok("Branch saved successfully."))
@@ -133,6 +138,7 @@ namespace App.UI.Web.Controllers
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
+
         [HttpPost("/Branch/UpdateStatus")]
         public async Task<IActionResult> UpdateStatus(string code, bool isActive)
         {
@@ -156,6 +162,93 @@ namespace App.UI.Web.Controllers
             {
                 _logger.LogError(ex, "Error updating status for Branch {code}", code);
                 return Json(ActionResponse.Fail(ex.Message));
+            }
+        }
+
+        [HttpGet("GetEmployeeDropdown")]
+        public async Task<IActionResult> GetEmployeeDropdown(string searchTerm)
+        {
+            try
+            {
+                // Proteksi ekstra jika objek service ternyata tidak ter-resolve (null)
+                if (_employeeService == null)
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var allEmployees = await _employeeService.GetListAsync();
+
+                // Jika data kosong atau null dari internal service, langsung return array kosong
+                if (allEmployees == null || !allEmployees.Any())
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var filteredEmployees = allEmployees.Where(e => e != null && e.IsActive);
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    filteredEmployees = filteredEmployees.Where(e =>
+                        (e.FullName != null && e.FullName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                        (e.EmployeeCode != null && e.EmployeeCode.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                    );
+                }
+
+                var result = filteredEmployees.Select(e => new
+                {
+                    id = e.EmployeeCode ?? string.Empty,
+                    text = $"[{e.EmployeeCode ?? "N/A"}] {e.FullName ?? "No Name"}"
+                }).ToList();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching employee dropdown data");
+                return Json(Array.Empty<object>());
+            }
+        }
+
+        [HttpGet("GetCompanyDropdown")]
+        public async Task<IActionResult> GetCompanyDropdown(string searchTerm)
+        {
+            try
+            {
+                // Proteksi ekstra jika objek service ternyata tidak ter-resolve (null)
+                if (_profileService == null)
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var allProfiles = await _profileService.GetListAsync();
+
+                // Jika data kosong atau null dari internal service, langsung return array kosong
+                if (allProfiles == null || !allProfiles.Any())
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var filteredCompanies = allProfiles.Where(p => p != null && p.IsActive);
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    filteredCompanies = filteredCompanies.Where(p =>
+                        p.CompanyName != null && p.CompanyName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                    );
+                }
+
+                var result = filteredCompanies.Select(p => new
+                {
+                    id = p.CompanyProfileId.ToString(),
+                    text = p.CompanyName ?? "Unknown Company"
+                }).ToList();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching company dropdown data");
+                return Json(Array.Empty<object>());
             }
         }
         #endregion

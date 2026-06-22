@@ -4,6 +4,29 @@
 @{
     ViewData["Title"] = $"Data Master - {Model.Title}";
 }
+
+<link rel="stylesheet" href="~/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
+<style>
+    /* Mengatasi select2 yang sering overflow atau terlalu mepet di bootstrap 4 theme */
+    .select2-container--bootstrap4 .select2-selection--single {
+        height: calc(2.25rem + 2px) !important;
+    }
+    .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
+        line-height: 2.25rem !important;
+        padding-left: 0.75rem !important;
+    }
+    .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow {
+        height: 2.25rem !important;
+    }
+    /* Memperbaiki jarak dropdown parent di dalam modal */
+    .select2-dropdown {
+        border: 1px solid #ced4da !important;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+</style>
+
 <div class="row">
     <div class="col-md-12">
         <div class="card shadow-sm full-height-card">
@@ -39,65 +62,69 @@
 <div class="modal fade" id="BranchModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="fa-solid fa-building me-2"></i>
+            <div class="modal-header bg-light py-3">
+                <h5 class="modal-title fs-6 fw-bold text-secondary">
+                    <i class="fa-solid fa-building text-primary me-2"></i>
                     <span id="modalTitle">Add @Model.Title</span>
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body p-4">
                 <form id="BranchForm" asp-action="Save" method="post" enctype="multipart/form-data" autocomplete="off">
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.Mode)
                     @Html.HiddenFor(model => model.Title)        
                     
-                    <div class="row g-3">        
-                        <div class="col-md-12">
+                    <div class="row">        
+                        <div class="col-md-12 mb-3">
                             <label asp-for="Item.BranchCode" class="form-label fw-semibold"></label>
                             <input asp-for="Item.BranchCode" id="Item_BranchCode" asp-key="true" class="form-control" placeholder="e.g. BR01, BR-JKT" maxlength="20" />
                             <span asp-validation-for="Item.BranchCode" class="text-danger small"></span>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <label asp-for="Item.BranchName" class="form-label fw-semibold"></label>
                             <input asp-for="Item.BranchName" id="Item_BranchName" class="form-control" placeholder="e.g. Jakarta Main Branch" />
                             <span asp-validation-for="Item.BranchName" class="text-danger small"></span>
                         </div>
 
-                        <div class="col-md-12">
+                        <div class="col-md-12 mb-3">
                             <label asp-for="Item.Address" class="form-label fw-semibold"></label>
                             <textarea asp-for="Item.Address" id="Item_Address" class="form-control" rows="2" placeholder="e.g. Jl. Sudirman No. 12"></textarea>
                             <span asp-validation-for="Item.Address" class="text-danger small"></span>
                         </div>
 
-                        <div class="col-md-12">
-                            <label @* asp-for="Item.BranchHeadEmployee" *@ class="form-label fw-semibold"></label>
-                            <input @* asp-for="Item.BranchHeadEmployee" *@ id="Item_BranchHeadEmployee" class="form-control" placeholder="e.g. John Doe" />
-                            <span @* asp-validation-for="Item.BranchHeadEmployee" *@ class="text-danger small"></span>
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Item.BranchHeadEmployeeId" class="form-label fw-semibold">Branch Head</label>
+                            <div class="w-100">
+                                <select asp-for="Item.BranchHeadEmployeeId" id="Item_BranchHeadEmployeeId" class="form-control select2" style="width: 100%;" data-placeholder="Search Branch Head..."></select>
+                            </div>
+                            <span asp-validation-for="Item.BranchHeadEmployeeId" class="text-danger small"></span>
                         </div>
 
-                        <div class="col-md-12">
-                            <label @* asp-for="Item.Company" *@ class="form-label fw-semibold"></label>
-                            <input @* asp-for="Item.Company" *@ id="Item_Company" class="form-control" placeholder="e.g. PT. Utama Sejahtera" />
-                            <span @* asp-validation-for="Item.Company" *@ class="text-danger small"></span>
+                        <div class="col-md-12 mb-3">
+                            <label asp-for="Item.CompanyProfileId" class="form-label fw-semibold">Company</label>
+                            <div class="w-100">
+                                <select asp-for="Item.CompanyProfileId" id="Item_CompanyProfileId" class="form-control select2" style="width: 100%;" data-placeholder="Search Company..."></select>
+                            </div>
+                            <span asp-validation-for="Item.CompanyProfileId" class="text-danger small"></span>
                         </div>
 
-                        <div class="col-md-12 mt-3">
-                            <div class="form-check form-switch d-flex align-items-center gap-2 ps-0">
-                                <input asp-for="Item.IsActive" id="Item_IsActive" class="form-check-input ms-0 me-1" type="checkbox" role="switch" />
-                                <label asp-for="Item.IsActive" class="form-check-label fw-semibold mb-0" style="cursor: pointer;"></label>
+                        <div class="col-md-12 mt-2">
+                            <div class="form-check form-switch d-flex align-items-center gap-3 ps-0">
+                                <input asp-for="Item.IsActive" id="Item_IsActive" class="form-check-input ms-0" type="checkbox" role="switch" style="cursor: pointer;" />
+                                <label asp-for="Item.IsActive" class="form-check-label fw-semibold" style="cursor: pointer;"></label>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" onclick="resetForm()">
+            <div class="modal-footer bg-light py-2">
+                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="resetForm()">
                     <i class="fa-solid fa-rotate-left me-1"></i> Reset
                 </button>
-                <button id="save-button" type="button" class="btn btn-primary">
+                <button id="save-button" type="button" class="btn btn-sm btn-primary">
                     <i class="fa-solid fa-floppy-disk me-1"></i> Save
                 </button>
             </div>
@@ -107,6 +134,9 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    
+    <script src="~/plugins/select2/js/select2.full.min.js"></script>
+
     <script>
         function closeModal() {
             const modalElement = document.getElementById('BranchModal');
@@ -118,7 +148,6 @@
 
         function showModal(code) {
             $('#modalTitle').text(code ? 'Edit Branch' : 'Add Branch');
-            // Menyetel mode (1 untuk Create, 2 untuk Update bergantung enum FormMode Anda)
             if (!code) {
                 resetForm();
                 $('input[name="Mode"]').val('1'); // FormMode.Create
@@ -132,7 +161,46 @@
         }
 
         $(document).ready(function () {
-            // Validasi Input Karakter Keras BranchCode (Anti Spasi & Maksa Kapital)
+
+            $('#Item_BranchHeadEmployeeId').select2({
+                theme: 'bootstrap4',
+                dropdownParent: $('#BranchModal'),
+                allowClear: true,
+                placeholder: 'Search Branch Head...',
+                ajax: {
+                    url: '@Url.Action("GetEmployeeDropdown", "Branch")',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return { searchTerm: params.term };
+                    },
+                    processResults: function (data) {
+                        return { results: data };
+                    },
+                    cache: true
+                }
+            });
+
+            $('#Item_CompanyProfileId').select2({
+                theme: 'bootstrap4',
+                dropdownParent: $('#BranchModal'),
+                allowClear: true,
+                placeholder: 'Search Company...',
+                ajax: {
+                    url: '@Url.Action("GetCompanyDropdown", "Branch")',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return { searchTerm: params.term };
+                    },
+                    processResults: function (data) {
+                        return { results: data };
+                    },
+                    cache: true
+                }
+            });
+
+            // Validasi input manual BranchCode
             $('#Item_BranchCode').on('keydown', function (e) {
                 if (e.key === " ") {
                     e.preventDefault();
@@ -225,7 +293,6 @@
             $('#save-button').on('click', function () { saveBranch(); });
         });
 
-        // Dialog Konfirmasi sebelum mengubah status Active/Inactive
         function confirmStatusChange(branchCode, element) {
             const isChecked = $(element).is(':checked');
             const statusText = isChecked ? 'ACTIVATE' : 'DEACTIVATE';
@@ -273,7 +340,6 @@
             });
         }
 
-        // Fungsi AJAX Simpan Data via Form-Data
         function saveBranch() {
             const form = $('#BranchForm')[0];
             const formData = new FormData(form);
@@ -305,8 +371,7 @@
             });
         }
 
-        // Fungsi Ambil Data ke Modal Saat Edit Di-klik
-        function editRow(code) {
+function editRow(code) {
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetData", "Branch")',
@@ -316,12 +381,39 @@
                         notify.warning('Branch not found');
                         return;
                     }             
+                    // 1. Mengisi input teks biasa
                     $('#Item_BranchCode').val(data.branchCode);                    
                     $('#Item_BranchName').val(data.branchName);                      
                     $('#Item_Address').val(data.address);                      
-                    $('#Item_BranchHeadEmployee').val(data.branchHeadEmployee);                      
-                    $('#Item_Company').val(data.company);                      
                     $('#Item_IsActive').prop('checked', data.isActive);                      
+
+                    // ====================================================================
+                    // TAMBAHKAN DI SINI: Proses set nilai ID untuk Dropdown Select2 AJAX
+                    // ====================================================================
+                    
+                    // Untuk Dropdown Branch Head (Menggunakan Employee Code sebagai ID)
+                    if (data.branchHeadEmployee) { // Sesuaikan nama properti JSON dari backend Anda
+                        // Format Option: new Option("Teks yang Tampil", "Nilai ID yang disimpan", true, true)
+                        var empText = `[${data.branchHeadEmployee}] ${data.branchHeadEmployeeName || ''}`;
+                        var empOption = new Option(empText, data.branchHeadEmployee, true, true);
+                        
+                        $('#Item_BranchHeadEmployee').append(empOption).trigger('change');
+                    } else {
+                        $('#Item_BranchHeadEmployee').val(null).trigger('change');
+                    }
+
+                    // Untuk Dropdown Company (Menggunakan CompanyProfileId sebagai ID angka)
+                    if (data.company) { // Jika dari backend nama propertinya data.company / data.companyProfileId
+                        var compOption = new Option(data.companyName || 'Selected Company', data.company, true, true);
+                        
+                        $('#Item_Company').append(compOption).trigger('change');
+                    } else {
+                        $('#Item_Company').val(null).trigger('change');
+                    }
+                    
+                    // ====================================================================
+
+                    // 2. Tampilkan modal setelah semua data terisi
                     showModal(data.branchCode);
                 },
                 error: function (xhr) {
@@ -329,7 +421,7 @@
                     notify.error('Failed to retrieve Branch data');
                 }
             });
-        } 
+        }
 
         function deleteRow(code) {
             $.ajax({
@@ -353,6 +445,8 @@
 
         function resetForm() {
             $('#BranchForm')[0].reset();
+            $('#Item_BranchHeadEmployee').val(null).trigger('change');
+            $('#Item_Company').val(null).trigger('change');
         }
     </script>
 }
