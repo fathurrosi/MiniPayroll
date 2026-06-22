@@ -1,66 +1,68 @@
 ﻿using App.Application.Interfaces.Repositories;
 using App.Application.Interfaces.Services;
-using App.Application.Interfaces.Services.Payroll;
+using App.Application.Interfaces.Services.Masters;
 using App.Domain.Entities;
+using App.Domain.Models.Dto;
 using App.Domain.Models.Dto.Masters;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Extensions;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Services.Masters
 {
-    public class SalaryComponentService : ISalaryComponentService
+    public class CompanyProfileService : IProfileService
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<TblSalaryComponent> _SalaryComponentRepo;
-        private readonly ILogger<SalaryComponentService> _logger;
+        private readonly IGenericRepository<TblCompanyProfile> _profileRepo;
+        private readonly ILogger<CompanyProfileService> _logger;
         private readonly IContextService _context;
-        public SalaryComponentService(
-            ILogger<SalaryComponentService> logger,
-           IGenericRepository<TblSalaryComponent> SalaryComponentRepo,
+        public CompanyProfileService(
+            ILogger<CompanyProfileService> logger,
+           IGenericRepository<TblCompanyProfile> profileRepo,
            IContextService context,
             IMapper mapper)
         {
             _logger = logger;
-            _SalaryComponentRepo = SalaryComponentRepo;
+            _profileRepo = profileRepo;
             _mapper = mapper;
             _context = context;
         }
 
-        public async Task<List<SalaryComponentDto>> GetListAsync()
+        public async Task<List<ProfileDto>> GetListAsync()
         {
-            var entities = await _SalaryComponentRepo.GetListAsync();
-            return _mapper.Map<List<SalaryComponentDto>>(entities);
+            var entities = await _profileRepo.GetListAsync();
+            return _mapper.Map<List<ProfileDto>>(entities);
         }
 
-        public async Task<SalaryComponentDto?> GetByCodeAsync(string code)
+        public async Task<ProfileDto?> GetByIdAsync(int id)
         {
-            var entity = await _SalaryComponentRepo.GetFirstOrDefaultAsync(x =>
-                    x.ComponentCode == code);
+            var entity = await _profileRepo.GetFirstOrDefaultAsync(x =>
+                    x.CompanyProfileId == id);
 
             return entity == null
                 ? null
-                : _mapper.Map<SalaryComponentDto>(entity);
+                : _mapper.Map<ProfileDto>(entity);
         }
 
-        public async Task<int> DeleteAsync(string code)
+        public async Task<int> DeleteAsync(int id)
         {
-            var entity = await _SalaryComponentRepo.FindAsync(x =>
-                x.ComponentCode == code);
+            var entity = await _profileRepo.FindAsync(x =>
+                x.CompanyProfileId == id);
             if (entity == null)
                 return 0;
 
-            return await _SalaryComponentRepo.Remove(entity);
+            return await _profileRepo.Remove(entity);
         }
 
-        public async Task<PagedResponse<SalaryComponentDto>> GetPagedAsync(DataTableRequest model)
+        public async Task<PagedResponse<ProfileDto>> GetPagedAsync(DataTableRequest model)
         {
             try
             {
-                var entityResult = await _SalaryComponentRepo.GetPagedAsync(model);
-                return entityResult.MapPaged<TblSalaryComponent, SalaryComponentDto>(_mapper, model);
+                var entityResult = await _profileRepo.GetPagedAsync(model);
+                return entityResult.MapPaged<TblCompanyProfile, ProfileDto>(_mapper, model);
             }
             catch (Exception ex)
             {
@@ -71,31 +73,31 @@ namespace App.Infrastructure.Services.Masters
 
 
 
-        public async Task<SalaryComponentDto> SaveAsync(SalaryComponentDto model)
+        public async Task<ProfileDto> SaveAsync(ProfileDto model)
         {
             try
             {
-                var existingItem = await _SalaryComponentRepo.FindAsync(t => t.ComponentCode.Equals(model.ComponentCode));
+                var existingItem = await _profileRepo.FindAsync(t => t.CompanyProfileId.Equals(model.CompanyProfileId));
                 if (existingItem == null)
                 {
-                    var item = _mapper.Map<TblSalaryComponent>(model);
+                    var item = _mapper.Map<TblCompanyProfile>(model);
                     item.CreatedBy = _context.Username;
                     item.CreatedDate = DateTime.Now;
-                    var addedItem = await _SalaryComponentRepo.AddAsync(item);
-                    return _mapper.Map<SalaryComponentDto>(addedItem);
+                    var addedItem = await _profileRepo.AddAsync(item);
+                    return _mapper.Map<ProfileDto>(addedItem);
                 }
                 else
                 {
                     _mapper.Map(model, existingItem);
                     existingItem.UpdatedBy = _context.Username;
                     existingItem.UpdatedDate = DateTime.Now;
-                    var updatedItem = await _SalaryComponentRepo.UpdateAsync(existingItem);
-                    return _mapper.Map<SalaryComponentDto>(updatedItem);
+                    var updatedItem = await _profileRepo.UpdateAsync(existingItem);
+                    return _mapper.Map<ProfileDto>(updatedItem);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error saving SalaryComponent");
+                _logger.LogError(ex, "Error saving profile");
                 throw;
             }
         }
