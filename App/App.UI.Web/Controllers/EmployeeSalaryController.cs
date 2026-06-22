@@ -1,5 +1,6 @@
 ﻿using App.Application.Interfaces.Services.Masters;
 using App.Application.Interfaces.Services.Payroll;
+using App.Domain.Entities;
 using App.Domain.Enums;
 using App.Domain.Models;
 using App.Domain.Models.Dto.Masters;
@@ -25,7 +26,7 @@ namespace App.UI.Web.Controllers
             , IPtkpService ptkpService
             , IEmployeeService employeeService
             , IDepartmentService departmentService
-, IPositionService positionService
+            , IPositionService positionService
             , ISalaryComponentService salaryComponentService)
         {
             _EmployeeSalaryService = EmployeeSalaryService;
@@ -87,8 +88,9 @@ namespace App.UI.Web.Controllers
             }
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> GetEmployeeSalary(string code)
+        public async Task<IActionResult> GetData(string code)
         {
             try
             {
@@ -104,7 +106,7 @@ namespace App.UI.Web.Controllers
 
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteEmployeeSalary(string code)
+        public async Task<IActionResult> Delete(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
                 return BadRequest("EmployeeSalary code is required");
@@ -124,26 +126,36 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddEmployeeSalary(PageModel<EmployeeSalaryDto> model)
+        public async Task<IActionResult> Add([FromBody] EmployeeSalaryCreateModel model)
         {
             try
             {
-                return Json(ActionResponse.Ok("EmployeeSalary saved successfully"));
+                //return Json(ActionResponse.Ok("EmployeeSalary saved successfully"));
                 //if (model.Mode == FormMode.Create)
                 //{
                 //    var existingItem = await _EmployeeSalaryService.GetByCode(model.Item.EmployeeSalaryCode);
                 //    if (existingItem != null) return Json(ActionResponse.Fail($"EmployeeSalary {model.Item.EmployeeSalaryCode} already exist!"));
                 //}
-                //////var result = await _EmployeeSalaryService.Save(model.Item);
-                //////return (result != null) ? Json(ActionResponse.Ok("EmployeeSalary saved successfully")) : Json(ActionResponse.Fail("EmployeeSalary saved failed"));
+                List<EmployeeSalaryDto> items = new List<EmployeeSalaryDto>();
+                foreach (var employeeId in model.EmployeeIds)
+                {
+                    ////items.Add(new EmployeeSalaryDto()
+                    ////{
+                    ////    EmployeeId = employeeId,
+                    ////    IsActive = true,
+                    ////    EffectiveDate 
+                    ////});
+                }
+
+                //var result = await _EmployeeSalaryService.Save(model.Item);
+                //return (result != null) ? Json(ActionResponse.Ok("EmployeeSalary saved successfully")) : Json(ActionResponse.Fail("EmployeeSalary saved failed"));
+                return Json(ActionResponse.Ok("EmployeeSalary saved successfully"));
             }
             catch (Exception ex)
             {
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
-
-
         #endregion
 
     }

@@ -1,49 +1,36 @@
-﻿@model EmployeeSalaryModel
-
+﻿﻿@using App.Domain.Models
+@using App.Domain.Models.Dto
+@using App.Domain.Models.Dto.Masters
+@model PageModel<ProfileDto>
 @{
     ViewData["Title"] = $"Data Master - {Model.Title}";
-    var orderedComponents = Model.Components
-        .OrderBy(c => c.SortOrder)
-        .ToList();
 }
-
-<style>
-    .salary-input {
-        min-width: 120px;
-        text-align: right;
-    }
-
-    #tblSalary th,
-    #tblSalary td {
-        vertical-align: middle;
-        white-space: nowrap;
-    }
-</style>
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card shadow-sm">
-
+        <div class="card shadow-sm full-height-card">
             <div class="card-header py-2 px-3 bg-light">
 
                 <div class="d-flex align-items-center">
 
                     <h6 class="mb-0 fw-semibold">
-                        Employee Salary
+                        Existing @Model.Title
                     </h6>
 
                     <div class="ms-auto d-flex gap-2">
-                  
-                        <button class="btn btn-success"
-                              id="add-new">
-                            <i class="bi bi-plus"></i>
-                            Add Employee Salary
+
+                        <button id="add-new"
+                                class="btn btn-sm btn-primary">
+                            <i class="fa-solid fa-plus me-1"></i>
+                            Add New
                         </button>
+
                         <button id="csv-export"
                                 class="btn btn-sm btn-outline-success">
                             <i class="fa-solid fa-file-excel me-1"></i>
                             Export CSV
                         </button>
+
                         <button id="pdf-export"
                                 class="btn btn-sm btn-outline-danger">
                             <i class="fa-solid fa-file-pdf me-1"></i>
@@ -51,196 +38,291 @@
                         </button>
 
                     </div>
+
                 </div>
+
             </div>
-
-            <div class="card-body">
-
-                <div class="row mb-3">
-
-                  @*   <div class="col-md-3">
-                        <select asp-for="Year" class="form-select">
-                            @for (int i = DateTime.Now.Year - 2;
-                                   i <= DateTime.Now.Year + 2;
-                                   i++)
-                            {
-                                <option value="@i">@i</option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-md-3">
-                        <select asp-for="Month" class="form-select">
-
-                            @for (int i = 1; i <= 12; i++)
-                            {
-                                <option value="@i">
-                                    @(new DateTime(2000, i, 1)
-                                        .ToString("MMMM"))
-                                </option>
-                            }
-
-                        </select>
-                    </div> *@
-                    <div class="col-md-3">
-                        <select asp-for="EmployeeId"
-                                class="form-select">
-
-                            <option value="">
-                                -- Select Employee --
-                            </option>
-
-                            @foreach (var employee in Model.Employees)
-                            {
-                                <option value="@employee.EmployeeId">
-                                    @employee.FullName
-                                </option>
-                            }
-
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <select asp-for="DepartmentCode"
-                                class="form-select">
-
-                            <option value="">
-                                -- Select Department --
-                            </option>
-
-                            @foreach (var department in Model.Departments)
-                            {
-                                <option value="@department.DepartmentCode">
-                                    @department.DepartmentName
-                                </option>
-                            }
-
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <select asp-for="PositionCode"
-                                class="form-select">
-
-                            <option value="">
-                                -- Select Position --
-                            </option>
-
-                            @foreach (var position in Model.Positions)
-                            {
-                                <option value="@position.PositionCode">
-                                    @position.PositionName
-                                </option>
-                            }
-
-                        </select>
-                    </div>
-
-                    <div class="col-md-1">
-                        <button id="btnSearch"
-                                class="btn btn-primary w-100">
-                            Search
-                        </button>
-                    </div>
-
-                </div>
-
+            <!-- Body -->
+            <div class="card-body p-2">
                 <div class="table-responsive">
-                    <table id="tblSalary"
-                           class="table table-sm table-bordered table-hover w-100">
+                    <table id="main-table"
+                           class="table table-sm table-striped table-hover align-middle w-100 mb-0">
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+     
+</div>
+ 
+<div class="modal fade"
+     id="companyProfileModal"
+     tabindex="-1"
+     aria-hidden="true">
 
-                <div class="mt-3 text-end">
-                    <button id="btnSave"
-                            class="btn btn-success">
-                        Save
-                    </button>
-                </div>
-
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-building me-2"></i>
+                    <span id="modalTitle">
+                        Add @Model.Title
+                    </span>
+                </h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
             </div>
 
+            <div class="modal-body">
+                <form id="companyProfileForm"
+                      asp-action="Save"
+                      method="post"
+                      enctype="multipart/form-data"
+                      autocomplete="off">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Mode)
+                    @Html.HiddenFor(model => model.Title) 
+                    <input type="hidden"
+                           asp-for="Item.CompanyProfileId"
+                           asp-key="true" />
+                    <div class="row g-3">
+                       
+                        <!-- Company Name -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.CompanyName"
+                                   class="form-label fw-semibold"></label>
+                            <input asp-for="Item.CompanyName"
+                                   class="form-control"
+                                   placeholder="Company Name" />
+                            <span asp-validation-for="Item.CompanyName" 
+                                  class="text-danger small"></span>
+                        </div>
+                        <!-- Phone Number -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.PhoneNumber"
+                                   class="form-label fw-semibold"></label>
+                            <input asp-for="Item.PhoneNumber"
+                                   class="form-control"
+                                   placeholder="+62xxxxxxxxxx" />
+                            <span asp-validation-for="Item.PhoneNumber"
+                                  class="text-danger small"></span>
+                        </div>
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.Email"
+                                   class="form-label fw-semibold"></label>
+                            <input asp-for="Item.Email"
+                                   type="email"
+                                   class="form-control"
+                                   placeholder="company@example.com" />
+                            <span asp-validation-for="Item.Email"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Website -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.Website"
+                                   class="form-label fw-semibold"></label>
+                            <input asp-for="Item.Website"
+                                   class="form-control"
+                                   placeholder="https://www.company.com" />
+                            <span asp-validation-for="Item.Website"
+                                  class="text-danger small"></span>
+                        </div>
+                        <!-- Tax Number -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.TaxNumber"
+                                   class="form-label fw-semibold"></label>
+                            <input asp-for="Item.TaxNumber"
+                                   class="form-control"
+                                   placeholder="NPWP / Tax Number" />
+                            <span asp-validation-for="Item.TaxNumber"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.IsActive"
+                                   class="form-label fw-semibold"></label>
+                            <select asp-for="Item.IsActive"
+                                    class="form-select">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                            <span asp-validation-for="Item.IsActive"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <!-- Logo Upload -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Company Logo
+                            </label>
+
+                            <input type="file"
+                                   id="logoFile"
+                                   name="LogoFile"
+                                   accept=".png,.jpg,.jpeg,.svg"
+                                   class="form-control" />
+
+                            @Html.HiddenFor(model => model.Item.LogoFileName)
+                            @Html.HiddenFor(model => model.Item.LogoFilePath)
+
+                            <span asp-validation-for="Item.LogoFilePath"
+                                  class="text-danger small"></span>
+
+                            <div class="mt-3">
+                                <img id="logoPreview"
+                                     src="@Model.Item.LogoFilePath"
+                                     alt="Logo Preview"
+                                     style="max-height:150px; max-width:300px; @(string.IsNullOrEmpty(Model.Item.LogoFilePath) ? "display:none;" : "")" />
+                            </div>
+                        </div>
+
+                        <!-- Company Address -->
+                        <div class="col-6">
+                            <label asp-for="Item.CompanyAddress"
+                                   class="form-label fw-semibold"></label>
+                            <textarea asp-for="Item.CompanyAddress"
+                                      rows="4"
+                                      class="form-control"
+                                      placeholder="Company Address"></textarea>
+                            <span asp-validation-for="Item.CompanyAddress"
+                                  class="text-danger small"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-left me-1"></i>
+                    Reset
+                </button>
+                <button id="save-button"
+                        type="button"
+                        class="btn btn-primary">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    Save
+                </button>
+            </div>
         </div>
     </div>
 </div>
->
-@section Scripts
-{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-
-        let table;
-
-        function buildColumns() {
-
-            let columns = [
-                {
-                    data: 'employeeCode',
-                    title: 'Employee No'
-                },
-                {
-                    data: 'employeeName',
-                    title: 'Employee Name'
-                }
-            ];
-
-            @foreach (var c in orderedComponents)
-            {
-                <text> columns.push({
-                          data: 'components.@c.ComponentCode',
-                          title: '@c.ComponentName',
-                          className: 'text-end',
-                          orderable: false,
-                          render: function (data, type, row) {
-                              data = data ?? 0;
-                              return ` <input type="number" class="form-control form-control-sm salary-input"
-                              data-component="@c.ComponentCode" value="${data}" /> `;
-                          }
-                     });
-                </text>
+        function closeModal() {
+            const modalElement = document.getElementById('companyProfileModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            setReadonly(false);
+            if (modal) {
+                modal.hide();
             }
-
-            return columns;
         }
+        function showModal(id) {
+            $('#modalTitle').text(
+                id > 0 ? 'Edit Company Profile' : 'Add Company Profile'
+            );
 
-        function loadSalary() {
+            setReadonly(id > 0 ? true : false);
+            const modal = new bootstrap.Modal(
+                document.getElementById('companyProfileModal')
+            );
+            modal.show();
+        }
+        $(document).ready(function () {
+             $('#logoFile').on('change', function () {
+                 const file = this.files[0];
+                 const preview = document.getElementById('logoPreview');
+                 if (!file) {
+                     preview.style.display = 'none';
+                     return;
+                 }
+                 preview.src = URL.createObjectURL(file);
+                 preview.style.display = 'block';
+            });
 
-            if ($.fn.DataTable.isDataTable('#tblSalary')) {
-                table.destroy();
-                $('#tblSalary').empty();
-            }
-
-            table = $('#tblSalary').DataTable({
-
+            const table =  $('#main-table').DataTable({
                 processing: true,
                 serverSide: true,
-                searching: false,
-                ordering: false,
-
-                scrollX: true,
-                scrollCollapse: true,
+                responsive: true,
                 autoWidth: false,
-
-                fixedColumns: {
-                    left: 2
-                },
-
+                filter: true,
+                orderMulti: false,
+                order: [[0, 'desc']],
                 ajax: {
-                    url: '@Url.Action("GetList", "EmployeeSalary")',
+                    url: '@Url.Action("GetList", "Profile")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (d) {
-
-                        // d.year = $('#Year').val();
-                        // d.month = $('#Month').val();
-                        d.employeeId = $('#EmployeeId').val();
-                        d.departmentCode = $('#DepartmentCode').val();
-                        d.positionCode = $('#PositionCode').val();
                         return JSON.stringify(d);
+                    },
+                    dataSrc: function (json) {
+                        return json.data || [];
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 401 || xhr.status === 403)
+                            return;
+                        notify.error('Failed to load Profile data');
                     }
                 },
-
-                columns: buildColumns(),
+                columnDefs: [
+                    {
+                        targets: -1,
+                        className: 'not-export'
+                    }
+                ],
+                 columns: [
+                     { data: 'companyName', title: 'Company Name' },
+                     { data: 'phoneNumber', title: 'Phone Number', defaultContent: '-' },
+                     { data: 'email', title: 'Email', defaultContent: '-' },
+                     { data: 'website', title: 'Website', defaultContent: '-',
+                         render: function (data) {
+                             if (!data)
+                                 return '-';
+                             return `<a href="${data}" target="_blank">${data}</a>`;
+                         }
+                     },
+                     { data: 'taxNumber', title: 'Tax Number', defaultContent: '-' },
+                     { data: 'isActive', title: 'Status', className: 'text-center',
+                         render: function (data) {
+                             return data
+                                 ? '<span class="badge bg-success">Active</span>'
+                                 : '<span class="badge bg-danger">Inactive</span>';
+                         }
+                     },
+                     {
+                         data: null,
+                         title: 'Action',
+                         orderable: false,
+                         searchable: false,
+                         className: 'text-center action-col',
+                         width: '100px',
+                         render: function (data, type, row) {
+                             return `
+                                 <div class="d-flex justify-content-center align-items-center gap-2">
+                                     <a href="javascript:void(0)"
+                                        onclick="editRow('${row.companyProfileId}')"
+                                        title="Edit">
+                                         <i class="fa-solid fa-pen-to-square text-primary"></i>
+                                     </a>
+                                     <a href="javascript:void(0)"
+                                        onclick="confirmDelete(() => deleteRow('${row.companyProfileId}'))"
+                                        title="Delete">
+                                         <i class="fa-solid fa-trash text-danger"></i>
+                                     </a>
+                                     <a href="/Profile/Info/${row.companyProfileId}"
+                                        title="View">
+                                         <i class="fa-solid fa-eye text-primary"></i>
+                                     </a>
+                                 </div>
+                             `;
+                         }
+                     }
+                 ] ,
                 dom:
                     "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
                     "rt" +
@@ -264,104 +346,118 @@
                     }
                 ]
             });
-        }
-
-        $(document).ready(function () {
-
-            loadSalary();
-
-            $('#btnSearch').click(function () {
-                loadSalary();
+            
+            $('#csv-export').on('click', function () {
+                $('.btn-export-csv').trigger('click');
             });
 
-        });
-
-        $('#csv-export').on('click', function () {
-            $('.btn-export-csv').trigger('click');
-        });
-
-        $('#pdf-export').on('click', function () {
-            $('.btn-export-pdf').trigger('click');
-        });
-        $('#add-new').on('click', function () {
-            window.location.href = '@Url.Action("Detail", "EmployeeSalary")';
-        });
-
-        $('#tblSalary').on(
-            'change',
-            '.salary-input',
-            function () {
-
-                let input = $(this);
-                let tr = input.closest('tr');
-                let row = table.row(tr).data();
-
-                let componentCode =
-                    input.data('component');
-
-                let amount =
-                    parseFloat(input.val()) || 0;
-
-                row.components[componentCode] =
-                    amount;
+            $('#pdf-export').on('click', function () { 
+                $('.btn-export-pdf').trigger('click');
             });
 
-        $('#btnSave').click(function () {
-
-            let salaries = [];
-
-            table.rows().every(function () {
-
-                let row = this.data();
-
-                let details = [];
-
-                for (const componentCode
-                        in row.components) {
-
-                    details.push({
-                        componentCode: componentCode,
-                        amount:
-                            parseFloat(
-                                row.components[componentCode]
-                            ) || 0
-                    });
-                }
-
-                salaries.push({
-                    employeeSalaryId:
-                        row.employeeSalaryId,
-                    employeeId:
-                        row.employeeId,
-                    year:
-                        $('#Year').val(),
-                    month:
-                        $('#Month').val(),
-                    details: details
-                });
+            $('#add-new').on('click', function () {
+                showModal();
             });
+             $('#save-button').on('click', function () {
+                saveCompanyProfile();
+            });
+        });
 
+        function saveCompanyProfile() {
+            const form = $('#companyProfileForm')[0];
+            const formData = new FormData(form);
             $.ajax({
-                url:
-                    '@Url.Action("Save", "EmployeeSalary")',
                 type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(salaries),
+                url: '@Url.Action("Add", "Profile")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('#save-button').prop('disabled', true);
+                },
                 success: function (response) {
-
                     if (response.success) {
-                        toastr.success('Saved');
+                        notify.success(response.message);
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        closeModal();
                     }
                     else {
-                        toastr.error(response.message);
+                        notify.warning(response.message);
                     }
                 },
-                error: function () {
-                    toastr.error('Server error.');
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('An error occurred while saving Company Profile');
+                },
+                complete: function () {
+                    $('#save-button').prop('disabled', false);
                 }
             });
+        }
+        function editRow(id) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetData", "Profile")',
+                data: { id: id },
+                success: function (data) {
+                    if (!data) {
+                        notify.warning('Company Profile not found');
+                        return;
+                    }
+                    $('#Item_CompanyProfileId').val(data.companyProfileId);
+                    $('#Item_CompanyName').val(data.companyName);
+                    $('#Item_CompanyAddress').val(data.companyAddress);
+                    $('#Item_PhoneNumber').val(data.phoneNumber);
+                    $('#Item_Email').val(data.email);
+                    $('#Item_Website').val(data.website);
+                    $('#Item_TaxNumber').val(data.taxNumber);
+                    $('#Item_IsActive').val(data.isActive.toString());
+                    $('#Item_LogoFileName').val(data.logoFileName);
+                    $('#Item_LogoFilePath').val(data.logoFilePath);
+                    showModal(data.companyProfileId);
+                },
 
-        });
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('Failed to retrieve Company Profile');
+                }
+            });
+        }
 
+        function deleteRow(id) {
+            $.ajax({
+                type: 'DELETE',
+                url: '@Url.Action("Delete", "Profile")',
+                data: {
+                    id: id
+                },
+                headers: {
+                    'RequestVerificationToken':
+                        $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        resetForm();
+                        notify.success(response.message);
+                    } else {
+                        notify.warning(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('Failed to delete Company Profile');
+                }
+            });
+        }
+        function resetForm() {
+            $('#companyProfileForm')[0].reset();
+            $('#Item_CompanyProfileId').val('');
+            $('#Item_LogoFileName').val('');
+            $('#Item_LogoFilePath').val('');
+        }
     </script>
 }
