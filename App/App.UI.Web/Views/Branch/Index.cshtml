@@ -400,7 +400,7 @@
 
                     // Untuk Dropdown Branch Head (Menggunakan Employee Code sebagai ID)
                     if (data.branchHeadEmployeeId) { 
-                        var empText = `[${data.branchHeadEmployeeId}] ${data.branchHeadEmployeeName || ''}`;
+                        var empText = `[${data.branchHeadEmployeeId}] ${data.fullName || ''}`;
                         var empOption = new Option(empText, data.branchHeadEmployeeId, true, true);
                         $('#Item_BranchHeadEmployeeId').append(empOption).trigger('change');
                     } else {

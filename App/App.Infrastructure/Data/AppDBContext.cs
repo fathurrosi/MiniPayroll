@@ -116,6 +116,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblUserRole> TblUserRoles { get; set; }
 
+    public virtual DbSet<VwBranchDetail> VwBranchDetails { get; set; }
+
     public virtual DbSet<VwEmployeeMonthlySchedule> VwEmployeeMonthlySchedules { get; set; }
 
     public virtual DbSet<VwEmployeeMonthlyScheduleBackup> VwEmployeeMonthlyScheduleBackups { get; set; }
@@ -1101,6 +1103,39 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<VwBranchDetail>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_BranchDetails");
+
+            entity.Property(e => e.Address)
+                .HasMaxLength(191)
+                .IsUnicode(false);
+            entity.Property(e => e.BranchCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.BranchName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CompanyName).HasMaxLength(200);
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.EmployeeCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.FullName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);

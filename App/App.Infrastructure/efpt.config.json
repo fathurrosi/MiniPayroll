@@ -223,6 +223,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[vw_BranchDetails]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[vw_EmployeeMonthlySchedule]",
          "ObjectType": 3
       },

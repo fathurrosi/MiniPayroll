@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace App.Domain.Models.Dto.Masters
 {
-    public sealed class BranchDto : BaseDto<BranchDto>
+    public sealed class BranchDto : BaseDto<VwBranchDetail>
     {
         [Required(ErrorMessage = "Branch code is required.")]
         [StringLength(20, ErrorMessage = "Branch code cannot exceed 20 characters.")]
@@ -23,6 +23,9 @@ namespace App.Domain.Models.Dto.Masters
         public bool IsActive { get; set; } = false;
 
         public int BranchHeadEmployeeId { get; set; }
+        public string FullName { get; set; }
         public int CompanyProfileId { get; set; }
+
+        public string CompanyName { get; set; }
     }
 }

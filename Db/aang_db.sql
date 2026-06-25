@@ -118,3 +118,29 @@ CREATE TABLE [dbo].[tbl_Positions](
 ) ON [PRIMARY]
 GO
 
+
+USE [MANDE_03]
+GO
+
+/****** Object:  View [dbo].[vw_EmployeeSalary]    Script Date: 24/06/2026 16:13:10 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE view [dbo].[vw_BranchDetails]
+as
+
+select 
+a.id, a.BranchCode, a.BranchName, a.Address, a.BranchHeadEmployeeId, a.CompanyProfileId, a.IsActive,
+a.CreatedDate, a.UpdatedDate, a.CreatedBy, a.UpdatedBy,
+b.EmployeeCode, b.FullName,
+c.CompanyName
+from tbl_Branches a
+left join tbl_employees b on a.BranchHeadEmployeeId = b.EmployeeId
+left join tbl_CompanyProfiles c on a.CompanyProfileId = c.CompanyProfileId
+GO
+
+

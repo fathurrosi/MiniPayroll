@@ -16,15 +16,18 @@ namespace App.Infrastructure.Services.Masters
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<TblBranch> _BranchRepo;
+        private readonly IGenericRepository<VwBranchDetail> _vwBranchDetail;
         private readonly ILogger<BranchService> _logger;
         private readonly IContextService _userService;
 
-        public BranchService(IGenericRepository<TblBranch> BranchRepo
+        public BranchService(IGenericRepository<TblBranch> BranchRepo,
+            IGenericRepository<VwBranchDetail> vwBranchDetail
             , IMapper mapper
             , ILogger<BranchService> logger
             , IContextService userService)
         {
             _BranchRepo = BranchRepo;
+            _vwBranchDetail = vwBranchDetail; // assign
             _mapper = mapper;
             _logger = logger;
             _userService = userService;
@@ -56,7 +59,7 @@ namespace App.Infrastructure.Services.Masters
         {
             try
             {
-                var entityItem = await _BranchRepo.FindAsync(t => t.BranchCode == code);
+                var entityItem = await _vwBranchDetail.FindAsync(t => t.BranchCode == code);
                 return _mapper.Map<BranchDto>(entityItem);
             }
             catch (Exception ex)
