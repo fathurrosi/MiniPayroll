@@ -196,7 +196,7 @@ namespace App.UI.Web.Controllers
 
                 var result = filteredEmployees.Select(e => new
                 {
-                    id = e.EmployeeId ?? string.Empty,
+                    id = e.EmployeeId.ToString(),
                     text = $"[{e.EmployeeCode ?? "N/A"}] {e.FullName ?? "No Name"}"
                 }).ToList();
 
