@@ -592,7 +592,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblLeaveRequest>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC07957D55C3");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC0702EF53BC");
 
             entity.ToTable("tbl_LeaveRequests");
 
@@ -600,10 +600,28 @@ public partial class AppDBContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasDefaultValue("Pending");
-            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.LeaveType)
+            entity.Property(e => e.BranchCode)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DepartmentCode)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.LeaveTypeCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblLeaveType>(entity =>

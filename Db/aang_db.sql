@@ -144,3 +144,49 @@ left join tbl_CompanyProfiles c on a.CompanyProfileId = c.CompanyProfileId
 GO
 
 
+
+USE [MANDE_03]
+GO
+
+/****** Object:  Table [dbo].[tbl_LeaveRequests]    Script Date: 25/06/2026 15:06:34 ******/
+drop table [dbo].[tbl_LeaveRequests]
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[tbl_LeaveRequests](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL,
+	[BranchCode] [varchar](20) NOT NULL,
+	[DepartmentCode] [varchar](50) NOT NULL,
+	[EmployeeId] [bigint] NOT NULL,
+	[LeaveTypeCode] [varchar](20) NOT NULL,
+	[StartDate] [date] NOT NULL,
+	[EndDate] [date] NOT NULL,
+	[TotalDays] [int] NOT NULL,
+	[Reason] [nvarchar](max) NULL,
+	[ApprovalStatus] [nvarchar](50) NOT NULL,
+	[ApprovedBy] [bigint] NULL,
+	[ApprovedDate] [datetime2](7) NULL,
+
+	[CreatedDate] [datetime] NULL,
+	[UpdatedDate] [datetime] NULL,
+	[CreatedBy] [varchar](50) NULL,
+	[UpdatedBy] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[tbl_LeaveRequests] ADD  DEFAULT ((0)) FOR [TotalDays]
+GO
+
+ALTER TABLE [dbo].[tbl_LeaveRequests] ADD  DEFAULT ('Pending') FOR [ApprovalStatus]
+GO
+
+ALTER TABLE [dbo].[tbl_LeaveRequests] ADD  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+

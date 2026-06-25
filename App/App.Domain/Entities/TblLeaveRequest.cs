@@ -15,10 +15,19 @@ public partial class TblLeaveRequest
     [Key]
     public long Id { get; set; }
 
+    [StringLength(20)]
+    [Unicode(false)]
+    public string BranchCode { get; set; } = null!;
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string DepartmentCode { get; set; } = null!;
+
     public long EmployeeId { get; set; }
 
-    [StringLength(100)]
-    public string LeaveType { get; set; } = null!;
+    [StringLength(20)]
+    [Unicode(false)]
+    public string LeaveTypeCode { get; set; } = null!;
 
     public DateOnly StartDate { get; set; }
 
@@ -35,5 +44,17 @@ public partial class TblLeaveRequest
 
     public DateTime? ApprovedDate { get; set; }
 
-    public DateTime CreatedDate { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? CreatedDate { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 }
