@@ -1,4 +1,5 @@
-﻿using App.Application.Interfaces.Repositories;
+﻿using App.Application.Interfaces.Procedures;
+using App.Application.Interfaces.Repositories;
 using App.Application.Interfaces.Services;
 using App.Application.Interfaces.Services.Masters;
 using App.Domain.Entities;
@@ -6,9 +7,11 @@ using App.Domain.Models.Dto.Masters;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Extensions;
+using Dapper;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Data;
 
 namespace App.Infrastructure.Services.Masters
 {
@@ -20,16 +23,18 @@ namespace App.Infrastructure.Services.Masters
         private readonly IGenericRepository<VwEmployeeSalary> _VwEmployeeSalaryRepo;
         private readonly IGenericRepository<TblSalaryComponent> _TblSalaryComponentRepo;
         private readonly ILogger<EmployeeSalaryService> _logger;
+        private readonly IProcedureExecutor _executor;
         private readonly IContextService _userService;
         public EmployeeSalaryService(IGenericRepository<TblEmployeeSalary> EmployeeSalaryRepo
             , IGenericRepository<VwEmployeeSalary> VwEmployeeSalaryRepo
             , IGenericRepository<TblSalaryComponent> TblSalaryComponentRepo
-
+            , IProcedureExecutor executor
             , IGenericRepository<TblEmployeeSalaryDetail> EmployeeSalaryDetailRepo
             , IMapper mapper
             , ILogger<EmployeeSalaryService> logger
             , IContextService userService)
         {
+            _executor = executor;
             _EmployeeSalaryRepo = EmployeeSalaryRepo;
             _VwEmployeeSalaryRepo = VwEmployeeSalaryRepo;
             _mapper = mapper;
@@ -40,15 +45,14 @@ namespace App.Infrastructure.Services.Masters
         }
 
 
-        public async Task<int> DeleteAsync(string code)
+        public async Task<int> DeleteAsync(int code)
         {
             try
             {
-                Guid EmployeeSalaryCode;
-                Guid.TryParse(code, out EmployeeSalaryCode);
+                int employeeId = code;
 
 
-                var entityItem = await _EmployeeSalaryRepo.FindAsync(t => t.EmployeeSalaryId == EmployeeSalaryCode)
+                var entityItem = await _EmployeeSalaryRepo.FindAsync(t => t.EmployeeId == employeeId)
                       ?? throw new KeyNotFoundException($"Code {code} not found");
                 return await _EmployeeSalaryRepo.Remove(entityItem);
             }
@@ -66,14 +70,13 @@ namespace App.Infrastructure.Services.Masters
             }
         }
 
-        public async Task<EmployeeSalaryDto> GetByCodeAsync(string code)
+        public async Task<EmployeeSalaryDto> GetByCodeAsync(int code)
         {
             try
             {
-                Guid EmployeeSalaryCode;
-                Guid.TryParse(code, out EmployeeSalaryCode);
+                int employeeId = code;
 
-                var entityItem = await _EmployeeSalaryRepo.FindAsync(t => t.EmployeeSalaryId == EmployeeSalaryCode);
+                var entityItem = await _EmployeeSalaryRepo.FindAsync(t => t.EmployeeId == employeeId);
                 return _mapper.Map<EmployeeSalaryDto>(entityItem);
             }
             catch (Exception ex)
@@ -87,12 +90,6 @@ namespace App.Infrastructure.Services.Masters
         {
             try
             {
-                //var entityResult = await _VwEmployeeSalaryRepo.GetPagedAsync(t => 
-                //(t.EmployeeId == model.EmployeeId || model.EmployeeId == 0) &&
-                //(t.Position == model.PositionCode || string.IsNullOrEmpty(model.PositionCode)) &&
-                //(t.Department == model.DepartmentCode || string.IsNullOrEmpty(model.DepartmentCode))
-                //, model);
-
                 int employeeId = 0;
                 int.TryParse(model.EmployeeId, out employeeId);
 
@@ -104,13 +101,14 @@ namespace App.Infrastructure.Services.Masters
                                 model);
 
                 var results = entityResult.MapPaged<VwEmployeeSalary, VwEmployeeSalaryDto>(_mapper, model);
+
                 var salaryComponents = await _TblSalaryComponentRepo.GetListAsync();
                 var orderedComponents = salaryComponents.OrderBy(c => c.SortOrder).ToList();
                 var details = await _EmployeeSalaryDetailRepo.GetListAsync();
                 for (int i = 0; i < results.Items.Count; i++)
                 {
                     var result = results.Items[i];
-                    var employeeDetails = details.Where(d => d.EmployeeSalaryId == result.EmployeeSalaryId).ToList();
+                    var employeeDetails = details.Where(d => d.EmployeeId == result.EmployeeId).ToList();
                     foreach (var c in orderedComponents)
                     {
                         decimal amount = employeeDetails.FirstOrDefault(d => d.ComponentCode == c.ComponentCode)?.Amount ?? 0;
@@ -167,16 +165,20 @@ namespace App.Infrastructure.Services.Masters
         {
             try
             {
-                var entityItem = await _EmployeeSalaryRepo.FindAsync(t => t.EmployeeSalaryId == model.EmployeeSalaryId);
+                var entityItem = await _EmployeeSalaryRepo.FindAsync(t => t.EmployeeId == model.EmployeeId);
                 if (entityItem == null)
                 {
                     TblEmployeeSalary item = _mapper.Map<TblEmployeeSalary>(model);
+                    item.CreatedBy = _userService.Username;
+                    item.CreatedDate = DateTime.UtcNow;
                     var addedEntity = await _EmployeeSalaryRepo.AddAsync(item);
                     return _mapper.Map<EmployeeSalaryDto>(addedEntity);
                 }
                 else
                 {
                     _mapper.Map(model, entityItem);
+                    entityItem.UpdatedBy = _userService.Username;
+                    entityItem.UpdatedDate = DateTime.UtcNow;
                     var updatedEntity = await _EmployeeSalaryRepo.UpdateAsync(entityItem);
                     return _mapper.Map<EmployeeSalaryDto>(updatedEntity);
                 }
@@ -186,6 +188,84 @@ namespace App.Infrastructure.Services.Masters
                 _logger.LogError(ex, "Error saving EmployeeSalary");
                 throw;
             }
+        }
+
+
+        public async Task<bool> SaveAsync(List<EmployeeSalaryDto> items, List<EmployeeSalaryDetailDto> details)
+        {
+            try
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@EmployeeSalaries",
+                    CreateEmployeeSalaryTable(items).AsTableValuedParameter("type_EmployeeSalary"));
+
+                parameters.Add("@EmployeeSalaryDetails",
+                    CreateEmployeeSalaryDetailTable(details).AsTableValuedParameter("type_EmployeeSalaryDetail"));
+
+                await _executor.ExecuteNonQueryAsync("sp_SaveEmployeeSalary", parameters);
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving EmployeeSalary");
+                throw;
+            }
+        }
+
+        private DataTable CreateEmployeeSalaryTable(List<EmployeeSalaryDto> items)
+        {
+            var table = new DataTable();
+            table.Columns.Add("EmployeeId", typeof(int));
+            table.Columns.Add("EffectiveDate", typeof(DateTime));
+            table.Columns.Add("IsActive", typeof(bool));
+            table.Columns.Add("CreatedDate", typeof(DateTime));
+            table.Columns.Add("UpdatedDate", typeof(DateTime));
+            table.Columns.Add("CreatedBy", typeof(string));
+            table.Columns.Add("UpdatedBy", typeof(string));
+
+            foreach (var item in items)
+            {
+                table.Rows.Add(
+                    item.EmployeeId,
+                    item.EffectiveDate,
+                    item.IsActive,
+                    item.CreatedDate.HasValue ? (object)item.CreatedDate.Value : DateTime.UtcNow,
+                    item.UpdatedDate.HasValue ? (object)item.UpdatedDate.Value : DateTime.UtcNow,
+                    $"{_userService.Username}",
+                    $"{_userService.Username}"
+                    );
+            }
+
+            return table;
+        }
+
+        private DataTable CreateEmployeeSalaryDetailTable(List<EmployeeSalaryDetailDto> items)
+        {
+            var table = new DataTable();
+            table.Columns.Add("EmployeeId", typeof(int));
+            table.Columns.Add("ComponentCode", typeof(string));
+            table.Columns.Add("Amount", typeof(decimal));
+            table.Columns.Add("CreatedDate", typeof(DateTime));
+            table.Columns.Add("UpdatedDate", typeof(DateTime));
+            table.Columns.Add("CreatedBy", typeof(string));
+            table.Columns.Add("UpdatedBy", typeof(string));
+
+            foreach (var item in items)
+            {
+                table.Rows.Add(
+                    item.EmployeeId,
+                    item.ComponentCode,
+                    item.Amount,
+                    item.CreatedDate.HasValue ? (object)item.CreatedDate.Value : DateTime.UtcNow,
+                    item.UpdatedDate.HasValue ? (object)item.UpdatedDate.Value : DateTime.UtcNow,
+                    $"{_userService.Username}",
+                    $"{_userService.Username}"
+                    );
+            }
+
+            return table;
         }
 
     }

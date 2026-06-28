@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
+[PrimaryKey("EmployeeId", "ComponentCode")]
 [Table("tbl_EmployeeSalaryDetail")]
 public partial class TblEmployeeSalaryDetail
 {
     [Key]
-    public Guid EmployeeSalaryDetailId { get; set; }
+    public int EmployeeId { get; set; }
 
-    public Guid EmployeeSalaryId { get; set; }
-
+    [Key]
     [StringLength(20)]
     [Unicode(false)]
     public string ComponentCode { get; set; } = null!;
@@ -26,4 +26,15 @@ public partial class TblEmployeeSalaryDetail
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 }

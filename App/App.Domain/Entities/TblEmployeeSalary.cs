@@ -13,8 +13,6 @@ namespace App.Domain.Entities;
 public partial class TblEmployeeSalary
 {
     [Key]
-    public Guid EmployeeSalaryId { get; set; }
-
     public int EmployeeId { get; set; }
 
     public DateOnly EffectiveDate { get; set; }
@@ -26,4 +24,12 @@ public partial class TblEmployeeSalary
 
     [Column(TypeName = "datetime")]
     public DateTime? UpdatedDate { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? UpdatedBy { get; set; }
 }

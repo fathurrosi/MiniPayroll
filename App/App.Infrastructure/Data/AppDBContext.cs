@@ -511,33 +511,42 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblEmployeeSalary>(entity =>
         {
-            entity.HasKey(e => e.EmployeeSalaryId);
+            entity.HasKey(e => e.EmployeeId);
 
             entity.ToTable("tbl_EmployeeSalary");
 
-            entity.Property(e => e.EmployeeSalaryId)
-                .HasDefaultValueSql("(newid())")
-                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__Emplo__4460231C");
+            entity.Property(e => e.EmployeeId).ValueGeneratedNever();
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__IsAct__45544755");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblEmployeeSalaryDetail>(entity =>
         {
-            entity.HasKey(e => e.EmployeeSalaryDetailId);
+            entity.HasKey(e => new { e.EmployeeId, e.ComponentCode });
 
             entity.ToTable("tbl_EmployeeSalaryDetail");
 
-            entity.Property(e => e.EmployeeSalaryDetailId).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.ComponentCode)
-                .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblEmployeeShift>(entity =>
@@ -1497,9 +1506,11 @@ public partial class AppDBContext : DbContext
                 .ToView("vw_EmployeeSalary");
 
             entity.Property(e => e.Department)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.DepartmentDescription)
+                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.EmployeeCode)
@@ -1511,9 +1522,11 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.Position)
+                .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.PositionDescription)
+                .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
         });

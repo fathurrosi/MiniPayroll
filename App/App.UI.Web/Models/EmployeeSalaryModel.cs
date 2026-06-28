@@ -8,25 +8,16 @@ namespace App.UI.Web.Models
     {
         public string EmployeeId { get; set; }
         public string? DepartmentCode { get; set; }
-
         public string? PositionCode { get; set; }
-
-        public List<int> EmployeeIds { get; set; } = [];
-
-        //public List<EmployeeSalaryDto> EmployeeSalaries { get; set; } = [];
-
+        public List<int> EmployeeIds { get; set; } = []; 
         public List<SalaryComponentDto> Components { get; set; } = [];
-
         public List<EmployeeDto> Employees { get; set; }
-
         public List<DepartmentDto> Departments { get; set; }
-
         public List<PositionDto> Positions { get; set; }
     }
 
     public class EmployeeSalaryModel : PageModel<List<EmployeeSalaryDto>>
-    {
-        public Guid EmployeeSalaryId { get; set; }
+    { 
 
         public string EmployeeId { get; set; }
 

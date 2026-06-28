@@ -22,21 +22,19 @@ public partial class VwEmployeeSalary
     [Unicode(false)]
     public string EmployeeName { get; set; } = null!;
 
-    public Guid? EmployeeSalaryId { get; set; }
+    [StringLength(50)]
+    [Unicode(false)]
+    public string Position { get; set; } = null!;
 
     [StringLength(50)]
     [Unicode(false)]
-    public string? Position { get; set; }
-
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? Department { get; set; }
+    public string Department { get; set; } = null!;
 
     [StringLength(100)]
     [Unicode(false)]
-    public string? PositionDescription { get; set; }
+    public string PositionDescription { get; set; } = null!;
 
     [StringLength(100)]
     [Unicode(false)]
-    public string? DepartmentDescription { get; set; }
+    public string DepartmentDescription { get; set; } = null!;
 }

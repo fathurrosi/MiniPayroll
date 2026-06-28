@@ -12,8 +12,7 @@ namespace App.Domain.Models.Dto.Masters
         public string EmployeeCode { get; set; } = null!;
 
         public string EmployeeName { get; set; } = null!;
-
-        public Guid? EmployeeSalaryId { get; set; }
+         
         public string Position { get; set; }
         public string Department { get; set; }
         public string? PositionDescription { get; set; }
@@ -25,10 +24,7 @@ namespace App.Domain.Models.Dto.Masters
     }
     public sealed class EmployeeSalaryDetailDto : BaseDto<TblEmployeeSalaryDetail>
     {
-        public Guid EmployeeSalaryDetailId { get; set; }
-
-        public Guid EmployeeSalaryId { get; set; }
-
+        public int EmployeeId { get; set; }
 
         public string ComponentCode { get; set; } = null!;
 
@@ -37,16 +33,14 @@ namespace App.Domain.Models.Dto.Masters
     }
 
     public sealed class EmployeeSalaryDto : BaseDto<TblEmployeeSalary>
-    {
-        public Guid EmployeeSalaryId { get; set; }
-
+    { 
         public int EmployeeId { get; set; }
 
         public DateTime EffectiveDate { get; set; }
 
         public bool IsActive { get; set; }
          
-        //public List<EmployeeSalaryDetailDto> Details { get; set; } = new List<EmployeeSalaryDetailDto>();
+        public List<EmployeeSalaryDetailDto> Details { get; set; } = new List<EmployeeSalaryDetailDto>();
 
     }
 }
