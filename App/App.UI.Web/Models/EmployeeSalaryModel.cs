@@ -3,19 +3,19 @@ using App.Domain.Models.Dto.Masters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace App.UI.Web.Models
-{ 
+{
     public class EmployeeSalaryCreateModel : PageModel<List<EmployeeSalaryDto>>
-    { 
+    {
         public string EmployeeId { get; set; }
         public string? DepartmentCode { get; set; }
 
         public string? PositionCode { get; set; }
 
         public List<int> EmployeeIds { get; set; } = [];
-        public List<EmployeeSalaryDto> EmployeeSalaries { get; set; } = [];
+
+        //public List<EmployeeSalaryDto> EmployeeSalaries { get; set; } = [];
 
         public List<SalaryComponentDto> Components { get; set; } = [];
-
 
         public List<EmployeeDto> Employees { get; set; }
 

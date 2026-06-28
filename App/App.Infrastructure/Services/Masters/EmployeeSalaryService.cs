@@ -98,11 +98,9 @@ namespace App.Infrastructure.Services.Masters
 
                 var entityResult = await _VwEmployeeSalaryRepo.GetPagedAsync(
                                 t =>
-                                    (employeeId ==0|| t.EmployeeId == employeeId) &&
-                                    (string.IsNullOrWhiteSpace(model.PositionCode) ||
-                                     t.Position == model.PositionCode) &&
-                                    (string.IsNullOrWhiteSpace(model.DepartmentCode) ||
-                                     t.Department == model.DepartmentCode),
+                                    (employeeId == 0 || t.EmployeeId == employeeId) &&
+                                    (string.IsNullOrWhiteSpace(model.PositionCode) || t.Position == model.PositionCode) &&
+                                    (string.IsNullOrWhiteSpace(model.DepartmentCode) || t.Department == model.DepartmentCode),
                                 model);
 
                 var results = entityResult.MapPaged<VwEmployeeSalary, VwEmployeeSalaryDto>(_mapper, model);
@@ -130,6 +128,26 @@ namespace App.Infrastructure.Services.Masters
             }
         }
 
+
+
+        public async Task<List<VwEmployeeSalaryDto>> GetListAsync(string department, string position, int employeeId)
+        {
+            try
+            {
+                var entityResult = await _VwEmployeeSalaryRepo.GetListAsync(t =>
+                (t.Department == department || string.IsNullOrEmpty(department)) &&
+                     (t.Position == position || string.IsNullOrEmpty(position)) &&
+                     (t.EmployeeId == employeeId || employeeId == 0)
+
+                );
+                return entityResult.Select(t => _mapper.Map<VwEmployeeSalaryDto>(t)).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting EmployeeSalarys");
+                throw;
+            }
+        }
 
         public async Task<List<EmployeeSalaryDto>> GetListAsync()
         {

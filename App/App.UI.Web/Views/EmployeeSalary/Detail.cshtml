@@ -82,14 +82,10 @@
 
         <hr />
 
-        <table id="tblEmployee"
-               class="table table-bordered">
+        <table id="tblEmployee" class="table table-bordered">
             <thead>
                 <tr>
-                    <th width="50">
-                        <input type="checkbox"
-                               id="chkAll" />
-                    </th>
+                    <th width="50"> <input type="checkbox" id="chkAll" /> </th>
                     <th>Employee No</th>
                     <th>Name</th>
                     <th>Department</th>
@@ -131,7 +127,7 @@
 
 <div class="mt-3 text-end">
     <button type="button"
-            id="btnSave"
+            id="save-button"
             class="btn btn-success">
         Save
     </button>
@@ -147,12 +143,10 @@
 
     <script>
         function getSelectedEmployees() {
-
             var employeeIds = [];
             $('.employee-checkbox:checked').each(function () {
                 employeeIds.push($(this).val());
             });
-
             return employeeIds;
         }
         $(document).on('change', '#chkAll', function () {
@@ -162,70 +156,77 @@
             );
         });
 
+        function saveEmployeeSalary() {
+            var employees = [];
+            $(".employee-checkbox:checked").each(function () {
+                const row = $(this).closest("tr");
+                employees.push({
+                    employeeSalaryId: 0,
+                    employeeId: parseInt($(this).val()),
+                    effectiveDate: row.find(".effective-date").val(),
+                    isActive: row.find(".is-active").prop("checked")
+                });
+
+            });
+
+            if (employees.length === 0) {
+                notify.warning("Please select employee.");
+                return;
+            }
+
+            var components = [];
+            $(".salary-component").each(function () {
+
+                components.push({
+                    componentCode: $(this).data("component-code"),
+                    defaultAmount: parseFloat($(this).val()) || 0
+                });
+
+            });
+
+            var request = {
+                item: employees,
+                components: components
+            };
+
+            $.ajax({
+                url: '@Url.Action("Add", "EmployeeSalary")',
+                type: 'POST', 
+                data: request,
+                beforeSend: function () {
+                    $('#save-button').prop('disabled', true);
+                },
+                success: function (response) {
+                    if (response.success) {
+                        notify.success(response.message);
+                        window.location.href = '@Url.Action("Index", "EmployeeSalary")';
+                    }
+                    else {
+                        notify.warning(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('An error occurred while saving Company SalaryComponent');
+                },
+                complete: function () {
+                    $('#save-button').prop('disabled', false);
+                }
+            });
+        }
 
         $(document).ready(function () {
-
-             
-            $("#btnSave").click(function () {
-                var employees = [];
-                $(".employee-checkbox:checked").each(function () {                    
-                    const row = $(this).closest("tr");
-                    employees.push({
-                        employeeId: parseInt($(this).val()),
-                        effectiveDate: row.find(".effective-date").val(),
-                        isActive: row.find(".is-active").prop("checked")
-                    });
-
-                });
-
-                if (employees.length === 0) {
-                    notify.warning("Please select employee.");
-                    return;
-                }
-
-                var components = [];
-
-                $(".salary-component").each(function () {
-
-                    components.push({
-                        componentCode: $(this).data("component-code"),
-                        defaultAmount: parseFloat($(this).val()) || 0
-                    });
-
-                });
-
-                var request = {
-                    employeeSalaries: employees,
-                    components: components
-                }; 
-                $.ajax({
-                    url: '@Url.Action("Add", "EmployeeSalary")',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(request),
-                    success: function (response) {
-                        if (response.success) {
-                            notify.success(response.message);
-                            window.location.href = '@Url.Action("Index", "EmployeeSalary")';
-                        }
-                        else {
-                            notify.warning(response.message);
-                        }
-                    },
-
-                    error: function () {
-                        notify.error("Failed to save employee salary.");
-                    }
-                });
-
+            $("#save-button").click(function () {
+               saveEmployeeSalary();
             });
 
             $("#btnSearchEmployee").click(function () {
                 var departmentCode = $("#DepartmentCode").val();
                 var positionCode = $("#PositionCode").val();
-                var employeeId = $("#EmployeeId").val(); 
+                var employeeId = $("#EmployeeId").val();
                 $.ajax({
-                    url: '@Url.Action("GetList", "Employee")',
+                    url: '@Url.Action("GetList", "EmployeeSalary")',
                     type: 'GET',
                     data: {
                         departmentCode: departmentCode,
@@ -244,9 +245,9 @@
                                                value="${employee.employeeId}" />
                                     </td>
                                     <td>${employee.employeeCode}</td>
-                                    <td>${employee.fullName}</td>
-                                    <td>${employee.department}</td>
-                                    <td>${employee.position}</td>
+                                    <td>${employee.employeeName}</td>
+                                    <td>${employee.departmentDescription}</td>
+                                    <td>${employee.positionDescription}</td>
                                     <td>
                                         <input type="date" class="form-control form-control-sm effective-date" />
                                     </td>

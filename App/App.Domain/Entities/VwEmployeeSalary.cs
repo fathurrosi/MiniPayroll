@@ -31,4 +31,12 @@ public partial class VwEmployeeSalary
     [StringLength(50)]
     [Unicode(false)]
     public string? Department { get; set; }
+
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? PositionDescription { get; set; }
+
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? DepartmentDescription { get; set; }
 }

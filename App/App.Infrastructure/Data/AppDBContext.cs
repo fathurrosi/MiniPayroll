@@ -130,7 +130,7 @@ public partial class AppDBContext : DbContext
     {
         modelBuilder.Entity<AuditLog>(entity =>
         {
-            entity.HasKey(e => e.AuditLogId).HasName("PK__AuditLog__EB5F6CBDF9293E67");
+            entity.HasKey(e => e.AuditLogId).HasName("PK__AuditLog__EB5F6CBDAE9771B9");
 
             entity.Property(e => e.ActionType)
                 .HasMaxLength(20)
@@ -143,7 +143,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<PayrollPeriod>(entity =>
         {
-            entity.HasKey(e => e.PayrollPeriodId).HasName("PK__PayrollP__06190D369CB1EA82");
+            entity.HasKey(e => e.PayrollPeriodId).HasName("PK__PayrollP__06190D36A30FFDD5");
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsClosed).HasDefaultValue(false);
@@ -161,7 +161,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TaxBracket>(entity =>
         {
-            entity.HasKey(e => e.TaxBracketId).HasName("PK__TaxBrack__DE9EDED17BCD2B73");
+            entity.HasKey(e => e.TaxBracketId).HasName("PK__TaxBrack__DE9EDED1E3ED8D2C");
 
             entity.Property(e => e.MaxAmount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.MinAmount).HasColumnType("decimal(18, 2)");
@@ -170,7 +170,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblAllowance>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Allo__3214EC07106166CB");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Allo__3214EC071A21B3F6");
 
             entity.ToTable("tbl_Allowance");
 
@@ -191,7 +191,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblAttendance>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Atte__3214EC077368BE19");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Atte__3214EC07A59516EA");
 
             entity.ToTable("tbl_Attendance");
 
@@ -214,7 +214,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblAttendance1>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Atte__3214EC07F3D66695");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Atte__3214EC07A280FC32");
 
             entity.ToTable("tbl_Attendances");
 
@@ -228,7 +228,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblAuditLog>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Audi__3214EC07B515151F");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Audi__3214EC073B12DAF4");
 
             entity.ToTable("tbl_AuditLogs");
 
@@ -241,7 +241,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblBiayaJabatanConfig>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Biay__3214EC075B10526E");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Biay__3214EC07A217BE00");
 
             entity.ToTable("tbl_BiayaJabatanConfig");
 
@@ -253,7 +253,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblBpjskesehatanConfig>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_BPJS__3214EC07E395D219");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_BPJS__3214EC077D3A585E");
 
             entity.ToTable("tbl_BPJSKesehatanConfig");
 
@@ -265,7 +265,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblBpjsketenagakerjaanConfig>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_BPJS__3214EC074A6871B9");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_BPJS__3214EC073D6C9D05");
 
             entity.ToTable("tbl_BPJSKetenagakerjaanConfig");
 
@@ -293,7 +293,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblBranch>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Bran__3214EC07C791F378");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Bran__3214EC07F3BBDA87");
 
             entity.ToTable("tbl_Branches");
 
@@ -318,7 +318,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblCompanyProfile>(entity =>
         {
-            entity.HasKey(e => e.CompanyProfileId).HasName("PK__tbl_Comp__0B8C9D4989D4D2FA");
+            entity.HasKey(e => e.CompanyProfileId).HasName("PK__tbl_Comp__0B8C9D49AEC6E4D6");
 
             entity.ToTable("tbl_CompanyProfiles");
 
@@ -345,7 +345,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblDeduction>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Dedu__3214EC0718F305C8");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Dedu__3214EC0719F7064B");
 
             entity.ToTable("tbl_Deduction");
 
@@ -443,7 +443,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblEmployeeAllowance>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC073EA970CA");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC07233A1C65");
 
             entity.ToTable("tbl_EmployeeAllowance");
 
@@ -456,7 +456,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblEmployeeDeduction>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0723D7F9AD");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC07694504BA");
 
             entity.ToTable("tbl_EmployeeDeduction");
 
@@ -466,7 +466,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblEmployeePayroll>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0740C07C7B");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0739A25DF7");
 
             entity.ToTable("tbl_EmployeePayroll");
 
@@ -492,7 +492,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblEmployeePayrollInfo>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0741AB8EB8");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0796BD63D8");
 
             entity.ToTable("tbl_EmployeePayrollInfo");
 
@@ -515,8 +515,13 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_EmployeeSalary");
 
-            entity.Property(e => e.EmployeeSalaryId).ValueGeneratedNever();
+            entity.Property(e => e.EmployeeSalaryId)
+                .HasDefaultValueSql("(newid())")
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__Emplo__4460231C");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__IsAct__45544755");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
@@ -526,7 +531,7 @@ public partial class AppDBContext : DbContext
 
             entity.ToTable("tbl_EmployeeSalaryDetail");
 
-            entity.Property(e => e.EmployeeSalaryDetailId).ValueGeneratedNever();
+            entity.Property(e => e.EmployeeSalaryDetailId).HasDefaultValueSql("(newid())");
             entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.ComponentCode)
                 .IsRequired()
@@ -537,7 +542,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblEmployeeShift>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC0713F93396");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Empl__3214EC077F3E5CD0");
 
             entity.ToTable("tbl_EmployeeShift");
 
@@ -592,7 +597,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblLeaveRequest>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC0702EF53BC");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC07BFEC9789");
 
             entity.ToTable("tbl_LeaveRequests");
 
@@ -626,7 +631,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblLeaveType>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC073977724A");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC07F7810D3A");
 
             entity.ToTable("tbl_LeaveType");
 
@@ -634,8 +639,6 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.IsPaid).HasDefaultValue(true);
             entity.Property(e => e.LeaveCode)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -650,7 +653,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblMenu>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Menu__3214EC07AE8DEE6A");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Menu__3214EC0731CED028");
 
             entity.ToTable("tbl_Menus");
 
@@ -680,7 +683,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblOvertime>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC0792745927");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC07327E2243");
 
             entity.ToTable("tbl_Overtime");
 
@@ -713,7 +716,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblOvertimeCalculation>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC07DFD88D8B");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC07C895A1F2");
 
             entity.ToTable("tbl_OvertimeCalculation");
 
@@ -727,7 +730,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblOvertimeRate>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC076A67C600");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Over__3214EC07228AC5FC");
 
             entity.ToTable("tbl_OvertimeRate");
 
@@ -737,7 +740,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPayroll>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC0780A9F730");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC07889A2AFC");
 
             entity.ToTable("tbl_Payrolls");
 
@@ -758,7 +761,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPayrollDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC0784C88A43");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC07D8ED555F");
 
             entity.ToTable("tbl_PayrollDetails");
 
@@ -774,7 +777,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPayrollPeriod>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC07A13EFAA1");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC073A1E7A1B");
 
             entity.ToTable("tbl_PayrollPeriods");
 
@@ -786,7 +789,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPayrollPolicy>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC0728BB346E");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC0783AFC037");
 
             entity.ToTable("tbl_PayrollPolicy");
 
@@ -800,7 +803,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPayrollResult>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC0732A0FA4E");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC07ECCB6119");
 
             entity.ToTable("tbl_PayrollResult");
 
@@ -827,7 +830,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPayrollResultDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC072D9595A6");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC0736ADDCE2");
 
             entity.ToTable("tbl_PayrollResultDetail");
 
@@ -845,7 +848,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPayrollRun>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC07B1380A66");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Payr__3214EC07BAD228BC");
 
             entity.ToTable("tbl_PayrollRun");
 
@@ -862,7 +865,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPayslip>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Pays__3214EC07E3E2934E");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Pays__3214EC07C0CD4D78");
 
             entity.ToTable("tbl_Payslip");
 
@@ -879,7 +882,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPermission>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Perm__3214EC073C50791F");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Perm__3214EC07EF48C5E8");
 
             entity.ToTable("tbl_Permissions");
 
@@ -921,7 +924,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblPph21Bracket>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_PPh2__3214EC071F21DA6B");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_PPh2__3214EC07A501B6AF");
 
             entity.ToTable("tbl_PPh21Bracket");
 
@@ -988,7 +991,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblRolePermission>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Role__3214EC077972BA3B");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Role__3214EC0775A16E64");
 
             entity.ToTable("tbl_RolePermissions");
 
@@ -997,7 +1000,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblSalaryComponent>(entity =>
         {
-            entity.HasKey(e => e.ComponentCode).HasName("PK__tbl_Sala__898CFBF9B1E601DE");
+            entity.HasKey(e => e.ComponentCode).HasName("PK__tbl_Sala__898CFBF91F9E5C13");
 
             entity.ToTable("tbl_SalaryComponents");
 
@@ -1029,7 +1032,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblShift>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC07226F7085");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC07B7E95F55");
 
             entity.ToTable("tbl_Shift");
 
@@ -1054,7 +1057,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblShiftPattern>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC0723B08207");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC0754CDCD0A");
 
             entity.ToTable("tbl_ShiftPattern");
 
@@ -1076,7 +1079,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblShiftPatternDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC07D2F91E07");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Shif__3214EC07695CC16B");
 
             entity.ToTable("tbl_ShiftPatternDetail");
 
@@ -1092,7 +1095,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblUser>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_User__3214EC0765A1D7E7");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_User__3214EC0794A326C3");
 
             entity.ToTable("tbl_Users");
 
@@ -1112,7 +1115,7 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblUserRole>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_User__3214EC0736D5D433");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_User__3214EC075F0D6048");
 
             entity.ToTable("tbl_UserRoles");
 
@@ -1496,6 +1499,9 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.Department)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.DepartmentDescription)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.EmployeeCode)
                 .IsRequired()
                 .HasMaxLength(20)
@@ -1506,6 +1512,9 @@ public partial class AppDBContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Position)
                 .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.PositionDescription)
+                .HasMaxLength(100)
                 .IsUnicode(false);
         });
 

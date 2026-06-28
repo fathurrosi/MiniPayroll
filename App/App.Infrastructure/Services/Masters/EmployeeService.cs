@@ -15,6 +15,7 @@ namespace App.Infrastructure.Services.Masters
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<TblEmployee> _EmployeeRepo;
+
         private readonly ILogger<EmployeeService> _logger;
         private readonly IContextService _userService;
         public EmployeeService(IGenericRepository<TblEmployee> EmployeeRepo

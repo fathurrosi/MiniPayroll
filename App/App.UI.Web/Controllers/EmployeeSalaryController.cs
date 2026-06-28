@@ -37,11 +37,24 @@ namespace App.UI.Web.Controllers
             _positionService = positionService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetList(
+    string? departmentCode,
+    string? positionCode,
+    string? employeeId)
+        {
+            int id = 0;
+            int.TryParse(employeeId, out id);
+            var employees = await _EmployeeSalaryService.GetListAsync(
+                departmentCode, positionCode, id);
+
+            return Json(employees);
+        }
+
         #region EmployeeSalary
         public async Task<IActionResult> Index()
         {
             var model = new EmployeeSalaryModel() { Title = "Employee Salary" };
-
             model.Item = new List<EmployeeSalaryDto>();
             model.Employees = await _EmployeeService.GetListAsync();
             model.Components = await _SalaryComponentService.GetListAsync();
@@ -126,26 +139,15 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] EmployeeSalaryCreateModel model)
+        public async Task<IActionResult> Add(EmployeeSalaryCreateModel request)
         {
             try
             {
-                //return Json(ActionResponse.Ok("EmployeeSalary saved successfully"));
-                //if (model.Mode == FormMode.Create)
+                //List<EmployeeSalaryDto> items = new List<EmployeeSalaryDto>();
+                //foreach (var employeeId in request.EmployeeIds)
                 //{
-                //    var existingItem = await _EmployeeSalaryService.GetByCode(model.Item.EmployeeSalaryCode);
-                //    if (existingItem != null) return Json(ActionResponse.Fail($"EmployeeSalary {model.Item.EmployeeSalaryCode} already exist!"));
+
                 //}
-                List<EmployeeSalaryDto> items = new List<EmployeeSalaryDto>();
-                foreach (var employeeId in model.EmployeeIds)
-                {
-                    ////items.Add(new EmployeeSalaryDto()
-                    ////{
-                    ////    EmployeeId = employeeId,
-                    ////    IsActive = true,
-                    ////    EffectiveDate 
-                    ////});
-                }
 
                 //var result = await _EmployeeSalaryService.Save(model.Item);
                 //return (result != null) ? Json(ActionResponse.Ok("EmployeeSalary saved successfully")) : Json(ActionResponse.Fail("EmployeeSalary saved failed"));
@@ -156,6 +158,59 @@ namespace App.UI.Web.Controllers
                 return Json(ActionResponse.Fail(ex.Message));
             }
         }
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> Add([FromBody] EmployeeSalaryCreateModel request)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = "Invalid request."
+        //        });
+        //    }
+
+        //    if (request.EmployeeSalaries == null || !request.EmployeeSalaries.Any())
+        //    {
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = "Please select at least one employee."
+        //        });
+        //    }
+
+        //    if (request.Components == null || !request.Components.Any())
+        //    {
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = "No salary components found."
+        //        });
+        //    }
+
+        //    try
+        //    {
+        //        await _employeeSalaryService.AddAsync(request);
+
+        //        return Json(new
+        //        {
+        //            success = true,
+        //            message = "Employee salary saved successfully."
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error saving employee salary.");
+
+        //        return Json(new
+        //        {
+        //            success = false,
+        //            message = ex.Message
+        //        });
+        //    }
+        //}
         #endregion
 
     }
