@@ -51,4 +51,7 @@ public partial class TblShift
     [StringLength(50)]
     [Unicode(false)]
     public string? UpdatedBy { get; set; }
+
+    [InverseProperty("Shift")]
+    public virtual ICollection<TblAttendance> TblAttendances { get; set; } = new List<TblAttendance>();
 }

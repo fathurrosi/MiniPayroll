@@ -13,47 +13,62 @@ namespace App.Domain.Entities;
 public partial class TblAttendance
 {
     [Key]
-    public int Id { get; set; }
+    public int AttendanceId { get; set; }
 
     public int EmployeeId { get; set; }
 
-    public DateOnly WorkDate { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? CheckIn { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? CheckOut { get; set; }
+    public DateOnly AttendanceDate { get; set; }
 
     public int? ShiftId { get; set; }
+
+    [Precision(0)]
+    public TimeOnly? ScheduledTimeIn { get; set; }
+
+    [Precision(0)]
+    public TimeOnly? ScheduledTimeOut { get; set; }
+
+    [Precision(0)]
+    public TimeOnly? ActualTimeIn { get; set; }
+
+    [Precision(0)]
+    public TimeOnly? ActualTimeOut { get; set; }
 
     public int LateMinutes { get; set; }
 
     public int EarlyOutMinutes { get; set; }
 
+    public int WorkMinutes { get; set; }
+
     public int OvertimeMinutes { get; set; }
 
-    public bool IsAbsent { get; set; }
+    [StringLength(30)]
+    [Unicode(false)]
+    public string AttendanceStatus { get; set; } = null!;
+
+    [StringLength(500)]
+    public string? Remarks { get; set; }
 
     public bool IsHoliday { get; set; }
 
     public bool IsWeekend { get; set; }
 
-    [StringLength(500)]
-    [Unicode(false)]
-    public string? Remarks { get; set; }
+    public bool IsManualEntry { get; set; }
 
-    [Column(TypeName = "datetime")]
+    [StringLength(100)]
+    public string CreatedBy { get; set; } = null!;
+
     public DateTime CreatedDate { get; set; }
 
-    [Column(TypeName = "datetime")]
-    public DateTime? UpdatedDate { get; set; }
+    [StringLength(100)]
+    public string? ModifiedBy { get; set; }
 
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? CreatedBy { get; set; }
+    public DateTime? ModifiedDate { get; set; }
 
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? UpdatedBy { get; set; }
+    [ForeignKey("EmployeeId")]
+    [InverseProperty("TblAttendances")]
+    public virtual TblEmployee Employee { get; set; } = null!;
+
+    [ForeignKey("ShiftId")]
+    [InverseProperty("TblAttendances")]
+    public virtual TblShift? Shift { get; set; }
 }

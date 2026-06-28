@@ -1,6 +1,7 @@
 ﻿using App.Application.Interfaces.Repositories;
 using App.Application.Interfaces.Services;
 using App.Domain.Entities;
+using App.Domain.Enums;
 using App.Domain.Models.Dto;
 using App.Infrastructure.Data;
 using App.Infrastructure.Services.Masters;
@@ -499,15 +500,15 @@ decimal cappedMonthly = Math.Min(monthly, biaya.MaxMonthly);
 
             var attendances = await _attendanceRepo.GetListAsync(x =>
                     x.EmployeeId == employeeId &&
-                    x.WorkDate.Year == year &&
-                    x.WorkDate.Month == month);
+                    x.AttendanceDate.Year == year &&
+                    x.AttendanceDate.Month == month);
 
             //------------------------------------
             // ABSENT
             //------------------------------------
 
             int absentDays = attendances
-                .Count(x => x.IsAbsent);
+                .Count(x => x.AttendanceStatus == AttendanceStatus.Absent.ToString());
 
             decimal absentDeduction =
                 absentDays * dailySalary;
