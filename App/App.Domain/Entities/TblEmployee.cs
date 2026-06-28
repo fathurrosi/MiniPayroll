@@ -93,4 +93,7 @@ public partial class TblEmployee
     [StringLength(50)]
     [Unicode(false)]
     public string? Ptkpcode { get; set; }
+
+    [InverseProperty("Employee")]
+    public virtual ICollection<TblAttendance> TblAttendances { get; set; } = new List<TblAttendance>();
 }

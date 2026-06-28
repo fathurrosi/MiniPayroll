@@ -47,6 +47,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_AttendanceStatus]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_AuditLogs]",
          "ObjectType": 0
       },
@@ -228,14 +232,6 @@
       },
       {
          "Name": "[dbo].[vw_EmployeeMonthlySchedule]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[vw_EmployeeMonthlySchedule_backup]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[vw_EmployeeMonthlySchedule_Without_IsRest_Field]",
          "ObjectType": 3
       },
       {

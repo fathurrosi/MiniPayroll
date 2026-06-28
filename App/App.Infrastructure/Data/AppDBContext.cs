@@ -26,7 +26,7 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblAttendance> TblAttendances { get; set; }
 
-    public virtual DbSet<TblAttendance1> TblAttendances1 { get; set; }
+    public virtual DbSet<TblAttendanceStatus> TblAttendanceStatuses { get; set; }
 
     public virtual DbSet<TblAuditLog> TblAuditLogs { get; set; }
 
@@ -120,10 +120,6 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<VwEmployeeMonthlySchedule> VwEmployeeMonthlySchedules { get; set; }
 
-    public virtual DbSet<VwEmployeeMonthlyScheduleBackup> VwEmployeeMonthlyScheduleBackups { get; set; }
-
-    public virtual DbSet<VwEmployeeMonthlyScheduleWithoutIsRestField> VwEmployeeMonthlyScheduleWithoutIsRestFields { get; set; }
-
     public virtual DbSet<VwEmployeeSalary> VwEmployeeSalaries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -191,39 +187,48 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblAttendance>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Atte__3214EC07A59516EA");
+            entity.HasKey(e => e.AttendanceId).HasName("PK__tbl_Atte__8B69261C3239859E");
 
             entity.ToTable("tbl_Attendance");
 
-            entity.Property(e => e.CheckIn).HasColumnType("datetime");
-            entity.Property(e => e.CheckOut).HasColumnType("datetime");
-            entity.Property(e => e.CreatedBy)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.CreatedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Remarks)
-                .HasMaxLength(500)
-                .IsUnicode(false);
-            entity.Property(e => e.UpdatedBy)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
-        });
-
-        modelBuilder.Entity<TblAttendance1>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Atte__3214EC07A280FC32");
-
-            entity.ToTable("tbl_Attendances");
-
+            entity.Property(e => e.ActualTimeIn).HasPrecision(0);
+            entity.Property(e => e.ActualTimeOut).HasPrecision(0);
             entity.Property(e => e.AttendanceStatus)
                 .IsRequired()
-                .HasMaxLength(50)
-                .HasDefaultValue("Present");
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedBy)
+                .IsRequired()
+                .HasMaxLength(100);
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.IsManualEntry).HasDefaultValue(true);
+            entity.Property(e => e.ModifiedBy).HasMaxLength(100);
             entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.ScheduledTimeIn).HasPrecision(0);
+            entity.Property(e => e.ScheduledTimeOut).HasPrecision(0);
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.TblAttendances)
+                .HasForeignKey(d => d.EmployeeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Attendance_Employee");
+
+            entity.HasOne(d => d.Shift).WithMany(p => p.TblAttendances)
+                .HasForeignKey(d => d.ShiftId)
+                .HasConstraintName("FK_Attendance_Shift");
+        });
+
+        modelBuilder.Entity<TblAttendanceStatus>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("tbl_AttendanceStatus");
+
+            entity.Property(e => e.Description)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<TblAuditLog>(entity =>
@@ -1177,224 +1182,6 @@ public partial class AppDBContext : DbContext
             entity
                 .HasNoKey()
                 .ToView("vw_EmployeeMonthlySchedule");
-
-            entity.Property(e => e.Day1)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day10)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day11)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day12)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day13)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day14)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day15)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day16)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day17)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day18)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day19)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day2)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day20)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day21)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day22)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day23)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day24)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day25)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day26)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day27)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day28)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day29)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day3)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day30)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day31)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day4)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day5)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day6)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day7)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day8)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day9)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.EmployeeCode)
-                .IsRequired()
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.EmployeeName)
-                .IsRequired()
-                .HasMaxLength(255)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<VwEmployeeMonthlyScheduleBackup>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("vw_EmployeeMonthlySchedule_backup");
-
-            entity.Property(e => e.Day1)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day10)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day11)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day12)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day13)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day14)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day15)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day16)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day17)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day18)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day19)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day2)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day20)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day21)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day22)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day23)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day24)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day25)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day26)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day27)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day28)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day29)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day3)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day30)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day31)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day4)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day5)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day6)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day7)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day8)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.Day9)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.EmployeeCode)
-                .IsRequired()
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.FullName)
-                .IsRequired()
-                .HasMaxLength(255)
-                .IsUnicode(false);
-        });
-
-        modelBuilder.Entity<VwEmployeeMonthlyScheduleWithoutIsRestField>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToView("vw_EmployeeMonthlySchedule_Without_IsRest_Field");
 
             entity.Property(e => e.Day1)
                 .HasMaxLength(20)
