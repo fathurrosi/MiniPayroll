@@ -1,5 +1,410 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container-fluid py-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-0">
+                <i class="bi bi-calendar-check text-primary"></i>
+                Attendance
+            </h3>
+            <small class="text-muted">
+                Daily Employee Attendance
+            </small>
+        </div>
+
+        <button class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i>
+            New Attendance
+        </button>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+
+        <div class="col-lg-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2 class="text-primary">125</h2>
+                    <small>Total Employee</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2 class="text-success">110</h2>
+                    <small>Present</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2 class="text-warning">8</h2>
+                    <small>Late</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2 class="text-danger">3</h2>
+                    <small>Absent</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2 class="text-info">2</h2>
+                    <small>Leave</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <h2 class="text-secondary">2</h2>
+                    <small>Holiday</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Filter -->
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-header bg-white fw-bold">
+            <i class="bi bi-funnel"></i>
+            Search Filter
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+                    <label class="form-label">Employee</label>
+                    <select class="form-select">
+                        <option>All Employee</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Department</label>
+                    <select class="form-select">
+                        <option>All Department</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">Status</label>
+                    <select class="form-select">
+                        <option>All Status</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">From</label>
+                    <input type="date" class="form-control">
+                </div>
+
+                <div class="col-md-2">
+                    <label class="form-label">To</label>
+                    <input type="date" class="form-control">
+                </div>
+
+                <div class="col-md-1 d-grid">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Attendance Table -->
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white d-flex justify-content-between">
+
+            <span class="fw-bold">
+                Attendance List
+            </span>
+
+            <span class="badge bg-primary">
+                125 Records
+            </span>
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Employee</th>
+
+                        <th>Department</th>
+
+                        <th>Date</th>
+
+                        <th>Shift</th>
+
+                        <th>Time In</th>
+
+                        <th>Time Out</th>
+
+                        <th>Late</th>
+
+                        <th>Status</th>
+
+                        <th width="120">Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>1</td>
+
+                        <td>
+                            <strong>John Doe</strong><br>
+                            <small class="text-muted">EMP0001</small>
+                        </td>
+
+                        <td>IT</td>
+
+                        <td>01-Jul-2026</td>
+
+                        <td>Morning</td>
+
+                        <td>08:00</td>
+
+                        <td>17:02</td>
+
+                        <td>
+                            <span class="badge bg-success">
+                                On Time
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge bg-success">
+                                Present
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>2</td>
+
+                        <td>
+                            <strong>Mary</strong><br>
+                            <small class="text-muted">EMP0002</small>
+                        </td>
+
+                        <td>HR</td>
+
+                        <td>01-Jul-2026</td>
+
+                        <td>Morning</td>
+
+                        <td>08:18</td>
+
+                        <td>17:00</td>
+
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                18 Min
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                Late
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>3</td>
+
+                        <td>
+                            <strong>David</strong><br>
+                            <small class="text-muted">EMP0003</small>
+                        </td>
+
+                        <td>Finance</td>
+
+                        <td>01-Jul-2026</td>
+
+                        <td>Morning</td>
+
+                        <td>-</td>
+
+                        <td>-</td>
+
+                        <td>-</td>
+
+                        <td>
+                            <span class="badge bg-danger">
+                                Absent
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>4</td>
+
+                        <td>
+                            <strong>Lisa</strong><br>
+                            <small class="text-muted">EMP0004</small>
+                        </td>
+
+                        <td>Sales</td>
+
+                        <td>01-Jul-2026</td>
+
+                        <td>Morning</td>
+
+                        <td>-</td>
+
+                        <td>-</td>
+
+                        <td>-</td>
+
+                        <td>
+                            <span class="badge bg-info">
+                                Leave
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>5</td>
+
+                        <td>
+                            <strong>Kevin</strong><br>
+                            <small class="text-muted">EMP0005</small>
+                        </td>
+
+                        <td>Production</td>
+
+                        <td>01-Jul-2026</td>
+
+                        <td>Morning</td>
+
+                        <td>-</td>
+
+                        <td>-</td>
+
+                        <td>-</td>
+
+                        <td>
+                            <span class="badge bg-secondary">
+                                Holiday
+                            </span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
