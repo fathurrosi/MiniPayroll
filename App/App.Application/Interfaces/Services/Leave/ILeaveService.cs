@@ -11,6 +11,6 @@ namespace App.Application.Interfaces.Services.Leave
         Task<List<LeaveDto>> GetListAsync();
         Task<LeaveDto> SaveAsync(LeaveDto leaveDto);
         Task<int> DeleteAsync(long Id);
-        Task<LeaveDto> GetByCodeAsync(int Id);
+        Task<LeaveDto> GetByCodeAsync(long Id);
     }
 }

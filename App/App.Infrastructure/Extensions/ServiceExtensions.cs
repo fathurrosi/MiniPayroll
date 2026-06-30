@@ -32,7 +32,8 @@ namespace App.Infrastructure.Extensions
                     "App.Infrastructure.Services",
                     "App.Infrastructure.Services.Masters",
                     "App.Infrastructure.Services.Payroll",
-                    "App.Infrastructure.Services.Settings" )
+                    "App.Infrastructure.Services.Settings",
+                    "App.Infrastructure.Services.Leave" )
                     .Where(type => type.Name.EndsWith("Service")))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime());
