@@ -18,15 +18,18 @@ namespace App.Infrastructure.Services.Leave
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<TblLeaveRequest> _leaveRepo;
+        private readonly IGenericRepository<VwLeaveRequest> _vwLeaveRequest;
         private readonly ILogger<LeaveService> _logger;
         private readonly IContextService _userService;
 
-        public LeaveService(IGenericRepository<TblLeaveRequest> leaveRepo
-            , IMapper mapper
-            , ILogger<LeaveService> logger
-            , IContextService userService)
+        public LeaveService(IGenericRepository<TblLeaveRequest> leaveRepo,
+            IGenericRepository<VwLeaveRequest> vwLeaveRequest,
+            IMapper mapper,
+            ILogger<LeaveService> logger,
+            IContextService userService)
         {
             _leaveRepo = leaveRepo;
+            _vwLeaveRequest = vwLeaveRequest;
             _mapper = mapper;
             _logger = logger;
             _userService = userService;
@@ -53,11 +56,11 @@ namespace App.Infrastructure.Services.Leave
             }
         }
 
-        public async Task<LeaveDto> GetByCodeAsync(int Id)
+        public async Task<LeaveDto> GetByCodeAsync(long Id)
         {
             try
             {
-                var entityItem = await _leaveRepo.FindAsync(t => t.Id == Id);
+                var entityItem = await _vwLeaveRequest.FindAsync(t => t.Id == Id);
                 return _mapper.Map<LeaveDto>(entityItem);
             }
             catch (Exception ex)
@@ -71,8 +74,8 @@ namespace App.Infrastructure.Services.Leave
         {
             try
             {
-                var entityResult = await _leaveRepo.GetPagedAsync(model);
-                return entityResult.MapPaged<TblLeaveRequest, LeaveDto>(_mapper, model);
+                var entityResult = await _vwLeaveRequest.GetPagedAsync(model);
+                return entityResult.MapPaged<VwLeaveRequest, LeaveDto>(_mapper, model);
             }
             catch (Exception ex)
             {
@@ -99,20 +102,41 @@ namespace App.Infrastructure.Services.Leave
         {
             try
             {
-                var entityItem = await _leaveRepo.FindAsync(t => t.Id.Equals(model.Id));
-                if (entityItem == null)
+                if (model.Id == 0)
                 {
-                    TblLeaveRequest item = _mapper.Map<TblLeaveRequest>(model);
-                    item.CreatedDate = DateTime.Now;
-                    item.CreatedBy = _userService.Username;
+                    TblLeaveRequest item = new TblLeaveRequest
+                    {
+                        BranchCode = model.BranchCode,
+                        DepartmentCode = model.DepartmentCode,
+                        EmployeeId = model.EmployeeId,
+                        LeaveTypeCode = model.LeaveTypeCode,
+                        StartDate = model.StartDate,
+                        EndDate = model.EndDate,
+                        TotalDays = model.TotalDays,
+                        Reason = model.Reason,
+                        CreatedDate = DateTime.Now,
+                        CreatedBy = _userService.Username,
+                        ApprovalStatus = false
+                    };
                     var addedEntity = await _leaveRepo.AddAsync(item);
                     return _mapper.Map<LeaveDto>(addedEntity);
                 }
                 else
                 {
-                    _mapper.Map(model, entityItem);
+                    var entityItem = await _leaveRepo.FindAsync(t => t.Id == model.Id);
+                    if (entityItem == null) throw new Exception("Data not found");
+
+                    entityItem.BranchCode = model.BranchCode;
+                    entityItem.DepartmentCode = model.DepartmentCode;
+                    entityItem.EmployeeId = model.EmployeeId;
+                    entityItem.LeaveTypeCode = model.LeaveTypeCode;
+                    entityItem.StartDate = model.StartDate;
+                    entityItem.EndDate = model.EndDate;
+                    entityItem.TotalDays = model.TotalDays;
+                    entityItem.Reason = model.Reason;
                     entityItem.UpdatedDate = DateTime.Now;
                     entityItem.UpdatedBy = _userService.Username;
+                    
                     var updatedEntity = await _leaveRepo.UpdateAsync(entityItem);
                     return _mapper.Map<LeaveDto>(updatedEntity);
                 }

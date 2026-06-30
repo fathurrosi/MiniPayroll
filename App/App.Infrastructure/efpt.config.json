@@ -241,6 +241,10 @@
       {
          "Name": "[dbo].[vw_EmployeeSalary]",
          "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_LeaveRequest]",
+         "ObjectType": 3
       }
    ],
    "UiHint": null,

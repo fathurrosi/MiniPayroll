@@ -9,25 +9,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_LeaveRequests")]
-public partial class TblLeaveRequest
+[Keyless]
+public partial class VwLeaveRequest
 {
-    [Key]
     public long Id { get; set; }
 
     [StringLength(20)]
     [Unicode(false)]
     public string BranchCode { get; set; } = null!;
 
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? BranchName { get; set; }
+
     [StringLength(50)]
     [Unicode(false)]
     public string DepartmentCode { get; set; } = null!;
 
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? DepartmentName { get; set; }
+
     public long EmployeeId { get; set; }
+
+    [StringLength(255)]
+    [Unicode(false)]
+    public string? EmployeeName { get; set; }
 
     [StringLength(20)]
     [Unicode(false)]
     public string LeaveTypeCode { get; set; } = null!;
+
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? LeaveName { get; set; }
 
     public DateOnly StartDate { get; set; }
 
@@ -41,19 +56,9 @@ public partial class TblLeaveRequest
 
     public int? ApprovedBy { get; set; }
 
+    [StringLength(255)]
+    [Unicode(false)]
+    public string? ApprovedByName { get; set; }
+
     public DateTime? ApprovedDate { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? CreatedDate { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? UpdatedDate { get; set; }
-
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? CreatedBy { get; set; }
-
-    [StringLength(50)]
-    [Unicode(false)]
-    public string? UpdatedBy { get; set; }
 }

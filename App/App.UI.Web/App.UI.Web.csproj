@@ -26,8 +26,4 @@
     <ProjectReference Include="..\App.Infrastructure\App.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\LeaveRequest\" />
-  </ItemGroup>
-
 </Project>
