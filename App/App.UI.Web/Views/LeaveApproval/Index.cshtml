@@ -1,0 +1,62 @@
+﻿@* 
+   No Layout = null here! This will automatically use your main AdminLTE _Layout.cshtml 
+   so the sidebar, navbar, and footers remain intact.
+*@
+@{
+    ViewData["Title"] = "404 Error Page";
+}
+
+<style>
+    /* Premium Text Gradient for AdminLTE */
+    .text-gradient {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Soft floating effect using escaped @@ symbol for Razor */
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+    }
+    .error-illustration {
+        animation: float 3s ease-in-out infinite;
+        display: inline-block;
+    }
+    
+    .error-card {
+        border: none;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        border-radius: 1rem;
+    }
+</style>
+ 
+
+<!-- Main content -->
+<section class="content px-2">
+    <div class="card error-card bg-white py-5">
+        <div class="card-body text-center">
+            
+            <!-- Animated 404 Number -->
+            <div class="error-illustration mb-3">
+                <h1 class="display-1 fw-bold text-gradient mb-0" style="font-size: 7rem; font-weight: 800; letter-spacing: -2px;">
+                    404
+                </h1>
+            </div>
+
+  
+            <!-- Messages -->
+            <h3 class="font-weight-bold text-dark mb-3">
+                <i class="fas fa-search text-warning mr-2"></i> Oops! Page not found.
+            </h3>
+             
+            <!-- Action Navigation -->
+            <div>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg px-4 shadow-sm" style="border-radius: 0.5rem; font-weight: 600;">
+                    <i class="fas fa-tachometer-alt mr-2"></i> Return to Dashboard
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
