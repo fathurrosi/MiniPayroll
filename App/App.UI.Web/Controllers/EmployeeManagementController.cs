@@ -10,20 +10,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace App.UI.Web.Controllers
 {
-    public class EmployeeController : BaseController
+    public class EmployeeManagementController : BaseController
     {
         private readonly IDepartmentService _departmentService;
         private readonly IPositionService _positionService;
         private readonly IEmployeeService _EmployeeService;
         private readonly IPtkpService _PtkpService;
-        private readonly ILogger<EmployeeController> _logger;
+        private readonly ILogger<EmployeeManagementController> _logger;
 
-        public EmployeeController(
+        public EmployeeManagementController(
             IDepartmentService departmentService,
             IPositionService positionService,
-            IEmployeeService employeeService, 
+            IEmployeeService employeeService,
             IPtkpService ptkpService,
-            ILogger<EmployeeController> logger)
+            ILogger<EmployeeManagementController> logger)
         {
             _departmentService = departmentService;
             _positionService = positionService;
@@ -35,11 +35,11 @@ namespace App.UI.Web.Controllers
         #region Employee
         public async Task<IActionResult> Index()
         {
-            var item = new EmployeeModel() { Title = "Employee" };
-            item.PtkpList = await _PtkpService.GetListAsync();
+            //var item = new EmployeeModel() { Title = "Employee Management" };
+            //item.PtkpList = await _PtkpService.GetListAsync();
 
 
-            return View(item);
+            return View();
         }
 
         [HttpPost]
