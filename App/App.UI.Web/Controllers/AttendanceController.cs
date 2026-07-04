@@ -11,6 +11,11 @@ namespace App.UI.Web.Controllers
             return View();
         }
 
+        public ActionResult Configuration()
+        {
+            return View();
+        }
+
         // GET: AttendanceController/Details/5
         public ActionResult Details(int id)
         {
