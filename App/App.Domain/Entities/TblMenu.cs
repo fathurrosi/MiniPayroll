@@ -54,4 +54,9 @@ public partial class TblMenu
     public string? UpdatedBy { get; set; }
 
     public int? Deleted { get; set; }
+
+    [StringLength(255)]
+    public string? Description { get; set; }
+
+    public bool IsCard { get; set; }
 }

@@ -13,5 +13,7 @@ namespace App.Domain.Models.Dto.Settings
         public DateTime? LastLoginDate { get; set; }
 
         public List<MenuDto> MenuList { get; set; }
+
+        public List<MenuDto> ConfigMenuList { get; set; }
     }
 }
