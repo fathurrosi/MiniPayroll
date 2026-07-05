@@ -43,10 +43,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tbl_Attendances]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[tbl_AttendanceStatus]",
          "ObjectType": 0
       },
@@ -144,6 +140,10 @@
       },
       {
          "Name": "[dbo].[tbl_OvertimeRate]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_OvertimeType]",
          "ObjectType": 0
       },
       {

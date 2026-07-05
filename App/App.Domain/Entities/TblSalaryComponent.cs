@@ -51,4 +51,21 @@ public partial class TblSalaryComponent
     [StringLength(50)]
     [Unicode(false)]
     public string? UpdatedBy { get; set; }
+
+    [StringLength(255)]
+    public string? Description { get; set; }
+
+    public bool IsMandatory { get; set; }
+
+    [Column("IsBPJS")]
+    public bool IsBpjs { get; set; }
+
+    [Column("IsTHR")]
+    public bool IsThr { get; set; }
+
+    public bool IsProrate { get; set; }
+
+    public bool IsOvertime { get; set; }
+
+    public bool IsVisible { get; set; }
 }

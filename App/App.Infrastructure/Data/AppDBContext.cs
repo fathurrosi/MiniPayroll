@@ -76,6 +76,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblOvertimeRate> TblOvertimeRates { get; set; }
 
+    public virtual DbSet<TblOvertimeType> TblOvertimeTypes { get; set; }
+
     public virtual DbSet<TblPayroll> TblPayrolls { get; set; }
 
     public virtual DbSet<TblPayrollDetail> TblPayrollDetails { get; set; }
@@ -654,6 +656,11 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.Gender)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength();
             entity.Property(e => e.LeaveCode)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -752,6 +759,29 @@ public partial class AppDBContext : DbContext
 
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.Multiplier).HasColumnType("decimal(10, 2)");
+        });
+
+        modelBuilder.Entity<TblOvertimeType>(entity =>
+        {
+            entity.HasKey(e => e.OvertimeCode).HasName("PK__tbl_Over__3214EC073FFC7AFB");
+
+            entity.ToTable("tbl_OvertimeType");
+
+            entity.Property(e => e.OvertimeCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.OvertimeName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<TblPayroll>(entity =>
@@ -1040,6 +1070,11 @@ public partial class AppDBContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.DefaultAmount).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.IsBpjs).HasColumnName("IsBPJS");
+            entity.Property(e => e.IsProrate).HasDefaultValue(true);
+            entity.Property(e => e.IsThr).HasColumnName("IsTHR");
+            entity.Property(e => e.IsVisible).HasDefaultValue(true);
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
