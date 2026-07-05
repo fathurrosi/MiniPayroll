@@ -4,12 +4,12 @@ using App.Domain.Models.Response;
 
 namespace App.Application.Interfaces.Services.Masters
 {
-    public interface IHolidayService
+    public interface IPositionService
     {
-        Task<List<HolidayDto>> GetListAsync();
-        Task<HolidayDto?> GetByIdAsync(int id);  
-        Task<int> DeleteAsync(int id);
-        Task<PagedResponse<HolidayDto>> GetPagedAsync(DataTableRequest model); 
-        Task<HolidayDto> SaveAsync(HolidayDto model);  
+        Task<List<PositionDto>> GetListAsync();
+        Task<PositionDto?> GetByCodeAsync(string code);  
+        Task<int> DeleteAsync(string code);
+        Task<PagedResponse<PositionDto>> GetPagedAsync(DataTableRequest model); 
+        Task<PositionDto> SaveAsync(PositionDto model);  
     }
 }
