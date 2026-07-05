@@ -30,7 +30,7 @@ public partial class TblOvertimeType
 
     public bool? IsPublicHoliday { get; set; }
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }

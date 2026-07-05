@@ -227,6 +227,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[vw_Attendance]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[dbo].[vw_BranchDetails]",
          "ObjectType": 3
       },

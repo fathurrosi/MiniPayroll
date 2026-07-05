@@ -9,17 +9,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_Attendance")]
-public partial class TblAttendance
+[Keyless]
+public partial class VwAttendance
 {
-    [Key]
-    public int AttendanceId { get; set; }
-
     public int EmployeeId { get; set; }
+
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? EmployeeCode { get; set; }
+
+    [StringLength(255)]
+    [Unicode(false)]
+    public string? EmployeeName { get; set; }
 
     public DateOnly AttendanceDate { get; set; }
 
     public int? ShiftId { get; set; }
+
+    [StringLength(20)]
+    [Unicode(false)]
+    public string? ShiftCode { get; set; }
+
+    [StringLength(100)]
+    [Unicode(false)]
+    public string? ShiftName { get; set; }
 
     [Precision(0)]
     public TimeOnly? ScheduledTimeIn { get; set; }
@@ -54,23 +67,19 @@ public partial class TblAttendance
 
     public bool IsManualEntry { get; set; }
 
-    [StringLength(100)]
-    public string CreatedBy { get; set; } = null!;
-
-    public DateTime CreatedDate { get; set; }
-
-    [Column(TypeName = "datetime")]
-    public DateTime? UpdatedDate { get; set; }
+    [StringLength(50)]
+    [Unicode(false)]
+    public string Position { get; set; } = null!;
 
     [StringLength(50)]
     [Unicode(false)]
-    public string? UpdatedBy { get; set; }
+    public string Department { get; set; } = null!;
 
-    [ForeignKey("EmployeeId")]
-    [InverseProperty("TblAttendances")]
-    public virtual TblEmployee Employee { get; set; } = null!;
+    [StringLength(100)]
+    [Unicode(false)]
+    public string PositionDescription { get; set; } = null!;
 
-    [ForeignKey("ShiftId")]
-    [InverseProperty("TblAttendances")]
-    public virtual TblShift? Shift { get; set; }
+    [StringLength(100)]
+    [Unicode(false)]
+    public string DepartmentDescription { get; set; } = null!;
 }
