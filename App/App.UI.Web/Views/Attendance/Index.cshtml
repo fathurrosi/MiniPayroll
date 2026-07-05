@@ -1,4 +1,11 @@
-﻿<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+﻿@using App.Domain.Models 
+@using App.Domain.Models.Dto.Attendance
+@model PageModel<AttendanceDto>
+@{
+    ViewData["Title"] = $"Data Master - {Model.Title}";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
 <div class="container-fluid py-4">
@@ -139,272 +146,452 @@
     <!-- Attendance Table -->
 
     <div class="card shadow-sm border-0">
-
         <div class="card-header bg-white d-flex justify-content-between">
-
             <span class="fw-bold">
                 Attendance List
             </span>
-
-            <span class="badge bg-primary">
+            @* <span class="badge bg-primary">
                 125 Records
-            </span>
-
+            </span> *@
         </div>
-
         <div class="table-responsive">
 
-            <table class="table table-hover align-middle mb-0">
-
-                <thead class="table-light">
-
-                    <tr>
-
-                        <th>#</th>
-
-                        <th>Employee</th>
-
-                        <th>Department</th>
-
-                        <th>Date</th>
-
-                        <th>Shift</th>
-
-                        <th>Time In</th>
-
-                        <th>Time Out</th>
-
-                        <th>Late</th>
-
-                        <th>Status</th>
-
-                        <th width="120">Action</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td>1</td>
-
-                        <td>
-                            <strong>John Doe</strong><br>
-                            <small class="text-muted">EMP0001</small>
-                        </td>
-
-                        <td>IT</td>
-
-                        <td>01-Jul-2026</td>
-
-                        <td>Morning</td>
-
-                        <td>08:00</td>
-
-                        <td>17:02</td>
-
-                        <td>
-                            <span class="badge bg-success">
-                                On Time
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="badge bg-success">
-                                Present
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button class="btn btn-sm btn-outline-primary">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>2</td>
-
-                        <td>
-                            <strong>Mary</strong><br>
-                            <small class="text-muted">EMP0002</small>
-                        </td>
-
-                        <td>HR</td>
-
-                        <td>01-Jul-2026</td>
-
-                        <td>Morning</td>
-
-                        <td>08:18</td>
-
-                        <td>17:00</td>
-
-                        <td>
-                            <span class="badge bg-warning text-dark">
-                                18 Min
-                            </span>
-                        </td>
-
-                        <td>
-                            <span class="badge bg-warning text-dark">
-                                Late
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button class="btn btn-sm btn-outline-primary">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>3</td>
-
-                        <td>
-                            <strong>David</strong><br>
-                            <small class="text-muted">EMP0003</small>
-                        </td>
-
-                        <td>Finance</td>
-
-                        <td>01-Jul-2026</td>
-
-                        <td>Morning</td>
-
-                        <td>-</td>
-
-                        <td>-</td>
-
-                        <td>-</td>
-
-                        <td>
-                            <span class="badge bg-danger">
-                                Absent
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button class="btn btn-sm btn-outline-primary">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>4</td>
-
-                        <td>
-                            <strong>Lisa</strong><br>
-                            <small class="text-muted">EMP0004</small>
-                        </td>
-
-                        <td>Sales</td>
-
-                        <td>01-Jul-2026</td>
-
-                        <td>Morning</td>
-
-                        <td>-</td>
-
-                        <td>-</td>
-
-                        <td>-</td>
-
-                        <td>
-                            <span class="badge bg-info">
-                                Leave
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button class="btn btn-sm btn-outline-primary">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>5</td>
-
-                        <td>
-                            <strong>Kevin</strong><br>
-                            <small class="text-muted">EMP0005</small>
-                        </td>
-
-                        <td>Production</td>
-
-                        <td>01-Jul-2026</td>
-
-                        <td>Morning</td>
-
-                        <td>-</td>
-
-                        <td>-</td>
-
-                        <td>-</td>
-
-                        <td>
-                            <span class="badge bg-secondary">
-                                Holiday
-                            </span>
-                        </td>
-
-                        <td>
-
-                            <button class="btn btn-sm btn-outline-primary">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-
-                            <button class="btn btn-sm btn-outline-danger">
-                                <i class="bi bi-trash"></i>
-                            </button>
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
+            <table id="main-table" class="table table-hover align-middle mb-0"> 
             </table>
 
         </div>
-
     </div>
-
 </div>
+
+                            
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function closeModal() {
+            const modalElement = document.getElementById('overtimeTypeModal');
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            setReadonly(false);
+            if (modal) {
+                modal.hide();
+            }
+        }
+        function showModal(isEdit) {
+            $('#modalTitle').text(
+                isEdit ? 'Edit overtimeType' : 'Add overtimeType'
+            );
+
+            setReadonly(isEdit);
+            const modal = new bootstrap.Modal(
+                document.getElementById('overtimeTypeModal')
+            );
+            modal.show();
+        }
+        $(document).ready(function () {
+             $('#logoFile').on('change', function () {
+                 const file = this.files[0];
+                 const preview = document.getElementById('logoPreview');
+                 if (!file) {
+                     preview.style.display = 'none';
+                     return;
+                 }
+                 preview.src = URL.createObjectURL(file);
+                 preview.style.display = 'block';
+            });
+            
+            const table = $('#main-table').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                autoWidth: false,
+                filter: true,
+                orderMulti: false,
+                order: [[1, "desc"]],
+                ajax: {
+                    url: '@Url.Action("GetList", "Attendance")',
+                    type: "POST",
+                    contentType: "application/json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    },
+                    dataSrc: function (json) {
+                        return json.data || [];
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 401 || xhr.status === 403)
+                            return;
+                        notify.error("Failed to load attendance.");
+                    }
+                },
+                columnDefs: [
+                    {
+                        targets: -1,
+                        className: "not-export"
+                    }
+                ],
+                columns: [
+                    // Employee
+                    {
+                        data: null,
+                        title: "Employee",
+                        width: "260px",
+                        render: function (data) {
+                            return `
+                                <div class="fw-bold">
+                                    ${data.employeeCode}
+                                </div>
+                                <div>
+                                    ${data.employeeName}
+                                </div>
+                                <small class="text-muted">
+                                    ${data.DepartmentDescription ?? ""}
+                                </small>
+                            `;
+                        }
+                    },
+                    // Attendance Date
+                    {
+                        data: "attendanceDate",
+                        title: "Date",
+                        width: "110px",
+                        className: "text-center",
+                        render: function (data) {
+                            if (!data)
+                                return "-";
+                            return moment(data).format("DD MMM YYYY");
+                        }
+                    },
+                    // Shift
+                    {
+                        data: "shiftCode",
+                        title: "Shift",
+                        width: "100px",
+                        className: "text-center",
+                        render: function (data) {
+                            return `
+                                <span class="badge bg-primary">
+                                    ${data ?? "-"}
+                                </span>
+                            `;
+                        }
+                    },
+                    // Schedule
+                    {
+                        data: null,
+                        title: "Schedule",
+                        width: "120px",
+                        className: "text-center",
+                        render: function (data) {
+                            return `
+                                <div class="fw-semibold">
+                                    ${data.scheduledTimeIn ?? "--:--"}
+                                </div>
+
+                                <small class="text-muted">
+                                    ${data.scheduledTimeOut ?? "--:--"}
+                                </small>
+                            `;
+                        }
+                    },
+                    // Actual
+                    {
+                        data: null,
+                        title: "Actual",
+                        width: "120px",
+                        className: "text-center",
+                        render: function (data) {
+                            return `
+                                <div class="text-success fw-semibold">
+                                    ${data.actualTimeIn ?? "-"}
+                                </div>
+
+                                <small class="text-danger">
+                                    ${data.actualTimeOut ?? "-"}
+                                </small>
+                            `;
+                        }
+                    },
+                    // Late / Early
+                    {
+                        data: null,
+                        title: "Late / Early",
+                        width: "120px",
+                        className: "text-center",
+                        render: function (data) {
+                            return `
+                                <div>
+                                    <span class="badge bg-danger">
+                                        Late ${data.lateMinutes}m
+                                    </span>
+                                </div>
+                                <div class="mt-1">
+                                    <span class="badge bg-warning text-dark">
+                                        Early ${data.earlyOutMinutes}m
+                                    </span>
+                                </div>
+                            `;
+                        }
+                    },
+
+                    // Working Hours
+                    {
+                        data: "workMinutes",
+                        title: "Work",
+                        width: "90px",
+                        className: "text-center",
+                        render: function (data) {
+                            let h = Math.floor((data || 0) / 60);
+                            let m = (data || 0) % 60;
+                            return `
+                                <span class="fw-bold">
+                                    ${h}h ${m}m
+                                </span>
+                            `;
+                        }
+                    },
+
+                    // OT
+                    {
+                        data: "overtimeMinutes",
+                        title: "OT",
+                        width: "90px",
+                        className: "text-center",
+                        render: function (data) {
+                            if (!data)
+                                return "-";
+
+                            let h = Math.floor(data / 60);
+                            let m = data % 60;
+                            return `
+                                <span class="badge bg-info">
+                                    ${h}h ${m}m
+                                </span>
+                            `;
+                        }
+                    },
+                    // Status
+                    {
+                        data: "attendanceStatus",
+                        title: "Status",
+                        width: "120px",
+                        className: "text-center",
+                        render: function (data) {
+                            switch ((data || "").toUpperCase()) {
+                                case "PRESENT":
+                                    return `
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle"></i>
+                                            Present
+                                        </span>`;
+                                case "LATE":
+                                    return `
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="bi bi-clock"></i>
+                                            Late
+                                        </span>`;
+                                case "ABSENT":
+                                    return `
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-x-circle"></i>
+                                            Absent
+                                        </span>`;
+                                case "LEAVE":
+                                    return `
+                                        <span class="badge bg-info">
+                                            <i class="bi bi-airplane"></i>
+                                            Leave
+                                        </span>`;
+                                case "HOLIDAY":
+                                    return `
+                                        <span class="badge bg-primary">
+                                            <i class="bi bi-calendar-event"></i>
+                                            Holiday
+                                        </span>`;
+                                case "RESTDAY":
+                                    return `
+                                        <span class="badge bg-secondary">
+                                            <i class="bi bi-moon"></i>
+                                            Rest Day
+                                        </span>`;
+                                default:
+                                    return `
+                                        <span class="badge bg-dark">
+                                            ${data}
+                                        </span>`;
+                            }
+                        }
+                    },
+
+                    // Action
+                    {
+                        data: null,
+                        title: "Action",
+                        width: "90px",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false,
+                        render: function (data, type, row) {
+                            return `
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a href="javascript:void(0)"
+                                       onclick="viewAttendance(${row.attendanceId})"
+                                       title="View">
+                                        <i class="fa-solid fa-eye text-primary"></i>
+                                    </a>
+                                    <a href="javascript:void(0)"
+                                       onclick="editAttendance(${row.attendanceId})"
+                                       title="Adjust">
+                                        <i class="fa-solid fa-pen-to-square text-success"></i>
+                                    </a>
+                                </div>
+                            `;
+                        }
+                    }
+                ],
+                dom:
+                    "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
+                    "rt" +
+                    "<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
+                buttons: [
+                    {
+                        extend: "csvHtml5",
+                        className: "btn-export-csv d-none",
+                        title: "@Model.Title",
+                        exportOptions: {
+                            columns: ":not(.not-export)"
+                        }
+                    },
+                    {
+                        extend: "pdfHtml5",
+                        className: "btn-export-pdf d-none",
+                        title: "@Model.Title",
+                        exportOptions: {
+                            columns: ":not(.not-export)"
+                        }
+                    }
+
+                ]
+
+            });
+            
+            $('#csv-export').on('click', function () {
+                $('.btn-export-csv').trigger('click');
+            });
+
+            $('#pdf-export').on('click', function () {
+                $('.btn-export-pdf').trigger('click');
+            });
+
+            $('#add-new').on('click', function () {
+                showModal(false);
+            });
+             $('#save-button').on('click', function () {
+                saveovertimeType();
+            });
+
+            $('#Item_IsActive').prop('checked', data.isActive === true);
+        });
+
+        function saveovertimeType() {
+            const form = $('#overtimeTypeForm')[0];
+            const formData = new FormData(form);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Add", "overtimeType")',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('#save-button').prop('disabled', true);
+                },
+                success: function (response) {
+                    if (response.success) {
+                        notify.success(response.message);
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        closeModal();
+                    }
+                    else {
+                        notify.warning(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('An error occurred while saving Company overtimeType');
+                },
+                complete: function () {
+                    $('#save-button').prop('disabled', false);
+                }
+            });
+        }
+
+        function editRow(code) {
+
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetData", "OvertimeType")',
+                data: { code: code},
+
+                success: function (data) {
+
+                    if (!data) {
+                        notify.warning('Overtime type not found.');
+                        return;
+                    }
+
+                    // Basic Information
+                    $('#Item_OvertimeCode').val(data.overtimeCode);
+                    $('#Item_OvertimeName').val(data.overtimeName);
+                    $('#Item_Description').val(data.description);
+
+                    // Category
+                    $('#Item_OvertimeCategory').val(data.overtimeCategory);
+
+                    // Status
+                    $('#Item_IsActive').prop('checked', data.isActive);
+
+                    showModal(true);
+                },
+
+                error: function (xhr) {
+
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+
+                    notify.error('Failed to retrieve overtime type.');
+
+                }
+            });
+
+        }
+        function deleteRow(code) {
+            $.ajax({
+                type: 'DELETE',
+                url: '@Url.Action("Delete", "overtimeType")',
+                data: {
+                    code: code
+                },
+                headers: {
+                    'RequestVerificationToken':
+                        $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.success) {
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        resetForm();
+                        notify.success(response.message);
+                    } else {
+                        notify.warning(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403)
+                        return;
+                    notify.error('Failed to delete Company overtimeType');
+                }
+            });
+        }
+        function resetForm() {
+            $('#overtimeTypeForm')[0].reset();
+        }
+    </script>
+}

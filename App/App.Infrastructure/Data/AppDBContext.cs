@@ -118,6 +118,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblUserRole> TblUserRoles { get; set; }
 
+    public virtual DbSet<VwAttendance> VwAttendances { get; set; }
+
     public virtual DbSet<VwBranchDetail> VwBranchDetails { get; set; }
 
     public virtual DbSet<VwEmployeeMonthlySchedule> VwEmployeeMonthlySchedules { get; set; }
@@ -206,10 +208,13 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(100);
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsManualEntry).HasDefaultValue(true);
-            entity.Property(e => e.ModifiedBy).HasMaxLength(100);
             entity.Property(e => e.Remarks).HasMaxLength(500);
             entity.Property(e => e.ScheduledTimeIn).HasPrecision(0);
             entity.Property(e => e.ScheduledTimeOut).HasPrecision(0);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
             entity.HasOne(d => d.Employee).WithMany(p => p.TblAttendances)
                 .HasForeignKey(d => d.EmployeeId)
@@ -775,6 +780,7 @@ public partial class AppDBContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.IsActive).HasAnnotation("Relational:DefaultConstraintName", "DF_tbl_OvertimeType_IsActive");
             entity.Property(e => e.OvertimeName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -1179,6 +1185,51 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<VwAttendance>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_Attendance");
+
+            entity.Property(e => e.ActualTimeIn).HasPrecision(0);
+            entity.Property(e => e.ActualTimeOut).HasPrecision(0);
+            entity.Property(e => e.AttendanceStatus)
+                .IsRequired()
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.Department)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.DepartmentDescription)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.EmployeeCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.EmployeeName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Position)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.PositionDescription)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Remarks).HasMaxLength(500);
+            entity.Property(e => e.ScheduledTimeIn).HasPrecision(0);
+            entity.Property(e => e.ScheduledTimeOut).HasPrecision(0);
+            entity.Property(e => e.ShiftCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.ShiftName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<VwBranchDetail>(entity =>

@@ -32,6 +32,7 @@ namespace App.Infrastructure.Extensions
                     "App.Infrastructure.Services",
                     "App.Infrastructure.Services.Masters",
                     "App.Infrastructure.Services.Payroll",
+                    "App.Infrastructure.Services.Attendance",
                     "App.Infrastructure.Services.Settings" )
                     .Where(type => type.Name.EndsWith("Service")))
                 .AsImplementedInterfaces()
