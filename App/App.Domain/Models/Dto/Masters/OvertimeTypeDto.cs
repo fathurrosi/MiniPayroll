@@ -22,7 +22,7 @@ namespace App.Domain.Models.Dto.Masters
 
         public bool? IsPublicHoliday { get; set; }
 
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         //public string OvertimeCategory { get; set; }
         //private string _OvertimeCategory;

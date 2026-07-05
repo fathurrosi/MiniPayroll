@@ -61,164 +61,104 @@
      aria-hidden="true">
 
     <div class="modal-dialog modal-dialog-centered">
-
         <div class="modal-content border-0 shadow">
-
             <div class="modal-header">
-
                 <h5 class="modal-title fw-bold"
                     id="overtimeTypeModalLabel">
-
                     <i class="bi bi-stopwatch text-primary me-2"></i>
-
                     <span id="modalTitle">
                         Add @Model.Title
                     </span>
-
                 </h5>
-
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal">
                 </button>
-
             </div>
-
             <div class="modal-body">
-
                 <form id="overtimeTypeForm"
                       asp-action="Save"
                       method="post"
                       autocomplete="off">
-
                     @Html.AntiForgeryToken()
-
                     @Html.HiddenFor(m => m.Mode)
                     @Html.HiddenFor(m => m.Title)
- 
-
                     <div class="row g-3">
-
                         <div class="col-md-4">
-
                             <label asp-for="Item.OvertimeCode"
                                    class="form-label fw-semibold">
                             </label>
-
                             <input asp-for="Item.OvertimeCode" asp-key="true"
                                    class="form-control text-uppercase" />
-
                             <span asp-validation-for="Item.OvertimeCode"
                                   class="text-danger small"></span>
-
                         </div>
 
                         <div class="col-md-8">
-
                             <label asp-for="Item.OvertimeName"
                                    class="form-label fw-semibold">
                             </label>
-
                             <input asp-for="Item.OvertimeName"
                                    class="form-control"
                                    placeholder="Working Day" />
-
                             <span asp-validation-for="Item.OvertimeName"
                                   class="text-danger small"></span>
-
                         </div>
 
                         <div class="col-md-12">
-
                             <label class="form-label fw-semibold">
-
                                 Applies To
-
                             </label>
 
                             <select asp-for="Item.OvertimeCategory"
                                     class="form-select">
-
                                 <option value="">-- Select Category --</option>
-
                                 <option value="WorkingDay">
                                     🏢 Working Day
                                 </option>
-
                                 <option value="RestDay">
                                     🛌 Rest Day
                                 </option>
-
                                 <option value="PublicHoliday">
                                     🎉 Public Holiday
                                 </option>
-
                             </select>
-
                         </div>
-
                         <div class="col-md-12">
-
                             <label asp-for="Item.Description"
                                    class="form-label fw-semibold">
                             </label>
-
                             <textarea asp-for="Item.Description"
                                       class="form-control"
                                       rows="3"
                                       placeholder="Description..."></textarea>
-
                         </div>
 
-                        <div class="col-md-12">
-
-                            <div class="form-check form-switch">
-
-                                <input asp-for="Item.IsActive"
-                                       class="form-check-input" />
-
-                                <label asp-for="Item.IsActive"
-                                       class="form-check-label">
-                                </label>
-
+                        <div class="col-md-8">
+                            <div class="form-check form-switch d-flex align-items-center gap-2 ps-0">
+                                <input asp-for="Item.IsActive" class="form-check-input ms-0 me-1" type="checkbox" role="switch" />
+                                <label asp-for="Item.IsActive" class="form-check-label fw-semibold mb-0" style="cursor: pointer;"></label>
                             </div>
-
                         </div>
-
                     </div>
-
                 </form>
-
             </div>
-
             <div class="modal-footer">
-
                 <button class="btn btn-light"
                         type="button"
                         onclick="resetForm()">
-
                     <i class="bi bi-arrow-clockwise"></i>
-
                     Reset
-
                 </button>
-
                 <button id="save-button"
                         class="btn btn-primary"
                         type="button">
-
                     <i class="bi bi-check-circle"></i>
-
                     Save
-
                 </button>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
@@ -231,12 +171,12 @@
                 modal.hide();
             }
         }
-        function showModal(id) {
+        function showModal(isEdit) {
             $('#modalTitle').text(
-                id > 0 ? 'Edit overtimeType' : 'Add overtimeType'
+                isEdit ? 'Edit overtimeType' : 'Add overtimeType'
             );
 
-            setReadonly(id > 0 ? true : false);
+            setReadonly(isEdit);
             const modal = new bootstrap.Modal(
                 document.getElementById('overtimeTypeModal')
             );
@@ -379,7 +319,7 @@
                                 <div class="d-flex justify-content-center gap-2">
 
                                     <a href="javascript:void(0)"
-                                       onclick="editRow(${row.id})"
+                                       onclick="editRow('${row.overtimeCode}')"
                                        title="Edit">
 
                                         <i class="fa-solid fa-pen-to-square text-primary"></i>
@@ -387,7 +327,7 @@
                                     </a>
 
                                     <a href="javascript:void(0)"
-                                       onclick="confirmDelete(() => deleteRow(${row.id}))"
+                                       onclick="confirmDelete(() => deleteRow('${row.overtimeCode}'))"
                                        title="Delete">
 
                                         <i class="fa-solid fa-trash text-danger"></i>
@@ -439,11 +379,13 @@
             });
 
             $('#add-new').on('click', function () {
-                showModal();
+                showModal(false);
             });
              $('#save-button').on('click', function () {
                 saveovertimeType();
             });
+
+            $('#Item_IsActive').prop('checked', data.isActive === true);
         });
 
         function saveovertimeType() {
@@ -479,39 +421,51 @@
             });
         }
 
-        function editRow(id) {
+        function editRow(code) {
+
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetData", "overtimeType")',
-                data: { id: id },
+                url: '@Url.Action("GetData", "OvertimeType")',
+                data: { code: code},
+
                 success: function (data) {
+
                     if (!data) {
-                        notify.warning('overtimeType not found');
+                        notify.warning('Overtime type not found.');
                         return;
                     }
-             
-                    $('#Item_Id').val(data.id); 
-                    if (data.overtimeTypeDate) {
-                        var cleanDate = data.overtimeTypeDate.split('T')[0];
-                        $('#Item_overtimeTypeDate').val(cleanDate);
-                    }
-                      
-                    $('#Item_overtimeTypeName').val(data.overtimeTypeName);  $('#chkNationalovertimeType').prop('checked', data.isNationalovertimeType); 
-                    showModal(data.id);
+
+                    // Basic Information
+                    $('#Item_OvertimeCode').val(data.overtimeCode);
+                    $('#Item_OvertimeName').val(data.overtimeName);
+                    $('#Item_Description').val(data.description);
+
+                    // Category
+                    $('#Item_OvertimeCategory').val(data.overtimeCategory);
+
+                    // Status
+                    $('#Item_IsActive').prop('checked', data.isActive);
+
+                    showModal(true);
                 },
+
                 error: function (xhr) {
+
                     if (xhr.status === 401 || xhr.status === 403)
                         return;
-                    notify.error('Failed to retrieve Company overtimeType');
+
+                    notify.error('Failed to retrieve overtime type.');
+
                 }
             });
-        } 
-        function deleteRow(id) {
+
+        }
+        function deleteRow(code) {
             $.ajax({
                 type: 'DELETE',
                 url: '@Url.Action("Delete", "overtimeType")',
                 data: {
-                    id: id
+                    code: code
                 },
                 headers: {
                     'RequestVerificationToken':
