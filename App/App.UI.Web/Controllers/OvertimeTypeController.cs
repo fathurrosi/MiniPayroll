@@ -55,11 +55,11 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetData(string id)
+        public async Task<IActionResult> GetData(string code)
         {
             try
             {
-                var model = await _OvertimeTypeService.GetByCodeAsync(id);
+                var model = await _OvertimeTypeService.GetByCodeAsync(code);
                 return Json(model);
             }
             catch (Exception ex)
