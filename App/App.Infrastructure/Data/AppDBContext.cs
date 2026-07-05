@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructure.Data;
