@@ -1,19 +1,37 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using App.Application.Interfaces.Services;
+using App.Domain.Models;
+using App.Domain.Models.Dto;
+using App.Domain.Models.Dto.Masters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.UI.Web.Controllers
 {
     public class AttendanceController : BaseController
     {
+        private readonly ILogger<AttendanceController> _logger;
+        private readonly IUserService _userService;
+        public AttendanceController(ILogger<AttendanceController> logger
+            , IUserService userService)
+        {
+            _logger = logger;
+            _userService = userService;
+        }
+
         // GET: AttendanceController
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Configuration()
+        public async Task<ActionResult> Configuration()
         {
-            return View();
+            var user = await _userService.GetUserAsync();
+            var model = new PageModel<List<MenuDto>>() { Title = "Attendance Configuration" };
+            model.Item = new List<MenuDto>();
+
+            if (user != null)
+                model.Item = user.ConfigMenuList.Where( t=> t.ParentId == "ATT004").ToList();
+            return View(model);
         }
 
         // GET: AttendanceController/Details/5

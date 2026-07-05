@@ -1,4 +1,5 @@
 ﻿using App.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -37,5 +38,12 @@ namespace App.Domain.Models.Dto
         public string? ParentId { get; set; }
 
         public List<MenuDto> ChildList { get; set; }
+
+
+
+        [MaxLength(255)]
+        public string? Description { get; set; }
+
+        public bool IsCard { get; set; } 
     }
 }

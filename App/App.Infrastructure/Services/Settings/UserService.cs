@@ -341,26 +341,30 @@ namespace App.Infrastructure.Services.Settings
             if (entity != null)
             {
                 user = _mapper.Map<UserDto>(entity);
-                var menuEntities = await _menuRepo.GetListAsync(t=> t.Deleted != 1);
-                ;
+                var menuEntities = await _menuRepo.GetListAsync(t => t.Deleted != 1);
+
                 List<MenuDto> result = new List<MenuDto>();
                 var parentList = menuEntities.Where(t => string.IsNullOrEmpty(t.ParentId)).OrderBy(t => t.Sort).ToList();
                 foreach (var parent in parentList)
                 {
                     var parentManu = _mapper.Map<MenuDto>(parent);
-                    parentManu.ChildList = menuEntities.Where(t => t.ParentId == parent.Id).Select(t => _mapper.Map<MenuDto>(t)).OrderBy(t => t.Sort).ToList();
+                    parentManu.ChildList = menuEntities.Where(t => t.ParentId == parent.Id)
+                        .Select(t => _mapper.Map<MenuDto>(t)).OrderBy(t => t.Sort).ToList();
 
                     result.Add(parentManu);
                 }
 
                 user.MenuList = result;
+
+                user.ConfigMenuList = menuEntities.Where(t => t.IsCard == true)
+                    .Select(t => _mapper.Map<MenuDto>(t)).OrderBy(t => t.Sort).ToList();
             }
             return user;
         }
 
         public async Task<bool> ClearAsync()
-        { 
-            return await ClearAsync(_context.Username);  
+        {
+            return await ClearAsync(_context.Username);
         }
 
         public async Task<bool> ClearAsync(string username)
@@ -394,7 +398,7 @@ namespace App.Infrastructure.Services.Settings
         {
             throw new NotImplementedException();
         }
-         
+
     }
 
 }
