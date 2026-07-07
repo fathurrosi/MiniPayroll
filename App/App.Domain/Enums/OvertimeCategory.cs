@@ -4,10 +4,10 @@ using System.Text;
 
 namespace App.Domain.Enums
 {
-    public enum CalculationType
+    public enum OvertimeCategory
     {
-        Fixed,
-        Percentage,
-        Formula,
+        WorkingDay,
+        RestDay,
+        PublicHoliday
     }
 }

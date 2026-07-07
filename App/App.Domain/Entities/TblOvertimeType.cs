@@ -9,46 +9,40 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Domain.Entities;
 
-[Table("tbl_LeaveType")]
-public partial class TblLeaveType
+[Table("tbl_OvertimeType")]
+public partial class TblOvertimeType
 {
     [Key]
-    public int Id { get; set; }
-
     [StringLength(20)]
     [Unicode(false)]
-    public string? LeaveCode { get; set; }
+    public string OvertimeCode { get; set; } = null!;
 
     [StringLength(100)]
     [Unicode(false)]
-    public string? LeaveName { get; set; }
+    public string? OvertimeName { get; set; }
 
-    public int? DefaultAnnualQuota { get; set; }
+    [StringLength(255)]
+    public string? Description { get; set; }
 
-    public bool IsPaid { get; set; }
+    public bool? IsWorkingDay { get; set; }
+
+    public bool? IsRestDay { get; set; }
+
+    public bool? IsPublicHoliday { get; set; }
 
     public bool IsActive { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime? CreatedDate { get; set; }
 
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? CreatedBy { get; set; }
+
     [Column(TypeName = "datetime")]
     public DateTime? UpdatedDate { get; set; }
 
     [StringLength(50)]
     [Unicode(false)]
-    public string? CreatedBy { get; set; }
-
-    [StringLength(50)]
-    [Unicode(false)]
     public string? UpdatedBy { get; set; }
-
-    [StringLength(255)]
-    public string? Description { get; set; }
-
-    public bool RequireAttachment { get; set; }
-
-    [StringLength(1)]
-    [Unicode(false)]
-    public string? Gender { get; set; }
 }

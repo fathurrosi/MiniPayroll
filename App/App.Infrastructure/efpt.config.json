@@ -43,10 +43,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tbl_Attendances]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[tbl_AttendanceStatus]",
          "ObjectType": 0
       },
@@ -147,6 +143,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_OvertimeType]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_PayrollDetails]",
          "ObjectType": 0
       },
@@ -225,6 +225,10 @@
       {
          "Name": "[dbo].[tbl_Users]",
          "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[vw_Attendance]",
+         "ObjectType": 3
       },
       {
          "Name": "[dbo].[vw_BranchDetails]",

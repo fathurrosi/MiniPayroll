@@ -3,84 +3,7 @@
 @{
     int daysInMonth = DateTime.DaysInMonth(Model.Year, Model.Month);
 }
-@* <div class="row">
-    <div class="col-md-12">
-        <div class="card shadow-sm full-height-card">
-            <div class="card-header py-2 px-3 bg-light">
-
-                <div class="d-flex align-items-center">
-
-                    <h6 class="mb-0 fw-semibold">
-                        Filter Shift Schedule
-                    </h6>
-                </div>
-
-            </div>
-            <!-- Body -->
-            <div class="card-body p-2">
-                
-                <div class="row mb-3">
-                    <div class="col-md-2">
-                        <select asp-for="Year"
-                                class="form-select">
-                            @for (int i = DateTime.Now.Year - 2; i <= DateTime.Now.Year + 2; i++)
-                            {
-                                <option value="@i">@i</option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-md-2">
-                        <select asp-for="Month"
-                                class="form-select">
-
-                            @for (int i = 1; i <= 12; i++)
-                            {
-                                <option value="@i">
-                                    @(new DateTime(2000, i, 1).ToString("MMMM"))
-                                </option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <select asp-for="DepartmentCode" class="form-select">
-                            <option value=""> -- Select Department -- </option>
-                            @foreach (var department in Model.Departments)
-                            {
-                                <option value="@department.DepartmentCode">
-                                    @department.DepartmentName
-                                </option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-md-3">
-                        <select asp-for="EmployeeId" class="form-select">
-                            <option value=""> -- Select Employee -- </option>
-                            @foreach (var emp in Model.Employees)
-                            {
-                                <option value="@emp.EmployeeId">
-                                    @emp.FullName
-                                </option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-md-1 text-end">
-                        <button id="btnSearch" class="btn btn-primary col-md-12">
-                            Search
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-     
-</div> *@
-
+ 
 <div class="row">
     <div class="col-md-12">
         <div class="card shadow-sm full-height-card">
@@ -99,7 +22,7 @@
                                 data-bs-target="#generateScheduleModal">
                             <i class="bi bi-calendar-plus"></i>
                             Generate Schedule
-                        </button> 
+                        </button>
                         <button id="csv-export"
                                 class="btn btn-sm btn-outline-success">
                             <i class="fa-solid fa-file-excel me-1"></i>
@@ -201,7 +124,7 @@
                         data-bs-dismiss="modal">
                 </button>
             </div>
-            <div class="modal-body">                            
+            <div class="modal-body">
                 <div class="mb-3">
                     <label asp-for="ModalDateFrom" class="form-label">
                         From Date
@@ -249,14 +172,13 @@
                     </select>
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input"
-                           type="checkbox"
-                           id="ModalOverwriteExisting">
-                    <label class="form-check-label">
-                        Overwrite Existing Schedule
-                    </label>
+                <div class="mb-3">
+                    <div class="form-check form-switch d-flex align-items-center gap-2 ps-0">
+                        <input id="ModalOverwriteExisting" class="form-check-input ms-0 me-1" type="checkbox" role="switch" />
+                        <label class="form-check-label fw-semibold mb-0" style="cursor: pointer;"> Overwrite Existing Schedule</label>
+                    </div>
                 </div>
+                 
             </div>
             <div class="modal-footer">
                 <button type="button"
@@ -317,10 +239,10 @@
                 serverSide: true,
                 searching: false,
                 scrollX: true,
-                scrollCollapse: true,  
-                autoWidth: false, 
+                scrollCollapse: true,
+                autoWidth: false,
                 fixedColumns: {
-                    left: 2  
+                    left: 2
                 },
                 ajax: {
                     url: '@Url.Action("GetList", "Schedule")',
@@ -334,7 +256,7 @@
                         return JSON.stringify(d);
                     }
                 },
-                columns: buildColumns(daysInMonth),     
+                columns: buildColumns(daysInMonth),
                 dom:
                     "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
                     "rt" +
@@ -360,25 +282,25 @@
             });
 
              
-            $('#csv-export').on('click', function () { 
+            $('#csv-export').on('click', function () {
                 $('.btn-export-csv').trigger('click');
             });
 
-            $('#pdf-export').on('click', function () { 
+            $('#pdf-export').on('click', function () {
                 $('.btn-export-pdf').trigger('click');
             });
         }
 
         $(document).ready(function () {
             loadSchedule();
-            $('#btnSearch').click(function () { 
+            $('#btnSearch').click(function () {
                 loadSchedule();
             });
 
             $('#btnGenerate').click(function () {
                 var $btn = $(this);
                 $.ajax({
-                    url: '@Url.Action("GenerateSchedule", "Schedule")',
+                    url: '@Url.Action("Generate", "Schedule")',
                     type: 'POST',
                     data: {
                         dateFrom : $('#ModalDateFrom').val(),
