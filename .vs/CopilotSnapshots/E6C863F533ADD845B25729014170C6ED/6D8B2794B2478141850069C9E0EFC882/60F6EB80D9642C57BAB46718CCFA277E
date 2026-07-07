@@ -19,20 +19,17 @@ namespace App.Infrastructure.Services.Leave
         private readonly IMapper _mapper;
         private readonly IGenericRepository<TblLeaveRequest> _leaveRepo;
         private readonly IGenericRepository<VwLeaveRequest> _vwLeaveRequest;
-        private readonly IGenericRepository<TblEmployee> _employeeRepo;
         private readonly ILogger<LeaveService> _logger;
         private readonly IContextService _userService;
 
         public LeaveService(IGenericRepository<TblLeaveRequest> leaveRepo,
             IGenericRepository<VwLeaveRequest> vwLeaveRequest,
-            IGenericRepository<TblEmployee> employeeRepo,
             IMapper mapper,
             ILogger<LeaveService> logger,
             IContextService userService)
         {
             _leaveRepo = leaveRepo;
             _vwLeaveRequest = vwLeaveRequest;
-            _employeeRepo = employeeRepo;
             _mapper = mapper;
             _logger = logger;
             _userService = userService;
@@ -107,27 +104,10 @@ namespace App.Infrastructure.Services.Leave
             {
                 if (model.Id == 0)
                 {
-                    // Try to resolve employee's current branch/department when creating a new leave
-                    string branchCode = model.BranchCode;
-                    string departmentCode = model.DepartmentCode;
-                    if (model.EmployeeId != 0)
-                    {
-                        var employee = await _employeeRepo.FindAsync(e => e.EmployeeId == model.EmployeeId);
-                        if (employee != null)
-                        {
-                            // Employee.Department may contain a code or name depending on data model.
-                            // Prefer employee.Department when model did not provide a department.
-                            if (string.IsNullOrWhiteSpace(departmentCode) && !string.IsNullOrWhiteSpace(employee.Department))
-                                departmentCode = employee.Department!;
-
-                            // If employee has branch info in the future, map it here. Currently TblEmployee has no branch field.
-                        }
-                    }
-
                     TblLeaveRequest item = new TblLeaveRequest
                     {
-                        BranchCode = branchCode,
-                        DepartmentCode = departmentCode,
+                        BranchCode = model.BranchCode,
+                        DepartmentCode = model.DepartmentCode,
                         EmployeeId = model.EmployeeId,
                         LeaveTypeCode = model.LeaveTypeCode,
                         StartDate = model.StartDate,

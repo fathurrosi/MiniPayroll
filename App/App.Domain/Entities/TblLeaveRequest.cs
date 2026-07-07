@@ -37,8 +37,8 @@ public partial class TblLeaveRequest
 
     public string? Reason { get; set; }
 
-    [StringLength(50)]
-    public bool ApprovalStatus { get; set; }
+    [Required]
+    public bool? ApprovalStatus { get; set; }
 
     public long? ApprovedBy { get; set; }
 

@@ -189,7 +189,7 @@
 
         $(document).ready(function () {
             // Initialize Select2 with AJAX
-            const select2Options = (url, placeholder, extraDataFn) => ({
+            const select2Options = (url, placeholder) => ({
                 theme: 'bootstrap4',
                 dropdownParent: $('#LeaveRequestModal'),
                 allowClear: true,
@@ -198,7 +198,7 @@
                     url: url,
                     dataType: 'json',
                     delay: 250,
-                    data: params => Object.assign({ searchTerm: params.term }, extraDataFn ? extraDataFn() : {}),
+                    data: params => ({ searchTerm: params.term }),
                     processResults: data => ({ results: data }),
                     cache: true
                 }
@@ -206,16 +206,8 @@
 
             $('#Item_BranchCode').select2(select2Options('@Url.Action("GetBranchDropdown", "LeaveRequest")', 'Search Branch...'));
             $('#Item_DepartmentCode').select2(select2Options('@Url.Action("GetDepartmentDropdown", "LeaveRequest")', 'Search Department...'));
-            $('#Item_EmployeeId').select2(select2Options('@Url.Action("GetEmployeeDropdown", "LeaveRequest")', 'Search Employee...', () => ({
-                branchCode: $('#Item_BranchCode').val(),
-                departmentCode: $('#Item_DepartmentCode').val()
-            })));
+            $('#Item_EmployeeId').select2(select2Options('@Url.Action("GetEmployeeDropdown", "LeaveRequest")', 'Search Employee...'));
             $('#Item_LeaveTypeCode').select2(select2Options('@Url.Action("GetLeaveTypeDropdown", "LeaveRequest")', 'Search Leave Type...'));
-
-            // When branch or department changes, clear employee selection so it reloads with filters
-            $('#Item_BranchCode, #Item_DepartmentCode').on('change', function() {
-                $('#Item_EmployeeId').val(null).trigger('change');
-            });
 
             // Calculate Total Days
             $('#Item_StartDate, #Item_EndDate').on('change', function() {

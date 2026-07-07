@@ -107,27 +107,10 @@ namespace App.Infrastructure.Services.Leave
             {
                 if (model.Id == 0)
                 {
-                    // Try to resolve employee's current branch/department when creating a new leave
-                    string branchCode = model.BranchCode;
-                    string departmentCode = model.DepartmentCode;
-                    if (model.EmployeeId != 0)
-                    {
-                        var employee = await _employeeRepo.FindAsync(e => e.EmployeeId == model.EmployeeId);
-                        if (employee != null)
-                        {
-                            // Employee.Department may contain a code or name depending on data model.
-                            // Prefer employee.Department when model did not provide a department.
-                            if (string.IsNullOrWhiteSpace(departmentCode) && !string.IsNullOrWhiteSpace(employee.Department))
-                                departmentCode = employee.Department!;
-
-                            // If employee has branch info in the future, map it here. Currently TblEmployee has no branch field.
-                        }
-                    }
-
                     TblLeaveRequest item = new TblLeaveRequest
                     {
-                        BranchCode = branchCode,
-                        DepartmentCode = departmentCode,
+                        BranchCode = model.BranchCode,
+                        DepartmentCode = model.DepartmentCode,
                         EmployeeId = model.EmployeeId,
                         LeaveTypeCode = model.LeaveTypeCode,
                         StartDate = model.StartDate,

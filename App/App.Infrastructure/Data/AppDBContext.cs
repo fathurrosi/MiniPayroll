@@ -635,8 +635,7 @@ public partial class AppDBContext : DbContext
 
             entity.Property(e => e.ApprovalStatus)
                 .IsRequired()
-                .HasMaxLength(50)
-                .HasDefaultValue("Pending");
+                .HasDefaultValueSql("('Pending')");
             entity.Property(e => e.BranchCode)
                 .IsRequired()
                 .HasMaxLength(20)
