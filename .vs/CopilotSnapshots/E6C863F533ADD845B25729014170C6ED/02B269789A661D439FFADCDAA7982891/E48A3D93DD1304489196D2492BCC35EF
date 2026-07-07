@@ -173,22 +173,11 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpGet("GetEmployeeDropdown")]
-        public async Task<IActionResult> GetEmployeeDropdown(string searchTerm, string? branchCode, string? departmentCode)
+        public async Task<IActionResult> GetEmployeeDropdown(string searchTerm)
         {
             var list = await _employeeService.GetListAsync();
-
-            // Filter by department if provided (TblEmployee stores Department)
-            if (!string.IsNullOrWhiteSpace(departmentCode))
-            {
-                list = list.Where(x => !string.IsNullOrWhiteSpace(x.Department) &&
-                    x.Department!.Equals(departmentCode, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
-            // Note: employee -> branch mapping is not present on TblEmployee in this schema.
-            // If a view with employee branch exists, replace the above logic with repository query.
-
             var result = list
-                .Where(x => string.IsNullOrEmpty(searchTerm) ||
+                .Where(x => string.IsNullOrEmpty(searchTerm) || 
                        (x.FullName != null && x.FullName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)) ||
                        (x.EmployeeCode != null && x.EmployeeCode.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
                 .Select(x => new { id = x.EmployeeId, text = $"[{x.EmployeeCode}] {x.FullName}" })
