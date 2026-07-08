@@ -1,334 +1,62 @@
-﻿@using App.Domain.Models
-@using App.Domain.Models.Dto.Leave
-@model PageModel<LeaveDto>
+﻿@* 
+   No Layout = null here! This will automatically use your main AdminLTE _Layout.cshtml 
+   so the sidebar, navbar, and footers remain intact.
+*@
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = "404 Error Page";
 }
 
 <style>
-    .select2-container--bootstrap4 .select2-selection--single {
-        height: calc(2.25rem + 2px) !important;
-        border: 1px solid #ced4da !important;
-        border-radius: 0.25rem !important;
-        background-color: #fff !important;
+    /* Premium Text Gradient for AdminLTE */
+    .text-gradient {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
-    .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
-        line-height: 2.25rem !important;
-        padding-left: 0.75rem !important;
-        color: #495057 !important;
+
+    /* Soft floating effect using escaped @@ symbol for Razor */
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
     }
-    .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow {
-        height: 2.25rem !important;
+    .error-illustration {
+        animation: float 3s ease-in-out infinite;
+        display: inline-block;
     }
-    .select2-dropdown {
-        border: 1px solid #ced4da !important;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    
+    .error-card {
+        border: none;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        border-radius: 1rem;
     }
 </style>
+ 
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card shadow-sm full-height-card">
-            <div class="card-header py-2 px-3 bg-light">
-                <div class="d-flex align-items-center">
-                    <h6 class="mb-0 fw-semibold">Existing @Model.Title</h6>
-                    <div class="ms-auto d-flex gap-2">
-                        <button id="add-new" class="btn btn-sm btn-primary">
-                            <i class="fa-solid fa-plus me-1"></i> Add New
-                        </button>
-                        <button id="csv-export" class="btn btn-sm btn-outline-success">
-                            <i class="fa-solid fa-file-excel me-1"></i> Export CSV
-                        </button>
-                        <button id="pdf-export" class="btn btn-sm btn-outline-danger">
-                            <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
-                        </button>
-                    </div>
-                </div>
+<!-- Main content -->
+<section class="content px-2">
+    <div class="card error-card bg-white py-5">
+        <div class="card-body text-center">
+            
+            <!-- Animated 404 Number -->
+            <div class="error-illustration mb-3">
+                <h1 class="display-1 fw-bold text-gradient mb-0" style="font-size: 7rem; font-weight: 800; letter-spacing: -2px;">
+                    404
+                </h1>
             </div>
-            <div class="card-body p-2">
-                <div class="table-responsive">
-                    <table id="main-table" class="table table-sm table-striped table-hover align-middle w-100 mb-0">
-                    </table>
-                </div>
+
+  
+            <!-- Messages -->
+            <h3 class="font-weight-bold text-dark mb-3">
+                <i class="fas fa-search text-warning mr-2"></i> Oops! Page not found.
+            </h3>
+             
+            <!-- Action Navigation -->
+            <div>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary btn-lg px-4 shadow-sm" style="border-radius: 0.5rem; font-weight: 600;">
+                    <i class="fas fa-tachometer-alt mr-2"></i> Return to Dashboard
+                </a>
             </div>
+
         </div>
     </div>
-</div>
-
-<div class="modal fade" id="LeaveRequestModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header bg-light py-3">
-                <h5 class="modal-title fs-6 fw-bold text-secondary">
-                    <i class="fa-solid fa-calendar-check text-primary me-2"></i>
-                    <span id="modalTitle">Add @Model.Title</span>
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body p-4">
-                <form id="LeaveRequestForm" asp-action="SaveAsync" method="post" autocomplete="off">
-                    @Html.AntiForgeryToken()
-                    @Html.HiddenFor(model => model.Mode)
-                    @Html.HiddenFor(model => model.Item.Id)
-                    
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="Item.BranchCode" class="form-label fw-semibold"></label>
-                            <select asp-for="Item.BranchCode" id="Item_BranchCode" class="form-control select2" style="width: 100%;" data-placeholder="Select Branch..."></select>
-                            <span asp-validation-for="Item.BranchCode" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="Item.DepartmentCode" class="form-label fw-semibold"></label>
-                            <select asp-for="Item.DepartmentCode" id="Item_DepartmentCode" class="form-control select2" style="width: 100%;" data-placeholder="Select Department..."></select>
-                            <span asp-validation-for="Item.DepartmentCode" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="Item.EmployeeId" class="form-label fw-semibold"></label>
-                            <select asp-for="Item.EmployeeId" id="Item_EmployeeId" class="form-control select2" style="width: 100%;" data-placeholder="Select Employee..."></select>
-                            <span asp-validation-for="Item.EmployeeId" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="Item.LeaveTypeCode" class="form-label fw-semibold"></label>
-                            <select asp-for="Item.LeaveTypeCode" id="Item_LeaveTypeCode" class="form-control select2" style="width: 100%;" data-placeholder="Select Leave Type..."></select>
-                            <span asp-validation-for="Item.LeaveTypeCode" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label asp-for="Item.StartDate" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.StartDate" type="date" id="Item_StartDate" class="form-control" />
-                            <span asp-validation-for="Item.StartDate" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label asp-for="Item.EndDate" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.EndDate" type="date" id="Item_EndDate" class="form-control" />
-                            <span asp-validation-for="Item.EndDate" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <label asp-for="Item.TotalDays" class="form-label fw-semibold"></label>
-                            <input asp-for="Item.TotalDays" type="number" id="Item_TotalDays" class="form-control" readonly />
-                            <span asp-validation-for="Item.TotalDays" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-12 mb-3">
-                            <label asp-for="Item.Reason" class="form-label fw-semibold"></label>
-                            <textarea asp-for="Item.Reason" id="Item_Reason" class="form-control" rows="3" placeholder="Reason for leave..."></textarea>
-                            <span asp-validation-for="Item.Reason" class="text-danger small"></span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer bg-light py-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="resetForm()">
-                    <i class="fa-solid fa-rotate-left me-1"></i> Reset
-                </button>
-                <button id="save-button" type="button" class="btn btn-sm btn-primary">
-                    <i class="fa-solid fa-floppy-disk me-1"></i> Save
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-
-    <script>
-        function resetForm() {
-            $('#LeaveRequestForm')[0].reset();
-            $('#Item_Id').val('0');
-            $('.select2').val(null).trigger('change');
-            $('#LeaveRequestForm').validate().resetForm();
-        }
-
-        function showModal(id) {
-            $('#modalTitle').text(id ? 'Edit Leave Request' : 'Add Leave Request');
-            resetForm();
-            if (!id) {
-                $('input[name="Mode"]').val('1'); // Create
-                
-                // Set default dates to today
-                const today = new Date().toISOString().split('T')[0];
-                $('#Item_StartDate').val(today);
-                $('#Item_EndDate').val(today);
-                $('#Item_TotalDays').val(1);
-
-                const modal = new bootstrap.Modal(document.getElementById('LeaveRequestModal'));
-                modal.show();
-            } else {
-                $('input[name="Mode"]').val('2'); // Update
-                $.get('@Url.Action("GetData", "LeaveRequest")', { Id: id }, function (data) {
-                    if (data) {
-                        $('#Item_Id').val(data.id);
-                        $('#Item_StartDate').val(data.startDate);
-                        $('#Item_EndDate').val(data.endDate);
-                        $('#Item_TotalDays').val(data.totalDays);
-                        $('#Item_Reason').val(data.reason);
-
-                        // Set Select2 values
-                        if (data.branchCode) {
-                            var option = new Option('[' + data.branchCode + '] ' + (data.branchName || ''), data.branchCode, true, true);
-                            $('#Item_BranchCode').append(option).trigger('change');
-                        }
-                        if (data.departmentCode) {
-                            var option = new Option('[' + data.departmentCode + '] ' + (data.departmentName || ''), data.departmentCode, true, true);
-                            $('#Item_DepartmentCode').append(option).trigger('change');
-                        }
-                        if (data.employeeId) {
-                            var option = new Option(data.employeeName || data.employeeId, data.employeeId, true, true);
-                            $('#Item_EmployeeId').append(option).trigger('change');
-                        }
-                        if (data.leaveTypeCode) {
-                            var option = new Option('[' + data.leaveTypeCode + '] ' + (data.leaveName || ''), data.leaveTypeCode, true, true);
-                            $('#Item_LeaveTypeCode').append(option).trigger('change');
-                        }
-                        
-                        const modal = new bootstrap.Modal(document.getElementById('LeaveRequestModal'));
-                        modal.show();
-                    }
-                });
-            }
-        }
-
-        $(document).ready(function () {
-            // Initialize Select2 with AJAX
-            const select2Options = (url, placeholder) => ({
-                theme: 'bootstrap4',
-                dropdownParent: $('#LeaveRequestModal'),
-                allowClear: true,
-                placeholder: placeholder,
-                ajax: {
-                    url: url,
-                    dataType: 'json',
-                    delay: 250,
-                    data: params => ({ searchTerm: params.term }),
-                    processResults: data => ({ results: data }),
-                    cache: true
-                }
-            });
-
-            $('#Item_BranchCode').select2(select2Options('@Url.Action("GetBranchDropdown", "LeaveRequest")', 'Search Branch...'));
-            $('#Item_DepartmentCode').select2(select2Options('@Url.Action("GetDepartmentDropdown", "LeaveRequest")', 'Search Department...'));
-            $('#Item_EmployeeId').select2(select2Options('@Url.Action("GetEmployeeDropdown", "LeaveRequest")', 'Search Employee...'));
-            $('#Item_LeaveTypeCode').select2(select2Options('@Url.Action("GetLeaveTypeDropdown", "LeaveRequest")', 'Search Leave Type...'));
-
-            // Calculate Total Days
-            $('#Item_StartDate, #Item_EndDate').on('change', function() {
-                const start = new Date($('#Item_StartDate').val());
-                const end = new Date($('#Item_EndDate').val());
-                if (start && end && end >= start) {
-                    const diffTime = Math.abs(end - start);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-                    $('#Item_TotalDays').val(diffDays);
-                } else {
-                    $('#Item_TotalDays').val(0);
-                }
-            });
-
-            // DataTable
-            const table = $('#main-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '@Url.Action("GetList", "LeaveRequest")',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: d => JSON.stringify(d)
-                },
-                columns: [
-                    { data: 'employeeName', title: 'Employee' },
-                    { data: 'leaveName', title: 'Leave Type' },
-                    { data: 'startDate', title: 'Start Date' },
-                    { data: 'endDate', title: 'End Date' },
-                    { data: 'totalDays', title: 'Days', className: 'text-center' },
-                    { 
-                        data: 'approvalStatus', 
-                        title: 'Status',
-                        render: function(data) {
-                            return data === null
-                            ? '<span class="badge bg-warning text-dark">Need Approval</span>'
-                            : data
-                                ? '<span class="badge bg-success">Approved</span>'
-                                : '<span class="badge bg-danger">Rejected</span>';
-                        }
-                    },
-                    {
-                        data: null,
-                        title: 'Action',
-                        orderable: false,
-                        className: 'text-center',
-                        render: function (data, type, row) {
-                            return `
-                                <div class="d-flex justify-content-center gap-2">
-                                    <a href="javascript:void(0)" onclick="showModal('${row.id}')" title="Edit">
-                                        <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                    </a>
-                                    <a href="javascript:void(0)" onclick="confirmDelete(() => deleteRow('${row.id}'))" title="Delete">
-                                        <i class="fa-solid fa-trash text-danger"></i>
-                                    </a>
-                                </div>
-                            `;
-                        }
-                    }
-                ],
-                dom: "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>rt<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
-                buttons: [
-                    { extend: 'csvHtml5', className: 'btn-export-csv d-none', title: '@Model.Title' },
-                    { extend: 'pdfHtml5', className: 'btn-export-pdf d-none', title: '@Model.Title' }
-                ]
-            });
-
-            $('#add-new').on('click', () => showModal());
-            $('#save-button').on('click', () => saveLeaveRequest());
-        });
-
-        function saveLeaveRequest() {
-            const form = $('#LeaveRequestForm')[0];
-            if (!$(form).valid()) return;
-
-            const formData = new FormData(form);
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("SaveAsync", "LeaveRequest")',
-                data: formData,
-                processData: false,
-                contentType: false,
-                beforeSend: function () {
-                    $('#save-button').prop('disabled', true);
-                },
-                success: function (response) {
-                    if (response.success) {
-                        notify.success(response.message);
-                        $('#main-table').DataTable().ajax.reload(null, false);
-                        const modalElement = document.getElementById('LeaveRequestModal');
-                        const modal = bootstrap.Modal.getInstance(modalElement);
-                        if (modal) modal.hide();
-                    }
-                    else {
-                        notify.warning(response.message);
-                    }
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403) return;
-                    notify.error('An error occurred while saving Leave Request');
-                },
-                complete: function () {
-                    $('#save-button').prop('disabled', false);
-                }
-            });
-        }
-
-        function deleteRow(id) {
-            $.ajax({
-                url: '@Url.Action("Delete", "LeaveRequest")',
-                type: 'DELETE',
-                data: { Id: id },
-                success: function (response) {
-                    if (response.success) {
-                        notify.success(response.message);
-                        $('#main-table').DataTable().ajax.reload();
-                    } else {
-                        notify.error(response.message);
-                    }
-                }
-            });
-        }
-    </script>
-}
+</section>
