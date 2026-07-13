@@ -21,6 +21,10 @@ public partial class TblDepartment
     [Unicode(false)]
     public string DepartmentName { get; set; } = null!;
 
+    [StringLength(20)]
+    [Unicode(false)]
+    public string BranchCode { get; set; } = null!;
+
     public bool IsActive { get; set; }
 
     [Column(TypeName = "datetime")]

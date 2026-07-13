@@ -481,3 +481,5 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 /App/App.UI.Web/appsettings.json
+/App/App.Infrastructure/efpt.config.json
+/App/App.Domain/efpt.config.json

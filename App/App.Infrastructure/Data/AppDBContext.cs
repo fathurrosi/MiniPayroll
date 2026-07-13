@@ -381,6 +381,10 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.DepartmentCode)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.BranchCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
