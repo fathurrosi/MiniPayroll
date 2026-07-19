@@ -43,6 +43,11 @@ namespace App.Infrastructure.Services.Settings
             _menuRepo = menuRepo;
         }
 
+        public async Task<string> GetHashPassword(string password)
+        {
+            return _hasherService.Hash(password);
+        }
+
         public async Task<bool> ValidateUserAsync(string username, string password)
         {
             var user = await _userRepo.GetFirstOrDefaultAsync(t => t.Username == username);
@@ -72,34 +77,6 @@ namespace App.Infrastructure.Services.Settings
                 throw;
             }
         }
-
-        //public async Task<UserViewDto?> GetViewByKey(string name)
-        //{
-        //    try
-        //    {
-        //        var entityItem = await _userViewRepo.GetFirstOrDefaultAsync(t => t.Username == name);
-        //        return entityItem == null ? null : _mapper.Map<UserViewDto>(entityItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error getting User View with name {name}", name);
-        //        throw;
-        //    }
-        //}
-
-        //public async Task<List<UserViewDto>> GetUsersViewByGroup(string groupName)
-        //{
-        //    try
-        //    {
-        //        var entityItem = await _userViewRepo.GetListAsync(t => t.GroupName == groupName);
-        //        return entityItem.Select(t => _mapper.Map<UserViewDto>(t)).ToList();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error getting User View with name {groupName}", groupName);
-        //        throw;
-        //    }
-        //}
         public async Task<PagedResponse<UserDto>> GetPagedAsync(DataTableRequest model)
         {
             try
@@ -113,20 +90,6 @@ namespace App.Infrastructure.Services.Settings
                 throw;
             }
         }
-
-        //public async Task<PagedResult<UserViewDto>> GetPagedByGroupAsync(DataTableRequest model, string groupName)
-        //{
-        //    try
-        //    {
-        //        var entityResult = await _userViewRepo.GetPagedAsync(t => t.GroupName == groupName, model);
-        //        return entityResult.MapPaged<VwTblUser, UserViewDto>(_mapper, model);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error getting paged Users");
-        //        throw;
-        //    }
-        //}
         public async Task<int> Delete(string name)
         {
             try
@@ -152,14 +115,18 @@ namespace App.Infrastructure.Services.Settings
                 if (entityItem == null)
                 {
                     TblUser item = _mapper.Map<TblUser>(model);
+                    item.PasswordHash = _hasherService.Hash(model.Password);
                     item.CreatedBy = _context.Username;
                     item.CreatedDate = DateTime.UtcNow;
                     var addedEntity = await _userRepo.AddAsync(item);
                     return _mapper.Map<UserDto>(addedEntity);
                 }
                 else
-                {
-                    _mapper.Map(model, entityItem);
+                {                    
+                    entityItem.PasswordHash = _hasherService.Hash(model.Password);
+                    entityItem.Email = model.Email;
+                    entityItem.FullName = model.FullName;
+                    entityItem.IsActive = model.IsActive;
                     entityItem.UpdatedBy = _context.Username;
                     entityItem.UpdatedDate = DateTime.UtcNow;
                     var updatedEntity = await _userRepo.UpdateAsync(entityItem);
@@ -172,70 +139,7 @@ namespace App.Infrastructure.Services.Settings
                 throw;
             }
         }
-        public async Task<UserDto> SaveUser(UserDto model)
-        {
-            try
-            {
-                return new UserDto();
-                //// CEK USERNAME DUPLICATE
-                //var existingUsername = await _userRepo
-                //    .GetFirstOrDefaultAsync(x =>
-                //        x.Username == model.Username &&
-                //        x.UserId != model.UserId);
 
-                //if (existingUsername != null)
-                //{
-                //    throw new Exception("Username already exists");
-                //}
-
-                //var entityItem = await _userRepo
-                //    .GetFirstOrDefaultAsync(t => t.UserId == model.UserId);
-
-                //if (entityItem == null)
-                //{
-                //    TblUser item =
-                //        _mapper.Map<TblUser>(model);
-
-                //    item.PasswordHash =
-                //        _passwordHasher.Hash(model.Password);
-
-                //    item.CreatedBy = _context.Username;
-                //    item.CreatedDate = DateTime.UtcNow;
-
-                //    var addedEntity =
-                //        await _userRepo.AddAsync(item);
-
-                //    return _mapper.Map<UserDto>(addedEntity);
-                //}
-                //else
-                //{
-                //    var oldPasswordHash = entityItem.PasswordHash;
-
-                //    _mapper.Map(model, entityItem);
-
-                //    entityItem.PasswordHash = oldPasswordHash;
-
-                //    if (!string.IsNullOrWhiteSpace(model.Password))
-                //    {
-                //        entityItem.PasswordHash =
-                //            _passwordHasher.Hash(model.Password);
-                //    }
-
-                //    entityItem.UpdatedBy = _context.Username;
-                //    entityItem.UpdatedDate = DateTime.UtcNow;
-
-                //    var updatedEntity =
-                //        await _userRepo.UpdateAsync(entityItem);
-
-                //    return _mapper.Map<UserDto>(updatedEntity);
-                //}
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error saving User");
-                throw;
-            }
-        }
         public async Task<List<UserDto>> GetUsersAsync()
         {
             try

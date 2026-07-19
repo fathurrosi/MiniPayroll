@@ -1,7 +1,9 @@
-﻿@using App.Domain.Models
+﻿@using App.Domain.Enums
+@using App.Domain.Models
 @using App.Domain.Models.Dto
 @using App.Domain.Models.Dto.Masters
-@model PageModel<OvertimeTypeDto>
+@using App.Domain.Models.Dto.Settings
+@model PageModel<UserDto>
 @{
     ViewData["Title"] = $"Data Master - {Model.Title}";
 }
@@ -55,16 +57,16 @@
 </div>
  
 <div class="modal fade"
-     id="overtimeTypeModal"
+     id="UserModal"
      tabindex="-1"
-     aria-labelledby="overtimeTypeModalLabel"
+     aria-labelledby="UserModalLabel"
      aria-hidden="true">
 
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
             <div class="modal-header">
                 <h5 class="modal-title fw-bold"
-                    id="overtimeTypeModalLabel">
+                    id="UserModalLabel">
                     <i class="bi bi-stopwatch text-primary me-2"></i>
                     <span id="modalTitle">
                         Add @Model.Title
@@ -76,70 +78,145 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="overtimeTypeForm"
+                <form id="UserForm"
                       asp-action="Save"
                       method="post"
                       autocomplete="off">
+
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.Mode)
                     @Html.HiddenFor(m => m.Title)
+                    @Html.HiddenFor(m => m.Item.PasswordHash)                    
+                    @Html.HiddenFor(m => m.Item.Id)
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
                     <div class="row g-3">
+
+                        <!-- Username -->
                         <div class="col-md-4">
-                            <label asp-for="Item.OvertimeCode"
+                            <label asp-for="Item.Username"
                                    class="form-label fw-semibold">
                             </label>
-                            <input asp-for="Item.OvertimeCode" asp-key="true"
-                                   class="form-control text-uppercase" />
-                            <span asp-validation-for="Item.OvertimeCode"
-                                  class="text-danger small"></span>
-                        </div>
 
-                        <div class="col-md-8">
-                            <label asp-for="Item.OvertimeName"
-                                   class="form-label fw-semibold">
-                            </label>
-                            <input asp-for="Item.OvertimeName"
+                            <input asp-for="Item.Username"
+                                   asp-key="true"
                                    class="form-control"
-                                   placeholder="Working Day" />
-                            <span asp-validation-for="Item.OvertimeName"
-                                  class="text-danger small"></span>
+                                   placeholder="Enter username" />
+
+                            <span asp-validation-for="Item.Username"
+                                  class="text-danger small">
+                            </span>
                         </div>
 
-                        <div class="col-md-12">
-                            <label class="form-label fw-semibold">
-                                Applies To
-                            </label>
-
-                            <select asp-for="Item.OvertimeCategory"
-                                    class="form-select">
-                                <option value="">-- Select Category --</option>
-                                <option value="WorkingDay">
-                                    🏢 Working Day
-                                </option>
-                                <option value="RestDay">
-                                    🛌 Rest Day
-                                </option>
-                                <option value="PublicHoliday">
-                                    🎉 Public Holiday
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <label asp-for="Item.Description"
+                        <!-- Full Name -->
+                        <div class="col-md-8">
+                            <label asp-for="Item.FullName"
                                    class="form-label fw-semibold">
                             </label>
-                            <textarea asp-for="Item.Description"
-                                      class="form-control"
-                                      rows="3"
-                                      placeholder="Description..."></textarea>
+
+                            <input asp-for="Item.FullName"
+                                   class="form-control"
+                                   placeholder="Enter full name" />
+
+                            <span asp-validation-for="Item.FullName"
+                                  class="text-danger small">
+                            </span>
                         </div>
 
-                        <div class="col-md-8">
-                            <div class="form-check form-switch d-flex align-items-center gap-2 ps-0">
-                                <input asp-for="Item.IsActive" class="form-check-input ms-0 me-1" type="checkbox" role="switch" />
-                                <label asp-for="Item.IsActive" class="form-check-label fw-semibold mb-0" style="cursor: pointer;"></label>
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.Email"
+                                   class="form-label fw-semibold">
+                            </label>
+
+                            <input asp-for="Item.Email"
+                                   type="email"
+                                   class="form-control"
+                                   placeholder="example@company.com" />
+
+                            <span asp-validation-for="Item.Email"
+                                  class="text-danger small">
+                            </span>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-6 d-flex align-items-end">
+                            <div class="form-check form-switch">
+                                <input asp-for="Item.IsActive"
+                                       class="form-check-input"
+                                       role="switch" />
+
+                                <label asp-for="Item.IsActive"
+                                       class="form-check-label fw-semibold">
+                                </label>
                             </div>
                         </div>
+ 
+                        <!-- Password -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.Password"
+                                   class="form-label fw-semibold">
+                            </label>
+
+                            <div class="input-group">
+                                <input asp-for="Item.Password"
+                                       type="password"
+                                       class="form-control"
+                                       placeholder="Enter password" />
+
+                                <button type="button"
+                                        class="btn btn-outline-secondary toggle-password"
+                                        data-target="Item_Password">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+
+                            <span asp-validation-for="Item.Password"
+                                  class="text-danger small">
+                            </span>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="col-md-6">
+                            <label asp-for="Item.ConfirmPassword"
+                                   class="form-label fw-semibold">
+                            </label>
+
+                            <div class="input-group">
+                                <input asp-for="Item.ConfirmPassword"
+                                       type="password"
+                                       class="form-control"
+                                       placeholder="Confirm password" />
+
+                                <button type="button"
+                                        class="btn btn-outline-secondary toggle-password"
+                                        data-target="Item_ConfirmPassword">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+
+                            <span asp-validation-for="Item.ConfirmPassword"
+                                  class="text-danger small">
+                            </span>
+                        </div>
+
+                      
+                        @if (Model.Item.LastLoginDate.HasValue)
+                        {
+                            <div class="col-md-12">
+                                <label class="form-label fw-semibold">
+                                    Last Login
+                                </label>
+
+                                <input class="form-control"
+                                       value="@Model.Item.LastLoginDate.Value.ToString("dd MMM yyyy HH:mm")"
+                                       readonly />
+                            </div>
+                        }
+
                     </div>
                 </form>
             </div>
@@ -164,7 +241,7 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         function closeModal() {
-            const modalElement = document.getElementById('overtimeTypeModal');
+            const modalElement = document.getElementById('UserModal');
             const modal = bootstrap.Modal.getInstance(modalElement);
             setReadonly(false);
             if (modal) {
@@ -173,12 +250,12 @@
         }
         function showModal(isEdit) {
             $('#modalTitle').text(
-                isEdit ? 'Edit overtimeType' : 'Add overtimeType'
+                isEdit ? 'Edit User' : 'Add User'
             );
 
             setReadonly(isEdit);
             const modal = new bootstrap.Modal(
-                document.getElementById('overtimeTypeModal')
+                document.getElementById('UserModal')
             );
             modal.show();
         }
@@ -203,7 +280,7 @@
                 order: [[0, 'asc']],
 
                 ajax: {
-                    url: '@Url.Action("GetList", "OvertimeType")',
+                    url: '@Url.Action("GetList", "User")',
                     type: 'POST',
                     contentType: 'application/json',
                     data: function (d) {
@@ -230,17 +307,16 @@
                 columns: [
 
                     {
-                        data: "overtimeCode",
-                        title: "Code",
+                        data: "username",
+                        title: "Username",
                         width: "80px",
                         render: function (data) {
                             return `<span class="fw-bold">${data}</span>`;
                         }
                     },
-
                     {
-                        data: "overtimeName",
-                        title: "Overtime Type",
+                        data: "fullName",
+                        title: "Full Name",
                         render: function (data, type, row) {
 
                             return `
@@ -253,44 +329,6 @@
                             `;
                         }
                     },
-
-                    {
-                        data: "overtimeCategory",
-                        title: "Category",
-                        className: "text-center",
-                        width: "170px",
-                        render: function (data) {
-
-                             switch ((data || "").toUpperCase()) {
-
-
-                                case "WORKINGDAY":
-                                    return `<span class="badge bg-primary">
-                                                <i class="bi bi-building"></i>
-                                                Working Day
-                                            </span>`;
-
-                                case "RESTDAY":
-                                    return `<span class="badge bg-warning text-dark">
-                                                <i class="bi bi-moon"></i>
-                                                Rest Day
-                                            </span>`;
-
-                                case "PUBLICHOLIDAY":
-                                    return `<span class="badge bg-success">
-                                                <i class="bi bi-calendar-event"></i>
-                                                Public Holiday
-                                            </span>`;
-
-                                default:
-                                    return `<span class="badge bg-secondary">
-                                                Unknown
-                                            </span>`;
-                            }
-
-                        }
-                    },
-
                     {
                         data: "isActive",
                         title: "Status",
@@ -303,7 +341,6 @@
                                 : `<span class="badge bg-danger">Inactive</span>`;
                         }
                     },
-
                     {
                         data: null,
                         title: "Action",
@@ -317,38 +354,26 @@
                             return `
 
                                 <div class="d-flex justify-content-center gap-2">
-
                                     <a href="javascript:void(0)"
-                                       onclick="editRow('${row.overtimeCode}')"
+                                       onclick="editRow('${row.username}')"
                                        title="Edit">
-
                                         <i class="fa-solid fa-pen-to-square text-primary"></i>
-
                                     </a>
-
                                     <a href="javascript:void(0)"
-                                       onclick="confirmDelete(() => deleteRow('${row.overtimeCode}'))"
+                                       onclick="confirmDelete(() => deleteRow('${row.username}'))"
                                        title="Delete">
-
                                         <i class="fa-solid fa-trash text-danger"></i>
-
                                     </a>
-
                                 </div>
-
                             `;
                         }
                     }
-
                 ],
-
                 dom:
                     "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
                     "rt" +
                     "<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
-
                 buttons: [
-
                     {
                         extend: "csvHtml5",
                         className: "btn-export-csv d-none",
@@ -357,7 +382,6 @@
                             columns: ":not(.not-export)"
                         }
                     },
-
                     {
                         extend: "pdfHtml5",
                         className: "btn-export-pdf d-none",
@@ -366,7 +390,6 @@
                             columns: ":not(.not-export)"
                         }
                     }
-
                 ]
             });
             
@@ -382,18 +405,24 @@
                 showModal(false);
             });
              $('#save-button').on('click', function () {
-                saveovertimeType();
+                saveUser();
             });
 
             $('#Item_IsActive').prop('checked', data.isActive === true);
         });
 
-        function saveovertimeType() {
-            const form = $('#overtimeTypeForm')[0];
+        function saveUser() {
+            const form = $('#UserForm')[0];
+            // Trigger client validation
+            if (!$('#UserForm').valid()) {
+                notify.warning('Please correct the validation errors.');
+                return;
+            }
+
             const formData = new FormData(form);
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("Add", "overtimeType")',
+                url: '@Url.Action("Add", "User")',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -413,7 +442,7 @@
                 error: function (xhr) {
                     if (xhr.status === 401 || xhr.status === 403)
                         return;
-                    notify.error('An error occurred while saving Company overtimeType');
+                    notify.error('An error occurred while saving Company User');
                 },
                 complete: function () {
                     $('#save-button').prop('disabled', false);
@@ -421,49 +450,60 @@
             });
         }
 
-        function editRow(code) {
+        function editRow(username) {
 
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetData", "OvertimeType")',
-                data: { code: code},
+                url: '@Url.Action("GetData", "User")',
+                data: {
+                    code: username
+                },
 
                 success: function (data) {
 
                     if (!data) {
-                        notify.warning('Overtime type not found.');
+                        notify.warning('User information was not found.');
                         return;
                     }
 
                     // Basic Information
-                    $('#Item_OvertimeCode').val(data.overtimeCode);
-                    $('#Item_OvertimeName').val(data.overtimeName);
-                    $('#Item_Description').val(data.description);
+                    $('#Item_Id').val(data.id);
+                    $('#Item_Username').val(data.username);
+                    $('#Item_FullName').val(data.fullName);
+                    $('#Item_Email').val(data.email);
 
-                    // Category
-                    $('#Item_OvertimeCategory').val(data.overtimeCategory);
+                    // Password fields should always be empty
+                    $('#Item_Password').val('');
+                    $('#Item_ConfirmPassword').val('');
 
                     // Status
-                    $('#Item_IsActive').prop('checked', data.isActive);
+                    $('#Item_IsActive')
+                        .prop('checked', data.isActive);
+
+                    // Optional
+                    $('#Item_LastLoginDate')
+                        .val(data.lastLoginDate);
 
                     showModal(true);
                 },
 
                 error: function (xhr) {
 
-                    if (xhr.status === 401 || xhr.status === 403)
+                    if (xhr.status === 401 ||
+                        xhr.status === 403) {
                         return;
+                    }
 
-                    notify.error('Failed to retrieve overtime type.');
-
+                    notify.error(
+                        'Failed to retrieve user information.'
+                    );
                 }
             });
-
         }
         function deleteRow(code) {
             $.ajax({
                 type: 'DELETE',
-                url: '@Url.Action("Delete", "overtimeType")',
+                url: '@Url.Action("Delete", "User")',
                 data: {
                     code: code
                 },
@@ -483,12 +523,43 @@
                 error: function (xhr) {
                     if (xhr.status === 401 || xhr.status === 403)
                         return;
-                    notify.error('Failed to delete Company overtimeType');
+                    notify.error('Failed to delete Company User');
                 }
             });
         }
         function resetForm() {
-            $('#overtimeTypeForm')[0].reset();
+            $('#UserForm')[0].reset();
+        }
+
+        $(document).on('click', '.toggle-password', function () {
+
+            const targetId = $(this).data('target');
+            const $input = $('#' + targetId);
+            const $icon = $(this).find('i');
+
+            if ($input.attr('type') === 'password') {
+                $input.attr('type', 'text');
+                $icon.removeClass('fa-eye')
+                     .addClass('fa-eye-slash');
+            }
+            else {
+                $input.attr('type', 'password');
+                $icon.removeClass('fa-eye-slash')
+                     .addClass('fa-eye');
+            }
+        });
+
+        function togglePassword(button) {
+
+            const targetId = $(button).data('target');
+            const $input = $('#' + targetId);
+            const $icon = $(button).find('i');
+
+            const isPassword = $input.attr('type') === 'password';
+
+            $input.attr('type', isPassword ? 'text' : 'password');
+
+            $icon.toggleClass('fa-eye fa-eye-slash');
         }
     </script>
 }
