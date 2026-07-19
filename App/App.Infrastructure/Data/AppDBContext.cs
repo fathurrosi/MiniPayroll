@@ -381,6 +381,10 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.DepartmentCode)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.BranchCode)
+                .IsRequired()
+                .HasMaxLength(20)
+                .IsUnicode(false);
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -408,9 +412,7 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.BankName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.BasicSalary)
-                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__Basic__625A9A57")
-                .HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.BirthDate).HasColumnType("datetime");
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(50)
@@ -534,9 +536,7 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.IsActive)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "DF__tbl_Emplo__IsAct__45544755");
+            entity.Property(e => e.IsActive);//.HasDefaultValue(true, "DF__tbl_Emplo__IsAct__45544755");
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -780,7 +780,6 @@ public partial class AppDBContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(255);
-            entity.Property(e => e.IsActive).HasAnnotation("Relational:DefaultConstraintName", "DF_tbl_OvertimeType_IsActive");
             entity.Property(e => e.OvertimeName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
