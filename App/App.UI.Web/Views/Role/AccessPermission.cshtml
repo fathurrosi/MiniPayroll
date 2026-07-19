@@ -1,0 +1,224 @@
+﻿@model RolePermissionViewModel
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h4 class="mb-1">
+                        <i class="fa-solid fa-user-shield text-primary"></i>
+                        Role Access Permission
+                    </h4>
+
+                    <small class="text-muted">
+                        Manage role-based access permissions.
+                    </small>
+                </div>
+
+                <button id="btnSave"
+                        class="btn btn-primary">
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    Save Permission
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <!-- Left : Roles -->
+        <div class="col-lg-3">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-header bg-white">
+                    <div class="fw-semibold">
+                        Roles
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+
+                    <div class="list-group list-group-flush">
+
+                        @foreach (var role in Model.Roles)
+                        {
+                            <a href="javascript:void(0)"
+                                   class="list-group-item role-item"
+                                   data-role-id="@role.Id">
+
+                                <i class="fa-solid fa-users me-2"></i>
+                                @role.RoleName
+
+                            </a>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Right : Permissions -->
+        <div class="col-lg-9">
+
+            <div class="card shadow-sm">
+
+                <div class="card-header bg-white">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <h6 class="mb-0">
+                                Permission Matrix
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <input type="text"
+                                   id="txtSearchMenu"
+                                   class="form-control form-control-sm"
+                                   placeholder="Search menu..." />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card-body p-0">
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered table-hover mb-0"
+                               id="permissionTable">
+
+                            <thead class="table-light">
+
+                                <tr class="text-center">
+
+                                    <th style="min-width:300px">
+                                        Menu
+                                    </th>
+
+                                    <th width="80">View</th>
+                                    <th width="80">Create</th>
+                                    <th width="80">Edit</th>
+                                    <th width="80">Delete</th>
+                                    <th width="80">Export</th>
+                                    <th width="80">Approve</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="permissionBody">
+
+                                @foreach (var item in Model.MenuPermissions)
+                                {
+                                    <tr data-menu-id="@item.MenuId">
+
+                                        <td>
+
+                                            <div style="padding-left:@(item.Level * 25)px">
+
+                                                @if (item.HasChildren)
+                                                {
+                                                    <i class="fa fa-folder-open text-warning me-2"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa fa-file-lines text-secondary me-2"></i>
+                                                }
+
+                                                @item.MenuName
+
+                                            </div>
+
+                                        </td>
+
+                                        <td class="text-center">
+                                            <input type="checkbox"
+                                                   class="form-check-input permission"
+                                                   data-type="View"
+                                            @(item.CanView ? "checked" : "") />
+                                        </td>
+
+                                        <td class="text-center">
+                                            <input type="checkbox"
+                                                   class="form-check-input permission"
+                                                   data-type="Create"
+                                            @(item.CanCreate ? "checked" : "") />
+                                        </td>
+
+                                        <td class="text-center">
+                                            <input type="checkbox"
+                                                   class="form-check-input permission"
+                                                   data-type="Edit"
+                                            @(item.CanEdit ? "checked" : "") />
+                                        </td>
+
+                                        <td class="text-center">
+                                            <input type="checkbox"
+                                                   class="form-check-input permission"
+                                                   data-type="Delete"
+                                            @(item.CanDelete ? "checked" : "") />
+                                        </td>
+
+                                        <td class="text-center">
+                                            <input type="checkbox"
+                                                   class="form-check-input permission"
+                                                   data-type="Export"
+                                            @(item.CanExport ? "checked" : "") />
+                                        </td>
+
+                                        <td class="text-center">
+                                            <input type="checkbox"
+                                                   class="form-check-input permission"
+                                                   data-type="Approve"
+                                            @(item.CanApprove ? "checked" : "") />
+                                        </td>
+
+                                    </tr>
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).on('click', '.role-item', function () {
+
+            $('.role-item').removeClass('active');
+
+            $(this).addClass('active');
+
+            const roleId = $(this).data('role-id');
+
+            loadPermission(roleId);
+        });
+    </script>
+}

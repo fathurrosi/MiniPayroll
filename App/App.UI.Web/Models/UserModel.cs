@@ -1,9 +1,16 @@
 ﻿using App.Domain.Models;
 using App.Domain.Models.Dto.Masters;
+using App.Domain.Models.Dto.Settings;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.UI.Web.Models
 {
+    public class RolePermissionViewModel
+    {
+        public List<RoleDto> Roles { get; set; } = [];
+
+        public List<MenuPermissionDto> MenuPermissions { get; set; } = [];
+    }
     public sealed class UserModel
     {
         [Required]
