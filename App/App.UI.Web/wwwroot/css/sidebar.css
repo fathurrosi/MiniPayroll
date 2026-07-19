@@ -1,0 +1,213 @@
+
+/* ==========================================================
+   SIDEBAR
+   Professional Payroll System
+========================================================== */
+
+/* Sidebar Container */
+.app-sidebar{
+    background:#111827 !important;
+    border-right:none !important;
+    width:270px;
+    box-shadow:4px 0 20px rgba(0,0,0,.15);
+    transition:all .3s ease;
+}
+
+/* Brand */
+.brand-link{
+    height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.02);
+}
+
+.brand-link img{
+    height:46px;
+    width:auto;
+    transition:.3s;
+}
+
+.brand-link:hover img{
+    transform:scale(1.08);
+}
+
+/* Sidebar Wrapper */
+.sidebar-wrapper{
+    padding:15px 0;
+}
+
+/* Nav Header */
+.sidebar-menu .nav-header{
+    color:#94A3B8;
+    font-size:.72rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin:20px 18px 8px;
+}
+
+/* Nav Item */
+.sidebar-menu .nav-item{
+    margin:4px 12px;
+}
+
+/* Nav Link */
+.sidebar-menu .nav-link{
+    min-height:48px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    color:#CBD5E1 !important;
+    transition:all .25s ease;
+    padding:.8rem 1rem;
+    font-weight:500;
+}
+
+/* Icon */
+.sidebar-menu .nav-icon{
+    width:22px;
+    min-width:22px;
+    text-align:center;
+    margin-right:14px;
+    font-size:18px;
+}
+
+/* Text */
+.sidebar-menu .nav-link p{
+    margin:0;
+    flex:1;
+}
+
+/* Hover */
+.sidebar-menu .nav-link:hover{
+    background:rgba(255,255,255,.08);
+    color:#fff !important;
+    transform:translateX(5px);
+}
+
+/* Active */
+.sidebar-menu .nav-link.active,
+.sidebar-menu .nav-item.menu-open>.nav-link{
+    background:linear-gradient(135deg,#2563EB,#7C3AED);
+    color:#fff !important;
+    box-shadow:0 8px 20px rgba(37,99,235,.35);
+}
+
+/* Treeview */
+.sidebar-menu .nav-treeview{
+    margin-top:6px;
+    margin-left:18px;
+    padding-left:10px;
+    border-left:1px dashed rgba(255,255,255,.12);
+}
+
+.sidebar-menu .nav-treeview .nav-item{
+    margin:2px 0;
+}
+
+.sidebar-menu .nav-treeview .nav-link{
+    min-height:40px;
+    padding:.6rem .9rem;
+    font-size:.92rem;
+    border-radius:10px;
+    color:#94A3B8 !important;
+}
+
+.sidebar-menu .nav-treeview .nav-link:hover{
+    background:rgba(255,255,255,.05);
+    color:#fff !important;
+}
+
+/* Arrow */
+.nav-arrow{
+    transition:.3s;
+}
+
+.menu-open>.nav-link .nav-arrow{
+    transform:rotate(90deg);
+}
+
+/* Badge */
+.sidebar-menu .badge{
+    margin-left:auto;
+    border-radius:999px;
+}
+
+/* Scrollbar */
+.sidebar-wrapper::-webkit-scrollbar{
+    width:6px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.18);
+    border-radius:20px;
+}
+
+/* Collapse */
+.sidebar-mini.sidebar-collapse .brand-link{
+    justify-content:center;
+}
+
+.sidebar-mini.sidebar-collapse .brand-link img{
+    height:34px;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu .nav-link{
+    justify-content:center;
+    padding:.8rem;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu .nav-icon{
+    margin-right:0;
+}
+
+.sidebar-mini.sidebar-collapse .sidebar-menu .nav-link p,
+.sidebar-mini.sidebar-collapse .sidebar-menu .nav-arrow,
+.sidebar-mini.sidebar-collapse .sidebar-menu .badge,
+.sidebar-mini.sidebar-collapse .sidebar-menu .nav-header{
+    display:none;
+}
+
+/* Active Indicator */
+.sidebar-menu .nav-link.active::before{
+    content:"";
+    width:4px;
+    height:26px;
+    border-radius:10px;
+    background:#fff;
+    position:absolute;
+    left:10px;
+}
+
+/* Animation */
+.sidebar-menu .nav-link{
+    position:relative;
+    overflow:hidden;
+}
+
+.sidebar-menu .nav-link::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg,rgba(255,255,255,.15),transparent);
+    opacity:0;
+    transition:.3s;
+}
+
+.sidebar-menu .nav-link:hover::after{
+    opacity:1;
+}
+
+/* Responsive */
+@media(max-width:992px){
+
+    .app-sidebar{
+        width:260px;
+    }
+
+}
