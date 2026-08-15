@@ -1,28 +1,34 @@
 name: Build, publish and deploy to MonsterASP.NET
-on: [push]
+
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build_and_deploy:
     runs-on: windows-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 10.0
-          
-      - name: Install dependencies
-        run: dotnet restore
-        
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore App/App.UI.Web/App.UI.Web.csproj
+
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build App/App.UI.Web/App.UI.Web.csproj --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test App/App.UI.Web/App.UI.Web.csproj --configuration Release --no-build
 
       - name: Publish
-        run: dotnet publish --configuration Release --output ./publish --runtime win-x86 
-        
-      - name: Test with .NET
-        run: dotnet test
+        run: dotnet publish App/App.UI.Web/App.UI.Web.csproj --configuration Release --output ./publish --runtime win-x86 --self-contained false
 
       - name: Deploy to MonsterASP.NET via WebDeploy
         uses: rasmusbuchholdt/simply-web-deploy@2.1.0
