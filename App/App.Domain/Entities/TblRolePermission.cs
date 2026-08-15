@@ -9,9 +9,31 @@ public partial class TblRolePermission
 {
     public long Id { get; set; }
 
-    public long RoleId { get; set; }
+    public string RoleCode { get; set; }
 
-    public long PermissionId { get; set; }
+    public string MenuId { get; set; }
 
-    public DateTime AssignedDate { get; set; }
+    public bool CanView { get; set; }
+
+    public bool CanCreate { get; set; }
+
+    public bool CanEdit { get; set; }
+
+    public bool CanDelete { get; set; }
+
+    public bool CanExport { get; set; }
+
+    public bool CanApprove { get; set; }
+
+    public bool IsDeleted { get; set; }
+
+    public DateTime? CreatedDate { get; set; }
+
+    public DateTime? UpdatedDate { get; set; }
+
+    public string CreatedBy { get; set; }
+
+    public string UpdatedBy { get; set; }
+
+    public virtual TblMenu Menu { get; set; }
 }

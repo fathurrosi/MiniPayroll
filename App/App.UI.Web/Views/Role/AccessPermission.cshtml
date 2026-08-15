@@ -15,7 +15,8 @@
                     </h4>
 
                     <small class="text-muted">
-                        Manage role-based access permissions.
+                        Manage RBAC (Role-Based Access Control).
+
                     </small>
                 </div>
 
@@ -33,7 +34,7 @@
     <div class="row">
 
         <!-- Left : Roles -->
-        <div class="col-lg-3">
+        <div class="col-lg-4">
 
             <div class="card shadow-sm h-100">
 
@@ -68,7 +69,7 @@
         </div>
 
         <!-- Right : Permissions -->
-        <div class="col-lg-9">
+        <div class="col-lg-8">
 
             <div class="card shadow-sm">
 
@@ -220,5 +221,55 @@
 
             loadPermission(roleId);
         });
+
+                async function loadPermission(roleId) {
+
+            // Clear all checkboxes first
+            $('#permissionBody .permission').prop('checked', false);
+
+            try {
+
+                const response = await $.ajax({
+                    url: '@Url.Action("GetPermissions", "RolePermission")',
+                    type: 'GET',
+                    data: {
+                        roleId: roleId
+                    }
+                });
+
+                if (!response.success)
+                    return;
+
+                response.data.forEach(function (item) {
+
+                    const row = $('#permissionBody tr[data-menu-id="' + item.menuId + '"]');
+
+                    row.find('[data-type="View"]')
+                        .prop('checked', item.canView);
+
+                    row.find('[data-type="Create"]')
+                        .prop('checked', item.canCreate);
+
+                    row.find('[data-type="Edit"]')
+                        .prop('checked', item.canEdit);
+
+                    row.find('[data-type="Delete"]')
+                        .prop('checked', item.canDelete);
+
+                    row.find('[data-type="Export"]')
+                        .prop('checked', item.canExport);
+
+                    row.find('[data-type="Approve"]')
+                        .prop('checked', item.canApprove);
+                });
+
+            }
+            catch (ex) {
+
+                console.error(ex);
+
+                alert('Unable to load permissions.');
+            }
+        }
     </script>
 }

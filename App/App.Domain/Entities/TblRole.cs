@@ -7,8 +7,6 @@ namespace App.Domain.Entities;
 
 public partial class TblRole
 {
-    public long Id { get; set; }
-
     public string RoleCode { get; set; }
 
     public string RoleName { get; set; }
@@ -16,6 +14,8 @@ public partial class TblRole
     public string Description { get; set; }
 
     public bool IsDeleted { get; set; }
+
+    public int? RoleLevel { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 

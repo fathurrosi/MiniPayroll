@@ -38,4 +38,6 @@ public partial class TblMenu
     public string Description { get; set; }
 
     public bool IsCard { get; set; }
+
+    public virtual ICollection<TblRolePermission> TblRolePermissions { get; set; } = new List<TblRolePermission>();
 }

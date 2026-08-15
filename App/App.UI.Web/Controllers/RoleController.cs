@@ -139,70 +139,83 @@ namespace App.UI.Web.Controllers
 
         #endregion
 
-    //    [HttpGet]
-    //    public async Task<IActionResult> GetPermissions(int roleId)
-    //    {
-    //        var menus = await _menuService.GetAllMenus();
-    //        var permissions =
-    //            await _rolePermissionService.GetByRoleId(roleId);
+        [HttpGet]
+        public async Task<IActionResult> GetPermissions(string roleCode)
+        {
+            var permissions = await _RoleService.GetPermissionsAsync(roleCode);
 
-    //        var result = menus
-    //            .OrderBy(x => x.SortNo)
-    //            .Select(menu =>
-    //            {
-    //                var permission =
-    //                    permissions.FirstOrDefault(x =>
-    //                        x.MenuId == menu.Id);
+            return Json(new
+            {
+                success = true,
+                data = permissions
+            });
+        }
 
-    //                return new MenuPermissionDto
-    //                {
-    //                    MenuId = menu.Id,
-    //                    MenuName = menu.MenuName,
-    //                    Level = menu.Level,
-    //                    HasChildren = menu.HasChildren,
 
-    //                    CanView = permission?.CanView ?? false,
-    //                    CanCreate = permission?.CanCreate ?? false,
-    //                    CanEdit = permission?.CanEdit ?? false,
-    //                    CanDelete = permission?.CanDelete ?? false,
-    //                    CanExport = permission?.CanExport ?? false,
-    //                    CanApprove = permission?.CanApprove ?? false
-    //                };
-    //            })
-    //            .ToList();
+        //    [HttpGet]
+        //    public async Task<IActionResult> GetPermissions(int roleId)
+        //    {
+        //        var menus = await _menuService.GetAllMenus();
+        //        var permissions =
+        //            await _rolePermissionService.GetByRoleId(roleId);
 
-    //        return Json(result);
-    //    }
-    //    [HttpPost]
-    //    [ValidateAntiForgeryToken]
-    //    public async Task<IActionResult> Save(
-    //int roleId,
-    //List<MenuPermissionDto> permissions)
-    //    {
-    //        try
-    //        {
-    //            if (roleId <= 0)
-    //            {
-    //                return Json(
-    //                    ActionResponse.Fail(
-    //                        "Invalid role."));
-    //            }
+        //        var result = menus
+        //            .OrderBy(x => x.SortNo)
+        //            .Select(menu =>
+        //            {
+        //                var permission =
+        //                    permissions.FirstOrDefault(x =>
+        //                        x.MenuId == menu.Id);
 
-    //            await _rolePermissionService.Save(
-    //                roleId,
-    //                permissions);
+        //                return new MenuPermissionDto
+        //                {
+        //                    MenuId = menu.Id,
+        //                    MenuName = menu.MenuName,
+        //                    Level = menu.Level,
+        //                    HasChildren = menu.HasChildren,
 
-    //            return Json(
-    //                ActionResponse.Ok(
-    //                    "Permissions saved successfully."));
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            return Json(
-    //                ActionResponse.Fail(
-    //                    ex.Message));
-    //        }
-    //    }
+        //                    CanView = permission?.CanView ?? false,
+        //                    CanCreate = permission?.CanCreate ?? false,
+        //                    CanEdit = permission?.CanEdit ?? false,
+        //                    CanDelete = permission?.CanDelete ?? false,
+        //                    CanExport = permission?.CanExport ?? false,
+        //                    CanApprove = permission?.CanApprove ?? false
+        //                };
+        //            })
+        //            .ToList();
+
+        //        return Json(result);
+        //    }
+        //    [HttpPost]
+        //    [ValidateAntiForgeryToken]
+        //    public async Task<IActionResult> Save(
+        //int roleId,
+        //List<MenuPermissionDto> permissions)
+        //    {
+        //        try
+        //        {
+        //            if (roleId <= 0)
+        //            {
+        //                return Json(
+        //                    ActionResponse.Fail(
+        //                        "Invalid role."));
+        //            }
+
+        //            await _rolePermissionService.Save(
+        //                roleId,
+        //                permissions);
+
+        //            return Json(
+        //                ActionResponse.Ok(
+        //                    "Permissions saved successfully."));
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return Json(
+        //                ActionResponse.Fail(
+        //                    ex.Message));
+        //        }
+        //    }
 
 
         public async Task<IActionResult> AccessPermission()
@@ -213,6 +226,7 @@ namespace App.UI.Web.Controllers
                 MenuPermissions = new List<MenuPermissionDto>()
             };
 
+            model.Roles = await _RoleService.GetListAsync();
             return View(model);
         }
     }
