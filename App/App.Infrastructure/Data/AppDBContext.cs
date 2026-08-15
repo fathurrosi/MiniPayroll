@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructure.Data;
@@ -535,7 +536,7 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.IsActive).HasDefaultValue(true, "DF__tbl_Emplo__IsAct__45544755");
+            //entity.Property(e => e.IsActive).HasDefaultValue(true, "DF__tbl_Emplo__IsAct__45544755");
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
