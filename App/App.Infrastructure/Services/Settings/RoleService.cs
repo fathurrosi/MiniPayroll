@@ -4,6 +4,7 @@ using App.Application.Interfaces.Services.Masters;
 using App.Application.Interfaces.Services.Settings;
 using App.Domain.Entities;
 using App.Domain.Models.Dto.Masters;
+using App.Domain.Models.Dto.Settings;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Extensions;
@@ -15,30 +16,34 @@ namespace App.Infrastructure.Services.Settings
     public class RoleService : IRoleService
     {
         private readonly IMapper _mapper;
-        private readonly IGenericRepository<TblRole> _RoleRepo;
+        private readonly IGenericRepository<TblRole> _roleRepo;
+
+        private readonly IGenericRepository<TblRolePermission> _rolePermissionRepo;
         private readonly ILogger<RoleService> _logger;
         private readonly IContextService _context;
         public RoleService(
             ILogger<RoleService> logger,
-           IGenericRepository<TblRole> RoleRepo,
-           IContextService context,
+               IGenericRepository<TblRole> RoleRepo,
+               IGenericRepository<TblRolePermission> RolePermissionRepo,
+               IContextService context,
             IMapper mapper)
         {
             _logger = logger;
-            _RoleRepo = RoleRepo;
+            _roleRepo = RoleRepo;
             _mapper = mapper;
             _context = context;
+            _rolePermissionRepo = RolePermissionRepo;
         }
 
         public async Task<List<RoleDto>> GetListAsync()
         {
-            var entities = await _RoleRepo.GetListAsync();
+            var entities = await _roleRepo.GetListAsync(t => !t.IsDeleted);
             return _mapper.Map<List<RoleDto>>(entities);
         }
 
         public async Task<RoleDto?> GetByCodeAsync(string code)
         {
-            var entity = await _RoleRepo.GetFirstOrDefaultAsync(x =>
+            var entity = await _roleRepo.GetFirstOrDefaultAsync(x =>
                     x.RoleCode == code);
 
             return entity == null
@@ -46,15 +51,26 @@ namespace App.Infrastructure.Services.Settings
                 : _mapper.Map<RoleDto>(entity);
         }
 
+        public async Task<List<RolePermissionDto>> GetPermissionsAsync(string code)
+        {
+            var entity = await _rolePermissionRepo.GetListAsync(x =>
+                    x.RoleCode == code);
+
+            return entity == null
+                ? null
+                : _mapper.Map<List<RolePermissionDto>>(entity);
+        }
+
+
         public async Task<RoleDto?> DeleteAsync(string code)
         {
-            var entity = await _RoleRepo.FindAsync(x =>
+            var entity = await _roleRepo.FindAsync(x =>
                 x.RoleCode == code);
             if (entity == null)
                 return null;
 
             entity.IsDeleted = true;
-            entity  = await _RoleRepo.UpdateAsync(entity);
+            entity = await _roleRepo.UpdateAsync(entity);
 
             return _mapper.Map<RoleDto>(entity);
         }
@@ -63,7 +79,7 @@ namespace App.Infrastructure.Services.Settings
         {
             try
             {
-                var entityResult = await _RoleRepo.GetPagedAsync(model);                 
+                var entityResult = await _roleRepo.GetPagedAsync(model);
                 return entityResult.MapPaged<TblRole, RoleDto>(_mapper, model);
             }
             catch (Exception ex)
@@ -79,23 +95,23 @@ namespace App.Infrastructure.Services.Settings
         {
             try
             {
-                var existingItem = await _RoleRepo.FindAsync(t => t.RoleCode == model.RoleCode);
+                var existingItem = await _roleRepo.FindAsync(t => t.RoleCode == model.RoleCode);
                 if (existingItem == null)
                 {
                     var item = _mapper.Map<TblRole>(model);
                     item.CreatedBy = _context.Username;
                     item.CreatedDate = DateTime.Now;
-                    var addedItem = await _RoleRepo.AddAsync(item);
+                    var addedItem = await _roleRepo.AddAsync(item);
                     return _mapper.Map<RoleDto>(addedItem);
                 }
                 else
                 {
-                    long roleId = existingItem.Id;
+                    string roleCode = existingItem.RoleCode;
                     _mapper.Map(model, existingItem);
-                    existingItem.Id = roleId;
+                    existingItem.RoleCode = roleCode;
                     existingItem.UpdatedBy = _context.Username;
                     existingItem.UpdatedDate = DateTime.Now;
-                    var updatedItem = await _RoleRepo.UpdateAsync(existingItem);
+                    var updatedItem = await _roleRepo.UpdateAsync(existingItem);
                     return _mapper.Map<RoleDto>(updatedItem);
                 }
             }

@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructure.Data;
@@ -536,7 +535,7 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.IsActive);//.HasDefaultValue(true, "DF__tbl_Emplo__IsAct__45544755");
+            entity.Property(e => e.IsActive).HasDefaultValue(true, "DF__tbl_Emplo__IsAct__45544755");
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -1019,18 +1018,16 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblRole>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Role__3214EC075E5D7AB3");
+            entity.HasKey(e => e.RoleCode);
 
             entity.ToTable("tbl_Roles");
 
+            entity.Property(e => e.RoleCode).HasMaxLength(100);
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(500);
-            entity.Property(e => e.RoleCode)
-                .IsRequired()
-                .HasMaxLength(100);
             entity.Property(e => e.RoleName)
                 .IsRequired()
                 .HasMaxLength(255);
@@ -1042,11 +1039,29 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblRolePermission>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Role__3214EC07EAD358A1");
-
             entity.ToTable("tbl_RolePermissions");
 
-            entity.Property(e => e.AssignedDate).HasDefaultValueSql("(getdate())");
+            entity.HasIndex(e => new { e.RoleCode, e.MenuId }, "UQ_tbl_RolePermissions").IsUnique();
+
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.MenuId)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.RoleCode)
+                .IsRequired()
+                .HasMaxLength(100);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Menu).WithMany(p => p.TblRolePermissions)
+                .HasForeignKey(d => d.MenuId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_tbl_RolePermissions_Menu");
         });
 
         modelBuilder.Entity<TblSalaryComponent>(entity =>
