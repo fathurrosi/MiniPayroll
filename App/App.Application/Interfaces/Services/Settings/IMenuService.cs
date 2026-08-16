@@ -8,6 +8,7 @@ namespace App.Application.Interfaces.Services.Settings
     {
         Task<PagedResponse<MenuDto>> GetPagedAsync(DataTableRequest model);
         Task<List<MenuDto>> GetListAsync();
+        Task<List<MenuDto>> GetParentListAsync();
         Task<MenuDto> Save(MenuDto model);
         Task<int> Delete(string code);
         Task<MenuDto> GetByCode(string code);

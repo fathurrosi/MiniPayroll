@@ -20,13 +20,16 @@ builder.Host.UseSerilog((context, services, configuration) =>
 });
 
 var app = builder.Build();
-
+var useHttps = builder.Configuration.GetValue<bool>("AppSettings:UseHttps");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    //app.UseHsts();
+    if (useHttps)
+    {
+        app.UseHsts();
+    }
 }
 else
 {
@@ -39,7 +42,10 @@ else
     });
 }
 
-//app.UseHttpsRedirection();
+if (useHttps)
+{
+    app.UseHttpsRedirection();
+}
 app.UseRouting();
 
 app.UseAuthentication();

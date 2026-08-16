@@ -219,6 +219,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_SystemLog]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_UserRoles]",
          "ObjectType": 0
       },
@@ -244,6 +248,10 @@
       },
       {
          "Name": "[dbo].[vw_LeaveRequest]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_RolePermissions]",
          "ObjectType": 3
       }
    ],

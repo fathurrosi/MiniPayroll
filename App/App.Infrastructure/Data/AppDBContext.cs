@@ -114,6 +114,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblShiftPatternDetail> TblShiftPatternDetails { get; set; }
 
+    public virtual DbSet<TblSystemLog> TblSystemLogs { get; set; }
+
     public virtual DbSet<TblUser> TblUsers { get; set; }
 
     public virtual DbSet<TblUserRole> TblUserRoles { get; set; }
@@ -127,6 +129,8 @@ public partial class AppDBContext : DbContext
     public virtual DbSet<VwEmployeeSalary> VwEmployeeSalaries { get; set; }
 
     public virtual DbSet<VwLeaveRequest> VwLeaveRequests { get; set; }
+
+    public virtual DbSet<VwRolePermission> VwRolePermissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -536,7 +540,6 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            //entity.Property(e => e.IsActive).HasDefaultValue(true, "DF__tbl_Emplo__IsAct__45544755");
             entity.Property(e => e.UpdatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -620,13 +623,10 @@ public partial class AppDBContext : DbContext
 
         modelBuilder.Entity<TblLeaveRequest>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC07BAE4CA43");
+            entity.HasKey(e => e.Id).HasName("PK__tbl_Leav__3214EC0758F2FBB8");
 
             entity.ToTable("tbl_LeaveRequests");
 
-            entity.Property(e => e.ApprovalStatus)
-                .IsRequired()
-                .HasDefaultValueSql("('Pending')");
             entity.Property(e => e.BranchCode)
                 .IsRequired()
                 .HasMaxLength(20)
@@ -634,9 +634,7 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.CreatedBy)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.CreatedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.DepartmentCode)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -1165,6 +1163,16 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<TblSystemLog>(entity =>
+        {
+            entity.ToTable("tbl_SystemLog");
+
+            entity.Property(e => e.Level).HasMaxLength(16);
+            entity.Property(e => e.MachineName).HasMaxLength(100);
+            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
+            entity.Property(e => e.Username).HasMaxLength(256);
+        });
+
         modelBuilder.Entity<TblUser>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__tbl_User__3214EC07BEBA572B");
@@ -1454,6 +1462,37 @@ public partial class AppDBContext : DbContext
                 .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<VwRolePermission>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_RolePermissions");
+
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Css).HasMaxLength(255);
+            entity.Property(e => e.Icon).HasMaxLength(255);
+            entity.Property(e => e.MenuId)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.ParentId).HasMaxLength(255);
+            entity.Property(e => e.RoleCode)
+                .IsRequired()
+                .HasMaxLength(100);
+            entity.Property(e => e.RoleName)
+                .IsRequired()
+                .HasMaxLength(255);
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         OnModelCreatingPartial(modelBuilder);

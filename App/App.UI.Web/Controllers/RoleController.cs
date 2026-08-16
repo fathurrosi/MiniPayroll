@@ -1,4 +1,5 @@
 ﻿using App.Application.Interfaces.Services.Settings;
+using App.Domain.Entities;
 using App.Domain.Enums;
 using App.Domain.Models;
 using App.Domain.Models.Dto.Masters;
@@ -6,18 +7,23 @@ using App.Domain.Models.Dto.Settings;
 using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.UI.Web.Models;
-using Microsoft.AspNetCore.Mvc; 
+using Microsoft.AspNetCore.Mvc;
 
 namespace App.UI.Web.Controllers
 {
     public class RoleController : BaseController
     {
-        private readonly IRoleService _RoleService;
+        private readonly IRoleService _roleService;
+
+        private readonly IMenuService _menuService;
         private readonly ILogger<RoleController> _logger;
-        public RoleController(IRoleService RoleService, ILogger<RoleController> logger)
+        public RoleController(IRoleService roleService
+            , IMenuService menuService
+            , ILogger<RoleController> logger)
 
         {
-            _RoleService = RoleService;
+            _menuService = menuService;
+            _roleService = roleService;
             _logger = logger;
         }
 
@@ -29,11 +35,37 @@ namespace App.UI.Web.Controllers
             return View(model);
         }
         [HttpPost]
+        public async Task<IActionResult> SavePermissions( [FromBody] List<RolePermissionDto> permissions)
+        {
+            try
+            {
+                
+                if (permissions == null || !permissions.Any())
+                {
+                    return Json(ActionResponse.Fail(
+                        "No permissions to save."));
+                }
+
+
+                var result = await _roleService.SavePermissionAsync(permissions);
+
+                return Json(ActionResponse.Ok("Permissions saved successfully."));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving role permissions");
+
+                return Json(ActionResponse.Fail(
+                    "An error occurred while saving permissions."));
+            }
+        }
+
+        [HttpPost]
         public async Task<IActionResult> GetList([FromBody] DataTableRequest model)
         {
             try
             {
-                var result = await _RoleService.GetPagedAsync(model);
+                var result = await _roleService.GetPagedAsync(model);
                 return Json(new
                 {
                     draw = model.Draw,
@@ -59,7 +91,7 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-                var model = await _RoleService.GetByCodeAsync(code);
+                var model = await _roleService.GetByCodeAsync(code);
                 return Json(model);
             }
             catch (Exception ex)
@@ -78,7 +110,7 @@ namespace App.UI.Web.Controllers
 
             try
             {
-                var result = await _RoleService.DeleteAsync(code);
+                var result = await _roleService.DeleteAsync(code);
                 if (result != null)
                     return Ok(ActionResponse.Ok($"model {code} deleted successfully"));
 
@@ -100,7 +132,7 @@ namespace App.UI.Web.Controllers
                 {
                     return Json(ActionResponse.Fail("Request data is missing or invalid."));
                 }
-                 
+
                 if (string.IsNullOrWhiteSpace(model.Item.RoleCode))
                 {
                     return Json(ActionResponse.Fail("Overtime name is mandatory."));
@@ -115,14 +147,14 @@ namespace App.UI.Web.Controllers
                 if (model.Mode == FormMode.Create)
                 {
                     // Pro-Tip: Change your service to look up by Date instead of ID for creation checks
-                    var existingItem = await _RoleService.GetByCodeAsync(model.Item.RoleCode);
+                    var existingItem = await _roleService.GetByCodeAsync(model.Item.RoleCode);
                     if (existingItem != null)
                     {
                         return Json(ActionResponse.Fail($"A Role already exists with this code: {existingItem.RoleCode}"));
                     }
-                } 
+                }
                 // 4. Execute Save Operation
-                var result = await _RoleService.SaveAsync(model.Item);
+                var result = await _roleService.SaveAsync(model.Item);
 
                 return (result != null)
                     ? Json(ActionResponse.Ok("Role saved successfully."))
@@ -140,82 +172,33 @@ namespace App.UI.Web.Controllers
         #endregion
 
         [HttpGet]
-        public async Task<IActionResult> GetPermissions(string roleCode)
+        public async Task<IActionResult> GetPermissions(string roleCode, string menuId)
         {
-            var permissions = await _RoleService.GetPermissionsAsync(roleCode);
-
-            return Json(new
+            try
             {
-                success = true,
-                data = permissions
-            });
+                var permissions = await _roleService.GetPermissionsAsync(roleCode, menuId);
+                return Json(ActionResponse.Ok(permissions.OrderBy(p => p.Sort)));
+            }
+            catch (Exception ex)
+            {
+                return Json(ActionResponse.Fail(ex.Message));
+            }
         }
 
 
-        //    [HttpGet]
-        //    public async Task<IActionResult> GetPermissions(int roleId)
-        //    {
-        //        var menus = await _menuService.GetAllMenus();
-        //        var permissions =
-        //            await _rolePermissionService.GetByRoleId(roleId);
-
-        //        var result = menus
-        //            .OrderBy(x => x.SortNo)
-        //            .Select(menu =>
-        //            {
-        //                var permission =
-        //                    permissions.FirstOrDefault(x =>
-        //                        x.MenuId == menu.Id);
-
-        //                return new MenuPermissionDto
-        //                {
-        //                    MenuId = menu.Id,
-        //                    MenuName = menu.MenuName,
-        //                    Level = menu.Level,
-        //                    HasChildren = menu.HasChildren,
-
-        //                    CanView = permission?.CanView ?? false,
-        //                    CanCreate = permission?.CanCreate ?? false,
-        //                    CanEdit = permission?.CanEdit ?? false,
-        //                    CanDelete = permission?.CanDelete ?? false,
-        //                    CanExport = permission?.CanExport ?? false,
-        //                    CanApprove = permission?.CanApprove ?? false
-        //                };
-        //            })
-        //            .ToList();
-
-        //        return Json(result);
-        //    }
-        //    [HttpPost]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> Save(
-        //int roleId,
-        //List<MenuPermissionDto> permissions)
-        //    {
-        //        try
-        //        {
-        //            if (roleId <= 0)
-        //            {
-        //                return Json(
-        //                    ActionResponse.Fail(
-        //                        "Invalid role."));
-        //            }
-
-        //            await _rolePermissionService.Save(
-        //                roleId,
-        //                permissions);
-
-        //            return Json(
-        //                ActionResponse.Ok(
-        //                    "Permissions saved successfully."));
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return Json(
-        //                ActionResponse.Fail(
-        //                    ex.Message));
-        //        }
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> GetParentManus()
+        {
+            try
+            {
+                var parenMenus = await _menuService.GetParentListAsync();
+                return Json(ActionResponse.Ok(parenMenus));
+            }
+            catch (Exception ex)
+            {
+                return Json(ActionResponse.Fail(ex.Message));
+            }
+        }
 
 
         public async Task<IActionResult> AccessPermission()
@@ -226,7 +209,8 @@ namespace App.UI.Web.Controllers
                 MenuPermissions = new List<MenuPermissionDto>()
             };
 
-            model.Roles = await _RoleService.GetListAsync();
+            model.Roles = await _roleService.GetListAsync();
+            model.Menus = await _menuService.GetParentListAsync();
             return View(model);
         }
     }

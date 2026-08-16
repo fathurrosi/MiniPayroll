@@ -9,7 +9,12 @@ using App.Domain.Models.Request;
 using App.Domain.Models.Response;
 using App.Infrastructure.Extensions;
 using MapsterMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+using System.Collections;
+using static Dapper.SqlMapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace App.Infrastructure.Services.Settings
 {
@@ -19,17 +24,20 @@ namespace App.Infrastructure.Services.Settings
         private readonly IGenericRepository<TblRole> _roleRepo;
 
         private readonly IGenericRepository<TblRolePermission> _rolePermissionRepo;
+        private readonly IGenericRepository<VwRolePermission> _rolePermissionViewRepo;
         private readonly ILogger<RoleService> _logger;
         private readonly IContextService _context;
         public RoleService(
             ILogger<RoleService> logger,
-               IGenericRepository<TblRole> RoleRepo,
-               IGenericRepository<TblRolePermission> RolePermissionRepo,
-               IContextService context,
+            IGenericRepository<TblRole> RoleRepo,
+            IGenericRepository<TblRolePermission> RolePermissionRepo,
+            IGenericRepository<VwRolePermission> rolePermissionViewRepo,
+            IContextService context,
             IMapper mapper)
         {
             _logger = logger;
             _roleRepo = RoleRepo;
+            _rolePermissionViewRepo = rolePermissionViewRepo;
             _mapper = mapper;
             _context = context;
             _rolePermissionRepo = RolePermissionRepo;
@@ -41,6 +49,130 @@ namespace App.Infrastructure.Services.Settings
             return _mapper.Map<List<RoleDto>>(entities);
         }
 
+        //public async List<RolePermissionDto> SavePermissionAsync(List<RolePermissionDto> permissions)
+        //{
+        //    var keys = permissions.Select(t => new { t.RoleCode, t.MenuId }).ToList();
+        //    var exititngItems = await _rolePermissionRepo.GetFirstOrDefaultAsync(x =>
+        //           keys.Where(t => t.MenuId == x.MenuId && t.RoleCode == x.RoleCode).Any());
+
+        //    // this update
+        //    exititngItems
+
+        //    if any new then insert
+
+        //    return value
+        //}
+        public async Task<List<RolePermissionDto>> SavePermissionAsync( 
+            List<RolePermissionDto> permissions)
+        {
+            if (permissions == null || !permissions.Any())
+                return new List<RolePermissionDto>();
+
+            try
+            {
+                var roleCode = permissions
+                    .Select(x => x.RoleCode)
+                    .First();
+
+                var menuIds = permissions
+                    .Select(x => x.MenuId)
+                    .Distinct()
+                    .ToList();
+
+                // Get existing permissions
+                var existingItems = await _rolePermissionRepo.GetListAsync(x =>
+                    x.RoleCode == roleCode &&
+                    menuIds.Contains(x.MenuId) &&
+                    x.IsDeleted != true);
+
+                var updateItems = new List<TblRolePermission>();
+                var newItems = new List<TblRolePermission>();
+
+                foreach (var permission in permissions)
+                {
+                    var existing = existingItems.FirstOrDefault(x =>
+                        x.RoleCode == permission.RoleCode &&
+                        x.MenuId == permission.MenuId);
+
+                    if (existing != null)
+                    {
+                        // =========================
+                        // UPDATE
+                        // =========================
+
+                        existing.CanView = permission.CanView;
+                        existing.CanCreate = permission.CanCreate;
+                        existing.CanEdit = permission.CanEdit;
+                        existing.CanDelete = permission.CanDelete;
+                        existing.CanExport = permission.CanExport;
+                        existing.CanApprove = permission.CanApprove;
+
+                        existing.IsDeleted = false;
+
+                        updateItems.Add(existing);
+                    }
+                    else
+                    {
+                        // =========================
+                        // INSERT
+                        // =========================
+
+                        var newItem = new TblRolePermission
+                        {
+                            RoleCode = permission.RoleCode,
+                            MenuId = permission.MenuId,
+
+                            CanView = permission.CanView,
+                            CanCreate = permission.CanCreate,
+                            CanEdit = permission.CanEdit,
+                            CanDelete = permission.CanDelete,
+                            CanExport = permission.CanExport,
+                            CanApprove = permission.CanApprove,
+
+                            IsDeleted = false
+                        };
+
+                        newItems.Add(newItem);
+                    }
+                }
+
+                // =========================
+                // DATABASE OPERATIONS
+                // =========================
+
+                if (updateItems.Any())
+                {
+                    await _rolePermissionRepo.UpdateRangeAsync(updateItems);
+                }
+
+                if (newItems.Any())
+                {
+                    await _rolePermissionRepo.AddRangeAsync(newItems);
+                }
+
+                // =========================
+                // RETURN SAVED DATA
+                // =========================
+
+                var results = await _rolePermissionRepo.GetListAsync(x =>
+                    x.RoleCode == roleCode &&
+                    menuIds.Contains(x.MenuId) &&
+                    x.IsDeleted != true);
+
+                return results
+                    .Select(x => _mapper.Map<RolePermissionDto>(x))
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(
+                    ex,
+                    "Error saving role permissions for role {RoleCode}",
+                    permissions.FirstOrDefault()?.RoleCode);
+
+                throw;
+            }
+        }
         public async Task<RoleDto?> GetByCodeAsync(string code)
         {
             var entity = await _roleRepo.GetFirstOrDefaultAsync(x =>
@@ -51,14 +183,14 @@ namespace App.Infrastructure.Services.Settings
                 : _mapper.Map<RoleDto>(entity);
         }
 
-        public async Task<List<RolePermissionDto>> GetPermissionsAsync(string code)
+        public async Task<List<VwRolePermissionDto>> GetPermissionsAsync(string code, string menudId)
         {
-            var entity = await _rolePermissionRepo.GetListAsync(x =>
-                    x.RoleCode == code);
+            var entity = await _rolePermissionViewRepo.GetListAsync(x =>
+                    x.RoleCode == code && (x.ParentId == menudId || x.MenuId == menudId));
 
             return entity == null
                 ? null
-                : _mapper.Map<List<RolePermissionDto>>(entity);
+                : _mapper.Map<List<VwRolePermissionDto>>(entity);
         }
 
 

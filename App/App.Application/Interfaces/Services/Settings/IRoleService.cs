@@ -12,6 +12,7 @@ namespace App.Application.Interfaces.Services.Settings
         Task<RoleDto> DeleteAsync(string code);
         Task<PagedResponse<RoleDto>> GetPagedAsync(DataTableRequest model);
         Task<RoleDto> SaveAsync(RoleDto model);
-        Task<List<RolePermissionDto>> GetPermissionsAsync(string code);
+        Task<List<VwRolePermissionDto>> GetPermissionsAsync(string code, string menudId);
+        Task<List<RolePermissionDto>> SavePermissionAsync(List<RolePermissionDto> permissions);
     }
 }

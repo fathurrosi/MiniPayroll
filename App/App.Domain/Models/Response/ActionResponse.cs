@@ -23,6 +23,15 @@ namespace App.Domain.Models.Response
                 RedirectUrl = redirectUrl
             };
 
+        public static ActionResponse Ok(
+          object? data)
+          => new()
+          {
+              Success = true,
+              Data = data
+          };
+
+
         public static ActionResponse Fail(
             string message = "Operation failed",
             string? redirectUrl = null)

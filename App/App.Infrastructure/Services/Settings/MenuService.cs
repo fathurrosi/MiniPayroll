@@ -1,5 +1,6 @@
 ﻿using App.Application.Interfaces.Repositories;
 using App.Application.Interfaces.Services;
+using App.Application.Interfaces.Services.Settings;
 using App.Domain.Entities;
 using App.Domain.Models.Dto;
 using App.Domain.Models.Request;
@@ -13,7 +14,7 @@ using Microsoft.Extensions.Logging;
 
 namespace App.Infrastructure.Services.Settings
 {
-    public sealed class MenuService
+    public sealed class MenuService : IMenuService
     {
         private readonly IMapper _mapper;
         private readonly IGenericRepository<TblMenu> _menuRepo;
@@ -94,6 +95,21 @@ namespace App.Infrastructure.Services.Settings
             }
         }
 
+
+
+        public async Task<List<MenuDto>> GetParentListAsync()
+        {
+            try
+            {
+                var entityResult = await _menuRepo.GetListAsync(t => string.IsNullOrEmpty(t.ParentId));
+                return entityResult.Select(t => _mapper.Map<MenuDto>(t)).ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting parent menus");
+                throw;
+            }
+        }
         public async Task<MenuDto> Save(MenuDto model)
         {
             try

@@ -1,46 +1,101 @@
 ﻿@model RolePermissionViewModel
+<style>
+    .role-item {
+        transition: all 0.15s ease-in-out;
+    }
 
+        .role-item:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+        }
+
+        .role-item.active {
+            background-color: rgba(13, 110, 253, 0.10);
+            border-left: 3px solid var(--bs-primary) !important;
+        }
+
+            .role-item.active .fa-user {
+                color: var(--bs-primary) !important;
+            }
+
+    #permissionTable th {
+        white-space: nowrap;
+        font-size: 0.85rem;
+    }
+
+    #permissionTable td {
+        font-size: 0.875rem;
+    }
+
+    #permissionTable .form-check-input {
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+    }
+
+    #permissionTable tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+</style>
 <div class="container-fluid">
 
     <!-- Page Header -->
-    <div class="card shadow-sm mb-3">
-        <div class="card-body">
+    <div class="card shadow-sm border-0 mb-3">
+        <div class="card-body py-3">
+            <div class="d-flex justify-content-between align-items-center gap-3">
 
-            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                            <i class="fa-solid fa-user-shield text-primary fs-4"></i>
+                        </div>
+                    </div>
 
-                <div>
-                    <h4 class="mb-1">
-                        <i class="fa-solid fa-user-shield text-primary"></i>
-                        Role Access Permission
-                    </h4>
-
-                    <small class="text-muted">
-                        Manage RBAC (Role-Based Access Control).
-
-                    </small>
+                    <div>
+                        <h4 class="mb-1 fw-semibold">
+                            Role Access Permission
+                        </h4>
+                        <div class="text-muted small">
+                            Manage role-based access control and menu permissions.
+                        </div>
+                    </div>
                 </div>
 
-                <button id="btnSave"
-                        class="btn btn-primary">
+                <button type="button"
+                        id="btnSave"
+                        class="btn btn-primary px-4">
                     <i class="fa-solid fa-floppy-disk me-1"></i>
                     Save Permission
                 </button>
 
             </div>
-
         </div>
     </div>
 
-    <div class="row">
 
-        <!-- Left : Roles -->
-        <div class="col-lg-4">
+    <div class="row g-3">
 
-            <div class="card shadow-sm h-100">
+        <!-- ========================= -->
+        <!-- LEFT : ROLES -->
+        <!-- ========================= -->
+        <div class="col-lg-3">
 
-                <div class="card-header bg-white">
-                    <div class="fw-semibold">
-                        Roles
+            <div class="card shadow-sm border-0 h-100">
+
+                <div class="card-header bg-white border-bottom py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-semibold">
+                                <i class="fa-solid fa-users text-primary me-2"></i>
+                                Roles
+                            </div>
+                            <small class="text-muted">
+                                Select a role to manage
+                            </small>
+                        </div>
+
+                        <span class="badge bg-light text-dark">
+                            @Model.Roles.Count
+                        </span>
                     </div>
                 </div>
 
@@ -51,11 +106,30 @@
                         @foreach (var role in Model.Roles)
                         {
                             <a href="javascript:void(0)"
-                                   class="list-group-item role-item"
-                                   data-role-id="@role.Id">
+                                   class="list-group-item list-group-item-action role-item border-0 border-bottom"
+                                   data-role-id="@role.RoleCode">
 
-                                <i class="fa-solid fa-users me-2"></i>
-                                @role.RoleName
+                                <div class="d-flex align-items-center">
+
+                                    <div class="me-3">
+                                        <div class="rounded-circle bg-primary bg-opacity-10 p-2">
+                                            <i class="fa-solid fa-user text-primary"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex-grow-1">
+                                        <div class="fw-semibold">
+                                            @role.RoleName
+                                        </div>
+
+                                        <small class="text-muted">
+                                            Role: @role.RoleCode
+                                        </small>
+                                    </div>
+
+                                    <i class="fa-solid fa-chevron-right text-muted small"></i>
+
+                                </div>
 
                             </a>
                         }
@@ -68,133 +142,138 @@
 
         </div>
 
-        <!-- Right : Permissions -->
-        <div class="col-lg-8">
 
-            <div class="card shadow-sm">
+        <!-- ========================= -->
+        <!-- RIGHT : PERMISSIONS -->
+        <!-- ========================= -->
+        <div class="col-lg-9">
 
-                <div class="card-header bg-white">
+            <div class="card shadow-sm border-0">
 
-                    <div class="row">
+                <!-- Permission Header -->
+                <div class="card-header bg-white border-bottom py-3">
 
-                        <div class="col-md-6">
-                            <h6 class="mb-0">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                        <div>
+                            <div class="fw-semibold">
+                                <i class="fa-solid fa-shield-halved text-primary me-2"></i>
                                 Permission Matrix
-                            </h6>
+                            </div>
+
+                            <small class="text-muted">
+                                Configure access permissions for the selected role.
+                            </small>
                         </div>
 
-                        <div class="col-md-6">
-
-                            <input type="text"
-                                   id="txtSearchMenu"
-                                   class="form-control form-control-sm"
-                                   placeholder="Search menu..." />
-
+                        <div id="selectedRoleInfo"
+                             class="text-muted small">
+                            <span class="badge bg-secondary">
+                                No role selected
+                            </span>
                         </div>
 
                     </div>
 
                 </div>
 
+                <!-- Filters -->
+                <div class="card-body border-bottom bg-light py-3">
+
+                    <div class="row g-2 align-items-center">
+
+                        <!-- Module Label -->
+                        <div class="col-md-2">
+                            <label for="menuModule"
+                                   class="form-label fw-semibold mb-0">
+                                Menu Module
+                            </label>
+                        </div>
+
+                        <!-- Module Dropdown -->
+                        <div class="col-md-10">
+                            <select id="menuModule" class="form-select form-select-sm" disabled>
+                                @for (int i = 0; i < Model.Menus.Count; i++)
+                                {
+                                    var menu = Model.Menus[i];
+                                    <option value="@menu.Id"
+                                            selected="@(i == 0)">
+                                        @menu.Name
+                                    </option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Permission Table -->
                 <div class="card-body p-0">
 
                     <div class="table-responsive">
 
-                        <table class="table table-bordered table-hover mb-0"
+                        <table class="table table-bordered table-hover align-middle mb-0"
                                id="permissionTable">
 
                             <thead class="table-light">
 
-                                <tr class="text-center">
+                                <tr class="text-center align-middle">
 
-                                    <th style="min-width:300px">
-                                        Menu
+                                    <th class="text-start"
+                                        style="min-width: 220px;">
+                                        <div class="fw-semibold">
+                                            Menu
+                                        </div>
                                     </th>
 
-                                    <th width="80">View</th>
-                                    <th width="80">Create</th>
-                                    <th width="80">Edit</th>
-                                    <th width="80">Delete</th>
-                                    <th width="80">Export</th>
-                                    <th width="80">Approve</th>
+                                    <th style="width:80px;">
+                                        <i class="fa-solid fa-eye me-1"></i>
+                                        <span>Read</span>
+                                    </th>
 
+                                    <th style="width:80px;">
+                                        <i class="fa-solid fa-plus me-1"></i>
+                                        <span>Create</span>
+                                    </th>
+
+                                    <th style="width:80px;">
+                                        <i class="fa-solid fa-pen me-1"></i>
+                                        <span>Edit</span>
+                                    </th>
+
+                                    <th style="width:80px;">
+                                        <i class="fa-solid fa-trash me-1"></i>
+                                        <span>Delete</span>
+                                    </th>
+
+                                    <th style="width:80px;">
+                                        <i class="fa-solid fa-file-export me-1"></i>
+                                        <span>Export</span>
+                                    </th>
+                                    <th style="width:80px;">
+                                        <i class="fa-solid fa-check me-1"></i>
+                                        <span>Approve</span>
+                                    </th>
                                 </tr>
-
                             </thead>
-
                             <tbody id="permissionBody">
-
-                                @foreach (var item in Model.MenuPermissions)
-                                {
-                                    <tr data-menu-id="@item.MenuId">
-
-                                        <td>
-
-                                            <div style="padding-left:@(item.Level * 25)px">
-
-                                                @if (item.HasChildren)
-                                                {
-                                                    <i class="fa fa-folder-open text-warning me-2"></i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="fa fa-file-lines text-secondary me-2"></i>
-                                                }
-
-                                                @item.MenuName
-
-                                            </div>
-
-                                        </td>
-
-                                        <td class="text-center">
-                                            <input type="checkbox"
-                                                   class="form-check-input permission"
-                                                   data-type="View"
-                                            @(item.CanView ? "checked" : "") />
-                                        </td>
-
-                                        <td class="text-center">
-                                            <input type="checkbox"
-                                                   class="form-check-input permission"
-                                                   data-type="Create"
-                                            @(item.CanCreate ? "checked" : "") />
-                                        </td>
-
-                                        <td class="text-center">
-                                            <input type="checkbox"
-                                                   class="form-check-input permission"
-                                                   data-type="Edit"
-                                            @(item.CanEdit ? "checked" : "") />
-                                        </td>
-
-                                        <td class="text-center">
-                                            <input type="checkbox"
-                                                   class="form-check-input permission"
-                                                   data-type="Delete"
-                                            @(item.CanDelete ? "checked" : "") />
-                                        </td>
-
-                                        <td class="text-center">
-                                            <input type="checkbox"
-                                                   class="form-check-input permission"
-                                                   data-type="Export"
-                                            @(item.CanExport ? "checked" : "") />
-                                        </td>
-
-                                        <td class="text-center">
-                                            <input type="checkbox"
-                                                   class="form-check-input permission"
-                                                   data-type="Approve"
-                                            @(item.CanApprove ? "checked" : "") />
-                                        </td>
-
-                                    </tr>
-                                }
-
                             </tbody>
-
                         </table>
+                    </div>
+                </div>
+                <!-- Footer -->
+                <div class="card-footer bg-white border-top">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            <i class="fa-solid fa-circle-info me-1"></i>
+                            Changes will be applied to the selected role.
+                        </small>
+
+                        <small id="permissionCount"
+                               class="text-muted">
+                            0 permissions
+                        </small>
 
                     </div>
 
@@ -207,69 +286,322 @@
     </div>
 
 </div>
-
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        $(document).on('click', '.role-item', function () {
+        $('#btnSave').on('click', async function () {
 
-            $('.role-item').removeClass('active');
+            const btn = $(this);
 
-            $(this).addClass('active');
+            const roleCode = $('.role-item.active').data('role-id');
+            const menuId = $('#menuModule').val();
 
-            const roleId = $(this).data('role-id');
+            // Validate role
+            if (!roleCode) {
+                notify.error('Please select a role first.');
+                return;
+            }
 
-            loadPermission(roleId);
-        });
+            // Validate menu
+            if (!menuId) {
+                notify.error('Please select a menu module.');
+                return;
+            }
 
-                async function loadPermission(roleId) {
+             const permissions = [];
 
-            // Clear all checkboxes first
-            $('#permissionBody .permission').prop('checked', false);
+            $('#permissionBody tr').each(function () {
 
+                const row = $(this);
+
+                const menuId = row.data('menu-id');
+
+                const permission = {
+                    roleCode: roleCode,
+                    menuId: menuId.toString(),
+                    canView: row.find('[data-type="View"]').is(':checked'),
+                    canCreate: row.find('[data-type="Create"]').is(':checked'),
+                    canEdit: row.find('[data-type="Edit"]').is(':checked'),
+                    canDelete: row.find('[data-type="Delete"]').is(':checked'),
+                    canExport: row.find('[data-type="Export"]').is(':checked'),
+                    canApprove: row.find('[data-type="Approve"]').is(':checked')
+                };
+
+                permissions.push(permission);
+            });
+
+            if (permissions.length === 0) {
+                notify.warning('No permissions found to save.');
+                return;
+            }
+             
             try {
 
-                const response = await $.ajax({
-                    url: '@Url.Action("GetPermissions", "RolePermission")',
-                    type: 'GET',
-                    data: {
-                        roleId: roleId
-                    }
+                btn.prop('disabled', true);
+
+                const originalHtml = btn.html();
+
+                btn.html(`
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                    Saving...
+                `);
+
+                 const response = await $.ajax({
+                    url: '/Role/SavePermissions',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(permissions)
                 });
 
-                if (!response.success)
+                // const response = await $.ajax({
+                //     url: '/Role/SavePermissions',
+                //     type: 'POST',
+                //     contentType: 'application/json',
+                //     data: JSON.stringify(request)
+                // });
+
+                if (!response.success) {
+                    notify.error(response.message || 'Unable to save permissions.');
                     return;
+                }
 
-                response.data.forEach(function (item) {
-
-                    const row = $('#permissionBody tr[data-menu-id="' + item.menuId + '"]');
-
-                    row.find('[data-type="View"]')
-                        .prop('checked', item.canView);
-
-                    row.find('[data-type="Create"]')
-                        .prop('checked', item.canCreate);
-
-                    row.find('[data-type="Edit"]')
-                        .prop('checked', item.canEdit);
-
-                    row.find('[data-type="Delete"]')
-                        .prop('checked', item.canDelete);
-
-                    row.find('[data-type="Export"]')
-                        .prop('checked', item.canExport);
-
-                    row.find('[data-type="Approve"]')
-                        .prop('checked', item.canApprove);
-                });
+                notify.success(
+                    response.message || 'Permissions saved successfully.'
+                );
 
             }
             catch (ex) {
 
                 console.error(ex);
 
+                notify.error('An error occurred while saving permissions.');
+
+            }
+            finally {
+
+                btn.prop('disabled', false);
+
+                btn.html(`
+                    <i class="fa-solid fa-floppy-disk me-1"></i>
+                    Save Permission
+                `);
+            }
+
+        });
+
+        $('#menuModule').on('change', async function () {
+            const menuId = $(this).val();
+            const roleCode = $('.role-item.active').data('role-id');
+            if (!roleCode || !menuId) {
+                $('#permissionBody').empty();
+                return;
+            }
+            await loadPermission(roleCode, menuId);
+        }); 
+
+        $(document).on('click', '.role-item', async function () {
+            $('.role-item').removeClass('active');
+            $(this).addClass('active');
+            const roleCode = $(this).data('role-id');
+            const roleName = $(this).find('.fw-semibold').first().text().trim();
+            $('#selectedRoleInfo').html(`
+                <span class="badge bg-primary">
+                    <i class="fa-solid fa-user me-1"></i>
+                    ${roleName}
+                </span>
+            `);
+
+            if (roleCode && roleCode.toString().trim() !== '') {
+                $('#menuModule').prop('disabled', false);
+            }
+            // Load menus and automatically load first menu permissions
+            await loadParentMenus(roleCode);
+        });
+         
+
+        async function loadPermission(roleCode) {
+            const tbody = $('#permissionBody');
+            tbody.empty();
+
+            var menuId = $('#menuModule').val();
+            if (!roleCode || !menuId) {
+                return;
+            }
+
+            try {
+                const response = await $.ajax({
+                    url: '/Role/GetPermissions',
+                    type: 'GET',
+                    data: {
+                        roleCode: roleCode,
+                        menuId: menuId
+                    }
+                });
+
+                if (!response.success) {
+                    notify.warning(response.message || 'Unable to load permissions.');
+                    return;
+                }
+
+                response.data.forEach(function (item) {
+
+                    const viewPermission = `
+                        <td class="text-center">
+                            <input type="checkbox"
+                                   class="form-check-input permission"
+                                   data-type="View"
+                                   ${item.canView ? 'checked' : ''} />
+                        </td>
+                    `;
+
+                    let crudPermissions = '';
+
+                    if (item.hasChildren) {
+
+                        // Parent menu:
+                        // Only View permission is applicable.
+                        crudPermissions = `
+                            <td class="text-center">
+                                <span class="text-muted">-</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="text-muted">-</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="text-muted">-</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="text-muted">-</span>
+                            </td>
+
+                            <td class="text-center">
+                                <span class="text-muted">-</span>
+                            </td>
+                        `;
+
+                    } else {
+
+                        // Child menu:
+                        // All permissions are applicable.
+                        crudPermissions = `
+                            <td class="text-center">
+                                <input type="checkbox"
+                                       class="form-check-input permission"
+                                       data-type="Create"
+                                       ${item.canCreate ? 'checked' : ''} />
+                            </td>
+
+                            <td class="text-center">
+                                <input type="checkbox"
+                                       class="form-check-input permission"
+                                       data-type="Edit"
+                                       ${item.canEdit ? 'checked' : ''} />
+                            </td>
+
+                            <td class="text-center">
+                                <input type="checkbox"
+                                       class="form-check-input permission"
+                                       data-type="Delete"
+                                       ${item.canDelete ? 'checked' : ''} />
+                            </td>
+
+                            <td class="text-center">
+                                <input type="checkbox"
+                                       class="form-check-input permission"
+                                       data-type="Export"
+                                       ${item.canExport ? 'checked' : ''} />
+                            </td>
+
+                            <td class="text-center">
+                                <input type="checkbox"
+                                       class="form-check-input permission"
+                                       data-type="Approve"
+                                       ${item.canApprove ? 'checked' : ''} />
+                            </td>
+                        `;
+                    }
+
+                    const row = `
+                        <tr data-menu-id="${item.menuId}">
+
+                            <td>
+                                <div style="padding-left:${item.menuLevel * 10}px">
+
+                                    ${
+                                        item.hasChildren
+                                            ? '<i class="fa fa-folder-open text-warning me-2"></i>'
+                                            : '<i class="fa fa-file-lines text-secondary me-2"></i>'
+                                    }
+
+                                    ${item.name}
+
+                                </div>
+                            </td>
+
+                            ${viewPermission}
+
+                            ${crudPermissions}
+
+                        </tr>
+                    `;
+
+                    tbody.append(row);
+                });
+            }
+            catch (ex) {
+                console.error(ex);
                 alert('Unable to load permissions.');
             }
         }
+
+        async function loadParentMenus(roleCode) {
+            const menuSelect = $('#menuModule');
+            menuSelect.empty();
+
+            try {
+
+                const response = await $.ajax({
+                    url: '/Role/GetParentManus',
+                    type: 'GET'
+                });
+
+                if (!response.success) {
+                    alert(response.message || 'Unable to load menu modules.');
+                    return;
+                }
+
+                if (!response.data || response.data.length === 0) {
+                    menuSelect.append(`
+                        <option value="">
+                            No modules available
+                        </option>
+                    `);
+                    $('#permissionBody').empty();
+                    return;
+                }
+
+                // Populate modules
+                response.data.forEach(function (menu) {
+                    menuSelect.append(`
+                        <option value="${menu.id}">
+                            ${menu.name}
+                        </option>
+                    `);
+                });
+                // Default to first module
+                const defaultMenuId = response.data[0].id;
+                menuSelect.val(defaultMenuId);
+                // Load permissions for first module
+                await loadPermission(roleCode, defaultMenuId);
+
+            }
+            catch (ex) {
+                console.error(ex);
+                notify.error('Unable to load menu modules.');
+            }
+        } 
     </script>
 }
