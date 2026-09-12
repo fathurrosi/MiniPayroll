@@ -1,4 +1,5 @@
 using App.Infrastructure.Extensions;
+using App.Infrastructure.Middleware;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +51,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<SerilogContextMiddleware>();
 
 app.MapStaticAssets();
 

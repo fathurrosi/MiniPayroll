@@ -19,15 +19,7 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[AuditLogs]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[PayrollPeriods]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[SERILOG]",
          "ObjectType": 0
       },
       {
@@ -219,10 +211,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[tbl_SystemLog]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[tbl_UserRoles]",
          "ObjectType": 0
       },
@@ -252,6 +240,10 @@
       },
       {
          "Name": "[dbo].[vw_RolePermissions]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vw_Users]",
          "ObjectType": 3
       }
    ],

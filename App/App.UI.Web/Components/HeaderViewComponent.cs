@@ -7,14 +7,15 @@ namespace App.UI.Web.Components
 {
     public class HeaderViewComponent : ViewComponent
     {
-        //private readonly IContextService _contextService;
-        //public HeaderViewComponent(IContextService userService)
-        //{
-        //    _contextService = userService;
-        //}
+        private readonly IUserService _userService;
+        public HeaderViewComponent(IUserService userService)
+        {
+            _userService = userService;
+        }
         public async Task<IViewComponentResult> InvokeAsync()
-        { 
-            return View("~/Views/Shared/Layout/Header.cshtml"); 
+        {
+            var user = await _userService.GetUserAsync();
+            return View("~/Views/Shared/Layout/Header.cshtml", user); 
         }
     }
 

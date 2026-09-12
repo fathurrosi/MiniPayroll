@@ -21,7 +21,7 @@ namespace App.UI.Web.Controllers
         public EmployeeController(
             IDepartmentService departmentService,
             IPositionService positionService,
-            IEmployeeService employeeService, 
+            IEmployeeService employeeService,
             IPtkpService ptkpService,
             ILogger<EmployeeController> logger)
         {
@@ -199,6 +199,51 @@ namespace App.UI.Web.Controllers
                 {
                     id = p.PositionCode.ToString(),
                     text = p.PositionName ?? "Unknown Position"
+                }).ToList();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching Position dropdown data");
+                return Json(Array.Empty<object>());
+            }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetEmployeeDropdown(string searchTerm)
+        {
+            try
+            {
+                // Proteksi ekstra jika objek service ternyata tidak ter-resolve (null)
+                if (_positionService == null)
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var items = await _EmployeeService.GetListAsync();
+
+                // Jika data kosong atau null dari internal service, langsung return array kosong
+                if (items == null || !items.Any())
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var filteredItems = items.Where(p => p != null && p.IsActive);
+
+                if (!string.IsNullOrWhiteSpace(searchTerm))
+                {
+                    filteredItems = filteredItems.Where(p =>
+                        p.FullName != null && p.FullName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                        p.EmployeeCode != null && p.EmployeeCode.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                    );
+                }
+
+                var result = filteredItems.Select(p => new
+                {
+                    id = p.EmployeeCode.ToString(),
+                    text = p.FullName ?? "Unknown Employee Name"
                 }).ToList();
 
                 return Json(result);

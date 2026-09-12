@@ -14,7 +14,7 @@ namespace App.UI.Web.Components
         } 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            UserDto? item = await _userService.GetUserAsync();
+            VwUserDto? item = await _userService.GetUserAsync();
             return View("~/Views/Shared/Layout/Sidebar.cshtml", item); 
         } 
 

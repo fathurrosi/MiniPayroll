@@ -14,11 +14,7 @@ public partial class AppDBContext : DbContext
     {
     }
 
-    public virtual DbSet<AuditLog> AuditLogs { get; set; }
-
     public virtual DbSet<PayrollPeriod> PayrollPeriods { get; set; }
-
-    public virtual DbSet<Serilog> Serilogs { get; set; }
 
     public virtual DbSet<TaxBracket> TaxBrackets { get; set; }
 
@@ -114,8 +110,6 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblShiftPatternDetail> TblShiftPatternDetails { get; set; }
 
-    public virtual DbSet<TblSystemLog> TblSystemLogs { get; set; }
-
     public virtual DbSet<TblUser> TblUsers { get; set; }
 
     public virtual DbSet<TblUserRole> TblUserRoles { get; set; }
@@ -132,37 +126,16 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<VwRolePermission> VwRolePermissions { get; set; }
 
+    public virtual DbSet<VwUser> VwUsers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AuditLog>(entity =>
-        {
-            entity.HasKey(e => e.AuditLogId).HasName("PK__AuditLog__EB5F6CBD28CAD3FA");
-
-            entity.Property(e => e.ActionType)
-                .HasMaxLength(20)
-                .IsUnicode(false);
-            entity.Property(e => e.PerformedAt).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.TableName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-        });
-
         modelBuilder.Entity<PayrollPeriod>(entity =>
         {
             entity.HasKey(e => e.PayrollPeriodId).HasName("PK__PayrollP__06190D367AE7F02F");
 
             entity.Property(e => e.CreatedAt).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.IsClosed).HasDefaultValue(false);
-        });
-
-        modelBuilder.Entity<Serilog>(entity =>
-        {
-            entity.ToTable("SERILOG");
-
-            entity.Property(e => e.Level).HasMaxLength(16);
-            entity.Property(e => e.MachineName).HasMaxLength(100);
-            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
-            entity.Property(e => e.Username).HasMaxLength(256);
         });
 
         modelBuilder.Entity<TaxBracket>(entity =>
@@ -1163,16 +1136,6 @@ public partial class AppDBContext : DbContext
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
-        modelBuilder.Entity<TblSystemLog>(entity =>
-        {
-            entity.ToTable("tbl_SystemLog");
-
-            entity.Property(e => e.Level).HasMaxLength(16);
-            entity.Property(e => e.MachineName).HasMaxLength(100);
-            entity.Property(e => e.TimeStamp).HasColumnType("datetime");
-            entity.Property(e => e.Username).HasMaxLength(256);
-        });
-
         modelBuilder.Entity<TblUser>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__tbl_User__3214EC07BEBA572B");
@@ -1493,6 +1456,68 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        modelBuilder.Entity<VwUser>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("vw_Users");
+
+            entity.Property(e => e.Address).IsUnicode(false);
+            entity.Property(e => e.BankAccountNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.BankName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.BasicSalary).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.BirthDate).HasColumnType("datetime");
+            entity.Property(e => e.CreatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Department)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.EmployeeCode)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.FullName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Gender)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.HireDate).HasColumnType("datetime");
+            entity.Property(e => e.Npwp)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("NPWP");
+            entity.Property(e => e.PasswordHash)
+                .IsRequired()
+                .HasMaxLength(500);
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Position)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Ptkpcode)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("PTKPCode");
+            entity.Property(e => e.ResignDate).HasColumnType("datetime");
+            entity.Property(e => e.UpdatedBy)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+            entity.Property(e => e.Username)
+                .IsRequired()
+                .HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);

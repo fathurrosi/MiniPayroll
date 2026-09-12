@@ -8,7 +8,7 @@
         ? $"/{controller}"
         : $"/{controller}/{action}";
 }
-@model VwUserDto
+@model UserDto
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <!--begin::Sidebar Brand-->
     <div class="sidebar-brand">
@@ -44,9 +44,7 @@
                         var menu = Model.MenuList[i];
                         if (menu.ChildList?.Count > 0)
                         {
-                            bool parentActive = menu.ChildList.Where(t => controller.Equals(t.Name, StringComparison.OrdinalIgnoreCase)).Count() > 0;
-                            string parentOpen = parentActive ? "nav-item menu-open" : "nav-item";
-                            <li class="@parentOpen">
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="@menu.Icon"></i>
                                     <p>@menu.Caption</p>
@@ -55,27 +53,42 @@
                                 <ul class="nav nav-treeview">
                                     @foreach (var child in menu.ChildList)
                                     {
-                                        bool childActive = controller.Equals(child.Name, StringComparison.OrdinalIgnoreCase);
-                                        string childOpen = childActive ? "nav-item menu-open" : "nav-item";
-                                        string linkActive = childActive ? "nav-link active" : "nav-link";
-                                        <li class="@childOpen">
-                                            <a href="@Url.Content(child.Link)"
-                                                   class="@linkActive">
-                                                <i class="@child.Icon"></i>
-                                                <p>@child.Caption</p>
+                                        string isActive = "";
+                                        if (controller.Equals(menu.Link, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            isActive = "active";
+                                        }
+                                        <li class="nav-item @isActive">
+                                            <a href="@Url.Content(menu.Link)"
+                                                   class="nav-link">
+                                                <i class="@menu.Icon"></i>
+                                                <p>@menu.Caption</p>
                                             </a>
                                         </li>
                                     }
-                                                                
+
+                                    <li class="nav-item">
+                                        <a asp-controller="Employee"
+                                               asp-action="Index"
+                                               class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Employees</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         }
                         else
                         {
-                            bool parentActive = controller.Equals(menu.Name, StringComparison.OrdinalIgnoreCase);
-                            string parentOpen = parentActive ? "nav-item menu-open" : "nav-item";
-                            string linkActive = parentActive ? "nav-link active" : "nav-link";
-                            <li class="nav-item">
+                            string isActive = "";
+                            if (controller.Equals(
+                                menu.Link,
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                isActive = "active";
+                            }
+
+                            <li class="nav-item @isActive">
                                 <a href="@Url.Content(menu.Link)"
                                        class="nav-link">
                                     <i class="@menu.Icon"></i>
@@ -85,8 +98,9 @@
                         }
                     }
                 }
+
+                
             </ul>
-             
         </nav>
     </div>
 </aside>

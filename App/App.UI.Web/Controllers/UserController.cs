@@ -23,8 +23,8 @@ namespace App.UI.Web.Controllers
         #region User
         public async Task<IActionResult> Index()
         {
-            var model = new PageModel<UserDto>() { Title = "User" };
-            model.Item = new UserDto();
+            var model = new PageModel<VwUserDto>() { Title = "User" };
+            model.Item = new VwUserDto();
             return View(model);
         }
         [HttpPost]

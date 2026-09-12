@@ -5,9 +5,6 @@ using System.Text;
 
 namespace App.Domain.Models.Dto.Settings
 {
-
-
-
     public sealed class VwRolePermissionDto : BaseDto<VwRolePermission>
     {
 

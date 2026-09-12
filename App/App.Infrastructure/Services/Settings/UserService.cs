@@ -21,6 +21,7 @@ namespace App.Infrastructure.Services.Settings
         readonly IHasherService _hasherService;
         readonly IContextService _context;
         readonly IGenericRepository<TblUser> _userRepo;
+        readonly IGenericRepository<VwUser> _vwUserRepo;
         readonly IGenericRepository<TblMenu> _menuRepo;
         readonly IMapper _mapper;
         readonly ILogger<UserService> _logger;
@@ -32,11 +33,13 @@ namespace App.Infrastructure.Services.Settings
             , IHasherService hasherService
             , IDistributedCache cache
             , IGenericRepository<TblMenu> menuRepo
+            , IGenericRepository<VwUser> vwUserRepo
             )
         {
             _mapper = mapper;
             _userRepo = userRepo;
             _logger = logger;
+            _vwUserRepo = vwUserRepo;
             _context = context;
             _hasherService = hasherService;
             _cache = cache;
@@ -212,9 +215,9 @@ namespace App.Infrastructure.Services.Settings
             }
         }
 
-        public async Task<UserDto?> GetUserAsync()
+        public async Task<VwUserDto?> GetUserAsync()
         {
-            UserDto? userInfo = null;
+            VwUserDto? userInfo = null;
             string userDataJson = "";
             var username = _context.Username;
             if (string.IsNullOrEmpty(username)) return null;
@@ -224,7 +227,7 @@ namespace App.Infrastructure.Services.Settings
             if (cachedBytes != null)
             {
                 var json = Encoding.UTF8.GetString(cachedBytes);
-                return JsonConvert.DeserializeObject<UserDto>(json);
+                return JsonConvert.DeserializeObject<VwUserDto>(json);
             }
 
             userInfo = await GetUserAsync(username);
@@ -237,14 +240,14 @@ namespace App.Infrastructure.Services.Settings
             return userInfo;
         }
 
-        private async Task<UserDto?> GetUserAsync(string username)
+        private async Task<VwUserDto?> GetUserAsync(string username)
         {
-            UserDto? user = null;
+            VwUserDto? user = null;
             if (string.IsNullOrEmpty(username)) return null;
-            var entity = await _userRepo.GetFirstOrDefaultAsync(u => u.Username == username);
+            var entity = await _vwUserRepo.GetFirstOrDefaultAsync(u => u.Username == username);
             if (entity != null)
             {
-                user = _mapper.Map<UserDto>(entity);
+                user = _mapper.Map<VwUserDto>(entity);
                 var menuEntities = await _menuRepo.GetListAsync(t => t.Deleted != 1);
 
                 List<MenuDto> result = new List<MenuDto>();

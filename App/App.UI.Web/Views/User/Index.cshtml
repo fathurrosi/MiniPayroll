@@ -3,7 +3,7 @@
 @using App.Domain.Models.Dto
 @using App.Domain.Models.Dto.Masters
 @using App.Domain.Models.Dto.Settings
-@model PageModel<UserDto>
+@model PageModel<VwUserDto>
 @{
     ViewData["Title"] = $"Data Master - {Model.Title}";
 }
@@ -94,6 +94,15 @@
                     </div>
 
                     <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label asp-for="Item.EmployeeCode" class="form-label fw-semibold"></label>
+                            <div class="w-100">
+                                <select asp-for="Item.EmployeeCode" id="Item_EmployeeCode" class="form-control select2" style="width: 100%;" data-placeholder="Search Employee..."></select>
+                            </div>
+                            <span asp-validation-for="Item.EmployeeCode" class="text-danger small"></span>
+                        </div>
+
 
                         <!-- Username -->
                         <div class="col-md-4">
@@ -260,6 +269,85 @@
             modal.show();
         }
         $(document).ready(function () {
+
+            // $('#Item_Position').select2({
+            //     theme: 'bootstrap4',
+            //     dropdownParent: $('#UserModal'),
+            //     allowClear: true,
+            //     placeholder: 'Search Position...',
+            //     ajax: {
+            //         url: '@Url.Action("GetPositionDropdown", "Employee")', // Arahkan ke endpoint controller Anda
+            //         dataType: 'json',
+            //         delay: 250,
+            //         data: function (params) { return { searchTerm: params.term }; },
+            //         processResults: function (data) { return { results: data }; },
+            //         cache: true
+            //     }
+            // });
+
+            //    $('#Item_EmployeeCode').select2({
+            //     theme: 'bootstrap4',
+            //     dropdownParent: $('#UserModal'),
+            //     allowClear: true,
+            //     placeholder: 'Search Employee...',
+            //     ajax: {
+            //         url: '@Url.Action("employees", "Employee")', // Arahkan ke endpoint controller Anda
+            //         dataType: 'json',
+            //         delay: 250,
+            //         data: function (params) { return { searchTerm: params.term }; },
+            //         processResults: function (data) { return { results: data }; },
+            //         cache: true
+            //     }
+            // });
+
+             $('#Item_EmployeeCode').select2({
+                 theme: 'bootstrap4',
+                 dropdownParent: $('#UserModal'),
+             
+                 placeholder: 'Search Employee...',
+                 allowClear: true,
+             
+                 minimumInputLength: 2,
+             
+                 ajax: {
+                     url: '@Url.Action("GetEmployeeDropdown", "Employee")',
+                     type: 'GET',
+                     dataType: 'json',
+                     delay: 300,
+             
+                     data: function (params) {
+                         return {
+                             searchTerm: params.term || ''
+                         };
+                     },
+             
+                     processResults: function (data) {
+                         return {
+                             results: data || []
+                         };
+                     },
+             
+                     cache: true,
+             
+                     error: function (xhr, status, error) {
+                         console.error('Employee lookup failed:', error);
+                     }
+                 },
+             
+                 language: {
+                     inputTooShort: function (args) {
+                         return 'Please enter at least ' + args.minimum + ' characters';
+                     },
+                     searching: function () {
+                         return 'Searching employees...';
+                     },
+                     noResults: function () {
+                         return 'No employee found';
+                     }
+                 }
+             });
+             
+             
              $('#logoFile').on('change', function () {
                  const file = this.files[0];
                  const preview = document.getElementById('logoPreview');

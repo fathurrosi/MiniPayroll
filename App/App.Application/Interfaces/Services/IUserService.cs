@@ -17,7 +17,7 @@ namespace App.Application.Interfaces.Services
         Task<UserDto> GetById(int userId); 
         Task<List<UserDto>> GetUsers(List<string> usernames); 
 
-        Task<UserDto?> GetUserAsync();
+        Task<VwUserDto?> GetUserAsync();
         Task<bool> ClearAsync(); 
     }
 }
