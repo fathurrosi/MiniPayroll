@@ -69,7 +69,7 @@ namespace App.Infrastructure.Services.Masters
         {
             try
             {
-                var entityResult = await _EmployeeRepo.GetPagedAsync(model); 
+                var entityResult = await _EmployeeRepo.GetPagedAsync(model);
                 return entityResult.MapPaged<TblEmployee, EmployeeDto>(_mapper, model);
             }
             catch (Exception ex)
@@ -79,6 +79,31 @@ namespace App.Infrastructure.Services.Masters
             }
         }
 
+
+        public async Task<List<EmployeeDto>> GetListAsync(string? search)
+        {
+            try
+            {
+                search = search?.Trim();
+
+                var entityResult = await _EmployeeRepo.GetListAsync(p =>
+                    p.IsActive &&
+                    (
+                        string.IsNullOrEmpty(search) ||
+                        (p.FullName != null && p.FullName.Contains(search)) ||
+                        (p.EmployeeCode != null && p.EmployeeCode.Contains(search))
+                    ));
+
+                return entityResult
+                    .Select(_mapper.Map<EmployeeDto>)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting employee list. Search: {Search}", search);
+                throw;
+            }
+        }
         public async Task<List<EmployeeDto>> GetListAsync()
         {
             try
@@ -100,13 +125,13 @@ namespace App.Infrastructure.Services.Masters
                 var entityItem = await _EmployeeRepo.FindAsync(t => t.EmployeeCode.Equals(model.EmployeeCode));
                 if (entityItem == null)
                 {
-                    TblEmployee item = _mapper.Map<TblEmployee>(model); 
+                    TblEmployee item = _mapper.Map<TblEmployee>(model);
                     var addedEntity = await _EmployeeRepo.AddAsync(item);
                     return _mapper.Map<EmployeeDto>(addedEntity);
                 }
                 else
                 {
-                    _mapper.Map(model, entityItem); 
+                    _mapper.Map(model, entityItem);
                     var updatedEntity = await _EmployeeRepo.UpdateAsync(entityItem);
                     return _mapper.Map<EmployeeDto>(updatedEntity);
                 }

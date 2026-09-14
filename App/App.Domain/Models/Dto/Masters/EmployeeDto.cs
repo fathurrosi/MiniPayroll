@@ -18,7 +18,13 @@ namespace App.Domain.Models.Dto.Masters
         [StringLength(255, ErrorMessage = "Full Name cannot exceed 255 characters.")]
         [Display(Name = "Full Name")]
         public string FullName { get; set; } = string.Empty;
-
+        public string EmployeeName
+        {
+            get
+            {
+                return FullName;
+            }
+        }
         [StringLength(50)]
         [Display(Name = "Gender")]
         public string? Gender { get; set; }

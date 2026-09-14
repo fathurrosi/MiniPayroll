@@ -14,7 +14,7 @@ namespace App.UI.Web.Controllers
     {
         private readonly IDepartmentService _departmentService;
         private readonly IPositionService _positionService;
-        private readonly IEmployeeService _EmployeeService;
+        private readonly IEmployeeService _employeeService;
         private readonly IPtkpService _PtkpService;
         private readonly ILogger<EmployeeController> _logger;
 
@@ -27,7 +27,7 @@ namespace App.UI.Web.Controllers
         {
             _departmentService = departmentService;
             _positionService = positionService;
-            _EmployeeService = employeeService;
+            _employeeService = employeeService;
             _PtkpService = ptkpService;
             _logger = logger;
         }
@@ -37,8 +37,6 @@ namespace App.UI.Web.Controllers
         {
             var item = new EmployeeModel() { Title = "Employee" };
             item.PtkpList = await _PtkpService.GetListAsync();
-
-
             return View(item);
         }
 
@@ -47,8 +45,7 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-                var result = await _EmployeeService.GetPagedAsync(model);
-
+                var result = await _employeeService.GetPagedAsync(model);
                 return Json(new
                 {
                     draw = model.Draw,
@@ -74,7 +71,7 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-                var Employee = await _EmployeeService.GetByCode(code);
+                var Employee = await _employeeService.GetByCode(code);
                 return Json(Employee);
             }
             catch (Exception ex)
@@ -93,7 +90,7 @@ namespace App.UI.Web.Controllers
 
             try
             {
-                var result = await _EmployeeService.Delete(code);
+                var result = await _employeeService.Delete(code);
                 if (result > 0)
                     return Ok(ActionResponse.Ok($"Employee {code} deleted successfully"));
 
@@ -112,10 +109,10 @@ namespace App.UI.Web.Controllers
             {
                 if (model.Mode == FormMode.Create)
                 {
-                    var existingItem = await _EmployeeService.GetByCode(model.Item.EmployeeCode);
+                    var existingItem = await _employeeService.GetByCode(model.Item.EmployeeCode);
                     if (existingItem != null) return Json(ActionResponse.Fail($"Employee {model.Item.EmployeeCode} already exist!"));
                 }
-                var result = await _EmployeeService.Save(model.Item);
+                var result = await _employeeService.Save(model.Item);
                 return (result != null) ? Json(ActionResponse.Ok("Employee saved successfully")) : Json(ActionResponse.Fail("Employee saved failed"));
             }
             catch (Exception ex)
@@ -215,14 +212,8 @@ namespace App.UI.Web.Controllers
         public async Task<IActionResult> GetEmployeeDropdown(string searchTerm)
         {
             try
-            {
-                // Proteksi ekstra jika objek service ternyata tidak ter-resolve (null)
-                if (_positionService == null)
-                {
-                    return Json(Array.Empty<object>());
-                }
-
-                var items = await _EmployeeService.GetListAsync();
+            { 
+                var items = await _employeeService.GetListAsync(searchTerm);
 
                 // Jika data kosong atau null dari internal service, langsung return array kosong
                 if (items == null || !items.Any())
@@ -230,20 +221,42 @@ namespace App.UI.Web.Controllers
                     return Json(Array.Empty<object>());
                 }
 
-                var filteredItems = items.Where(p => p != null && p.IsActive);
-
-                if (!string.IsNullOrWhiteSpace(searchTerm))
-                {
-                    filteredItems = filteredItems.Where(p =>
-                        p.FullName != null && p.FullName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                        p.EmployeeCode != null && p.EmployeeCode.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-                    );
-                }
-
-                var result = filteredItems.Select(p => new
+                var result = items.Select(p => new
                 {
                     id = p.EmployeeCode.ToString(),
                     text = p.FullName ?? "Unknown Employee Name"
+                   
+                }).ToList();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching Position dropdown data");
+                return Json(Array.Empty<object>());
+            }
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            try
+            {
+                var items = await _employeeService.GetListAsync(searchTerm);
+
+                // Jika data kosong atau null dari internal service, langsung return array kosong
+                if (items == null || !items.Any())
+                {
+                    return Json(Array.Empty<object>());
+                }
+
+                var result = items.Select(p => new
+                {
+                    id = p.EmployeeCode.ToString(),
+                    text = p.FullName ?? "Unknown Employee Name",
+                    info = "Information Technology"
                 }).ToList();
 
                 return Json(result);

@@ -28,7 +28,7 @@ namespace App.UI.Web.Controllers
             _departmentService = departmentService;
             _logger = logger;
         }
-         
+
 
         #region Shift 
 
@@ -71,11 +71,22 @@ namespace App.UI.Web.Controllers
             {
                 return Json(ActionResponse.Fail(ex.Message));
             }
-
         }
 
 
-
+        [HttpGet]
+        public async Task<IActionResult> GetShifts()
+        {
+            try
+            {
+                var model = await _ShiftService.GetListAsync();
+                return Json(model);
+            }
+            catch (Exception ex)
+            {
+                return Json(ActionResponse.Fail(ex.Message));
+            }
+        }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
