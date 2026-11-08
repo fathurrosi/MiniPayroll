@@ -59,7 +59,11 @@ namespace App.Infrastructure.Extensions
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/AccessDenied";
+
+                options.ExpireTimeSpan = TimeSpan.FromHours(1);
                 options.SlidingExpiration = true;
+
+                options.Cookie.HttpOnly = true; 
             });
 
 

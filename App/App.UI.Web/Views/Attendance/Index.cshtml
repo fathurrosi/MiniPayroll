@@ -1,4 +1,4 @@
-﻿@using App.Domain.Models
+@using App.Domain.Models
 @using App.Domain.Models.Dto.Attendance
 @model PageModel<AttendanceDto>
 @{
@@ -84,26 +84,26 @@
 
                 <div class="col-md-2">
                     <label class="form-label">Department</label>
-                    <select class="form-select">
-                        <option>All Department</option>
-                    </select>
+                    <select class="form-select" id="DepartmentSelect">
+    <option value="">All Department</option>
+</select>
                 </div>
 
                 <div class="col-md-2">
                     <label class="form-label">Status</label>
-                    <select class="form-select">
-                        <option>All Status</option>
-                    </select>
+                    <select class="form-select" id="StatusSelect">
+    <option value="">All Status</option>
+</select>
                 </div>
 
                 <div class="col-md-2">
                     <label class="form-label">From</label>
-                    <input type="date" class="form-control">
+                    <input type="date" class="form-control" id="FromDate">
                 </div>
 
                 <div class="col-md-2">
                     <label class="form-label">To</label>
-                    <input type="date" class="form-control">
+                    <input type="date" class="form-control" id="ToDate">
                 </div>
 
                 <div class="col-md-1 d-grid">
@@ -157,7 +157,7 @@
     </div>
 </div>
 
-<!-- Attendance Modal -->@* 
+<!-- Attendance Modal -->
 <div class="modal fade"
      id="attendanceModal"
      tabindex="-1"
@@ -165,20 +165,11 @@
      aria-hidden="true">
 
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
- *@
-<div class="modal fade"
-     id="attendanceModal"
-     tabindex="-1"
-     aria-labelledby="attendanceModalLabel"
-     aria-hidden="true">
-
-    <div class="modal-dialog modal-md modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-light">
                 <h5 class="modal-title fw-bold" id="attendanceModalLabel">
-                    <i class="bi bi-calendar-plus text-primary me-2"></i>
-                    New Attendance
+                    <i class="bi bi-calendar-check text-primary me-2"></i>
+                    <span id="modalTitle">New Attendance</span>
                 </h5>
                 <button type="button"
                         class="btn-close"
@@ -187,65 +178,58 @@
                 </button>
             </div>
 
-            <form id="attendanceForm">
-                <div class="modal-body">
+            <form id="attendanceForm"
+                  asp-action="Add"
+                  asp-controller="Attendance"
+                  method="post"
+                  enctype="multipart/form-data"
+                  autocomplete="off">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Mode)
+                @Html.HiddenFor(m => m.Title)
+                <input type="hidden" asp-for="Item.AttendanceId" id="Item_AttendanceId" asp-key="true" />
+                <input type="hidden" asp-for="Item.LateMinutes" id="Item_LateMinutes" value="0" />
+                <input type="hidden" asp-for="Item.EarlyOutMinutes" id="Item_EarlyOutMinutes" value="0" />
+                <input type="hidden" asp-for="Item.WorkMinutes" id="Item_WorkMinutes" value="0" />
+                <input type="hidden" asp-for="Item.OvertimeMinutes" id="Item_OvertimeMinutes" value="0" />
+                <input type="hidden" asp-for="Item.IsManualEntry" id="Item_IsManualEntry" value="true" />
+
+                <div class="modal-body p-4">
                     <div class="row g-3">
                         <!-- Employee -->
-                        <div class="col-md-8">
-                            <label for="EmployeeId" class="form-label fw-semibold">
-                                Employee
-                                <span class="text-danger">*</span>
+                        <div class="col-md-6">
+                            <label asp-for="Item.EmployeeId" class="form-label fw-semibold">
+                                Employee <span class="text-danger">*</span>
                             </label>
-                            <select id="EmployeeId"
-                                    name="EmployeeId"
+                            <select asp-for="Item.EmployeeId"
+                                    id="Item_EmployeeId"
                                     class="form-select"
                                     required>
-                                <option value="">-- Select Employee --</option>
+                                <option value="">-- Search & Select Employee --</option>
                             </select>
-                            <div class="invalid-feedback">
-                                Please select an employee.
-                            </div>
+                            <span asp-validation-for="Item.EmployeeId" class="text-danger small"></span>
                         </div>
 
                         <!-- Attendance Date -->
-                        <div class="col-md-4">
-                            <label for="AttendanceDate"
-                                   class="form-label fw-semibold">
-                                Attendance Date
-                                <span class="text-danger">*</span>
+                        <div class="col-md-3">
+                            <label asp-for="Item.AttendanceDate" class="form-label fw-semibold">
+                                Attendance Date <span class="text-danger">*</span>
                             </label>
-                            <input type="date"
-                                   id="AttendanceDate"
-                                   name="AttendanceDate"
+                            <input asp-for="Item.AttendanceDate"
+                                   id="Item_AttendanceDate"
+                                   type="date"
                                    class="form-control"
-                                   required>
-                            <div class="invalid-feedback">
-                                Please select attendance date.
-                            </div>
+                                   required />
+                            <span asp-validation-for="Item.AttendanceDate" class="text-danger small"></span>
                         </div>
 
-                        <!-- Shift -->
-                        <div class="col-md-8">
-                            <label for="ShiftId"
-                                   class="form-label fw-semibold">
-                                Shift
+                        <!-- Attendance Status -->
+                        <div class="col-md-3">
+                            <label asp-for="Item.AttendanceStatus" class="form-label fw-semibold">
+                                Status <span class="text-danger">*</span>
                             </label>
-                            <select id="ShiftId"
-                                    name="ShiftId"
-                                    class="form-select">
-                                <option value="">-- Select Shift --</option>
-                            </select>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="col-md-4">
-                            <label for="AttendanceStatus"
-                                   class="form-label fw-semibold">
-                                Status
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select id="AttendanceStatus"
-                                    name="AttendanceStatus"
+                            <select asp-for="Item.AttendanceStatus"
+                                    id="Item_AttendanceStatus"
                                     class="form-select"
                                     required>
                                 <option value="PRESENT">Present</option>
@@ -255,152 +239,121 @@
                                 <option value="HOLIDAY">Holiday</option>
                                 <option value="RESTDAY">Rest Day</option>
                             </select>
+                            <span asp-validation-for="Item.AttendanceStatus" class="text-danger small"></span>
                         </div>
 
-                        <!-- Flags 
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">
-                                Day Type
+                        <!-- Shift -->
+                        <div class="col-md-7">
+                            <label asp-for="Item.ShiftId" class="form-label fw-semibold">
+                                Shift
                             </label>
+                            <select asp-for="Item.ShiftId"
+                                    id="Item_ShiftId"
+                                    class="form-select">
+                                <option value="">-- Select Shift --</option>
+                            </select>
+                            <span asp-validation-for="Item.ShiftId" class="text-danger small"></span>
+                        </div>
 
-                            <div class="d-flex gap-3 pt-2">
-                                <div class="form-check">
-                                    <input class="form-check-input"
+                        <!-- Day Type Flags -->
+                        <div class="col-md-5">
+                            <label class="form-label fw-semibold d-block">Day Type</label>
+                            <div class="d-flex gap-4 pt-1">
+                                <div class="form-check form-switch">
+                                    <input asp-for="Item.IsHoliday"
+                                           id="Item_IsHoliday"
+                                           class="form-check-input"
                                            type="checkbox"
-                                           id="IsHoliday"
-                                           name="IsHoliday"
-                                           value="true">
-
-                                    <label class="form-check-label"
-                                           for="IsHoliday">
+                                           role="switch" />
+                                    <label asp-for="Item.IsHoliday" class="form-check-label fw-semibold" style="cursor: pointer;">
                                         Holiday
                                     </label>
                                 </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input"
+                                <div class="form-check form-switch">
+                                    <input asp-for="Item.IsWeekend"
+                                           id="Item_IsWeekend"
+                                           class="form-check-input"
                                            type="checkbox"
-                                           id="IsWeekend"
-                                           name="IsWeekend"
-                                           value="true">
-
-                                    <label class="form-check-label"
-                                           for="IsWeekend">
+                                           role="switch" />
+                                    <label asp-for="Item.IsWeekend" class="form-check-label fw-semibold" style="cursor: pointer;">
                                         Weekend
                                     </label>
                                 </div>
                             </div>
                         </div>
--->
-                        <div class="col-12">
-                            <hr class="my-2">
-                            <h6 class="fw-bold mb-0">
-                                <i class="bi bi-clock me-1"></i>
-                                Schedule
-                            </h6>
-                        </div>
 
-                        <!-- Scheduled In -->
+                        <!-- Timing Comparison Section -->
                         <div class="col-md-6">
-                            <label for="ScheduledTimeIn"
-                                   class="form-label">
-                                Scheduled Time In
-                            </label>
-
-                            <input type="time"
-                                   id="ScheduledTimeIn"
-                                   name="ScheduledTimeIn"
-                                   class="form-control">
-                        </div>
-
-                        <!-- Scheduled Out -->
-                        <div class="col-md-6">
-                            <label for="ScheduledTimeOut"
-                                   class="form-label">
-                                Scheduled Time Out
-                            </label>
-
-                            <input type="time"
-                                   id="ScheduledTimeOut"
-                                   name="ScheduledTimeOut"
-                                   class="form-control">
-                        </div>
-
-                        <div class="col-12">
-                            <hr class="my-2">
-                            <h6 class="fw-bold mb-0">
-                                <i class="bi bi-fingerprint me-1"></i>
-                                Actual Attendance
-                            </h6>
-                        </div>
-
-                        <!-- Actual In -->
-                        <div class="col-md-6">
-                            <label for="ActualTimeIn"
-                                   class="form-label">
-                                Actual Time In
-                            </label>
-                            <input type="time"
-                                   id="ActualTimeIn"
-                                   name="ActualTimeIn"
-                                   class="form-control">
-                        </div>
-
-                        <!-- Actual Out -->
-                        <div class="col-md-6">
-                            <label for="ActualTimeOut"
-                                   class="form-label">
-                                Actual Time Out
-                            </label>
-                            <input type="time"
-                                   id="ActualTimeOut"
-                                   name="ActualTimeOut"
-                                   class="form-control">
-                        </div>
-
-                        <!-- Calculation Preview -->
-                        <div class="col-12">
-
-                            <div class="bg-light rounded p-3">
-                                <div class="row text-center">
-                                    <div class="col-md-3">
-                                        <small class="text-muted d-block">
-                                            Late
-                                        </small>
-
-                                        <span id="previewLate"
-                                              class="fw-bold text-danger">
-                                            0 min
-                                        </span>
+                            <div class="card border bg-light shadow-none h-100">
+                                <div class="card-body p-3">
+                                    <h6 class="fw-bold mb-3 text-secondary">
+                                        <i class="bi bi-clock me-1"></i> Scheduled Shift Time
+                                    </h6>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label asp-for="Item.ScheduledTimeIn" class="form-label small fw-semibold">Time In</label>
+                                            <input asp-for="Item.ScheduledTimeIn"
+                                                   id="Item_ScheduledTimeIn"
+                                                   type="time"
+                                                   class="form-control" />
+                                        </div>
+                                        <div class="col-6">
+                                            <label asp-for="Item.ScheduledTimeOut" class="form-label small fw-semibold">Time Out</label>
+                                            <input asp-for="Item.ScheduledTimeOut"
+                                                   id="Item_ScheduledTimeOut"
+                                                   type="time"
+                                                   class="form-control" />
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                    <div class="col-md-3">
-                                        <small class="text-muted d-block">
-                                            Early Out
-                                        </small>
-                                        <span id="previewEarly"
-                                              class="fw-bold text-warning">
-                                            0 min
-                                        </span>
+                        <div class="col-md-6">
+                            <div class="card border border-primary-subtle bg-light-subtle shadow-none h-100">
+                                <div class="card-body p-3">
+                                    <h6 class="fw-bold mb-3 text-primary">
+                                        <i class="bi bi-fingerprint me-1"></i> Actual Attendance Time
+                                    </h6>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label asp-for="Item.ActualTimeIn" class="form-label small fw-semibold">Actual In</label>
+                                            <input asp-for="Item.ActualTimeIn"
+                                                   id="Item_ActualTimeIn"
+                                                   type="time"
+                                                   class="form-control" />
+                                        </div>
+                                        <div class="col-6">
+                                            <label asp-for="Item.ActualTimeOut" class="form-label small fw-semibold">Actual Out</label>
+                                            <input asp-for="Item.ActualTimeOut"
+                                                   id="Item_ActualTimeOut"
+                                                   type="time"
+                                                   class="form-control" />
+                                        </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <small class="text-muted d-block">
-                                            Working Hours
-                                        </small>
-                                        <span id="previewWork"
-                                              class="fw-bold text-success">
-                                            0h 0m
-                                        </span>
-                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                    <div class="col-md-3">
-                                        <small class="text-muted d-block">
-                                            Overtime
-                                        </small>
-                                        <span id="previewOvertime"
-                                              class="fw-bold text-info">
-                                            0h 0m
-                                        </span>
+                        <!-- Calculation Preview Summary -->
+                        <div class="col-12">
+                            <div class="bg-light rounded p-3 border">
+                                <div class="row text-center g-2">
+                                    <div class="col-3 border-end">
+                                        <small class="text-muted d-block fw-semibold">Late</small>
+                                        <span id="previewLate" class="fw-bold fs-6 text-danger">0 min</span>
+                                    </div>
+                                    <div class="col-3 border-end">
+                                        <small class="text-muted d-block fw-semibold">Early Out</small>
+                                        <span id="previewEarly" class="fw-bold fs-6 text-warning">0 min</span>
+                                    </div>
+                                    <div class="col-3 border-end">
+                                        <small class="text-muted d-block fw-semibold">Working Hours</small>
+                                        <span id="previewWork" class="fw-bold fs-6 text-success">0h 0m</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <small class="text-muted d-block fw-semibold">Overtime</small>
+                                        <span id="previewOvertime" class="fw-bold fs-6 text-info">0h 0m</span>
                                     </div>
                                 </div>
                             </div>
@@ -408,60 +361,39 @@
 
                         <!-- Remarks -->
                         <div class="col-12">
-                            <label for="Remarks"
-                                   class="form-label fw-semibold">
+                            <label asp-for="Item.Remarks" class="form-label fw-semibold">
                                 Remarks
                             </label>
-                            <textarea id="Remarks"
-                                      name="Remarks"
+                            <textarea asp-for="Item.Remarks"
+                                      id="Item_Remarks"
                                       class="form-control"
-                                      rows="3"
+                                      rows="2"
                                       maxlength="500"
-                                      placeholder="Enter attendance remarks..."></textarea>
+                                      placeholder="Enter attendance remarks or adjustments..."></textarea>
                             <div class="text-end">
-                                <small class="text-muted">
-                                    Maximum 500 characters
-                                </small>
+                                <small class="text-muted">Maximum 500 characters</small>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Hidden calculated values -->
-
-                    <input type="hidden"
-                           id="LateMinutes"
-                           name="LateMinutes"
-                           value="0">
-                    <input type="hidden"
-                           id="EarlyOutMinutes"
-                           name="EarlyOutMinutes"
-                           value="0">
-                    <input type="hidden"
-                           id="WorkMinutes"
-                           name="WorkMinutes"
-                           value="0">
-                    <input type="hidden"
-                           id="OvertimeMinutes"
-                           name="OvertimeMinutes"
-                           value="0">
-                    <input type="hidden"
-                           id="IsManualEntry"
-                           name="IsManualEntry"
-                           value="true">
-
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer bg-light">
                     <button type="button"
-                            class="btn btn-secondary"
+                            class="btn btn-outline-secondary"
+                            onclick="resetAttendanceForm()">
+                        <i class="fa-solid fa-rotate-left me-1"></i>
+                        Reset
+                    </button>
+                    <button type="button"
+                            class="btn btn-light"
                             data-bs-dismiss="modal">
                         <i class="bi bi-x-circle me-1"></i>
                         Cancel
                     </button>
-                    <button type="submit"
-                            id="save-attendance"
-                            class="btn btn-primary">
-
+                    <button type="button"
+                            id="save-button"
+                            class="btn btn-primary"
+                            onclick="saveAttendance()">
                         <i class="bi bi-check-circle me-1"></i>
                         Save Attendance
                     </button>
@@ -474,7 +406,7 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         function closeModal() {
-            const modalElement = document.getElementById('overtimeTypeModal');
+            const modalElement = document.getElementById('attendanceModal');
             const modal = bootstrap.Modal.getInstance(modalElement);
             setReadonly(false);
             if (modal) {
@@ -531,7 +463,19 @@
                     type: "POST",
                     contentType: "application/json",
                     data: function (d) {
-                        return JSON.stringify(d);
+                        const employeeId = $('#Item_EmployeeId').val();
+                        const departmentId = $('#DepartmentSelect').val();
+                        const status = $('#StatusSelect').val();
+                        const fromDate = $('#FromDate').val();
+                        const toDate = $('#ToDate').val();
+                        const filters = {
+                            employeeId: employeeId,
+                            departmentId: departmentId,
+                            status: status,
+                            fromDate: fromDate,
+                            toDate: toDate
+                        };
+                        return JSON.stringify(Object.assign(d, filters));
                     },
                     dataSrc: function (json) {
                         return json.data || [];
@@ -767,6 +711,11 @@
                                        title="Adjust">
                                         <i class="fa-solid fa-pen-to-square text-success"></i>
                                     </a>
+                                    <a href="javascript:void(0)"
+                                       onclick="confirmDelete(() => deleteAttendance(${row.attendanceId}))"
+                                       title="Delete">
+                                        <i class="fa-solid fa-trash text-danger"></i>
+                                    </a>
                                 </div>
                             `;
                         }
@@ -793,9 +742,7 @@
                             columns: ":not(.not-export)"
                         }
                     }
-
                 ]
-
             });
             
             $('#csv-export').on('click', function () {
@@ -809,311 +756,106 @@
             $('#add-new').on('click', function () {
                 showModal(false);
             });
-             $('#save-button').on('click', function () {
-                saveovertimeType();
+
+            $('#save-button').on('click', function () {
+                saveAttendance();
             });
 
-            //$('#Item_IsActive').prop('checked', data.isActive === true);
-        });
-
-        function saveovertimeType() {
-            const form = $('#overtimeTypeForm')[0];
-            const formData = new FormData(form);
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Add", "overtimeType")',
-                data: formData,
-                processData: false,
-                contentType: false,
-                beforeSend: function () {
-                    $('#save-button').prop('disabled', true);
-                },
-                success: function (response) {
-                    if (response.success) {
-                        notify.success(response.message);
-                        $('#main-table').DataTable().ajax.reload(null, false);
-                        closeModal();
-                    }
-                    else {
-                        notify.warning(response.message);
-                    }
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('An error occurred while saving Company overtimeType');
-                },
-                complete: function () {
-                    $('#save-button').prop('disabled', false);
-                }
-            });
-        }
-
-        function editRow(code) {
-
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetData", "OvertimeType")',
-                data: { code: code},
-
-                success: function (data) {
-
-                    if (!data) {
-                        notify.warning('Overtime type not found.');
-                        return;
-                    }
-
-                    // Basic Information
-                    $('#Item_OvertimeCode').val(data.overtimeCode);
-                    $('#Item_OvertimeName').val(data.overtimeName);
-                    $('#Item_Description').val(data.description);
-
-                    // Category
-                    $('#Item_OvertimeCategory').val(data.overtimeCategory);
-
-                    // Status
-                    $('#Item_IsActive').prop('checked', data.isActive);
-
-                    showModal(true);
-                },
-
-                error: function (xhr) {
-
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-
-                    notify.error('Failed to retrieve overtime type.');
-
-                }
-            });
-
-        }
-        function deleteRow(code) {
-            $.ajax({
-                type: 'DELETE',
-                url: '@Url.Action("Delete", "overtimeType")',
-                data: {
-                    code: code
-                },
-                headers: {
-                    'RequestVerificationToken':
-                        $('input[name="__RequestVerificationToken"]').val()
-                },
-                success: function (response) {
-                    if (response.success) {
-                        $('#main-table').DataTable().ajax.reload(null, false);
-                        resetForm();
-                        notify.success(response.message);
-                    } else {
-                        notify.warning(response.message);
-                    }
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('Failed to delete Company overtimeType');
-                }
-            });
-        }
-        function resetForm() {
-            $('#overtimeTypeForm')[0].reset();
-        }
-
-         
-        function loadShifts() {
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetShifts", "Shift")',
-                success: function (data) {
-                    const select = $('#ShiftId');
-                    select.empty();
-                    select.append(
-                        '<option value="">-- Select Shift --</option>'
-                    );
-
-                    if (!data)
-                        return;
-
-                    data.forEach(function (item) {
-                        select.append(
-                            $('<option>', {
-                                value: item.id,
-                                text: item.shiftCode + ' - ' +  item.shiftName
-                            })
-                        );
-
-                    });
-                },
-
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('Failed to load shifts.');
-                }
-            });
-        }
-         
-        $('#ShiftId').on('change', function () {
-            const shiftId = $(this).val();
-            if (!shiftId) {
-                $('#ScheduledTimeIn').val('');
-                $('#ScheduledTimeOut').val('');
-                calculateAttendance();
-                return;
-            }
-
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetData", "Shift")',
-                data: {
-                    id: shiftId
-                },
-                success: function (data) {
-                    if (!data)
-                        return;
-
-                    $('#ScheduledTimeIn').val(
-                        data.startTime ?? ''
-                    );
-                    $('#ScheduledTimeOut').val(
-                        data.endTime ?? ''
-                    );
+            // Recalculate on any time input changes
+            $('#Item_ScheduledTimeIn, #Item_ScheduledTimeOut, #Item_ActualTimeIn, #Item_ActualTimeOut')
+                .on('change input', function () {
                     calculateAttendance();
-                },
+                });
 
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('Failed to retrieve shift.');
+            // Shift dropdown selection change
+            $('#Item_ShiftId').on('change', function () {
+                const shiftId = $(this).val();
+                if (!shiftId) {
+                    $('#Item_ScheduledTimeIn').val('');
+                    $('#Item_ScheduledTimeOut').val('');
+                    calculateAttendance();
+                    return;
+                }
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetData", "Shift")',
+                    data: { id: shiftId },
+                    success: function (data) {
+                        if (!data) return;
+                        $('#Item_ScheduledTimeIn').val(data.startTime ? data.startTime.substring(0, 5) : '');
+                        $('#Item_ScheduledTimeOut').val(data.endTime ? data.endTime.substring(0, 5) : '');
+                        calculateAttendance();
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 401 || xhr.status === 403) return;
+                        notify.error('Failed to retrieve shift schedule details.');
+                    }
+                });
+            });
+
+            // Employee Select2 search initialization
+            $('#Item_EmployeeId').select2({
+                theme: 'bootstrap-5',
+                placeholder: '-- Search & Select Employee --',
+                allowClear: true,
+                dropdownParent: $('#attendanceModal'),
+                minimumInputLength: 1,
+                width: '100%',
+                ajax: {
+                    url: '@Url.Action("Search", "Employee")',
+                    type: 'GET',
+                    dataType: 'json',
+                    delay: 300,
+                    data: function (params) {
+                        return {
+                            searchTerm: params.term || ''
+                        };
+                    },
+                    processResults: function (response) {
+                        return {
+                            results: (response || []).map(function (item) {
+                                return {
+                                    id: item.id,
+                                    text: item.text,
+                                    department: item.info
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                templateResult: function (item) {
+                    if (item.loading || !item.id) return item.text;
+                    return $(`
+                        <div class="py-1">
+                            <div class="fw-semibold">${item.text}</div>
+                            ${item.department ? `<small class="text-muted">${item.department}</small>` : ''}
+                        </div>
+                    `);
+                },
+                templateSelection: function (item) {
+                    return item.text || item.id;
+                },
+                escapeMarkup: function (markup) {
+                    return markup;
                 }
             });
         });
-         
-        $('#ScheduledTimeIn, #ScheduledTimeOut, #ActualTimeIn, #ActualTimeOut')
-            .on('change', function () {
-                calculateAttendance();
 
-            });
-
-
+        // ------------------------------------------------------------
+        // Time Conversion and Calculation Helpers
+        // ------------------------------------------------------------
         function timeToMinutes(value) {
-            if (!value)
-                return null;
-
+            if (!value) return null;
             const parts = value.split(':');
-            if (parts.length < 2)
-                return null;
+            if (parts.length < 2) return null;
 
             const hour = parseInt(parts[0], 10);
             const minute = parseInt(parts[1], 10);
-
-            if (isNaN(hour) || isNaN(minute))
-                return null;
+            if (isNaN(hour) || isNaN(minute)) return null;
 
             return (hour * 60) + minute;
-        }
-
-
-        function calculateAttendance() {
-            const scheduledIn = timeToMinutes($('#ScheduledTimeIn').val());
-            const scheduledOut = timeToMinutes($('#ScheduledTimeOut').val());
-            const actualIn = timeToMinutes($('#ActualTimeIn').val());
-            const actualOut = timeToMinutes($('#ActualTimeOut').val());
-            let lateMinutes = 0;
-            let earlyOutMinutes = 0;
-            let workMinutes = 0;
-            let overtimeMinutes = 0;
-            // --------------------------------------------------------
-            // Late
-            // --------------------------------------------------------
-            if (scheduledIn !== null &&
-                actualIn !== null &&
-                actualIn > scheduledIn) {
-                lateMinutes = actualIn - scheduledIn;
-            }
-
-
-            // --------------------------------------------------------
-            // Early Out
-            // --------------------------------------------------------
-            if (scheduledOut !== null &&
-                actualOut !== null &&
-                actualOut < scheduledOut) {
-                earlyOutMinutes = scheduledOut - actualOut;
-            }
-
-
-            // --------------------------------------------------------
-            // Working Minutes
-            // --------------------------------------------------------
-
-            if (actualIn !== null &&
-                actualOut !== null) {
-                let out = actualOut;
-                // Support overnight shift
-                if (out < actualIn) {
-                    out += 24 * 60;
-                }
-
-                workMinutes = Math.max(
-                    0,
-                    out - actualIn
-                );
-            }
-
-
-            // --------------------------------------------------------
-            // Overtime
-            // --------------------------------------------------------
-
-            if (scheduledOut !== null &&
-                actualOut !== null) {
-
-                let out = actualOut;
-
-                if (out < actualIn) {
-                    out += 24 * 60;
-                }
-
-                let scheduled = scheduledOut;
-
-                if (scheduled < scheduledIn) {
-                    scheduled += 24 * 60;
-                }
-
-                overtimeMinutes = Math.max(
-                    0,
-                    out - scheduled
-                );
-            }
-
-
-            // --------------------------------------------------------
-            // Update hidden fields
-            // --------------------------------------------------------
-
-            $('#LateMinutes').val(lateMinutes);
-            $('#EarlyOutMinutes').val(earlyOutMinutes);
-            $('#WorkMinutes').val(workMinutes);
-            $('#OvertimeMinutes').val(overtimeMinutes);
-            // --------------------------------------------------------
-            // Update preview
-            // --------------------------------------------------------
-            $('#previewLate').text(
-                `${lateMinutes} min`
-            );
-
-            $('#previewEarly').text(
-                `${earlyOutMinutes} min`
-            );
-
-            $('#previewWork').text(
-                formatMinutes(workMinutes)
-            );
-
-            $('#previewOvertime').text(
-                formatMinutes(overtimeMinutes)
-            );
         }
 
         function formatMinutes(minutes) {
@@ -1123,27 +865,162 @@
             return `${hours}h ${mins}m`;
         }
 
+        function calculateAttendance() {
+            const scheduledIn = timeToMinutes($('#Item_ScheduledTimeIn').val());
+            const scheduledOut = timeToMinutes($('#Item_ScheduledTimeOut').val());
+            const actualIn = timeToMinutes($('#Item_ActualTimeIn').val());
+            const actualOut = timeToMinutes($('#Item_ActualTimeOut').val());
+
+            let lateMinutes = 0;
+            let earlyOutMinutes = 0;
+            let workMinutes = 0;
+            let overtimeMinutes = 0;
+
+            // Late calculation
+            if (scheduledIn !== null && actualIn !== null && actualIn > scheduledIn) {
+                lateMinutes = actualIn - scheduledIn;
+            }
+
+            // Early Out calculation
+            if (scheduledOut !== null && actualOut !== null && actualOut < scheduledOut) {
+                earlyOutMinutes = scheduledOut - actualOut;
+            }
+
+            // Working hours calculation
+            if (actualIn !== null && actualOut !== null) {
+                let out = actualOut;
+                if (out < actualIn) { // Support overnight shifts
+                    out += 24 * 60;
+                }
+                workMinutes = Math.max(0, out - actualIn);
+            }
+
+            // Overtime calculation
+            if (scheduledOut !== null && actualOut !== null) {
+                let out = actualOut;
+                if (out < actualIn) {
+                    out += 24 * 60;
+                }
+                let scheduled = scheduledOut;
+                if (scheduled < scheduledIn) {
+                    scheduled += 24 * 60;
+                }
+                overtimeMinutes = Math.max(0, out - scheduled);
+            }
+
+            // Update hidden inputs
+            $('#Item_LateMinutes').val(lateMinutes);
+            $('#Item_EarlyOutMinutes').val(earlyOutMinutes);
+            $('#Item_WorkMinutes').val(workMinutes);
+            $('#Item_OvertimeMinutes').val(overtimeMinutes);
+
+            // Update preview labels
+            $('#previewLate').text(`${lateMinutes} min`);
+            $('#previewEarly').text(`${earlyOutMinutes} min`);
+            $('#previewWork').text(formatMinutes(workMinutes));
+            $('#previewOvertime').text(formatMinutes(overtimeMinutes));
+
+            // Auto-suggest status if currently default
+            const currentStatus = $('#Item_AttendanceStatus').val();
+            if (currentStatus === 'PRESENT' && lateMinutes > 0) {
+                $('#Item_AttendanceStatus').val('LATE');
+            } else if (currentStatus === 'LATE' && lateMinutes === 0) {
+                $('#Item_AttendanceStatus').val('PRESENT');
+            }
+        }
+
+        // ------------------------------------------------------------
+        // Load Shift Dropdown
+        // ------------------------------------------------------------
+        function loadShifts(selectedShiftId) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetShifts", "Shift")',
+                success: function (data) {
+                    const select = $('#Item_ShiftId');
+                    select.empty();
+                    select.append('<option value="">-- Select Shift --</option>');
+
+                    if (!data) return;
+
+                    data.forEach(function (item) {
+                        const opt = $('<option>', {
+                            value: item.id,
+                            text: (item.shiftCode ? item.shiftCode + ' - ' : '') + item.shiftName
+                        });
+                        if (selectedShiftId && item.id == selectedShiftId) {
+                            opt.prop('selected', true);
+                        }
+                        select.append(opt);
+                    });
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403) return;
+                    notify.error('Failed to load shift list.');
+                }
+            });
+        }
+
+        // ------------------------------------------------------------
+        // Reset Form
+        // ------------------------------------------------------------
+        function resetAttendanceForm() {
+            const form = $('#attendanceForm')[0];
+            if (form) {
+                form.reset();
+                $(form).removeClass('was-validated');
+            }
+
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+
+            $('#Item_AttendanceId').val('0');
+            $('#Item_AttendanceDate').val(`${yyyy}-${mm}-${dd}`);
+            $('#Item_AttendanceStatus').val('PRESENT');
+            $('#Item_EmployeeId').val('').trigger('change');
+            $('#Item_ShiftId').val('');
+            $('#Item_ScheduledTimeIn').val('');
+            $('#Item_ScheduledTimeOut').val('');
+            $('#Item_ActualTimeIn').val('');
+            $('#Item_ActualTimeOut').val('');
+            $('#Item_IsHoliday').prop('checked', false);
+            $('#Item_IsWeekend').prop('checked', false);
+            $('#Item_Remarks').val('');
+
+            $('#Item_LateMinutes').val(0);
+            $('#Item_EarlyOutMinutes').val(0);
+            $('#Item_WorkMinutes').val(0);
+            $('#Item_OvertimeMinutes').val(0);
+            $('#Item_IsManualEntry').val('true');
+
+            $('#previewLate').text('0 min');
+            $('#previewEarly').text('0 min');
+            $('#previewWork').text('0h 0m');
+            $('#previewOvertime').text('0h 0m');
+        }
+
         // ------------------------------------------------------------
         // Save Attendance
         // ------------------------------------------------------------
+        function saveAttendance() {
+            const $form = $('#attendanceForm');
+            if ($form.length === 0) {
+                notify.error('Attendance form was not found.');
+                return;
+            }
 
-        $('#attendanceForm').on('submit', function (e) {
-            e.preventDefault();
-            const form = this;
-            if (!form.checkValidity()) {
-                form.classList.add('was-validated');
+            if ($.validator && !$form.valid()) {
+                notify.warning('Please correct the validation errors before saving.');
                 return;
             }
 
             calculateAttendance();
-            const formData = new FormData(form);
-            const saveButton = $('#save-attendance');
-            saveButton.prop('disabled', true);
-            saveButton.html(`
-                <span class="spinner-border spinner-border-sm me-1"></span>
-                Saving...
-            `);
 
+            const formElement = $form[0];
+            const formData = new FormData(formElement);
+            const $saveButton = $('#save-button');
 
             $.ajax({
                 type: 'POST',
@@ -1151,175 +1028,111 @@
                 data: formData,
                 processData: false,
                 contentType: false,
+                beforeSend: function () {
+                    $saveButton.prop('disabled', true).html(`
+                        <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                        Saving...
+                    `);
+                },
                 success: function (response) {
                     if (response.success) {
-                        notify.success(
-                            response.message || 'Attendance saved successfully.'
-                        );
-                        attendanceModal.hide();
-                        $('#main-table')
-                            .DataTable()
-                            .ajax.reload(null, false);
-
-                    }
-                    else {
-                        notify.warning(
-                            response.message ||
-                            'Failed to save attendance.'
-                        );
+                        notify.success(response.message || 'Attendance saved successfully.');
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        closeModal();
+                    } else {
+                        notify.warning(response.message || 'Failed to save attendance.');
                     }
                 },
-
                 error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error(
-                        'An error occurred while saving attendance.'
-                    );
+                    if (xhr.status === 401 || xhr.status === 403) return;
+                    notify.error('An error occurred while saving attendance.');
                 },
-
                 complete: function () {
-                    saveButton.prop('disabled', false);
-                    saveButton.html(`
+                    $saveButton.prop('disabled', false).html(`
                         <i class="bi bi-check-circle me-1"></i>
                         Save Attendance
                     `);
                 }
             });
-
-        });
-
-        // ------------------------------------------------------------
-        // Reset form
-        // ------------------------------------------------------------
-        function resetAttendanceForm() {
-            const form =$('#attendanceForm')[0];
-            form.reset();
-            form.classList.remove('was-validated');
-            $('#EmployeeId').val('');
-            $('#ShiftId').val('');
-            $('#AttendanceStatus').val('PRESENT');
-            $('#LateMinutes').val(0);
-            $('#EarlyOutMinutes').val(0);
-            $('#WorkMinutes').val(0);
-            $('#OvertimeMinutes').val(0);
-            $('#IsManualEntry').val('true');
-            $('#previewLate').text('0 min');
-            $('#previewEarly').text('0 min');
-            $('#previewWork').text('0h 0m');
-            $('#previewOvertime').text('0h 0m');
         }
-         
-        // $('#EmployeeId').select2({
-        //     theme: 'bootstrap-5',
-        //     placeholder: '-- Search Employee --',
-        //     allowClear: true,
-        //     dropdownParent: $('#attendanceModal'),
-        //     minimumInputLength: 2,
-        //     ajax: {
-        //         url: '@Url.Action("Search", "Employee")',
-        //         type: 'GET',
-        //         dataType: 'json',
-        //         delay: 300,
-        //         data: function (params) {
-        //             return {
-        //                 search: params.term || ''
-        //             };
-        //         },
-        //         processResults: function (response) {
-        //             return {
-        //                 results: response.map(function (item) {
-        //                     return {
-        //                         id: item.id,
-        //                         text: item.text,
-        //                         department: item.info
-        //                     };
-        //                 })
-        //             };
-        //         }
-        //     },
-        //     templateResult: function (item) {
-        //         if (!item.id)
-        //             return item.text;
 
-        //         return $(`
-        //             <div>
-        //                 <div class="fw-semibold">${item.text}</div>
-        //                 <small class="text-muted">
-        //                     ${item.department ?? ''}
-        //                 </small>
-        //             </div>
-        //         `);
-        //     },
-        //     templateSelection: function (item) {
-        //         return item.text || item.id;
-        //     }
-        // });
-         
-        $('#EmployeeId').select2({
-            theme: 'bootstrap-5',
-            placeholder: '-- Search Employee --',
-            allowClear: true,
-            dropdownParent: $('#attendanceModal'),
-            minimumInputLength: 2,
-            width: '100%',
-            ajax: {
-                url: '@Url.Action("Search", "Employee")',
+        // ------------------------------------------------------------
+        // Edit & View Attendance
+        // ------------------------------------------------------------
+        function editAttendance(id) {
+            $.ajax({
                 type: 'GET',
-                dataType: 'json',
-                delay: 300,
-                data: function (params) {
-                    return {
-                        search: params.term || ''
-                    };
+                url: '@Url.Action("GetData", "Attendance")',
+                data: { id: id },
+                success: function (data) {
+                    if (!data) {
+                        notify.warning('Attendance record not found.');
+                        return;
+                    }
+
+                    resetAttendanceForm();
+
+                    $('#Item_AttendanceId').val(data.attendanceId);
+                    $('#Item_AttendanceDate').val(data.attendanceDate);
+                    $('#Item_AttendanceStatus').val(data.attendanceStatus || 'PRESENT');
+
+                    loadShifts(data.shiftId);
+
+                    $('#Item_ScheduledTimeIn').val(data.scheduledTimeIn ? data.scheduledTimeIn.substring(0, 5) : '');
+                    $('#Item_ScheduledTimeOut').val(data.scheduledTimeOut ? data.scheduledTimeOut.substring(0, 5) : '');
+                    $('#Item_ActualTimeIn').val(data.actualTimeIn ? data.actualTimeIn.substring(0, 5) : '');
+                    $('#Item_ActualTimeOut').val(data.actualTimeOut ? data.actualTimeOut.substring(0, 5) : '');
+
+                    $('#Item_IsHoliday').prop('checked', data.isHoliday === true);
+                    $('#Item_IsWeekend').prop('checked', data.isWeekend === true);
+                    $('#Item_Remarks').val(data.remarks || '');
+
+                    if (data.employeeId) {
+                        const empText = data.employee
+                            ? `${data.employee.employeeCode} - ${data.employee.fullName}`
+                            : (data.employeeName ? `${data.employeeCode ?? ''} - ${data.employeeName}` : data.employeeId);
+                        const newOption = new Option(empText, data.employeeId, true, true);
+                        $('#Item_EmployeeId').empty().append(newOption).trigger('change');
+                    }
+
+                    calculateAttendance();
+                    showModal(true);
                 },
-                processResults: function (response) {
-                    return {
-                        results: response.map(function (item) {
-                            return {
-                                id: item.id,
-                                text: item.text,
-                                department: item.info
-                            };
-                        })
-                    };
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403) return;
+                    notify.error('Failed to retrieve attendance details.');
+                }
+            });
+        }
+
+        function viewAttendance(id) {
+            editAttendance(id);
+        }
+
+        // ------------------------------------------------------------
+        // Delete Attendance
+        // ------------------------------------------------------------
+        function deleteAttendance(id) {
+            $.ajax({
+                type: 'DELETE',
+                url: '@Url.Action("Delete", "Attendance")',
+                data: { id: id },
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                 },
-
-                cache: true
-            },
-
-            templateResult: function (item) {
-                // Loading / placeholder item
-                if (item.loading) {
-                    return item.text;
+                success: function (response) {
+                    if (response.success) {
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                        notify.success(response.message || 'Attendance deleted successfully.');
+                    } else {
+                        notify.warning(response.message || 'Failed to delete attendance.');
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401 || xhr.status === 403) return;
+                    notify.error('Failed to delete attendance.');
                 }
-
-                // Empty item
-                if (!item.id) {
-                    return item.text;
-                }
-
-                return $(`
-                    <div class="py-1">
-                        <div class="fw-semibold">
-                            ${item.text}
-                        </div>
-
-                        ${item.department
-                            ? `<small class="text-muted">${item.department}</small>`
-                            : ''}
-                    </div>
-                `);
-            },
-
-            templateSelection: function (item) {
-                return item.text || item.id;
-            },
-
-            escapeMarkup: function (markup) {
-                return markup;
-            }
-        }); 
-
+            });
+        }
     </script>
 }
