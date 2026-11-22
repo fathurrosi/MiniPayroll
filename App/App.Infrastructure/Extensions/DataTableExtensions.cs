@@ -13,9 +13,10 @@ namespace App.Infrastructure.Extensions
         public static IQueryable<T> ApplyDataTableSorting<T>(this IQueryable<T> query, DataTableRequest request)
         {
             if (request == null || request.Order == null || request.Order.Count <= 0) return query;
+            if (request.Columns == null || request.Columns.Count <= request.Order[0].Column) return query;
             var column = request.Columns[request.Order[0].Column];
-            if (!column.Orderable) return query;
-            var propertyInfo = typeof(T).GetProperties().FirstOrDefault(p => p.Name.ToLower() == column.Data.ToLower());
+            if (!column.Orderable || string.IsNullOrWhiteSpace(column.Data)) return query;
+            var propertyInfo = typeof(T).GetProperties().FirstOrDefault(p => string.Equals(p.Name, column.Data, StringComparison.OrdinalIgnoreCase));
             //var propertyInfo = typeof(T).GetProperty(column.Data);
             if (propertyInfo == null) return query;
             var parameter = Expression.Parameter(typeof(T));
@@ -144,7 +145,7 @@ namespace App.Infrastructure.Extensions
                 if (request.Columns == null) return predicate;
                 foreach (var column in request.Columns)
                 {
-                    if (!column.Searchable || string.IsNullOrWhiteSpace(column.Search?.Value))
+                    if (!column.Searchable || string.IsNullOrWhiteSpace(column.Search?.Value) || string.IsNullOrWhiteSpace(column.Data))
                         continue;
 
                     var propertyInfo = type.GetProperty(
@@ -182,7 +183,7 @@ namespace App.Infrastructure.Extensions
                 var globalValue = request.Search.Value.Trim();
                 var globalPredicate = PredicateBuilder.False<T>();
 
-                foreach (var column in request.Columns.Where(c => c.Searchable))
+                foreach (var column in request.Columns.Where(c => c.Searchable && !string.IsNullOrWhiteSpace(c.Data)))
                 {
                     var propertyInfo = type.GetProperty(
                         column.Data,

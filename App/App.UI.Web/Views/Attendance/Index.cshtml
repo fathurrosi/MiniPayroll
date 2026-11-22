@@ -345,19 +345,7 @@
                     type: "POST",
                     contentType: "application/json",
                     data: function (d) {
-                        const employeeId = $('#Item_EmployeeId').val();
-                        const departmentId = $('#DepartmentSelect').val();
-                        const status = $('#StatusSelect').val();
-                        const fromDate = $('#FromDate').val();
-                        const toDate = $('#ToDate').val();
-                        const filters = {
-                            employeeId: employeeId,
-                            departmentId: departmentId,
-                            status: status,
-                            fromDate: fromDate,
-                            toDate: toDate
-                        };
-                        return JSON.stringify(Object.assign(d, filters));
+                        return JSON.stringify(d);
                     },
                     dataSrc: function (json) {
                         return json.data || [];
@@ -381,6 +369,7 @@
                         title: "Employee",
                         width: "240px",
                         orderable: false,
+                        searchable: false,
                         render: function (data) {
                             return `
                                 <div class="fw-bold">${data.employeeCode ?? ""}</div>
@@ -397,7 +386,7 @@
                         className: "text-center",
                         render: function (data) {
                             if (!data) return "-";
-                            return moment(data).format("DD MMM YYYY");
+                            return typeof moment !== 'undefined' ? moment(data).format("DD MMM YYYY") : data;
                         }
                     },
                     // Shift
@@ -416,6 +405,7 @@
                         title: "Schedule",
                         width: "110px",
                         orderable: false,
+                        searchable: false,
                         className: "text-center",
                         render: function (data) {
                             return `
@@ -430,6 +420,7 @@
                         title: "Actual",
                         width: "110px",
                         orderable: false,
+                        searchable: false,
                         className: "text-center",
                         render: function (data) {
                             return `
@@ -444,6 +435,7 @@
                         title: "Late / Early",
                         width: "120px",
                         orderable: false,
+                        searchable: false,
                         className: "text-center",
                         render: function (data) {
                             return `
@@ -507,7 +499,7 @@
                         data: null,
                         title: "Action",
                         width: "100px",
-                        className: "text-center",
+                        className: "text-center action-col",
                         orderable: false,
                         searchable: false,
                         render: function (data, type, row) {
@@ -532,27 +524,15 @@
                                        class="text-danger fs-6">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
-                                    <a href="javascript:void(0)"
-                                       onclick="confirmDelete(() => deleteAttendance(${row.attendanceId}))"
-                                       title="Delete">
-                                        <i class="fa-solid fa-trash text-danger"></i>
-                                    </a>
                                 </div>
                             `;
                         }
                     }
                 ],
                 dom:
-                    "<'row align-items-center mb-2'" +
-                        "<'col-sm-6 d-flex align-items-center'l>" +
-                        "<'col-sm-6 d-flex justify-content-end'f>" +
-                    ">" +
-                    "B" +
+                    "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
                     "rt" +
-                    "<'row align-items-center mt-2'" +
-                        "<'col-sm-5'i>" +
-                        "<'col-sm-7'p>" +
-                    ">",
+                    "<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
                 buttons: [
                     {
                         extend: "csvHtml5",
@@ -974,10 +954,12 @@
             $('#previewOvertime').text(formatMinutes(overtimeMinutes));
         }
 
-            $('#previewLate').text('0 min');
-            $('#previewEarly').text('0 min');
-            $('#previewWork').text('0h 0m');
-            $('#previewOvertime').text('0h 0m');
+        // Format Minutes Helper
+        function formatMinutes(mins) {
+            mins = mins || 0;
+            const h = Math.floor(mins / 60);
+            const m = mins % 60;
+            return `${h}h ${m}m`;
         }
     </script>
 }
