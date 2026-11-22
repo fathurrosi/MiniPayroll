@@ -359,7 +359,6 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.BranchCode)
-                .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedBy)
@@ -601,7 +600,6 @@ public partial class AppDBContext : DbContext
             entity.ToTable("tbl_LeaveRequests");
 
             entity.Property(e => e.BranchCode)
-                .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedBy)
@@ -1403,7 +1401,6 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.BranchCode)
-                .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.BranchName)

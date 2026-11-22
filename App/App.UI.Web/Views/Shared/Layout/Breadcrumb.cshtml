@@ -1,91 +1,166 @@
 ﻿@{
-    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
-    var action = ViewContext.RouteData.Values["action"]?.ToString();
-}<style>
- 
-     .breadcrumb-modern {
-         background: #fff;
-         padding: 10px 0;
-         font-family: "Segoe UI", Arial, sans-serif;
-         margin-left: 20px;
-     }
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString() ?? "Home";
+    var action = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
+    var isHome = string.Equals(controller, "Home", StringComparison.OrdinalIgnoreCase);
+    var isIndex = string.Equals(action, "Index", StringComparison.OrdinalIgnoreCase);
 
-        .breadcrumb-modern ol {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0;
-            margin: 0;
-            padding: 0;
-            list-style: none;
+    // Format display names nicely
+    string FormatName(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return "";
+        // Add spacing for PascalCase (e.g. OvertimeType -> Overtime Type)
+        return System.Text.RegularExpressions.Regex.Replace(name, "(\\B[A-Z])", " $1");
+    }
+
+    var controllerDisplay = FormatName(controller);
+    var actionDisplay = FormatName(action);
+}
+
+<style>
+    /* ═══════════════════════════════════════════════════════════════
+       DRIBBLE-STYLE PILL BREADCRUMB
+       Reference: Dribbble Concept (Pill Card with Circular Icon & Chevrons)
+       ═══════════════════════════════════════════════════════════════ */
+    .dribbble-breadcrumb {
+        display: inline-flex;
+        align-items: center;
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 5px 18px 5px 6px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        gap: 10px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1;
+        transition: all 0.25s ease;
+        user-select: none;
+    }
+
+    /* Circular Home / Sidebar Badge */
+    .dribbble-breadcrumb .breadcrumb-icon-badge {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #4f46e5;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
+
+    .dribbble-breadcrumb .breadcrumb-icon-badge:hover {
+        background: #4338ca;
+        transform: scale(1.06);
+        color: #ffffff;
+    }
+
+    .dribbble-breadcrumb .breadcrumb-icon-badge i {
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    /* Chevron Separator */
+    .dribbble-breadcrumb .breadcrumb-chevron {
+        color: #9ca3af;
+        font-size: 0.72rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        opacity: 0.85;
+    }
+
+    /* Breadcrumb Links */
+    .dribbble-breadcrumb .breadcrumb-item-link {
+        color: #374151;
+        text-decoration: none;
+        font-size: 0.92rem;
+        font-weight: 500;
+        transition: color 0.18s ease;
+        white-space: nowrap;
+    }
+
+    .dribbble-breadcrumb .breadcrumb-item-link:hover {
+        color: #4f46e5;
+    }
+
+    /* Active / Current Page */
+    .dribbble-breadcrumb .breadcrumb-item-active {
+        color: #4f46e5;
+        font-size: 0.92rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 576px) {
+        .dribbble-breadcrumb {
+            padding: 4px 12px 4px 5px;
+            gap: 6px;
         }
-
-        .breadcrumb-modern li {
-            display: flex;
-            align-items: center;
-            font-size: 15px;
-            line-height: 1;
+        .dribbble-breadcrumb .breadcrumb-item-link {
+            font-size: 0.82rem;
         }
-
-            /* Separator */
-            .breadcrumb-modern li + li::before {
-                content: "›";
-                margin: 0 12px;
-                color: #c0c4cc;
-                font-size: 18px;
-                font-weight: 300;
-            }
-
-        .breadcrumb-modern a,
-        .breadcrumb-modern .active {
-            display: flex;
-            align-items: center;
+        .dribbble-breadcrumb .breadcrumb-item-active {
+            font-size: 0.82rem;
         }
-
-            .breadcrumb-modern a::before,
-            .breadcrumb-modern .active::before {
-                content: "";
-                width: 14px;
-                height: 14px;
-                border-radius: 50%;
-                border: 3px solid #5fa8ff;
-                margin-right: 8px;
-                box-sizing: border-box;
-                flex-shrink: 0;
-            }
-
-        .breadcrumb-modern .active {
-            color: #333;
-            font-weight: 500;
+        .dribbble-breadcrumb .breadcrumb-icon-badge {
+            width: 30px;
+            height: 30px;
         }
-
-            .breadcrumb-modern .active::before {
-                border-color: #555;
-            }
+    }
 </style>
 
-<nav class="breadcrumb-modern" aria-label="breadcrumb">
-    <ol>
-        <li>
-            <a asp-controller="Home"
-                   asp-action="Index">
-                Home
-            </a>
-        </li>
+<nav class="dribbble-breadcrumb" aria-label="breadcrumb">
+    <!-- Home Icon Circular Badge (Also toggles sidebar if desired, or links to Home) -->
+    <a asp-controller="Home"
+       asp-action="Index"
+       class="breadcrumb-icon-badge"
+       data-lte-toggle="sidebar"
+       role="button"
+       title="Home / Toggle Sidebar">
+        <i class="bi bi-house-door-fill"></i>
+    </a>
 
-        <li>
-            <a asp-controller="@controller"
-                   asp-action="Index">
-                @controller
-            </a>
-        </li>
-          
+    <!-- Chevron -->
+    <span class="breadcrumb-chevron">
+        <i class="bi bi-chevron-right"></i>
+    </span>
 
-        @* @if (!string.Equals(action, "Index", StringComparison.OrdinalIgnoreCase))
-        { *@
-            <li>
-                <span class="active">@action</span>
-            </li>
-       @*  } *@
-    </ol>
-</nav> 
+    <!-- Home Link -->
+    @if (isHome && isIndex)
+    {
+        <span class="breadcrumb-item-active">Home</span>
+    }
+    else
+    {
+        <a asp-controller="Home" asp-action="Index" class="breadcrumb-item-link">Home</a>
+    }
+
+    <!-- Module / Controller -->
+    @if (!isHome)
+    {
+        <span class="breadcrumb-chevron">
+            <i class="bi bi-chevron-right"></i>
+        </span>
+
+        @if (isIndex)
+        {
+            <span class="breadcrumb-item-active">@controllerDisplay</span>
+        }
+        else
+        {
+            <a asp-controller="@controller" asp-action="Index" class="breadcrumb-item-link">@controllerDisplay</a>
+
+            <!-- Action / Page -->
+            <span class="breadcrumb-chevron">
+                <i class="bi bi-chevron-right"></i>
+            </span>
+            <span class="breadcrumb-item-active">@actionDisplay</span>
+        }
+    }
+</nav>

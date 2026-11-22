@@ -75,15 +75,15 @@ namespace App.UI.Web.Controllers
         public async Task<IActionResult> Delete(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
-                return BadRequest("model ID is required");
+                return BadRequest("Department code is required");
 
             try
             {
                 var result = await _DepartmentService.DeleteAsync(code);
                 if (result > 0)
-                    return Ok(ActionResponse.Ok($"model {code} deleted successfully"));
+                    return Ok(ActionResponse.Ok($"Department {code} deleted successfully"));
 
-                return Ok(ActionResponse.Fail("Failed to delete model"));
+                return Ok(ActionResponse.Fail("Failed to delete Department"));
             }
             catch (Exception ex)
             {
@@ -92,50 +92,51 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PageModel<DepartmentDto> model)
+        public async Task<IActionResult> Add(PageModel<DepartmentDto> model, [FromForm] DepartmentDto? item)
         {
             try
             {
-                // 1. Guard Clause
-                if (model?.Item == null)
+                // 1. Resolve department item from model or direct item binding
+                var department = model?.Item ?? item;
+                if (department == null)
                 {
                     return Json(ActionResponse.Fail("Request data is missing or invalid."));
                 }
 
-                // 2. Model Validation (Returns immediately without throwing expensive exceptions)
-                if (string.IsNullOrWhiteSpace(model.Item.DepartmentCode))
+                // 2. Validate fields
+                if (string.IsNullOrWhiteSpace(department.DepartmentCode))
                 {
-                    return Json(ActionResponse.Fail("Please select a valid Department Code."));
+                    return Json(ActionResponse.Fail("Department code is required."));
                 }
 
-                if (string.IsNullOrWhiteSpace(model.Item.DepartmentName))
+                department.DepartmentCode = department.DepartmentCode.Trim().ToUpper();
+
+                if (string.IsNullOrWhiteSpace(department.DepartmentName))
                 {
-                    return Json(ActionResponse.Fail("Department name is mandatory."));
+                    return Json(ActionResponse.Fail("Department name is required."));
                 }
 
-                // 3. Prevent Duplicate Departments on the Same Date
-                if (model.Mode == FormMode.Create)
+                department.DepartmentName = department.DepartmentName.Trim();
+
+                // 3. Check duplicate when creating
+                var isEdit = model?.Mode == FormMode.Edit;
+                var existingItem = await _DepartmentService.GetByCodeAsync(department.DepartmentCode);
+
+                if (!isEdit && existingItem != null)
                 {
-                    // Pro-Tip: Change your service to look up by Code instead of ID for creation checks
-                    var existingItem = await _DepartmentService.GetByCodeAsync(model.Item.DepartmentCode);
-                    if (existingItem != null)
-                    {
-                        return Json(ActionResponse.Fail($"A Department already exists on this date: {existingItem.DepartmentName}"));
-                    }
+                    return Json(ActionResponse.Fail($"Department with code '{department.DepartmentCode}' already exists ({existingItem.DepartmentName})."));
                 }
 
-                // 4. Execute Save Operation
-                var result = await _DepartmentService.SaveAsync(model.Item);
+                // 4. Save
+                var result = await _DepartmentService.SaveAsync(department);
 
                 return (result != null)
-                    ? Json(ActionResponse.Ok("Department saved successfully."))
-                    : Json(ActionResponse.Fail("Failed to save the Department."));
+                    ? Json(ActionResponse.Ok(isEdit ? "Department updated successfully." : "Department created successfully."))
+                    : Json(ActionResponse.Fail("Failed to save Department."));
             }
             catch (Exception ex)
             {
-                // If you installed Serilog earlier, make sure to log the actual stack trace here:
                 _logger.LogError(ex, "Error occurred while saving Department");
-
                 return Json(ActionResponse.Fail($"Internal server error: {ex.Message}"));
             }
         }

@@ -251,7 +251,7 @@
     <script>
         function closeModal() {
             const modalElement = document.getElementById('UserModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
+            const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
             setReadonly(false);
             if (modal) {
                 modal.hide();
@@ -263,10 +263,16 @@
             );
 
             setReadonly(isEdit);
-            const modal = new bootstrap.Modal(
+            if (!isEdit) {
+                resetForm();
+            }
+            const modal = bootstrap.Modal.getOrCreateInstance(
                 document.getElementById('UserModal')
             );
             modal.show();
+        }
+        function setReadonly(isReadonly) {
+            $('#Item_Username').prop('readonly', isReadonly);
         }
         $(document).ready(function () {
 
@@ -495,8 +501,6 @@
              $('#save-button').on('click', function () {
                 saveUser();
             });
-
-            $('#Item_IsActive').prop('checked', data.isActive === true);
         });
 
         function saveUser() {
@@ -617,6 +621,10 @@
         }
         function resetForm() {
             $('#UserForm')[0].reset();
+            $('#Item_Id').val('0');
+            $('#Item_EmployeeCode').val(null).trigger('change');
+            $('#Item_IsActive').prop('checked', true);
+            setReadonly(false);
         }
 
         $(document).on('click', '.toggle-password', function () {

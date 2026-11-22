@@ -6,7 +6,7 @@
 }
 
 <style>
-    /* Styling agar modal dialog attendance pas dan tidak ada scrollbar */
+    /* ── Modal Attendance ─────────────────────────────────── */
     #attendanceModal .modal-dialog {
         max-width: 820px;
         margin: 1.75rem auto;
@@ -37,6 +37,8 @@
         padding: 0.25rem 0.5rem;
         font-size: 0.875rem;
     }
+
+   
 </style>
 
 <div class="container-fluid py-4">
@@ -524,9 +526,16 @@
                     }
                 ],
                 dom:
-                    "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
+                    "<'row align-items-center mb-2'" +
+                        "<'col-sm-6 d-flex align-items-center'l>" +
+                        "<'col-sm-6 d-flex justify-content-end'f>" +
+                    ">" +
+                    "B" +
                     "rt" +
-                    "<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
+                    "<'row align-items-center mt-2'" +
+                        "<'col-sm-5'i>" +
+                        "<'col-sm-7'p>" +
+                    ">",
                 buttons: [
                     {
                         extend: "csvHtml5",

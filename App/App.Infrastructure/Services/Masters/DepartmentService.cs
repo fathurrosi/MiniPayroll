@@ -96,20 +96,23 @@ namespace App.Infrastructure.Services.Masters
         {
             try
             {
+                var username = _userService.Username ?? "System";
                 var entityItem = await _DepartmentRepo.FindAsync(t => t.DepartmentCode.Equals(model.DepartmentCode));
                 if (entityItem == null)
                 {
                     TblDepartment item = _mapper.Map<TblDepartment>(model);
                     item.CreatedDate = DateTime.Now;
-                    item.CreatedBy = _userService.Username;
+                    item.CreatedBy = username;
+                    item.BranchCode = model.BranchCode ?? "BR01";
                     var addedEntity = await _DepartmentRepo.AddAsync(item);
                     return _mapper.Map<DepartmentDto>(addedEntity);
                 }
                 else
                 {
                     _mapper.Map(model, entityItem);
-                    entityItem.CreatedDate = DateTime.Now;
-                    entityItem.CreatedBy = _userService.Username;
+                    entityItem.UpdatedDate = DateTime.Now;
+                    entityItem.UpdatedBy = username;
+                    entityItem.BranchCode = model.BranchCode ?? entityItem.BranchCode ?? "BR01";
                     var updatedEntity = await _DepartmentRepo.UpdateAsync(entityItem);
                     return _mapper.Map<DepartmentDto>(updatedEntity);
                 }

@@ -10,165 +10,183 @@
     <div class="col-md-12">
         <div class="card shadow-sm full-height-card">
             <div class="card-header py-2 px-3 bg-light">
-
                 <div class="d-flex align-items-center">
-
                     <h6 class="mb-0 fw-semibold">
                         Existing @Model.Title
                     </h6>
-
                     <div class="ms-auto d-flex gap-2">
-                        <button id="add-new"
-                                class="btn btn-sm btn-primary">
-                            <i class="fa-solid fa-plus me-1"></i>
-                            Add New
+                        <button id="add-new" class="btn btn-sm btn-primary">
+                            <i class="fa-solid fa-plus me-1"></i> Add New
                         </button>
-
-                        <button id="csv-export"
-                                class="btn btn-sm btn-outline-success">
-                            <i class="fa-solid fa-file-excel me-1"></i>
-                            Export CSV
+                        <button id="csv-export" class="btn btn-sm btn-outline-success">
+                            <i class="fa-solid fa-file-excel me-1"></i> Export CSV
                         </button>
-
-                        <button id="pdf-export"
-                                class="btn btn-sm btn-outline-danger">
-                            <i class="fa-solid fa-file-pdf me-1"></i>
-                            Export PDF
+                        <button id="pdf-export" class="btn btn-sm btn-outline-danger">
+                            <i class="fa-solid fa-file-pdf me-1"></i> Export PDF
                         </button>
-
                     </div>
-
                 </div>
-
             </div>
             <!-- Body -->
             <div class="card-body p-2">
                 <div class="table-responsive">
-                    <table id="main-table"
-                           class="table table-sm table-striped table-hover align-middle w-100 mb-0">
+                    <table id="main-table" class="table table-sm table-striped table-hover align-middle w-100 mb-0">
                     </table>
                 </div>
             </div>
         </div>
     </div>
-     
 </div>
- 
+
+<!-- Department Modal -->
 <div class="modal fade"
      id="DepartmentModal"
      tabindex="-1"
-     aria-hidden="true">
+     aria-labelledby="DepartmentModalLabel"
+     aria-hidden="true"
+     data-bs-backdrop="static">
 
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="fa-solid fa-building me-2"></i>
-                    <span id="modalTitle">
-                        Add @Model.Title
-                    </span>
-                </h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"></button>
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header py-2 px-3 bg-light">
+                <h6 class="modal-title fw-bold" id="DepartmentModalLabel">
+                    <i class="fa-solid fa-building text-primary me-2"></i>
+                    <span id="modalTitle">Add @Model.Title</span>
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
-                <form id="DepartmentForm"
-                      asp-action="Save"
-                      method="post"
-                      enctype="multipart/form-data"
-                      autocomplete="off">
+            <div class="modal-body py-3 px-3">
+                <form id="DepartmentForm" autocomplete="off" novalidate>
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.Mode)
-                    @Html.HiddenFor(model => model.Title)           
-                    <div class="row g-3">                    
+                    @Html.HiddenFor(model => model.Title)
+
+                    <div class="row g-3">
                         <div class="col-md-12">
-                            <label asp-for="Item.DepartmentCode" 
-                                   class="form-label fw-semibold"></label>
-                            <input asp-for="Item.DepartmentCode" asp-key="true" id="Item_DepartmentCodes"
-                                   class="form-control"
-                                   placeholder="e.g. HR" />
-                            <span asp-validation-for="Item.DepartmentCode"
-                                  class="text-danger small"></span>
+                            <label for="Item_DepartmentCode" class="form-label fw-semibold small">
+                                Department Code <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Item.DepartmentCode"
+                                   id="Item_DepartmentCode"
+                                   name="Item.DepartmentCode"
+                                   class="form-control form-control-sm text-uppercase"
+                                   maxlength="50"
+                                   required
+                                   placeholder="e.g. HRD" />
+                            <div class="invalid-feedback small">
+                                Department code is required (uppercase alphanumeric).
+                            </div>
                         </div>
 
                         <div class="col-md-12">
-                            <label asp-for="Item.DepartmentName"
-                                   class="form-label fw-semibold"></label>
-                            <input asp-for="Item.DepartmentName" 
-                                   class="form-control"
+                            <label for="Item_DepartmentName" class="form-label fw-semibold small">
+                                Department Name <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Item.DepartmentName"
+                                   id="Item_DepartmentName"
+                                   name="Item.DepartmentName"
+                                   class="form-control form-control-sm"
+                                   maxlength="100"
+                                   required
                                    placeholder="e.g. Human Resources" />
-                            <span asp-validation-for="Item.DepartmentName"
-                                  class="text-danger small"></span>
+                            <div class="invalid-feedback small">
+                                Department name is required.
+                            </div>
                         </div>
 
                         <div class="col-md-12 mt-2">
-                            <div class="form-check form-switch d-flex align-items-center gap-3 ps-0">
-                                <input asp-for="Item.IsActive" id="Item_IsActive" class="form-check-input ms-0" type="checkbox" role="switch" style="cursor: pointer;" />
-                                <label asp-for="Item.IsActive" class="form-check-label fw-semibold" style="cursor: pointer;"></label>
+                            <div class="form-check form-switch d-flex align-items-center gap-2 ps-0">
+                                <input asp-for="Item.IsActive"
+                                       id="Item_IsActive"
+                                       name="Item.IsActive"
+                                       class="form-check-input ms-0"
+                                       type="checkbox"
+                                       role="switch"
+                                       style="cursor: pointer;"
+                                       value="true" />
+                                <label for="Item_IsActive" class="form-check-label fw-semibold small" style="cursor: pointer;">
+                                    Active Status
+                                </label>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-outline-secondary"
-                        onclick="resetForm()">
-                    <i class="fa-solid fa-rotate-left me-1"></i>
-                    Reset
+
+            <div class="modal-footer py-2 px-3 bg-light">
+                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-left me-1"></i> Reset
                 </button>
-                <button id="save-button"
-                        type="button"
-                        class="btn btn-primary">
-                    <i class="fa-solid fa-floppy-disk me-1"></i>
-                    Save
+                <button id="save-button" type="button" class="btn btn-sm btn-primary">
+                    <i class="fa-solid fa-floppy-disk me-1"></i> Save
                 </button>
             </div>
         </div>
     </div>
 </div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        function closeModal() {
-            const modalElement = document.getElementById('DepartmentModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            setReadonly(false);
-            if (modal) {
-                modal.hide();
-            }
+        function getModal() {
+            return bootstrap.Modal.getOrCreateInstance(document.getElementById('DepartmentModal'));
         }
-        function showModal(code) {
-            $('#modalTitle').text(
-                code ? 'Edit Department' : 'Add Department'
-            );
 
-            setReadonly(code ? true : false);
-            const modal = new bootstrap.Modal(
-                document.getElementById('DepartmentModal')
-            );
-            modal.show();
+        function closeModal() {
+            setReadonly(false);
+            getModal().hide();
         }
+
+        function setReadonly(isReadonly) {
+            $('#Item_DepartmentCode').prop('readonly', isReadonly);
+        }
+
+        function showModal(isEdit) {
+            $('#modalTitle').text(isEdit ? 'Edit Department' : 'Add Department');
+            setReadonly(isEdit);
+
+            if (!isEdit) {
+                resetForm();
+                $('#Mode').val('0'); // FormMode.Create
+            } else {
+                $('#Mode').val('1'); // FormMode.Edit
+            }
+
+            getModal().show();
+        }
+
+        function resetForm() {
+            const form = $('#DepartmentForm')[0];
+            form.reset();
+            form.classList.remove('was-validated');
+
+            $('#Item_DepartmentCode').val('').prop('readonly', false).removeClass('is-invalid');
+            $('#Item_DepartmentName').val('').removeClass('is-invalid');
+            $('#Item_IsActive').prop('checked', true);
+            $('#Mode').val('0');
+        }
+
         $(document).ready(function () {
-            $('#Item_DepartmentCodes').on('keydown', function (e) {
+            // Department Code formatting
+            $('#Item_DepartmentCode').on('keydown', function (e) {
                 if (e.key === " ") {
                     e.preventDefault();
                 }
             });
 
-            $('#Item_DepartmentCodes').on('input', function () {
-                this.value = this.value.toUpperCase().replace(/\s+/g, '');
+            $('#Item_DepartmentCode').on('input', function () {
+                this.value = this.value.toUpperCase().replace(/[^A-Z0-9_\-]/g, '');
             });
 
-            const table =  $('#main-table').DataTable({
+            const table = $('#main-table').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
                 autoWidth: false,
                 filter: true,
-                orderMulti: false, 
+                orderMulti: false,
+                order: [[0, 'asc']],
                 ajax: {
                     url: '@Url.Action("GetList", "Department")',
                     type: 'POST',
@@ -180,9 +198,8 @@
                         return json.data || [];
                     },
                     error: function (xhr) {
-                        if (xhr.status === 401 || xhr.status === 403)
-                            return;
-                        notify.error('Failed to load Department data');
+                        if (xhr.status === 401 || xhr.status === 403) return;
+                        notify.error('Failed to load Department data.');
                     }
                 },
                 columnDefs: [
@@ -191,54 +208,78 @@
                         className: 'not-export'
                     }
                 ],
-                 columns: [
-                     { data: 'departmentCode', title: 'Department Code', defaultContent: '-' },
-                     { data: 'departmentName', title: 'Department Name', defaultContent: '-' }, 
-                     {
+                columns: [
+                    {
+                        data: 'departmentCode',
+                        title: 'Department Code',
+                        width: '140px',
+                        render: function (data) {
+                            return `<span class="badge bg-primary fs-7">${data ?? '-'}</span>`;
+                        }
+                    },
+                    {
+                        data: 'departmentName',
+                        title: 'Department Name',
+                        render: function (data) {
+                            return `<span class="fw-semibold">${data ?? '-'}</span>`;
+                        }
+                    },
+                    {
                         data: 'isActive',
-                        title: 'Is Active',
+                        title: 'Status',
                         className: 'text-center',
+                        width: '100px',
                         orderable: false,
                         searchable: false,
                         render: function (data, type, row) {
                             const checked = data ? 'checked' : '';
                             return `
-                                <div class="form-check form-switch d-flex justify-content-center">
+                                <div class="form-check form-switch d-flex justify-content-center mb-0">
                                     <input class="form-check-input status-switch" type="checkbox" role="switch" ${checked}
-                                    onclick="confirmStatusChange('${row.departmentCode}', this)">
+                                           style="cursor: pointer;"
+                                           onclick="confirmStatusChange('${row.departmentCode}', this)">
                                 </div>
                             `;
                         }
-                     },
-                     {
-                         data: null,
-                         title: 'Action',
-                         orderable: false,
-                         searchable: false,
-                         className: 'text-center action-col',
-                         width: '100px',
-                         render: function (data, type, row) {
-                             return `
-                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                     <a href="javascript:void(0)"
-                                        onclick="editRow('${row.departmentCode}')"
-                                        title="Edit">
-                                         <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                     </a>
-                                     <a href="javascript:void(0)"
-                                        onclick="confirmDelete(() => deleteRow('${row.departmentCode}'))"
-                                        title="Delete">
-                                         <i class="fa-solid fa-trash text-danger"></i>
-                                     </a> 
-                                 </div>
-                             `;
-                         }
-                     }
-                 ] ,
+                    },
+                    {
+                        data: null,
+                        title: 'Action',
+                        orderable: false,
+                        searchable: false,
+                        className: 'text-center action-col',
+                        width: '100px',
+                        render: function (data, type, row) {
+                            return `
+                                <div class="d-flex justify-content-center align-items-center gap-1">
+                                    <a href="javascript:void(0)"
+                                       onclick="editRow('${row.departmentCode}')"
+                                       class="text-primary fs-6 p-1"
+                                       title="Edit Department">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="javascript:void(0)"
+                                       onclick="confirmDelete(() => deleteRow('${row.departmentCode}'))"
+                                       class="text-danger fs-6 p-1"
+                                       title="Delete Department">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            `;
+                        }
+                    }
+                ],
                 dom:
-                    "B<'row mb-3'<'col-md-6'l><'col-md-6 text-end'f>>" +
+                    "<'row align-items-center mb-2'" +
+                        "<'col-sm-6 d-flex align-items-center'l>" +
+                        "<'col-sm-6 d-flex justify-content-end'f>" +
+                    ">" +
+                    "B" +
                     "rt" +
-                    "<'row mt-3'<'col-md-6'i><'col-md-6'p>>",
+                    "<'row align-items-center mt-2'" +
+                        "<'col-sm-5'i>" +
+                        "<'col-sm-7'p>" +
+                    ">",
                 buttons: [
                     {
                         extend: 'csvHtml5',
@@ -258,7 +299,7 @@
                     }
                 ]
             });
-            
+
             $('#csv-export').on('click', function () {
                 $('.btn-export-csv').trigger('click');
             });
@@ -268,9 +309,10 @@
             });
 
             $('#add-new').on('click', function () {
-                showModal();
+                showModal(false);
             });
-             $('#save-button').on('click', function () {
+
+            $('#save-button').on('click', function () {
                 saveDepartment();
             });
         });
@@ -282,14 +324,13 @@
 
             Swal.fire({
                 title: 'Are you sure?',
-                html: `You are about to <b class="${alertClass}">${statusText}</b> Department Code: <b>${departmentCode}</b>.`,
+                html: `You are about to <b class="${alertClass}">${statusText}</b> department: <b>${departmentCode}</b>.`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: isChecked ? '#28a745' : '#dc3545',
+                confirmButtonColor: isChecked ? '#198754' : '#dc3545',
                 cancelButtonColor: '#6c757d',
                 confirmButtonText: 'Yes, change it!',
-                cancelButtonText: 'Cancel',
-                allowOutsideClick: false
+                cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
                     executeStatusUpdate(departmentCode, isChecked, element);
@@ -302,7 +343,7 @@
         function executeStatusUpdate(departmentCode, isChecked, element) {
             $.ajax({
                 type: 'POST',
-                url: '/Department/UpdateStatus',
+                url: '@Url.Action("UpdateStatus", "Department")',
                 data: {
                     code: departmentCode,
                     isActive: isChecked
@@ -316,7 +357,7 @@
                     }
                 },
                 error: function () {
-                    notify.error('An error occurred while communicating with the server.');
+                    notify.error('An error occurred while updating status.');
                     $(element).prop('checked', !isChecked);
                 }
             });
@@ -324,87 +365,104 @@
 
         function saveDepartment() {
             const form = $('#DepartmentForm')[0];
+
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
+            }
+
+            const code = $('#Item_DepartmentCode').val().trim();
+            const name = $('#Item_DepartmentName').val().trim();
+
+            if (!code) {
+                $('#Item_DepartmentCode').addClass('is-invalid');
+                notify.warning('Department code is required.');
+                return;
+            }
+
+            if (!name) {
+                $('#Item_DepartmentName').addClass('is-invalid');
+                notify.warning('Department name is required.');
+                return;
+            }
+
             const formData = new FormData(form);
+            const saveBtn = $('#save-button');
+            saveBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span>Saving...');
+
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Add", "Department")',
                 data: formData,
                 processData: false,
                 contentType: false,
-                beforeSend: function () {
-                    $('#save-button').prop('disabled', true);
-                },
                 success: function (response) {
                     if (response.success) {
-                        notify.success(response.message);
+                        notify.success(response.message || 'Department saved successfully.');
                         $('#main-table').DataTable().ajax.reload(null, false);
                         closeModal();
-                    }
-                    else {
-                        notify.warning(response.message);
+                    } else {
+                        notify.warning(response.message || 'Failed to save Department.');
                     }
                 },
                 error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('An error occurred while saving Company Department');
+                    if (xhr.status === 401 || xhr.status === 403) return;
+                    notify.error('An error occurred while saving Department.');
                 },
                 complete: function () {
-                    $('#save-button').prop('disabled', false);
+                    saveBtn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk me-1"></i> Save');
                 }
             });
         }
 
         function editRow(code) {
+            if (!code) return;
+
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetData", "Department")',
                 data: { code: code },
                 success: function (data) {
                     if (!data) {
-                        notify.warning('Department not found');
+                        notify.warning('Department not found.');
                         return;
-                    }             
-                    $('#Item_DepartmentCode').val(data.departmentCode);                    
-                    $('#Item_DepartmentName').val(data.departmentName);                      
-                    showModal(data.departmentCode);
+                    }
+
+                    resetForm();
+                    $('#Item_DepartmentCode').val(data.departmentCode);
+                    $('#Item_DepartmentName').val(data.departmentName);
+                    $('#Item_IsActive').prop('checked', data.isActive === true);
+                    showModal(true);
                 },
                 error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('Failed to retrieve Company Department');
+                    if (xhr.status === 401 || xhr.status === 403) return;
+                    notify.error('Failed to retrieve Department details.');
                 }
             });
-        } 
+        }
+
         function deleteRow(code) {
+            if (!code) return;
+
             $.ajax({
                 type: 'DELETE',
-                url: '@Url.Action("Delete", "Department")',
-                data: {
-                    code: code
-                },
+                url: '@Url.Action("Delete", "Department")?code=' + encodeURIComponent(code),
                 headers: {
-                    'RequestVerificationToken':
-                        $('input[name="__RequestVerificationToken"]').val()
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                 },
                 success: function (response) {
                     if (response.success) {
                         $('#main-table').DataTable().ajax.reload(null, false);
-                        resetForm();
-                        notify.success(response.message);
+                        notify.success(response.message || 'Department deleted successfully.');
                     } else {
-                        notify.warning(response.message);
+                        notify.warning(response.message || 'Failed to delete Department.');
                     }
                 },
                 error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('Failed to delete Company Department');
+                    if (xhr.status === 401 || xhr.status === 403) return;
+                    notify.error('Failed to delete Department.');
                 }
             });
-        }
-        function resetForm() {
-            $('#DepartmentForm')[0].reset();
         }
     </script>
 }

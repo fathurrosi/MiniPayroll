@@ -176,7 +176,7 @@
     <script>
         function closeModal() {
             const modalElement = document.getElementById('RoleModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
+            const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
             setReadonly(false);
             if (modal) {
                 modal.hide();
@@ -188,10 +188,13 @@
             );
 
             setReadonly(isEdit);
-            const modal = new bootstrap.Modal(
+            const modal = bootstrap.Modal.getOrCreateInstance(
                 document.getElementById('RoleModal')
             );
             modal.show();
+        }
+        function setReadonly(isReadonly) {
+            $('#Item_RoleCode').prop('readonly', isReadonly);
         }
         $(document).ready(function () {
              $('#logoFile').on('change', function () {
@@ -357,8 +360,6 @@
              $('#save-button').on('click', function () {
                 saveRole();
             });
-
-            $('#Item_IsActive').prop('checked', data.isActive === true);
         });
 
         function saveRole() {
