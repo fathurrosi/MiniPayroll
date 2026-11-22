@@ -104,6 +104,10 @@ namespace App.Domain.Models.Dto.Settings
         [Display(Name = "Last Login")]
         public DateTime? LastLoginDate { get; set; }
 
+        // ★ Employee mapping (untuk tbl_UserEmployees)
+        public string? EmployeeCode { get; set; }
+        public int? EmployeeId { get; set; }
+
         public List<MenuDto> MenuList { get; set; }
 
         public List<MenuDto> ConfigMenuList { get; set; }

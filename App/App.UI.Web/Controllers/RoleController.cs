@@ -135,12 +135,12 @@ namespace App.UI.Web.Controllers
 
                 if (string.IsNullOrWhiteSpace(model.Item.RoleCode))
                 {
-                    return Json(ActionResponse.Fail("Overtime name is mandatory."));
+                    return Json(ActionResponse.Fail("Role code is mandatory."));
                 }
 
                 if (string.IsNullOrWhiteSpace(model.Item.RoleName))
                 {
-                    return Json(ActionResponse.Fail("Overtime category is mandatory."));
+                    return Json(ActionResponse.Fail("Role name is mandatory."));
                 }
 
                 // 3. Prevent Duplicate Roles on the Same Date

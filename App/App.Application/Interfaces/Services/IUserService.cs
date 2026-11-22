@@ -18,6 +18,9 @@ namespace App.Application.Interfaces.Services
         Task<List<UserDto>> GetUsers(List<string> usernames); 
 
         Task<VwUserDto?> GetUserAsync();
+        /// <summary>Ambil data user lengkap (dari View, ada EmployeeCode) berdasarkan username.</summary>
+        Task<VwUserDto?> GetVwUserByUsernameAsync(string username);
         Task<bool> ClearAsync(); 
     }
 }
+

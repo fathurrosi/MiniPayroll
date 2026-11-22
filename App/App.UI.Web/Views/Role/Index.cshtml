@@ -187,6 +187,9 @@
                 isEdit ? 'Edit Role' : 'Add Role'
             );
 
+            // ★ FIX: set Mode = Edit(1) or Create(0)
+            $('#Mode').val(isEdit ? '1' : '0');
+
             setReadonly(isEdit);
             const modal = bootstrap.Modal.getOrCreateInstance(
                 document.getElementById('RoleModal')
@@ -463,6 +466,9 @@
         }
         function resetForm() {
             $('#RoleForm')[0].reset();
+            // ★ FIX: reset Mode ke Create(0) dan enable RoleCode
+            $('#Mode').val('0');
+            $('#Item_RoleCode').prop('readonly', false);
         }
     </script>
 }

@@ -23,6 +23,8 @@ namespace App.Infrastructure.Services.Settings
         readonly IGenericRepository<TblUser> _userRepo;
         readonly IGenericRepository<VwUser> _vwUserRepo;
         readonly IGenericRepository<TblMenu> _menuRepo;
+        readonly IGenericRepository<TblUserEmployee> _userEmployeeRepo;  // ★ NEW
+        readonly IGenericRepository<TblEmployee> _employeeRepo;           // ★ NEW
         readonly IMapper _mapper;
         readonly ILogger<UserService> _logger;
         readonly IDistributedCache _cache;
@@ -34,6 +36,8 @@ namespace App.Infrastructure.Services.Settings
             , IDistributedCache cache
             , IGenericRepository<TblMenu> menuRepo
             , IGenericRepository<VwUser> vwUserRepo
+            , IGenericRepository<TblUserEmployee> userEmployeeRepo   // ★ NEW
+            , IGenericRepository<TblEmployee> employeeRepo            // ★ NEW
             )
         {
             _mapper = mapper;
@@ -44,6 +48,8 @@ namespace App.Infrastructure.Services.Settings
             _hasherService = hasherService;
             _cache = cache;
             _menuRepo = menuRepo;
+            _userEmployeeRepo = userEmployeeRepo;  // ★ NEW
+            _employeeRepo = employeeRepo;          // ★ NEW
         }
 
         public async Task<string> GetHashPassword(string password)
@@ -115,31 +121,86 @@ namespace App.Infrastructure.Services.Settings
             try
             {
                 var entityItem = await _userRepo.GetFirstOrDefaultAsync(t => t.Username.Equals(model.Username));
+                TblUser savedUser;
+
                 if (entityItem == null)
                 {
+                    // ─── CREATE ───────────────────────────────────────────
                     TblUser item = _mapper.Map<TblUser>(model);
                     item.PasswordHash = _hasherService.Hash(model.Password);
                     item.CreatedBy = _context.Username;
                     item.CreatedDate = DateTime.UtcNow;
-                    var addedEntity = await _userRepo.AddAsync(item);
-                    return _mapper.Map<UserDto>(addedEntity);
+                    savedUser = await _userRepo.AddAsync(item);
                 }
                 else
-                {                    
-                    entityItem.PasswordHash = _hasherService.Hash(model.Password);
+                {
+                    // ─── UPDATE ───────────────────────────────────────────
+                    // Hanya update password jika diisi baru
+                    if (!string.IsNullOrWhiteSpace(model.Password))
+                    {
+                        entityItem.PasswordHash = _hasherService.Hash(model.Password);
+                    }
                     entityItem.Email = model.Email;
                     entityItem.FullName = model.FullName;
                     entityItem.IsActive = model.IsActive;
                     entityItem.UpdatedBy = _context.Username;
                     entityItem.UpdatedDate = DateTime.UtcNow;
-                    var updatedEntity = await _userRepo.UpdateAsync(entityItem);
-                    return _mapper.Map<UserDto>(updatedEntity);
+                    savedUser = await _userRepo.UpdateAsync(entityItem);
                 }
+
+                // ★ Simpan mapping employee di tbl_UserEmployees (jika EmployeeCode dipilih)
+                await SaveUserEmployeeMappingAsync(savedUser.Id, model.EmployeeCode);
+
+                return _mapper.Map<UserDto>(savedUser);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error saving User");
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Simpan / update mapping user ↔ employee di tbl_UserEmployees.
+        /// Jika EmployeeCode kosong/null → hapus mapping yang ada.
+        /// </summary>
+        private async Task SaveUserEmployeeMappingAsync(long userId, string? employeeCode)
+        {
+            // Hapus mapping lama (jika ada)
+            var existing = await _userEmployeeRepo.GetFirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (string.IsNullOrWhiteSpace(employeeCode))
+            {
+                // Tidak ada employee dipilih → hapus mapping jika ada
+                if (existing != null)
+                    await _userEmployeeRepo.Remove(existing);
+                return;
+            }
+
+            // Cari EmployeeId berdasarkan EmployeeCode
+            var employee = await _employeeRepo.GetFirstOrDefaultAsync(e => e.EmployeeCode == employeeCode);
+            if (employee == null) return; // EmployeeCode tidak valid → abaikan
+
+            if (existing == null)
+            {
+                // Insert mapping baru
+                await _userEmployeeRepo.AddAsync(new TblUserEmployee
+                {
+                    UserId = userId,
+                    EmployeeId = employee.EmployeeId,
+                    CreatedDate = DateTime.UtcNow
+                });
+            }
+            else if (existing.EmployeeId != employee.EmployeeId)
+            {
+                // Update mapping ke employee yang berbeda
+                await _userEmployeeRepo.Remove(existing);
+                await _userEmployeeRepo.AddAsync(new TblUserEmployee
+                {
+                    UserId = userId,
+                    EmployeeId = employee.EmployeeId,
+                    CreatedDate = DateTime.UtcNow
+                });
             }
         }
 
@@ -238,6 +299,14 @@ namespace App.Infrastructure.Services.Settings
                 _cache.SetString(cacheKey, userDataJson, cacheEntryOptions);
             }
             return userInfo;
+        }
+
+        // ★ NEW: Ambil VwUserDto langsung dari view (ada EmployeeCode) berdasarkan username
+        public async Task<VwUserDto?> GetVwUserByUsernameAsync(string username)
+        {
+            if (string.IsNullOrEmpty(username)) return null;
+            var entity = await _vwUserRepo.GetFirstOrDefaultAsync(u => u.Username == username);
+            return entity == null ? null : _mapper.Map<VwUserDto>(entity);
         }
 
         private async Task<VwUserDto?> GetUserAsync(string username)

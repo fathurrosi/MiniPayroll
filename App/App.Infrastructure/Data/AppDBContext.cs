@@ -112,6 +112,8 @@ public partial class AppDBContext : DbContext
 
     public virtual DbSet<TblUser> TblUsers { get; set; }
 
+    public virtual DbSet<TblUserEmployee> TblUserEmployees { get; set; }
+
     public virtual DbSet<TblUserRole> TblUserRoles { get; set; }
 
     public virtual DbSet<VwAttendance> VwAttendances { get; set; }
@@ -1169,6 +1171,16 @@ public partial class AppDBContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+        });
+
+        // ★ TblUserEmployee — tabel mapping user ↔ employee
+        modelBuilder.Entity<TblUserEmployee>(entity =>
+        {
+            entity.HasKey(e => new { e.UserId, e.EmployeeId });
+            entity.ToTable("tbl_UserEmployees");
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getdate())");
         });
 
         modelBuilder.Entity<VwAttendance>(entity =>

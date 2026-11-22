@@ -58,7 +58,8 @@ namespace App.UI.Web.Controllers
         {
             try
             {
-                var model = await _UserService.GetByKey(code);
+                // ★ FIX: Gunakan VwUser (ada EmployeeCode) bukan TblUser
+                var model = await _UserService.GetVwUserByUsernameAsync(code);
                 return Json(model);
             }
             catch (Exception ex)
@@ -91,7 +92,7 @@ namespace App.UI.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add(PageModel<UserDto> model)
+        public async Task<IActionResult> Add(PageModel<VwUserDto> model)
         {
             try
             {
@@ -139,6 +140,18 @@ namespace App.UI.Web.Controllers
                             "Password and confirm password do not match."));
                     }
                 }
+                else if (!string.IsNullOrWhiteSpace(item.Password))
+                {
+                    // Edit mode & password diisi: validasi confirm password
+                    if (!string.Equals(
+                            item.Password,
+                            item.ConfirmPassword,
+                            StringComparison.Ordinal))
+                    {
+                        return Json(ActionResponse.Fail(
+                            "Password and confirm password do not match."));
+                    }
+                }
 
                 // Optional email validation
                 if (!string.IsNullOrWhiteSpace(item.Email))
@@ -164,21 +177,25 @@ namespace App.UI.Web.Controllers
                             $"Username '{item.Username}' already exists."));
                     }
                 }
-                else
-                {
-                    var existingUser =
-                        await _UserService.GetByKey(item.Username);
 
-                    if (existingUser != null &&
-                        existingUser.Id != item.Id)
-                    {
-                        return Json(ActionResponse.Fail(
-                            $"Username '{item.Username}' already exists."));
-                    }
-                }
+                // Map VwUserDto → UserDto untuk di-save
+                // ★ FIX IsActive: bool? null saat checkbox unchecked → default false (bukan true)
+                // ★ FIX EmployeeCode: pass ke UserDto agar tersimpan di tbl_UserEmployees
+                var userDto = new UserDto
+                {
+                    Id = (int)item.Id,
+                    Username = item.Username,
+                    Email = item.Email,
+                    Password = item.Password,
+                    ConfirmPassword = item.ConfirmPassword,
+                    PasswordHash = item.PasswordHash ?? string.Empty,
+                    FullName = item.FullName,
+                    IsActive = item.IsActive.GetValueOrDefault(false),
+                    EmployeeCode = item.EmployeeCode   // ★ pass ke service
+                };
 
                 // Save
-                var result = await _UserService.Save(item);
+                var result = await _UserService.Save(userDto);
 
                 if (result == null)
                 {

@@ -79,7 +79,7 @@
             </div>
             <div class="modal-body">
                 <form id="UserForm"
-                      asp-action="Save"
+                      asp-action="Add"
                       method="post"
                       autocomplete="off">
 
@@ -154,12 +154,17 @@
                         <!-- Status -->
                         <div class="col-md-6 d-flex align-items-end">
                             <div class="form-check form-switch">
-                                <input asp-for="Item.IsActive"
+                                <!-- ★ FIX: type="checkbox" explicit + id manual agar label for bisa link -->
+                                <input type="checkbox"
+                                       id="Item_IsActive"
+                                       name="Item.IsActive"
+                                       value="true"
                                        class="form-check-input"
                                        role="switch" />
 
-                                <label asp-for="Item.IsActive"
+                                <label for="Item_IsActive"
                                        class="form-check-label fw-semibold">
+                                    Active
                                 </label>
                             </div>
                         </div>
@@ -261,6 +266,9 @@
             $('#modalTitle').text(
                 isEdit ? 'Edit User' : 'Add User'
             );
+
+            // ★ FIX: set Mode = Edit(1) or Create(0)
+            $('#Mode').val(isEdit ? '1' : '0');
 
             setReadonly(isEdit);
             if (!isEdit) {
@@ -512,6 +520,9 @@
             }
 
             const formData = new FormData(form);
+
+            // ★ FIX IsActive: checkbox unchecked tidak kirim nilai → paksa kirim true/false
+            formData.set('Item.IsActive', $('#Item_IsActive').is(':checked') ? 'true' : 'false');
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Add", "User")',
@@ -564,13 +575,22 @@
                     $('#Item_FullName').val(data.fullName);
                     $('#Item_Email').val(data.email);
 
+                    // ★ FIX EmployeeCode: Select2 perlu Option baru untuk pre-select
+                    if (data.employeeCode) {
+                        const empLabel = data.fullName || data.employeeCode;
+                        const option = new Option(empLabel, data.employeeCode, true, true);
+                        $('#Item_EmployeeCode').empty().append(option).trigger('change');
+                    } else {
+                        $('#Item_EmployeeCode').val(null).trigger('change');
+                    }
+
                     // Password fields should always be empty
                     $('#Item_Password').val('');
                     $('#Item_ConfirmPassword').val('');
 
                     // Status
                     $('#Item_IsActive')
-                        .prop('checked', data.isActive);
+                        .prop('checked', data.isActive === true);
 
                     // Optional
                     $('#Item_LastLoginDate')
@@ -624,6 +644,8 @@
             $('#Item_Id').val('0');
             $('#Item_EmployeeCode').val(null).trigger('change');
             $('#Item_IsActive').prop('checked', true);
+            // ★ FIX: reset Mode ke Create(0) dan enable Username
+            $('#Mode').val('0');
             setReadonly(false);
         }
 
