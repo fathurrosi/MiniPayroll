@@ -1179,6 +1179,7 @@ public partial class AppDBContext : DbContext
                 .HasNoKey()
                 .ToView("vw_Attendance");
 
+            entity.Property(e => e.AttendanceId);
             entity.Property(e => e.ActualTimeIn).HasPrecision(0);
             entity.Property(e => e.ActualTimeOut).HasPrecision(0);
             entity.Property(e => e.AttendanceStatus)

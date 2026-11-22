@@ -5,6 +5,8 @@ namespace App.Domain.Models.Dto.Attendance
 {
     public sealed class VwAttendanceDto : BaseDto<VwAttendance>
     {
+        public int AttendanceId { get; set; }
+
         public int EmployeeId { get; set; }
 
         [MaxLength(20)]

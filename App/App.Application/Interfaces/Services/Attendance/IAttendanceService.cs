@@ -10,5 +10,6 @@ namespace App.Application.Interfaces.Services.Attendance
         Task<AttendanceDto> SaveAsync(AttendanceDto AttendanceDto);
         Task<int> DeleteAsync(long Id);
         Task<AttendanceDto> GetByKeyAsync(int Id);
+        Task<bool> ExistsAsync(int employeeId, DateOnly attendanceDate, int excludeAttendanceId = 0);
     }
 }

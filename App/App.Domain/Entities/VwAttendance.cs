@@ -7,6 +7,8 @@ namespace App.Domain.Entities;
 
 public partial class VwAttendance
 {
+    public int AttendanceId { get; set; }
+
     public int EmployeeId { get; set; }
 
     public string EmployeeCode { get; set; }

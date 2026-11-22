@@ -240,11 +240,12 @@ namespace App.UI.Web.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Search(string searchTerm)
+        public async Task<IActionResult> Search(string? searchTerm, string? search)
         {
             try
             {
-                var items = await _employeeService.GetListAsync(searchTerm);
+                var term = !string.IsNullOrWhiteSpace(searchTerm) ? searchTerm : search;
+                var items = await _employeeService.GetListAsync(term);
 
                 // Jika data kosong atau null dari internal service, langsung return array kosong
                 if (items == null || !items.Any())
@@ -254,16 +255,20 @@ namespace App.UI.Web.Controllers
 
                 var result = items.Select(p => new
                 {
-                    id = p.EmployeeCode.ToString(),
-                    text = p.FullName ?? "Unknown Employee Name",
-                    info = "Information Technology"
+                    id = p.EmployeeId,
+                    employeeId = p.EmployeeId,
+                    employeeCode = p.EmployeeCode,
+                    text = $"{p.EmployeeCode} - {p.FullName}",
+                    fullName = p.FullName,
+                    department = p.Department ?? "",
+                    info = p.Department ?? ""
                 }).ToList();
 
                 return Json(result);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while fetching Position dropdown data");
+                _logger.LogError(ex, "Error occurred while fetching Employee search data");
                 return Json(Array.Empty<object>());
             }
         }

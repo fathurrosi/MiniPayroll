@@ -4,121 +4,43 @@
 @{
     ViewData["Title"] = $"Data Master - {Model.Title}";
 }
+
+<style>
+    /* Styling agar modal dialog attendance pas dan tidak ada scrollbar */
+    #attendanceModal .modal-dialog {
+        max-width: 820px;
+        margin: 1.75rem auto;
+    }
+    #attendanceModal .modal-content {
+        border-radius: 0.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+    }
+    #attendanceModal .modal-body {
+        max-height: calc(100vh - 150px);
+        overflow-y: auto;
+    }
+    @@media (min-height: 520px) {
+        #attendanceModal .modal-body {
+            overflow-y: visible !important;
+        }
+    }
+    #attendanceModal .form-label {
+        margin-bottom: 0.2rem;
+        font-size: 0.85rem;
+    }
+    #attendanceModal .card {
+        border-radius: 0.4rem;
+    }
+    .select2-container--bootstrap-5 .select2-selection {
+        min-height: 31px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+</style>
+
 <div class="container-fluid py-4">
-
-
-    <!-- Summary Cards
-    <div class="row mb-4">
-
-        <div class="col-lg-2">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2 class="text-primary">125</h2>
-                    <small>Total Employee</small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2 class="text-success">110</h2>
-                    <small>Present</small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2 class="text-warning">8</h2>
-                    <small>Late</small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2 class="text-danger">3</h2>
-                    <small>Absent</small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2 class="text-info">2</h2>
-                    <small>Leave</small>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body text-center">
-                    <h2 class="text-secondary">2</h2>
-                    <small>Holiday</small>
-                </div>
-            </div>
-        </div>
-
-    </div>
--->
-    <!-- Filter -->
-    <div class="card shadow-sm border-0 mb-4">
-        <div class="card-header bg-white fw-bold">
-            <i class="bi bi-funnel"></i>
-            Search Filter
-        </div>
-        <div class="card-body">
-            <div class="row g-3">
-
-                <div class="col-md-3">
-                    <label class="form-label">Employee</label>
-                    <select class="form-select">
-                        <option>All Employee</option>
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label">Department</label>
-                    <select class="form-select">
-                        <option>All Department</option>
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label">Status</label>
-                    <select class="form-select">
-                        <option>All Status</option>
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label">From</label>
-                    <input type="date" class="form-control">
-                </div>
-
-                <div class="col-md-2">
-                    <label class="form-label">To</label>
-                    <input type="date" class="form-control">
-                </div>
-
-                <div class="col-md-1 d-grid">
-                    <label>&nbsp;</label>
-                    <button class="btn btn-primary">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Attendance Table -->
+    <!-- Attendance Table Card -->
     <div class="row">
         <div class="col-md-12">
             <div class="card shadow-sm full-height-card">
@@ -129,7 +51,7 @@
                                 @Model.Title
                             </h6>
                             <small class="text-muted">
-                                Daily Employee Attendance
+                                Daily Employee Attendance Records
                             </small>
                         </div>
                          
@@ -148,7 +70,7 @@
                 </div>
                 <div class="card-body p-2">
                     <div class="table-responsive">
-                        <table id="main-table" class="table table-hover align-middle mb-0">
+                        <table id="main-table" class="table table-hover align-middle mb-0 w-100">
                         </table>
                     </div>
                 </div>
@@ -157,29 +79,21 @@
     </div>
 </div>
 
-<!-- Attendance Modal -->@* 
+<!-- Attendance Modal (Compact 2-Column Layout, No-Scroll) -->
 <div class="modal fade"
      id="attendanceModal"
      tabindex="-1"
      aria-labelledby="attendanceModalLabel"
-     aria-hidden="true">
+     aria-hidden="true"
+     data-bs-backdrop="static">
 
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
- *@
-<div class="modal fade"
-     id="attendanceModal"
-     tabindex="-1"
-     aria-labelledby="attendanceModalLabel"
-     aria-hidden="true">
-
-    <div class="modal-dialog modal-md modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="attendanceModalLabel">
+            <div class="modal-header py-2 px-3 bg-light">
+                <h6 class="modal-title fw-bold" id="attendanceModalLabel">
                     <i class="bi bi-calendar-plus text-primary me-2"></i>
-                    New Attendance
-                </h5>
+                    <span>New Attendance</span>
+                </h6>
                 <button type="button"
                         class="btn-close"
                         data-bs-dismiss="modal"
@@ -187,337 +101,235 @@
                 </button>
             </div>
 
-            <form id="attendanceForm">
-                <div class="modal-body">
+            <form id="attendanceForm" autocomplete="off" novalidate>
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Mode)
+                <input type="hidden" id="Item_AttendanceId" name="Item.AttendanceId" value="0" />
+                <input type="hidden" id="AttendanceId" name="AttendanceId" value="0" />
+                <input type="hidden" id="Item_LateMinutes" name="Item.LateMinutes" value="0" />
+                <input type="hidden" id="Item_EarlyOutMinutes" name="Item.EarlyOutMinutes" value="0" />
+                <input type="hidden" id="Item_WorkMinutes" name="Item.WorkMinutes" value="0" />
+                <input type="hidden" id="Item_OvertimeMinutes" name="Item.OvertimeMinutes" value="0" />
+                <input type="hidden" id="Item_IsManualEntry" name="Item.IsManualEntry" value="true" />
+
+                <div class="modal-body py-2 px-3">
                     <div class="row g-3">
-                        <!-- Employee -->
-                        <div class="col-md-8">
-                            <label for="EmployeeId" class="form-label fw-semibold">
-                                Employee
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select id="EmployeeId"
-                                    name="EmployeeId"
-                                    class="form-select"
-                                    required>
-                                <option value="">-- Select Employee --</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Please select an employee.
+                        <!-- Left Column: Employee & Shift Info -->
+                        <div class="col-md-6 border-end pe-md-3">
+                            <!-- Employee -->
+                            <div class="mb-2">
+                                <label for="Item_EmployeeId" class="form-label fw-semibold">
+                                    Employee <span class="text-danger">*</span>
+                                </label>
+                                <select id="Item_EmployeeId"
+                                        name="Item.EmployeeId"
+                                        class="form-select form-select-sm"
+                                        required>
+                                    <option value="">-- Search Employee --</option>
+                                </select>
+                                <div class="invalid-feedback small">
+                                    Please select an employee.
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Attendance Date -->
-                        <div class="col-md-4">
-                            <label for="AttendanceDate"
-                                   class="form-label fw-semibold">
-                                Attendance Date
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input type="date"
-                                   id="AttendanceDate"
-                                   name="AttendanceDate"
-                                   class="form-control"
-                                   required>
-                            <div class="invalid-feedback">
-                                Please select attendance date.
-                            </div>
-                        </div>
-
-                        <!-- Shift -->
-                        <div class="col-md-8">
-                            <label for="ShiftId"
-                                   class="form-label fw-semibold">
-                                Shift
-                            </label>
-                            <select id="ShiftId"
-                                    name="ShiftId"
-                                    class="form-select">
-                                <option value="">-- Select Shift --</option>
-                            </select>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="col-md-4">
-                            <label for="AttendanceStatus"
-                                   class="form-label fw-semibold">
-                                Status
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select id="AttendanceStatus"
-                                    name="AttendanceStatus"
-                                    class="form-select"
-                                    required>
-                                <option value="PRESENT">Present</option>
-                                <option value="LATE">Late</option>
-                                <option value="ABSENT">Absent</option>
-                                <option value="LEAVE">Leave</option>
-                                <option value="HOLIDAY">Holiday</option>
-                                <option value="RESTDAY">Rest Day</option>
-                            </select>
-                        </div>
-
-                        <!-- Flags 
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">
-                                Day Type
-                            </label>
-
-                            <div class="d-flex gap-3 pt-2">
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           id="IsHoliday"
-                                           name="IsHoliday"
-                                           value="true">
-
-                                    <label class="form-check-label"
-                                           for="IsHoliday">
-                                        Holiday
+                            <!-- Date & Status -->
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <label for="Item_AttendanceDate" class="form-label fw-semibold">
+                                        Date <span class="text-danger">*</span>
                                     </label>
+                                    <input type="date"
+                                           id="Item_AttendanceDate"
+                                           name="Item.AttendanceDate"
+                                           class="form-control form-control-sm"
+                                           required />
+                                    <div class="invalid-feedback small">
+                                        Date is required.
+                                    </div>
                                 </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input"
-                                           type="checkbox"
-                                           id="IsWeekend"
-                                           name="IsWeekend"
-                                           value="true">
-
-                                    <label class="form-check-label"
-                                           for="IsWeekend">
-                                        Weekend
+                                <div class="col-6">
+                                    <label for="Item_AttendanceStatus" class="form-label fw-semibold">
+                                        Status <span class="text-danger">*</span>
                                     </label>
+                                    <select id="Item_AttendanceStatus"
+                                            name="Item.AttendanceStatus"
+                                            class="form-select form-select-sm"
+                                            required>
+                                        <option value="PRESENT">Present</option>
+                                        <option value="LATE">Late</option>
+                                        <option value="ABSENT">Absent</option>
+                                        <option value="LEAVE">Leave</option>
+                                        <option value="HOLIDAY">Holiday</option>
+                                        <option value="RESTDAY">Rest Day</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
--->
-                        <div class="col-12">
-                            <hr class="my-2">
-                            <h6 class="fw-bold mb-0">
-                                <i class="bi bi-clock me-1"></i>
-                                Schedule
-                            </h6>
-                        </div>
 
-                        <!-- Scheduled In -->
-                        <div class="col-md-6">
-                            <label for="ScheduledTimeIn"
-                                   class="form-label">
-                                Scheduled Time In
-                            </label>
+                            <!-- Shift -->
+                            <div class="mb-2">
+                                <label for="Item_ShiftId" class="form-label fw-semibold">
+                                    Shift
+                                </label>
+                                <select id="Item_ShiftId"
+                                        name="Item.ShiftId"
+                                        class="form-select form-select-sm">
+                                    <option value="">-- Select Shift --</option>
+                                </select>
+                            </div>
 
-                            <input type="time"
-                                   id="ScheduledTimeIn"
-                                   name="ScheduledTimeIn"
-                                   class="form-control">
-                        </div>
-
-                        <!-- Scheduled Out -->
-                        <div class="col-md-6">
-                            <label for="ScheduledTimeOut"
-                                   class="form-label">
-                                Scheduled Time Out
-                            </label>
-
-                            <input type="time"
-                                   id="ScheduledTimeOut"
-                                   name="ScheduledTimeOut"
-                                   class="form-control">
-                        </div>
-
-                        <div class="col-12">
-                            <hr class="my-2">
-                            <h6 class="fw-bold mb-0">
-                                <i class="bi bi-fingerprint me-1"></i>
-                                Actual Attendance
-                            </h6>
-                        </div>
-
-                        <!-- Actual In -->
-                        <div class="col-md-6">
-                            <label for="ActualTimeIn"
-                                   class="form-label">
-                                Actual Time In
-                            </label>
-                            <input type="time"
-                                   id="ActualTimeIn"
-                                   name="ActualTimeIn"
-                                   class="form-control">
-                        </div>
-
-                        <!-- Actual Out -->
-                        <div class="col-md-6">
-                            <label for="ActualTimeOut"
-                                   class="form-label">
-                                Actual Time Out
-                            </label>
-                            <input type="time"
-                                   id="ActualTimeOut"
-                                   name="ActualTimeOut"
-                                   class="form-control">
-                        </div>
-
-                        <!-- Calculation Preview -->
-                        <div class="col-12">
-
-                            <div class="bg-light rounded p-3">
-                                <div class="row text-center">
-                                    <div class="col-md-3">
-                                        <small class="text-muted d-block">
-                                            Late
-                                        </small>
-
-                                        <span id="previewLate"
-                                              class="fw-bold text-danger">
-                                            0 min
-                                        </span>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <small class="text-muted d-block">
-                                            Early Out
-                                        </small>
-                                        <span id="previewEarly"
-                                              class="fw-bold text-warning">
-                                            0 min
-                                        </span>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <small class="text-muted d-block">
-                                            Working Hours
-                                        </small>
-                                        <span id="previewWork"
-                                              class="fw-bold text-success">
-                                            0h 0m
-                                        </span>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <small class="text-muted d-block">
-                                            Overtime
-                                        </small>
-                                        <span id="previewOvertime"
-                                              class="fw-bold text-info">
-                                            0h 0m
-                                        </span>
-                                    </div>
-                                </div>
+                            <!-- Remarks -->
+                            <div class="mb-0">
+                                <label for="Item_Remarks" class="form-label fw-semibold">
+                                    Remarks
+                                </label>
+                                <textarea id="Item_Remarks"
+                                          name="Item.Remarks"
+                                          class="form-control form-control-sm"
+                                          rows="2"
+                                          maxlength="500"
+                                          placeholder="Enter attendance remarks..."></textarea>
                             </div>
                         </div>
 
-                        <!-- Remarks -->
-                        <div class="col-12">
-                            <label for="Remarks"
-                                   class="form-label fw-semibold">
-                                Remarks
-                            </label>
-                            <textarea id="Remarks"
-                                      name="Remarks"
-                                      class="form-control"
-                                      rows="3"
-                                      maxlength="500"
-                                      placeholder="Enter attendance remarks..."></textarea>
-                            <div class="text-end">
-                                <small class="text-muted">
-                                    Maximum 500 characters
-                                </small>
+                        <!-- Right Column: Schedule & Actual Times & Preview -->
+                        <div class="col-md-6 ps-md-3">
+                            <!-- Scheduled Times -->
+                            <div class="mb-2">
+                                <div class="d-flex align-items-center mb-1">
+                                    <span class="badge bg-light text-dark border">
+                                        <i class="bi bi-clock me-1 text-primary"></i> Scheduled Time
+                                    </span>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label for="Item_ScheduledTimeIn" class="form-label text-muted small">
+                                            Time In
+                                        </label>
+                                        <input type="time"
+                                               id="Item_ScheduledTimeIn"
+                                               name="Item.ScheduledTimeIn"
+                                               class="form-control form-control-sm" />
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="Item_ScheduledTimeOut" class="form-label text-muted small">
+                                            Time Out
+                                        </label>
+                                        <input type="time"
+                                               id="Item_ScheduledTimeOut"
+                                               name="Item.ScheduledTimeOut"
+                                               class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Actual Times -->
+                            <div class="mb-2">
+                                <div class="d-flex align-items-center mb-1">
+                                    <span class="badge bg-light text-dark border">
+                                        <i class="bi bi-fingerprint me-1 text-success"></i> Actual Attendance
+                                    </span>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <label for="Item_ActualTimeIn" class="form-label text-muted small">
+                                            Time In
+                                        </label>
+                                        <input type="time"
+                                               id="Item_ActualTimeIn"
+                                               name="Item.ActualTimeIn"
+                                               class="form-control form-control-sm" />
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="Item_ActualTimeOut" class="form-label text-muted small">
+                                            Time Out
+                                        </label>
+                                        <input type="time"
+                                               id="Item_ActualTimeOut"
+                                               name="Item.ActualTimeOut"
+                                               class="form-control form-control-sm" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Calculation Preview (Compact Bar) -->
+                            <div class="card bg-light border-0 p-2 mt-2">
+                                <div class="row g-1 text-center">
+                                    <div class="col-3">
+                                        <small class="text-muted d-block" style="font-size: 0.72rem;">Late</small>
+                                        <span id="previewLate" class="fw-bold text-danger small">0 min</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <small class="text-muted d-block" style="font-size: 0.72rem;">Early Out</small>
+                                        <span id="previewEarly" class="fw-bold text-warning small">0 min</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <small class="text-muted d-block" style="font-size: 0.72rem;">Work</small>
+                                        <span id="previewWork" class="fw-bold text-success small">0h 0m</span>
+                                    </div>
+                                    <div class="col-3">
+                                        <small class="text-muted d-block" style="font-size: 0.72rem;">Overtime</small>
+                                        <span id="previewOvertime" class="fw-bold text-info small">0h 0m</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Hidden calculated values -->
-
-                    <input type="hidden"
-                           id="LateMinutes"
-                           name="LateMinutes"
-                           value="0">
-                    <input type="hidden"
-                           id="EarlyOutMinutes"
-                           name="EarlyOutMinutes"
-                           value="0">
-                    <input type="hidden"
-                           id="WorkMinutes"
-                           name="WorkMinutes"
-                           value="0">
-                    <input type="hidden"
-                           id="OvertimeMinutes"
-                           name="OvertimeMinutes"
-                           value="0">
-                    <input type="hidden"
-                           id="IsManualEntry"
-                           name="IsManualEntry"
-                           value="true">
-
                 </div>
 
-                <div class="modal-footer">
+                <div class="modal-footer py-2 px-3 bg-light">
                     <button type="button"
-                            class="btn btn-secondary"
+                            class="btn btn-sm btn-secondary"
                             data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle me-1"></i>
-                        Cancel
+                        <i class="bi bi-x-circle me-1"></i> Cancel
                     </button>
                     <button type="submit"
                             id="save-attendance"
-                            class="btn btn-primary">
-
-                        <i class="bi bi-check-circle me-1"></i>
-                        Save Attendance
+                            class="btn btn-sm btn-primary">
+                        <i class="bi bi-check-circle me-1"></i> Save Attendance
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        function closeModal() {
-            const modalElement = document.getElementById('overtimeTypeModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            setReadonly(false);
-            if (modal) {
-                modal.hide();
-            }
+        function getAttendanceModal() {
+            return bootstrap.Modal.getOrCreateInstance(document.getElementById('attendanceModal'));
         }
+
+        function closeModal() {
+            setReadonly(false);
+            getAttendanceModal().hide();
+        }
+
         function showModal(isEdit) {
-            $('#modalTitle').text(
-                isEdit ? 'Edit Attendance' : 'Add Attendance'
+            $('#attendanceModalLabel').html(
+                isEdit
+                    ? '<i class="bi bi-pencil-square text-primary me-2"></i>Edit Attendance'
+                    : '<i class="bi bi-calendar-plus text-primary me-2"></i>New Attendance'
             );
 
-            setReadonly(isEdit);
-
+            setReadonly(false);
             resetAttendanceForm();
 
             // Default date = today
             const today = new Date();
-
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
 
-            $('#AttendanceDate').val(`${yyyy}-${mm}-${dd}`);
+            $('#Item_AttendanceDate').val(`${yyyy}-${mm}-${dd}`);
+            $('#save-attendance').show();
 
             loadShifts();
-
-            const modal = new bootstrap.Modal(
-                document.getElementById('attendanceModal')
-            );
-            modal.show();
+            getAttendanceModal().show();
         }
+
         $(document).ready(function () {
-             $('#logoFile').on('change', function () {
-                 const file = this.files[0];
-                 const preview = document.getElementById('logoPreview');
-                 if (!file) {
-                     preview.style.display = 'none';
-                     return;
-                 }
-                 preview.src = URL.createObjectURL(file);
-                 preview.style.display = 'block';
-            });
-            
+            // Initialize DataTable
             const table = $('#main-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -551,22 +363,15 @@
                 columns: [
                     // Employee
                     {
-                        //data: "employeeCode",
-                        data : null,
+                        data: null,
                         title: "Employee",
-                        width: "260px",
+                        width: "240px",
                         orderable: false,
                         render: function (data) {
                             return `
-                                <div class="fw-bold">
-                                    ${data.employeeCode}
-                                </div>
-                                <div>
-                                    ${data.employeeName}
-                                </div>
-                                <small class="text-muted">
-                                    ${data.DepartmentDescription ?? ""}
-                                </small>
+                                <div class="fw-bold">${data.employeeCode ?? ""}</div>
+                                <div>${data.employeeName ?? ""}</div>
+                                <small class="text-muted">${data.departmentDescription ?? ""}</small>
                             `;
                         }
                     },
@@ -577,8 +382,7 @@
                         width: "110px",
                         className: "text-center",
                         render: function (data) {
-                            if (!data)
-                                return "-";
+                            if (!data) return "-";
                             return moment(data).format("DD MMM YYYY");
                         }
                     },
@@ -586,32 +390,23 @@
                     {
                         data: "shiftCode",
                         title: "Shift",
-                        width: "100px",
+                        width: "90px",
                         className: "text-center",
                         render: function (data) {
-                            return `
-                                <span class="badge bg-primary">
-                                    ${data ?? "-"}
-                                </span>
-                            `;
+                            return `<span class="badge bg-primary">${data ?? "-"}</span>`;
                         }
                     },
                     // Schedule
                     {
                         data: null,
                         title: "Schedule",
-                        width: "120px",
-                         orderable: false,
+                        width: "110px",
+                        orderable: false,
                         className: "text-center",
                         render: function (data) {
                             return `
-                                <div class="fw-semibold">
-                                    ${data.scheduledTimeIn ?? "--:--"}
-                                </div>
-
-                                <small class="text-muted">
-                                    ${data.scheduledTimeOut ?? "--:--"}
-                                </small>
+                                <div class="fw-semibold">${data.scheduledTimeIn ?? "--:--"}</div>
+                                <small class="text-muted">${data.scheduledTimeOut ?? "--:--"}</small>
                             `;
                         }
                     },
@@ -619,44 +414,30 @@
                     {
                         data: null,
                         title: "Actual",
-                        width: "120px",
-                         orderable: false,
+                        width: "110px",
+                        orderable: false,
                         className: "text-center",
                         render: function (data) {
                             return `
-                                <div class="text-success fw-semibold">
-                                    ${data.actualTimeIn ?? "-"}
-                                </div>
-
-                                <small class="text-danger">
-                                    ${data.actualTimeOut ?? "-"}
-                                </small>
+                                <div class="text-success fw-semibold">${data.actualTimeIn ?? "-"}</div>
+                                <small class="text-danger">${data.actualTimeOut ?? "-"}</small>
                             `;
                         }
                     },
                     // Late / Early
                     {
                         data: null,
-                        title: "Late/Early",
+                        title: "Late / Early",
                         width: "120px",
-                         orderable: false,
+                        orderable: false,
                         className: "text-center",
                         render: function (data) {
                             return `
-                                <div>
-                                    <span class="badge bg-danger">
-                                        Late ${data.lateMinutes}m
-                                    </span>
-                                </div>
-                                <div class="mt-1">
-                                    <span class="badge bg-warning text-dark">
-                                        Early ${data.earlyOutMinutes}m
-                                    </span>
-                                </div>
+                                <div><span class="badge bg-danger">Late ${data.lateMinutes ?? 0}m</span></div>
+                                <div class="mt-1"><span class="badge bg-warning text-dark">Early ${data.earlyOutMinutes ?? 0}m</span></div>
                             `;
                         }
                     },
-
                     // Working Hours
                     {
                         data: "workMinutes",
@@ -666,14 +447,9 @@
                         render: function (data) {
                             let h = Math.floor((data || 0) / 60);
                             let m = (data || 0) % 60;
-                            return `
-                                <span class="fw-bold">
-                                    ${h}h ${m}m
-                                </span>
-                            `;
+                            return `<span class="fw-bold">${h}h ${m}m</span>`;
                         }
                     },
-
                     // OT
                     {
                         data: "overtimeMinutes",
@@ -681,91 +457,66 @@
                         width: "90px",
                         className: "text-center",
                         render: function (data) {
-                            if (!data)
-                                return "-";
-
+                            if (!data) return "-";
                             let h = Math.floor(data / 60);
                             let m = data % 60;
-                            return `
-                                <span class="badge bg-info">
-                                    ${h}h ${m}m
-                                </span>
-                            `;
+                            return `<span class="badge bg-info">${h}h ${m}m</span>`;
                         }
                     },
                     // Status
                     {
                         data: "attendanceStatus",
                         title: "Status",
-                        width: "120px",
+                        width: "110px",
                         className: "text-center",
                         render: function (data) {
                             switch ((data || "").toUpperCase()) {
                                 case "PRESENT":
-                                    return `
-                                        <span class="badge bg-success">
-                                            <i class="bi bi-check-circle"></i>
-                                            Present
-                                        </span>`;
+                                    return `<span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Present</span>`;
                                 case "LATE":
-                                    return `
-                                        <span class="badge bg-warning text-dark">
-                                            <i class="bi bi-clock"></i>
-                                            Late
-                                        </span>`;
+                                    return `<span class="badge bg-warning text-dark"><i class="bi bi-clock me-1"></i>Late</span>`;
                                 case "ABSENT":
-                                    return `
-                                        <span class="badge bg-danger">
-                                            <i class="bi bi-x-circle"></i>
-                                            Absent
-                                        </span>`;
+                                    return `<span class="badge bg-danger"><i class="bi bi-x-circle me-1"></i>Absent</span>`;
                                 case "LEAVE":
-                                    return `
-                                        <span class="badge bg-info">
-                                            <i class="bi bi-airplane"></i>
-                                            Leave
-                                        </span>`;
+                                    return `<span class="badge bg-info"><i class="bi bi-airplane me-1"></i>Leave</span>`;
                                 case "HOLIDAY":
-                                    return `
-                                        <span class="badge bg-primary">
-                                            <i class="bi bi-calendar-event"></i>
-                                            Holiday
-                                        </span>`;
+                                    return `<span class="badge bg-primary"><i class="bi bi-calendar-event me-1"></i>Holiday</span>`;
                                 case "RESTDAY":
-                                    return `
-                                        <span class="badge bg-secondary">
-                                            <i class="bi bi-moon"></i>
-                                            Rest Day
-                                        </span>`;
+                                    return `<span class="badge bg-secondary"><i class="bi bi-moon me-1"></i>Rest Day</span>`;
                                 default:
-                                    return `
-                                        <span class="badge bg-dark">
-                                            ${data}
-                                        </span>`;
+                                    return `<span class="badge bg-dark">${data ?? "-"}</span>`;
                             }
                         }
                     },
-
-                    // Action
+                    // Actions
                     {
                         data: null,
                         title: "Action",
-                        width: "90px",
+                        width: "100px",
                         className: "text-center",
                         orderable: false,
                         searchable: false,
                         render: function (data, type, row) {
+                            const id = row.attendanceId || row.AttendanceId;
                             return `
                                 <div class="d-flex justify-content-center gap-2">
                                     <a href="javascript:void(0)"
-                                       onclick="viewAttendance(${row.attendanceId})"
-                                       title="View">
-                                        <i class="fa-solid fa-eye text-primary"></i>
+                                       onclick="viewAttendance(${id})"
+                                       title="View details"
+                                       class="text-primary fs-6">
+                                        <i class="fa-solid fa-eye"></i>
                                     </a>
                                     <a href="javascript:void(0)"
-                                       onclick="editAttendance(${row.attendanceId})"
-                                       title="Adjust">
-                                        <i class="fa-solid fa-pen-to-square text-success"></i>
+                                       onclick="editAttendance(${id})"
+                                       title="Edit"
+                                       class="text-success fs-6">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="javascript:void(0)"
+                                       onclick="deleteAttendance(${id})"
+                                       title="Delete"
+                                       class="text-danger fs-6">
+                                        <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </div>
                             `;
@@ -793,11 +544,10 @@
                             columns: ":not(.not-export)"
                         }
                     }
-
                 ]
-
             });
-            
+
+            // Export buttons
             $('#csv-export').on('click', function () {
                 $('.btn-export-csv').trigger('click');
             });
@@ -809,311 +559,393 @@
             $('#add-new').on('click', function () {
                 showModal(false);
             });
-             $('#save-button').on('click', function () {
-                saveovertimeType();
+
+            // Employee Select2 initialization
+            $('#Item_EmployeeId').select2({
+                theme: 'bootstrap-5',
+                placeholder: '-- Search Employee --',
+                allowClear: true,
+                dropdownParent: $('#attendanceModal'),
+                minimumInputLength: 0,
+                width: '100%',
+                ajax: {
+                    url: '@Url.Action("Search", "Employee")',
+                    type: 'GET',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            searchTerm: params.term || '',
+                            search: params.term || ''
+                        };
+                    },
+                    processResults: function (response) {
+                        return {
+                            results: (response || []).map(function (item) {
+                                return {
+                                    id: item.id || item.employeeId,
+                                    text: item.text,
+                                    department: item.department || item.info
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                templateResult: function (item) {
+                    if (item.loading) return item.text;
+                    if (!item.id) return item.text;
+                    return $(`
+                        <div class="py-1">
+                            <div class="fw-semibold">${item.text}</div>
+                            ${item.department ? `<small class="text-muted">${item.department}</small>` : ''}
+                        </div>
+                    `);
+                },
+                templateSelection: function (item) {
+                    return item.text || item.id;
+                },
+                escapeMarkup: function (markup) {
+                    return markup;
+                }
             });
 
-            //$('#Item_IsActive').prop('checked', data.isActive === true);
+            $('#Item_EmployeeId').on('change', function () {
+                if ($(this).val()) {
+                    $(this).removeClass('is-invalid');
+                }
+            });
+
+            // Shift Change Event
+            $('#Item_ShiftId').on('change', function () {
+                const shiftId = $(this).val();
+                if (!shiftId) {
+                    $('#Item_ScheduledTimeIn').val('');
+                    $('#Item_ScheduledTimeOut').val('');
+                    calculateAttendance();
+                    return;
+                }
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetData", "Shift")',
+                    data: { id: shiftId },
+                    success: function (data) {
+                        if (!data) return;
+                        $('#Item_ScheduledTimeIn').val(data.startTime ? data.startTime.substring(0, 5) : '');
+                        $('#Item_ScheduledTimeOut').val(data.endTime ? data.endTime.substring(0, 5) : '');
+                        calculateAttendance();
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 401 || xhr.status === 403) return;
+                        notify.error('Failed to retrieve shift information.');
+                    }
+                });
+            });
+
+            // Auto-recalculate metrics on time input changes
+            $('#Item_ScheduledTimeIn, #Item_ScheduledTimeOut, #Item_ActualTimeIn, #Item_ActualTimeOut')
+                .on('change input', function () {
+                    calculateAttendance();
+                });
+
+            // Save Attendance Form Submission
+            $('#attendanceForm').on('submit', function (e) {
+                e.preventDefault();
+                const form = this;
+
+                const empId = $('#Item_EmployeeId').val();
+                if (!empId || empId === '' || empId === '0') {
+                    $('#Item_EmployeeId').addClass('is-invalid');
+                    notify.warning('Please select an employee.');
+                    return;
+                }
+
+                if (!form.checkValidity()) {
+                    form.classList.add('was-validated');
+                    return;
+                }
+
+                calculateAttendance();
+                const formData = new FormData(form);
+                const saveButton = $('#save-attendance');
+                saveButton.prop('disabled', true);
+                saveButton.html(`
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                    Saving...
+                `);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Add", "Attendance")',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            notify.success(response.message || 'Attendance saved successfully.');
+                            closeModal();
+                            $('#main-table').DataTable().ajax.reload(null, false);
+                        } else {
+                            notify.warning(response.message || 'Failed to save attendance.');
+                        }
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 401 || xhr.status === 403) return;
+                        notify.error('An error occurred while saving attendance.');
+                    },
+                    complete: function () {
+                        saveButton.prop('disabled', false);
+                        saveButton.html(`
+                            <i class="bi bi-check-circle me-1"></i>
+                            Save Attendance
+                        `);
+                    }
+                });
+            });
         });
 
-        function saveovertimeType() {
-            const form = $('#overtimeTypeForm')[0];
-            const formData = new FormData(form);
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Add", "overtimeType")',
-                data: formData,
-                processData: false,
-                contentType: false,
-                beforeSend: function () {
-                    $('#save-button').prop('disabled', true);
-                },
-                success: function (response) {
-                    if (response.success) {
-                        notify.success(response.message);
-                        $('#main-table').DataTable().ajax.reload(null, false);
-                        closeModal();
-                    }
-                    else {
-                        notify.warning(response.message);
-                    }
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('An error occurred while saving Company overtimeType');
-                },
-                complete: function () {
-                    $('#save-button').prop('disabled', false);
-                }
-            });
-        }
-
-        function editRow(code) {
-
-            $.ajax({
-                type: 'GET',
-                url: '@Url.Action("GetData", "OvertimeType")',
-                data: { code: code},
-
-                success: function (data) {
-
-                    if (!data) {
-                        notify.warning('Overtime type not found.');
-                        return;
-                    }
-
-                    // Basic Information
-                    $('#Item_OvertimeCode').val(data.overtimeCode);
-                    $('#Item_OvertimeName').val(data.overtimeName);
-                    $('#Item_Description').val(data.description);
-
-                    // Category
-                    $('#Item_OvertimeCategory').val(data.overtimeCategory);
-
-                    // Status
-                    $('#Item_IsActive').prop('checked', data.isActive);
-
-                    showModal(true);
-                },
-
-                error: function (xhr) {
-
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-
-                    notify.error('Failed to retrieve overtime type.');
-
-                }
-            });
-
-        }
-        function deleteRow(code) {
-            $.ajax({
-                type: 'DELETE',
-                url: '@Url.Action("Delete", "overtimeType")',
-                data: {
-                    code: code
-                },
-                headers: {
-                    'RequestVerificationToken':
-                        $('input[name="__RequestVerificationToken"]').val()
-                },
-                success: function (response) {
-                    if (response.success) {
-                        $('#main-table').DataTable().ajax.reload(null, false);
-                        resetForm();
-                        notify.success(response.message);
-                    } else {
-                        notify.warning(response.message);
-                    }
-                },
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('Failed to delete Company overtimeType');
-                }
-            });
-        }
-        function resetForm() {
-            $('#overtimeTypeForm')[0].reset();
-        }
-
-         
-        function loadShifts() {
+        // Load Shifts into Dropdown
+        function loadShifts(selectedId) {
             $.ajax({
                 type: 'GET',
                 url: '@Url.Action("GetShifts", "Shift")',
                 success: function (data) {
-                    const select = $('#ShiftId');
+                    const select = $('#Item_ShiftId');
                     select.empty();
-                    select.append(
-                        '<option value="">-- Select Shift --</option>'
-                    );
+                    select.append('<option value="">-- Select Shift --</option>');
 
-                    if (!data)
-                        return;
+                    if (!data) return;
 
                     data.forEach(function (item) {
-                        select.append(
-                            $('<option>', {
-                                value: item.id,
-                                text: item.shiftCode + ' - ' +  item.shiftName
-                            })
-                        );
-
+                        const opt = $('<option>', {
+                            value: item.id,
+                            text: item.shiftCode + ' - ' + item.shiftName
+                        });
+                        if (selectedId && item.id == selectedId) {
+                            opt.prop('selected', true);
+                        }
+                        select.append(opt);
                     });
                 },
-
                 error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
+                    if (xhr.status === 401 || xhr.status === 403) return;
                     notify.error('Failed to load shifts.');
                 }
             });
         }
-         
-        $('#ShiftId').on('change', function () {
-            const shiftId = $(this).val();
-            if (!shiftId) {
-                $('#ScheduledTimeIn').val('');
-                $('#ScheduledTimeOut').val('');
-                calculateAttendance();
-                return;
-            }
 
+        // View Attendance
+        function viewAttendance(id) {
+            if (!id) return;
             $.ajax({
                 type: 'GET',
-                url: '@Url.Action("GetData", "Shift")',
-                data: {
-                    id: shiftId
-                },
+                url: '@Url.Action("GetData", "Attendance")',
+                data: { id: id },
                 success: function (data) {
-                    if (!data)
+                    if (!data) {
+                        notify.warning('Attendance record not found.');
                         return;
-
-                    $('#ScheduledTimeIn').val(
-                        data.startTime ?? ''
-                    );
-                    $('#ScheduledTimeOut').val(
-                        data.endTime ?? ''
-                    );
-                    calculateAttendance();
+                    }
+                    populateFormData(data);
+                    $('#attendanceModalLabel').html('<i class="bi bi-eye text-primary me-2"></i>Attendance Details');
+                    setReadonly(true);
+                    $('#save-attendance').hide();
+                    getAttendanceModal().show();
                 },
-
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error('Failed to retrieve shift.');
+                error: function () {
+                    notify.error('Failed to retrieve attendance details.');
                 }
             });
-        });
-         
-        $('#ScheduledTimeIn, #ScheduledTimeOut, #ActualTimeIn, #ActualTimeOut')
-            .on('change', function () {
-                calculateAttendance();
+        }
 
+        // Edit Attendance
+        function editAttendance(id) {
+            if (!id) return;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetData", "Attendance")',
+                data: { id: id },
+                success: function (data) {
+                    if (!data) {
+                        notify.warning('Attendance record not found.');
+                        return;
+                    }
+                    populateFormData(data);
+                    $('#attendanceModalLabel').html('<i class="bi bi-pencil-square text-primary me-2"></i>Edit Attendance');
+                    $('#Mode').val('1'); // FormMode.Edit
+                    setReadonly(false);
+                    $('#save-attendance').show();
+                    getAttendanceModal().show();
+                },
+                error: function () {
+                    notify.error('Failed to retrieve attendance details.');
+                }
             });
+        }
 
+        // Populate Form Fields
+        function populateFormData(data) {
+            resetAttendanceForm();
 
+            $('#Item_AttendanceId').val(data.attendanceId);
+            $('#AttendanceId').val(data.attendanceId);
+
+            if (data.employeeId) {
+                const empText = data.employee
+                    ? `${data.employee.employeeCode} - ${data.employee.fullName}`
+                    : `Employee #${data.employeeId}`;
+                const option = new Option(empText, data.employeeId, true, true);
+                $('#Item_EmployeeId').empty().append(option).trigger('change');
+            }
+
+            if (data.attendanceDate) {
+                $('#Item_AttendanceDate').val(data.attendanceDate.substring(0, 10));
+            }
+
+            $('#Item_AttendanceStatus').val(data.attendanceStatus || 'PRESENT');
+            loadShifts(data.shiftId);
+
+            $('#Item_ScheduledTimeIn').val(data.scheduledTimeIn ? data.scheduledTimeIn.substring(0, 5) : '');
+            $('#Item_ScheduledTimeOut').val(data.scheduledTimeOut ? data.scheduledTimeOut.substring(0, 5) : '');
+            $('#Item_ActualTimeIn').val(data.actualTimeIn ? data.actualTimeIn.substring(0, 5) : '');
+            $('#Item_ActualTimeOut').val(data.actualTimeOut ? data.actualTimeOut.substring(0, 5) : '');
+            $('#Item_Remarks').val(data.remarks || '');
+
+            calculateAttendance();
+        }
+
+        // Delete Attendance
+        function deleteAttendance(id) {
+            if (!id) return;
+            if (!confirm('Are you sure you want to delete this attendance record?')) return;
+
+            $.ajax({
+                type: 'DELETE',
+                url: '@Url.Action("Delete", "Attendance")?id=' + id,
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+                    if (response.success) {
+                        notify.success(response.message || 'Attendance deleted successfully.');
+                        $('#main-table').DataTable().ajax.reload(null, false);
+                    } else {
+                        notify.warning(response.message || 'Failed to delete attendance.');
+                    }
+                },
+                error: function () {
+                    notify.error('Failed to delete attendance record.');
+                }
+            });
+        }
+
+        // Enable / Disable Form Inputs
+        function setReadonly(isReadonly) {
+            $('#Item_EmployeeId').prop('disabled', isReadonly);
+            $('#Item_AttendanceDate').prop('readonly', isReadonly);
+            $('#Item_ShiftId').prop('disabled', isReadonly);
+            $('#Item_AttendanceStatus').prop('disabled', isReadonly);
+            $('#Item_ScheduledTimeIn').prop('readonly', isReadonly);
+            $('#Item_ScheduledTimeOut').prop('readonly', isReadonly);
+            $('#Item_ActualTimeIn').prop('readonly', isReadonly);
+            $('#Item_ActualTimeOut').prop('readonly', isReadonly);
+            $('#Item_Remarks').prop('readonly', isReadonly);
+        }
+
+        // Reset Attendance Form
+        function resetAttendanceForm() {
+            const form = $('#attendanceForm')[0];
+            form.reset();
+            form.classList.remove('was-validated');
+
+            $('#Item_AttendanceId').val('0');
+            $('#AttendanceId').val('0');
+            $('#Mode').val('0'); // Create mode
+
+            $('#Item_EmployeeId').val(null).trigger('change');
+            $('#Item_EmployeeId').removeClass('is-invalid');
+            $('#Item_ShiftId').val('');
+            $('#Item_AttendanceStatus').val('PRESENT');
+
+            $('#Item_LateMinutes').val(0);
+            $('#Item_EarlyOutMinutes').val(0);
+            $('#Item_WorkMinutes').val(0);
+            $('#Item_OvertimeMinutes').val(0);
+            $('#Item_IsManualEntry').val('true');
+
+            $('#previewLate').text('0 min');
+            $('#previewEarly').text('0 min');
+            $('#previewWork').text('0h 0m');
+            $('#previewOvertime').text('0h 0m');
+        }
+
+        // Time to Minutes Helper
         function timeToMinutes(value) {
-            if (!value)
-                return null;
-
+            if (!value) return null;
             const parts = value.split(':');
-            if (parts.length < 2)
-                return null;
-
+            if (parts.length < 2) return null;
             const hour = parseInt(parts[0], 10);
             const minute = parseInt(parts[1], 10);
-
-            if (isNaN(hour) || isNaN(minute))
-                return null;
-
+            if (isNaN(hour) || isNaN(minute)) return null;
             return (hour * 60) + minute;
         }
 
-
+        // Calculate Late, Early Out, Work, Overtime Minutes
         function calculateAttendance() {
-            const scheduledIn = timeToMinutes($('#ScheduledTimeIn').val());
-            const scheduledOut = timeToMinutes($('#ScheduledTimeOut').val());
-            const actualIn = timeToMinutes($('#ActualTimeIn').val());
-            const actualOut = timeToMinutes($('#ActualTimeOut').val());
+            const scheduledIn = timeToMinutes($('#Item_ScheduledTimeIn').val());
+            const scheduledOut = timeToMinutes($('#Item_ScheduledTimeOut').val());
+            const actualIn = timeToMinutes($('#Item_ActualTimeIn').val());
+            const actualOut = timeToMinutes($('#Item_ActualTimeOut').val());
+
             let lateMinutes = 0;
             let earlyOutMinutes = 0;
             let workMinutes = 0;
             let overtimeMinutes = 0;
-            // --------------------------------------------------------
+
             // Late
-            // --------------------------------------------------------
-            if (scheduledIn !== null &&
-                actualIn !== null &&
-                actualIn > scheduledIn) {
+            if (scheduledIn !== null && actualIn !== null && actualIn > scheduledIn) {
                 lateMinutes = actualIn - scheduledIn;
             }
 
-
-            // --------------------------------------------------------
             // Early Out
-            // --------------------------------------------------------
-            if (scheduledOut !== null &&
-                actualOut !== null &&
-                actualOut < scheduledOut) {
+            if (scheduledOut !== null && actualOut !== null && actualOut < scheduledOut) {
                 earlyOutMinutes = scheduledOut - actualOut;
             }
 
-
-            // --------------------------------------------------------
             // Working Minutes
-            // --------------------------------------------------------
-
-            if (actualIn !== null &&
-                actualOut !== null) {
+            if (actualIn !== null && actualOut !== null) {
                 let out = actualOut;
-                // Support overnight shift
                 if (out < actualIn) {
-                    out += 24 * 60;
+                    out += 24 * 60; // Overnight shift
                 }
-
-                workMinutes = Math.max(
-                    0,
-                    out - actualIn
-                );
+                workMinutes = Math.max(0, out - actualIn);
             }
 
-
-            // --------------------------------------------------------
             // Overtime
-            // --------------------------------------------------------
-
-            if (scheduledOut !== null &&
-                actualOut !== null) {
-
+            if (scheduledOut !== null && actualOut !== null) {
                 let out = actualOut;
-
                 if (out < actualIn) {
                     out += 24 * 60;
                 }
-
                 let scheduled = scheduledOut;
-
-                if (scheduled < scheduledIn) {
+                if (scheduledIn !== null && scheduled < scheduledIn) {
                     scheduled += 24 * 60;
                 }
-
-                overtimeMinutes = Math.max(
-                    0,
-                    out - scheduled
-                );
+                overtimeMinutes = Math.max(0, out - scheduled);
             }
 
+            // Update hidden inputs
+            $('#Item_LateMinutes').val(lateMinutes);
+            $('#Item_EarlyOutMinutes').val(earlyOutMinutes);
+            $('#Item_WorkMinutes').val(workMinutes);
+            $('#Item_OvertimeMinutes').val(overtimeMinutes);
 
-            // --------------------------------------------------------
-            // Update hidden fields
-            // --------------------------------------------------------
-
-            $('#LateMinutes').val(lateMinutes);
-            $('#EarlyOutMinutes').val(earlyOutMinutes);
-            $('#WorkMinutes').val(workMinutes);
-            $('#OvertimeMinutes').val(overtimeMinutes);
-            // --------------------------------------------------------
-            // Update preview
-            // --------------------------------------------------------
-            $('#previewLate').text(
-                `${lateMinutes} min`
-            );
-
-            $('#previewEarly').text(
-                `${earlyOutMinutes} min`
-            );
-
-            $('#previewWork').text(
-                formatMinutes(workMinutes)
-            );
-
-            $('#previewOvertime').text(
-                formatMinutes(overtimeMinutes)
-            );
+            // Update preview badges
+            $('#previewLate').text(`${lateMinutes} min`);
+            $('#previewEarly').text(`${earlyOutMinutes} min`);
+            $('#previewWork').text(formatMinutes(workMinutes));
+            $('#previewOvertime').text(formatMinutes(overtimeMinutes));
         }
 
         function formatMinutes(minutes) {
@@ -1122,204 +954,5 @@
             const mins = minutes % 60;
             return `${hours}h ${mins}m`;
         }
-
-        // ------------------------------------------------------------
-        // Save Attendance
-        // ------------------------------------------------------------
-
-        $('#attendanceForm').on('submit', function (e) {
-            e.preventDefault();
-            const form = this;
-            if (!form.checkValidity()) {
-                form.classList.add('was-validated');
-                return;
-            }
-
-            calculateAttendance();
-            const formData = new FormData(form);
-            const saveButton = $('#save-attendance');
-            saveButton.prop('disabled', true);
-            saveButton.html(`
-                <span class="spinner-border spinner-border-sm me-1"></span>
-                Saving...
-            `);
-
-
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Add", "Attendance")',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    if (response.success) {
-                        notify.success(
-                            response.message || 'Attendance saved successfully.'
-                        );
-                        attendanceModal.hide();
-                        $('#main-table')
-                            .DataTable()
-                            .ajax.reload(null, false);
-
-                    }
-                    else {
-                        notify.warning(
-                            response.message ||
-                            'Failed to save attendance.'
-                        );
-                    }
-                },
-
-                error: function (xhr) {
-                    if (xhr.status === 401 || xhr.status === 403)
-                        return;
-                    notify.error(
-                        'An error occurred while saving attendance.'
-                    );
-                },
-
-                complete: function () {
-                    saveButton.prop('disabled', false);
-                    saveButton.html(`
-                        <i class="bi bi-check-circle me-1"></i>
-                        Save Attendance
-                    `);
-                }
-            });
-
-        });
-
-        // ------------------------------------------------------------
-        // Reset form
-        // ------------------------------------------------------------
-        function resetAttendanceForm() {
-            const form =$('#attendanceForm')[0];
-            form.reset();
-            form.classList.remove('was-validated');
-            $('#EmployeeId').val('');
-            $('#ShiftId').val('');
-            $('#AttendanceStatus').val('PRESENT');
-            $('#LateMinutes').val(0);
-            $('#EarlyOutMinutes').val(0);
-            $('#WorkMinutes').val(0);
-            $('#OvertimeMinutes').val(0);
-            $('#IsManualEntry').val('true');
-            $('#previewLate').text('0 min');
-            $('#previewEarly').text('0 min');
-            $('#previewWork').text('0h 0m');
-            $('#previewOvertime').text('0h 0m');
-        }
-         
-        // $('#EmployeeId').select2({
-        //     theme: 'bootstrap-5',
-        //     placeholder: '-- Search Employee --',
-        //     allowClear: true,
-        //     dropdownParent: $('#attendanceModal'),
-        //     minimumInputLength: 2,
-        //     ajax: {
-        //         url: '@Url.Action("Search", "Employee")',
-        //         type: 'GET',
-        //         dataType: 'json',
-        //         delay: 300,
-        //         data: function (params) {
-        //             return {
-        //                 search: params.term || ''
-        //             };
-        //         },
-        //         processResults: function (response) {
-        //             return {
-        //                 results: response.map(function (item) {
-        //                     return {
-        //                         id: item.id,
-        //                         text: item.text,
-        //                         department: item.info
-        //                     };
-        //                 })
-        //             };
-        //         }
-        //     },
-        //     templateResult: function (item) {
-        //         if (!item.id)
-        //             return item.text;
-
-        //         return $(`
-        //             <div>
-        //                 <div class="fw-semibold">${item.text}</div>
-        //                 <small class="text-muted">
-        //                     ${item.department ?? ''}
-        //                 </small>
-        //             </div>
-        //         `);
-        //     },
-        //     templateSelection: function (item) {
-        //         return item.text || item.id;
-        //     }
-        // });
-         
-        $('#EmployeeId').select2({
-            theme: 'bootstrap-5',
-            placeholder: '-- Search Employee --',
-            allowClear: true,
-            dropdownParent: $('#attendanceModal'),
-            minimumInputLength: 2,
-            width: '100%',
-            ajax: {
-                url: '@Url.Action("Search", "Employee")',
-                type: 'GET',
-                dataType: 'json',
-                delay: 300,
-                data: function (params) {
-                    return {
-                        search: params.term || ''
-                    };
-                },
-                processResults: function (response) {
-                    return {
-                        results: response.map(function (item) {
-                            return {
-                                id: item.id,
-                                text: item.text,
-                                department: item.info
-                            };
-                        })
-                    };
-                },
-
-                cache: true
-            },
-
-            templateResult: function (item) {
-                // Loading / placeholder item
-                if (item.loading) {
-                    return item.text;
-                }
-
-                // Empty item
-                if (!item.id) {
-                    return item.text;
-                }
-
-                return $(`
-                    <div class="py-1">
-                        <div class="fw-semibold">
-                            ${item.text}
-                        </div>
-
-                        ${item.department
-                            ? `<small class="text-muted">${item.department}</small>`
-                            : ''}
-                    </div>
-                `);
-            },
-
-            templateSelection: function (item) {
-                return item.text || item.id;
-            },
-
-            escapeMarkup: function (markup) {
-                return markup;
-            }
-        }); 
-
     </script>
 }

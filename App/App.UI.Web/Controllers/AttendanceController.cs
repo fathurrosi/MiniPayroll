@@ -18,14 +18,17 @@ namespace App.UI.Web.Controllers
 
         private readonly IUserService _userService;
         private readonly IAttendanceService _AttendanceService;
+        private readonly IEmployeeService _employeeService;
         private readonly ILogger<AttendanceController> _logger;
         public AttendanceController(IAttendanceService AttendanceService
             , IUserService userService
+            , IEmployeeService employeeService
             , ILogger<AttendanceController> logger)
 
         {
             _userService = userService;
             _AttendanceService = AttendanceService;
+            _employeeService = employeeService;
             _logger = logger;
         }
 
@@ -113,40 +116,71 @@ namespace App.UI.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PageModel<AttendanceDto> model)
+        public async Task<IActionResult> Add([FromForm] PageModel<AttendanceDto> model, [FromForm] AttendanceDto? item)
         {
             try
             {
+                var attendance = model?.Item ?? item;
+
                 // 1. Guard Clause
-                if (model?.Item == null)
+                if (attendance == null)
                 {
                     return Json(ActionResponse.Fail("Request data is missing or invalid."));
                 }
 
+                // If EmployeeId is not bound (or passed as employee code string), resolve it
+                if (attendance.EmployeeId <= 0)
+                {
+                    var rawEmployee = Request.Form["Item.EmployeeId"].FirstOrDefault()
+                                   ?? Request.Form["EmployeeId"].FirstOrDefault();
+
+                    if (!string.IsNullOrWhiteSpace(rawEmployee))
+                    {
+                        if (int.TryParse(rawEmployee, out int parsedId) && parsedId > 0)
+                        {
+                            attendance.EmployeeId = parsedId;
+                        }
+                        else
+                        {
+                            var emp = await _employeeService.GetByCode(rawEmployee);
+                            if (emp != null && emp.EmployeeId > 0)
+                            {
+                                attendance.EmployeeId = emp.EmployeeId;
+                            }
+                        }
+                    }
+                }
+
+                if (attendance.EmployeeId <= 0)
+                {
+                    return Json(ActionResponse.Fail("Please select an employee."));
+                }
+
                 // 2. Model Validation (Returns immediately without throwing expensive exceptions)
-                if (model.Item.AttendanceDate.Year <= 1900)
+                if (attendance.AttendanceDate.Year <= 1900)
                 {
                     return Json(ActionResponse.Fail("Please select a valid Attendance Date."));
                 }
 
-                if (string.IsNullOrWhiteSpace(model.Item.AttendanceStatus))
+                if (string.IsNullOrWhiteSpace(attendance.AttendanceStatus))
                 {
                     return Json(ActionResponse.Fail("Attendance status is mandatory."));
                 }
 
-                // 3. Prevent Duplicate Attendances on the Same Date
-                if (model.Mode == FormMode.Create)
+                if (attendance.ShiftId <= 0)
                 {
-                    // Pro-Tip: Change your service to look up by Date instead of ID for creation checks
-                    var existingItem = await _AttendanceService.GetByKeyAsync(model.Item.AttendanceId);
-                    if (existingItem != null)
-                    {
-                        return Json(ActionResponse.Fail($"A Attendance already exists on this date: {existingItem.AttendanceDate}"));
-                    }
+                    attendance.ShiftId = null;
+                }
+
+                // 3. Prevent Duplicate Attendances on the Same Date
+                var isDuplicate = await _AttendanceService.ExistsAsync(attendance.EmployeeId, attendance.AttendanceDate, attendance.AttendanceId);
+                if (isDuplicate)
+                {
+                    return Json(ActionResponse.Fail($"Attendance for this employee already exists on date: {attendance.AttendanceDate:yyyy-MM-dd}."));
                 }
 
                 // 4. Execute Save Operation
-                var result = await _AttendanceService.SaveAsync(model.Item);
+                var result = await _AttendanceService.SaveAsync(attendance);
 
                 return (result != null)
                     ? Json(ActionResponse.Ok("Attendance saved successfully."))

@@ -102,12 +102,25 @@ namespace App.Infrastructure.Services.Attendance
         {
             try
             {
-                var entityItem = await _AttendanceRepo.FindAsync(t => t.AttendanceId.Equals(model.AttendanceId));
+                TblAttendance? entityItem = null;
+                if (model.AttendanceId > 0)
+                {
+                    entityItem = await _AttendanceRepo.FindAsync(t => t.AttendanceId == model.AttendanceId);
+                }
+
+                if (model.ShiftId <= 0)
+                {
+                    model.ShiftId = null;
+                }
+
+                var username = !string.IsNullOrWhiteSpace(_userService.Username) ? _userService.Username : "System";
+
                 if (entityItem == null)
                 {
                     TblAttendance item = _mapper.Map<TblAttendance>(model);
+                    item.AttendanceId = 0;
                     item.CreatedDate = DateTime.Now;
-                    item.CreatedBy = _userService.Username;
+                    item.CreatedBy = username;
                     var addedEntity = await _AttendanceRepo.AddAsync(item);
                     return _mapper.Map<AttendanceDto>(addedEntity);
                 }
@@ -115,7 +128,7 @@ namespace App.Infrastructure.Services.Attendance
                 {
                     _mapper.Map(model, entityItem);
                     entityItem.UpdatedDate = DateTime.Now;
-                    entityItem.UpdatedBy = _userService.Username;
+                    entityItem.UpdatedBy = username;
                     var updatedEntity = await _AttendanceRepo.UpdateAsync(entityItem);
                     return _mapper.Map<AttendanceDto>(updatedEntity);
                 }
@@ -123,6 +136,23 @@ namespace App.Infrastructure.Services.Attendance
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error saving Attendance");
+                throw;
+            }
+        }
+
+        public async Task<bool> ExistsAsync(int employeeId, DateOnly attendanceDate, int excludeAttendanceId = 0)
+        {
+            try
+            {
+                var existing = await _AttendanceRepo.FindAsync(t =>
+                    t.EmployeeId == employeeId &&
+                    t.AttendanceDate == attendanceDate &&
+                    t.AttendanceId != excludeAttendanceId);
+                return existing != null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error checking existing attendance for EmployeeId {EmployeeId} on {Date}", employeeId, attendanceDate);
                 throw;
             }
         }
