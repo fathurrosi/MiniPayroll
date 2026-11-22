@@ -1,4 +1,4 @@
-﻿@using App.Domain.Models
+@using App.Domain.Models
 @using App.Domain.Models.Dto.Attendance
 @model PageModel<AttendanceDto>
 @{
@@ -345,7 +345,19 @@
                     type: "POST",
                     contentType: "application/json",
                     data: function (d) {
-                        return JSON.stringify(d);
+                        const employeeId = $('#Item_EmployeeId').val();
+                        const departmentId = $('#DepartmentSelect').val();
+                        const status = $('#StatusSelect').val();
+                        const fromDate = $('#FromDate').val();
+                        const toDate = $('#ToDate').val();
+                        const filters = {
+                            employeeId: employeeId,
+                            departmentId: departmentId,
+                            status: status,
+                            fromDate: fromDate,
+                            toDate: toDate
+                        };
+                        return JSON.stringify(Object.assign(d, filters));
                     },
                     dataSrc: function (json) {
                         return json.data || [];
@@ -519,6 +531,11 @@
                                        title="Delete"
                                        class="text-danger fs-6">
                                         <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                    <a href="javascript:void(0)"
+                                       onclick="confirmDelete(() => deleteAttendance(${row.attendanceId}))"
+                                       title="Delete">
+                                        <i class="fa-solid fa-trash text-danger"></i>
                                     </a>
                                 </div>
                             `;
@@ -957,11 +974,10 @@
             $('#previewOvertime').text(formatMinutes(overtimeMinutes));
         }
 
-        function formatMinutes(minutes) {
-            minutes = parseInt(minutes || 0, 10);
-            const hours = Math.floor(minutes / 60);
-            const mins = minutes % 60;
-            return `${hours}h ${mins}m`;
+            $('#previewLate').text('0 min');
+            $('#previewEarly').text('0 min');
+            $('#previewWork').text('0h 0m');
+            $('#previewOvertime').text('0h 0m');
         }
     </script>
 }

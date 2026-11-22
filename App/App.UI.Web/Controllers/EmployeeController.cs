@@ -1,4 +1,4 @@
-﻿using App.Application.Interfaces.Services.Masters;
+using App.Application.Interfaces.Services.Masters;
 using App.Domain.Enums;
 using App.Domain.Models;
 using App.Domain.Models.Dto.Masters;
