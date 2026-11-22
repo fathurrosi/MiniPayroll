@@ -166,41 +166,49 @@ namespace App.Infrastructure.Services.Settings
         /// </summary>
         private async Task SaveUserEmployeeMappingAsync(long userId, string? employeeCode)
         {
-            // Hapus mapping lama (jika ada)
-            var existing = await _userEmployeeRepo.GetFirstOrDefaultAsync(x => x.UserId == userId);
-
-            if (string.IsNullOrWhiteSpace(employeeCode))
+            try
             {
-                // Tidak ada employee dipilih → hapus mapping jika ada
-                if (existing != null)
+                // Hapus mapping lama (jika ada)
+                var existing = await _userEmployeeRepo.GetFirstOrDefaultAsync(x => x.UserId == userId);
+
+                if (string.IsNullOrWhiteSpace(employeeCode))
+                {
+                    // Tidak ada employee dipilih → hapus mapping jika ada
+                    if (existing != null)
+                        await _userEmployeeRepo.Remove(existing);
+                    return;
+                }
+
+                // Cari EmployeeId berdasarkan EmployeeCode
+                var employee = await _employeeRepo.GetFirstOrDefaultAsync(e => e.EmployeeCode == employeeCode);
+                if (employee == null) return; // EmployeeCode tidak valid → abaikan
+
+                if (existing == null)
+                {
+                    // Insert mapping baru
+                    await _userEmployeeRepo.AddAsync(new TblUserEmployee
+                    {
+                        UserId = userId,
+                        EmployeeId = employee.EmployeeId,
+                        CreatedDate = DateTime.UtcNow
+                    });
+                }
+                else if (existing.EmployeeId != employee.EmployeeId)
+                {
+                    // Update mapping ke employee yang berbeda
                     await _userEmployeeRepo.Remove(existing);
-                return;
+                    await _userEmployeeRepo.AddAsync(new TblUserEmployee
+                    {
+                        UserId = userId,
+                        EmployeeId = employee.EmployeeId,
+                        CreatedDate = DateTime.UtcNow
+                    });
+                }
             }
-
-            // Cari EmployeeId berdasarkan EmployeeCode
-            var employee = await _employeeRepo.GetFirstOrDefaultAsync(e => e.EmployeeCode == employeeCode);
-            if (employee == null) return; // EmployeeCode tidak valid → abaikan
-
-            if (existing == null)
+            catch (Exception ex)
             {
-                // Insert mapping baru
-                await _userEmployeeRepo.AddAsync(new TblUserEmployee
-                {
-                    UserId = userId,
-                    EmployeeId = employee.EmployeeId,
-                    CreatedDate = DateTime.UtcNow
-                });
-            }
-            else if (existing.EmployeeId != employee.EmployeeId)
-            {
-                // Update mapping ke employee yang berbeda
-                await _userEmployeeRepo.Remove(existing);
-                await _userEmployeeRepo.AddAsync(new TblUserEmployee
-                {
-                    UserId = userId,
-                    EmployeeId = employee.EmployeeId,
-                    CreatedDate = DateTime.UtcNow
-                });
+                _logger.LogError(ex, "Error saving User");
+                throw;
             }
         }
 

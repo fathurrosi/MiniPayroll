@@ -211,6 +211,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tbl_SystemLog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tbl_UserEmployees]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tbl_UserRoles]",
          "ObjectType": 0
       },
