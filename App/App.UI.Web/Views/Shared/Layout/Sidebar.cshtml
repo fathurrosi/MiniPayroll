@@ -48,7 +48,7 @@
                             string parentOpen = parentActive ? "nav-item menu-open" : "nav-item";
                             <li class="@parentOpen">
                                 <a href="#" class="nav-link">
-                                    <i class="@menu.Icon"></i>
+                                    <i class="@menu.Icon me-1"></i>
                                     <p>@menu.Caption</p>
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 </a>
@@ -61,7 +61,7 @@
                                         <li class="@childOpen">
                                             <a href="@Url.Content(child.Link)"
                                                    class="@linkActive">
-                                                <i class="@child.Icon"></i>
+                                                <i class="@child.Icon me-1"></i>
                                                 <p>@child.Caption</p>
                                             </a>
                                         </li>
@@ -77,8 +77,8 @@
                             string linkActive = parentActive ? "nav-link active" : "nav-link";
                             <li class="nav-item">
                                 <a href="@Url.Content(menu.Link)"
-                                       class="nav-link">
-                                    <i class="@menu.Icon"></i>
+                                       class="@linkActive">
+                                    <i class="@menu.Icon me-1"></i>
                                     <p>@menu.Caption</p>
                                 </a>
                             </li>
